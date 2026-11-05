@@ -1075,6 +1075,28 @@ gtag('config', 'G-JFP2NNX9DX');
   }
   @media (max-width:820px){.promo-media{border-left:0;border-top:1.5px dashed rgba(212,175,55,.5)}}
 
+  /* ---------- Sur le terrain en Chine (bannière vidéos) ---------- */
+  .terrain{padding:26px 0 6px}
+  .terrain-band{
+    border:1.5px solid rgba(212,175,55,.65);border-radius:var(--radius);
+    background:linear-gradient(90deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff;
+    padding:22px 26px 24px;
+  }
+  .terrain-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 20px;margin-bottom:16px}
+  .terrain-head .kicker{flex-basis:100%}
+  .terrain-head h2{font-size:clamp(1.25rem,2.6vw,1.7rem);font-weight:800;text-transform:uppercase}
+  .terrain-head p{color:#d6dde8;margin:0;max-width:600px;font-size:.95rem}
+  .terrain-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:480px;margin:0 auto}
+  .terrain-item{margin:0}
+  .terrain-item video{
+    width:100%;aspect-ratio:9/16;object-fit:cover;display:block;background:#000;
+    border:1px solid rgba(212,175,55,.35);border-radius:6px;
+  }
+  .terrain-item figcaption{margin-top:8px;font-size:.85rem;font-weight:700;color:#e8ecf3}
+  @media (max-width:820px){
+    .terrain-band{padding:18px 16px 20px}
+  }
+
   /* ---------- Partenariat ---------- */
   .partner-sec{padding:76px 0 84px}
   .partner-sec .qform-side p{color:var(--muted)}
@@ -1290,6 +1312,29 @@ gtag('config', 'G-JFP2NNX9DX');
         </div>
       </div>
       <div class="promo-media" data-promo-media><img src="assets/a2d56b1b98ecf377.jpg" alt="Panneaux solaires photovoltaïques — arrivage CIZA SUPPLY" data-alt-en="Photovoltaic solar panels — CIZA SUPPLY arrival" loading="lazy" /><span class="promo-cap"><b data-i18n="promo.media">Arrivage en cours :</b> <span data-i18n="promo.media2">demandez votre catalogue Quincaillerie</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= SUR LE TERRAIN EN CHINE ======================= -->
+<section class="terrain" id="terrain-chine" aria-label="Sur le terrain en Chine / On the ground in China">
+  <div class="wrap">
+    <div class="terrain-band">
+      <div class="terrain-head">
+        <p class="kicker" data-i18n="terrain.kicker">CIZA SUPPLY · Chine</p>
+        <h2 data-i18n="terrain.title">Sur le terrain en Chine</h2>
+        <p data-i18n="terrain.text">Nous visitons les usines et les entrepôts nous-mêmes : contrôle des lignes de production et des stocks, avant chaque commande.</p>
+      </div>
+      <div class="terrain-grid">
+        <figure class="terrain-item">
+          <video controls playsinline preload="none" poster="assets/fa7b7123af46a0c9.jpg" data-src="assets/b920be89db3f327b.mp4" aria-label="Visite d'un entrepôt partenaire en Chine / Visit to a partner warehouse in China"></video>
+          <figcaption data-i18n="terrain.c1">Entrepôt partenaire</figcaption>
+        </figure>
+        <figure class="terrain-item">
+          <video controls playsinline preload="none" poster="assets/ab34600a0e8dd47d.jpg" data-src="assets/a84ab8a9b7441b1f.mp4" aria-label="Visite d'usine en Chine, ligne de production / Factory visit in China, production line"></video>
+          <figcaption data-i18n="terrain.c2">Visite d'usine</figcaption>
+        </figure>
+      </div>
     </div>
   </div>
 </section>
@@ -2932,6 +2977,11 @@ gtag('config', 'G-JFP2NNX9DX');
       "promo.cta2": "Vous voulez afficher vos produits ici ? Contactez-nous",
       "promo.media": "Arrivage en cours :",
       "promo.media2": "demandez votre catalogue Quincaillerie",
+      "terrain.kicker": "CIZA SUPPLY · Chine",
+      "terrain.title": "Sur le terrain en Chine",
+      "terrain.text": "Nous visitons les usines et les entrepôts nous-mêmes : contrôle des lignes de production et des stocks, avant chaque commande.",
+      "terrain.c1": "Entrepôt partenaire",
+      "terrain.c2": "Visite d'usine",
       "num.dir": "WhatsApp de la Direction (Liaison Internationale)",
       "num.bi": "WhatsApp Burundi",
       "nav.list": "Ma liste de devis",
@@ -3300,6 +3350,11 @@ gtag('config', 'G-JFP2NNX9DX');
       "promo.cta2": "Want to show your products here? Contact us",
       "promo.media": "New arrival in progress:",
       "promo.media2": "ask for your Hardware catalogue",
+      "terrain.kicker": "CIZA SUPPLY · China",
+      "terrain.title": "On the ground in China",
+      "terrain.text": "We visit the factories and warehouses ourselves: production lines and stock checked in person, before every order.",
+      "terrain.c1": "Partner warehouse",
+      "terrain.c2": "Factory visit",
       "num.dir": "Management WhatsApp (International Liaison)",
       "num.bi": "WhatsApp Burundi",
       "nav.list": "My quote list",
