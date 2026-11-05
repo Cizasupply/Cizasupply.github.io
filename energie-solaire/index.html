@@ -211,7 +211,11 @@ gtag('config', 'G-JFP2NNX9DX');
 <!-- Page catégorie demandée directement (?page=<slug>) : on masque
      l'accueil dès le départ pour afficher la page demandée sans flash.
      Le routeur (bas de page) retire cette classe une fois la page en
-     place ; filet de sécurité à 1,5 s si quoi que ce soit échoue. -->
+     place ; filet de sécurité à 4 s si quoi que ce soit échoue.
+     On coupe aussi la restauration du défilement : sans ça, le
+     navigateur réapplique la position profonde de la page d'accueil
+     sur la page catégorie (beaucoup plus courte) et le visiteur
+     atterrit en bas de page au lieu du haut de la catégorie. -->
 <script>
 (function(){
   try {
@@ -219,8 +223,10 @@ gtag('config', 'G-JFP2NNX9DX');
     var ok = ["quincaillerie","energie-solaire","telephones-accessoires","beaute-mode","equipement-industriel","usines-transformation","pieces-automobiles","moto","maison-divers"];
     var seg = window.location.pathname.split("/").filter(Boolean).pop() || "";
     if((p && ok.indexOf(p) > -1) || ok.indexOf(seg) > -1){
+      try { history.scrollRestoration = "manual"; } catch(e){}
       document.documentElement.classList.add("cat-pending");
-      setTimeout(function(){ document.documentElement.classList.remove("cat-pending"); }, 1500);
+      document.documentElement.classList.add("catmode");
+      setTimeout(function(){ document.documentElement.classList.remove("cat-pending"); }, 4000);
     }
   } catch(e){}
 })();
@@ -522,12 +528,22 @@ gtag('config', 'G-JFP2NNX9DX');
   .cat a.page-link:hover .arr{transform:translateX(3px)}
 
   /* ---------- Page catégorie dédiée ---------- */
+  /* Masquage renforcé (!important) : sur la page dédiée, seule la
+     catégorie choisie s'affiche — aucune autre section ne doit
+     réapparaître, quel que soit le navigateur ou le cache. */
   body.catmode > section:not(#catpage),
-  body.catmode > .trust{display:none}
+  body.catmode > .trust{display:none !important}
   /* Arrivée directe sur une page catégorie : l'accueil reste masqué
      le temps que le routeur affiche la page demandée. */
   html.cat-pending body > section:not(#catpage),
-  html.cat-pending body > .trust{display:none}
+  html.cat-pending body > .trust{display:none !important}
+  /* En mode catégorie : remontée en haut immédiate (pas d'animation
+     douce que le chargement des médias pourrait interrompre) et pas
+     d'ancrage de défilement qui ramènerait la vue vers le bas quand
+     la galerie de la catégorie se charge. */
+  html.catmode{scroll-behavior:auto}
+  html.cat-pending{scroll-behavior:auto}
+  body.catmode{overflow-anchor:none}
   #catpage[hidden]{display:none}
   #catpage{padding:34px 0 84px}
   .cp-crumb{
@@ -4437,19 +4453,33 @@ gtag('config', 'G-JFP2NNX9DX');
     if(homes[i] && homes[i].parentNode) homes[i].parentNode.insertBefore(articles[i], homes[i].nextSibling);
     current = null;
   }
+  function toTop(){
+    /* Remontée franche en haut de la page catégorie — réaffirmée
+       après le premier rendu et après le chargement complet, pour
+       que ni la restauration du défilement ni le chargement des
+       photos/vidéos de la galerie ne laissent le visiteur en bas
+       de page (le défaut constaté sur mobile). */
+    window.scrollTo(0, 0);
+    if(document.documentElement) document.documentElement.scrollTop = 0;
+    if(document.body) document.body.scrollTop = 0;
+  }
   function enter(cat){
     if(current === cat){ fillHeader(cat); applySeo(cat); return; }
     restoreArticle();
     current = cat;
+    try { history.scrollRestoration = "manual"; } catch(e){}
     slot.appendChild(articles[CATS.indexOf(cat)]);
     page.hidden = false;
     document.body.classList.add("catmode");
+    document.documentElement.classList.add("catmode");
     fillHeader(cat);
     applySeo(cat);
-    window.scrollTo(0, 0);
+    toTop();
+    if(window.requestAnimationFrame) window.requestAnimationFrame(function(){ if(current === cat) toTop(); });
     if(window.gtag) gtag("event", "page_view", {page_title: document.title, page_location: SITE + cat.slug});
   }
   function exit(){
+    document.documentElement.classList.remove("catmode");
     if(!current) return;
     restoreArticle();
     page.hidden = true;
@@ -4506,6 +4536,9 @@ gtag('config', 'G-JFP2NNX9DX');
       if(el) setTimeout(function(){ el.scrollIntoView(); }, 40);
     }
   }
+  /* Une fois la page entièrement chargée (galeries, vidéos), on
+     réaffirme le haut de la page catégorie si on y est toujours. */
+  window.addEventListener("load", function(){ if(current) toTop(); });
   window.addEventListener("hashchange", route);
   window.addEventListener("popstate", route);
   new MutationObserver(function(){
