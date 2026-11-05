@@ -4136,10 +4136,8 @@ gtag('config', 'G-JFP2NNX9DX');
     ]
   };
   /* Visuels premium des cartes catalogue : pour chaque groupe de produits,
-     une photo réelle déjà présente sur le site (galeries et visuels des
-     catégories) et une icône dédiée, dessinée en ligne or. Quand aucune
-     photo distincte n'existe pour le groupe, la carte affiche la grande
-     icône sur fond bleu marine plutôt qu'une photo répétée. */
+     une photo qui correspond au groupe (voir CATMEDIA) et une icône
+     dédiée, dessinée en ligne or. */
   var ICON_PATHS = {
     wrench:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-8 8l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 8-8l-3.8 3.8z"/>',
     zap:'<path d="M13 2 4.5 13.5H11L9.8 22 19 10.5h-6.5L13 2z"/>',
@@ -4189,66 +4187,70 @@ gtag('config', 'G-JFP2NNX9DX');
   function iconSvg(name, size){
     return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICON_PATHS[name] || ICON_PATHS.package) + '</svg>';
   }
-  /* Photo + icône de chaque groupe, dans le même ordre que CATALOG. */
+  /* Photo + icône de chaque groupe, dans le même ordre que CATALOG.
+     Règle : une photo par groupe, qui montre le produit du groupe, et
+     aucune photo répétée d'une carte à l'autre. Photos réelles du site
+     quand elles correspondent au groupe ; photos produit générées
+     (fichiers card-*.jpg) pour les groupes sans photo correspondante. */
   var CATMEDIA = {
     "quincaillerie": [
-      {img:"assets/01bc81a1db6bf10a.jpg", ic:"wrench"},
-      {img:"assets/9812281ef37139be.jpg", ic:"zap"},
-      {img:"assets/574e00db39d85640.jpg", ic:"hex"},
-      {img:"assets/cbbef81345d4fdb7.jpg", ic:"lock"},
-      {img:"assets/a251c32224926414.jpg", ic:"drawer"},
-      {img:"assets/3cb0726d3d4c403b.jpg", ic:"droplet"},
+      {img:"assets/a251c32224926414.jpg", ic:"wrench"},
+      {img:"assets/46b9d7d27ec37531.jpg", ic:"zap"},
+      {img:"assets/cbbef81345d4fdb7.jpg", ic:"hex"},
+      {img:"assets/21f56c88e3615a47.jpg", ic:"lock"},
+      {img:"assets/dbc203bfe1da04f8.jpg", ic:"drawer"},
+      {img:"assets/c411c10265b71a02.jpg", ic:"droplet"},
       {img:"assets/4068aec52faeefff.jpg", ic:"bath"},
-      {img:"assets/90843cb4e92441a1.jpg", ic:"plug"},
+      {img:"assets/7f611959c7df52f0.jpg", ic:"plug"},
       {img:"assets/beadf4ca113765d7.jpg", ic:"bulb"},
-      {img:"assets/deec2b4ebb666dd9.jpg", ic:"roller"},
-      {img:"assets/d9efaa3bb0521938.jpg", ic:"flame"},
-      {ic:"shield"},
-      {img:"assets/9f14b8be4108cfd9.jpg", ic:"package"}
+      {img:"assets/5161c78be036c27e.jpg", ic:"roller"},
+      {img:"assets/d423995932dcecce.jpg", ic:"flame"},
+      {img:"assets/f4dbdd94345f302b.jpg", ic:"shield"},
+      {img:"assets/94db940f22703484.jpg", ic:"package"}
     ],
     "energie-solaire": [
       {img:"assets/50a01cb807e08fa6.jpg", ic:"sun"},
-      {img:"assets/99addba160c80568.jpg", ic:"bulb"},
-      {img:"assets/1c8c452b62419996.jpg", ic:"zap"},
-      {img:"assets/205591d1b6c7638c.jpg", ic:"battery"}
+      {img:"assets/90400c4907ddda26.jpg", ic:"bulb"},
+      {img:"assets/1e9c1275a3a70241.jpg", ic:"zap"},
+      {img:"assets/7cf7ee409e69c403.jpg", ic:"battery"}
     ],
     "telephones-accessoires": [
       {img:"assets/ded8ca4df5b5e7b5.jpg", ic:"phone"},
       {img:"assets/644bd1439fda519e.jpg", ic:"shield"},
       {img:"assets/9c3b11e60cf925d9.jpg", ic:"battery"},
       {img:"assets/2568e68ddc572f78.jpg", ic:"headphones"},
-      {img:"assets/671fef92a991a43e.jpg", ic:"grid"}
+      {img:"assets/61e6ea8c083cbf76.jpg", ic:"grid"}
     ],
     "beaute-mode": [
       {img:"assets/b0d9ee5f652a5850.jpg", ic:"sparkles"},
       {img:"assets/a8ef4dbf155fe7cd.jpg", ic:"scissors"},
       {img:"assets/9371fa83eefb52f9.jpg", ic:"shirt"},
       {img:"assets/b0fe6bab1e48fa37.jpg", ic:"tie"},
-      {img:"assets/a7f08f3c956862a3.jpg", ic:"gem"}
+      {img:"assets/0c8799802bd94d3e.jpg", ic:"gem"}
     ],
     "equipement-industriel": [
       {img:"assets/a67365ea6409f26b.jpg", ic:"zap"},
       {img:"assets/0e3581bc80f5f628.jpg", ic:"gear"},
       {img:"assets/bc4fd687cd446252.jpg", ic:"truck"},
       {img:"assets/2e7f048760f42a8d.jpg", ic:"leaf"},
-      {img:"assets/948dd3d47941fd2c.jpg", ic:"gauge"}
+      {img:"assets/0f234240aba54e81.jpg", ic:"gauge"}
     ],
     "usines-transformation": [
       {img:"assets/b829f3501d4482e1.jpg", ic:"cup"},
-      {img:"assets/f4136785a02bad87.jpg", ic:"barrel"},
-      {img:"assets/28ba19bc55b5fc8b.jpg", ic:"factory"},
+      {img:"assets/27153c078610e12a.jpg", ic:"barrel"},
+      {img:"assets/f4136785a02bad87.jpg", ic:"factory"},
       {img:"assets/8dc045f37cefce93.jpg", ic:"fridge"},
-      {img:"assets/94db940f22703484.jpg", ic:"truck"},
-      {img:"assets/d3c7430fb44783a9.jpg", ic:"flask"}
+      {img:"assets/28ba19bc55b5fc8b.jpg", ic:"truck"},
+      {img:"assets/776b5865c6263d6c.jpg", ic:"flask"}
     ],
     "pieces-automobiles": [
       {img:"assets/598b59c413ed95fb.jpg", ic:"disc"},
-      {ic:"funnel"},
-      {img:"assets/a32f841c8740520e.jpg", ic:"gear"},
-      {img:"assets/386e55776bb4a220.jpg", ic:"steering"},
-      {img:"assets/cad24910877edaf3.jpg", ic:"tire"},
-      {ic:"battery"},
-      {img:"assets/3729d663ca8b500b.jpg", ic:"car"}
+      {img:"assets/a32f841c8740520e.jpg", ic:"funnel"},
+      {img:"assets/386e55776bb4a220.jpg", ic:"gear"},
+      {img:"assets/cad24910877edaf3.jpg", ic:"steering"},
+      {img:"assets/55a25daf500ffa08.jpg", ic:"tire"},
+      {img:"assets/015a4e49dfd91b15.jpg", ic:"battery"},
+      {img:"assets/e840659d30d5d8df.jpg", ic:"car"}
     ],
     "moto": [
       {img:"assets/9472ed7ca23a41c4.jpg", ic:"bike"},
@@ -4261,7 +4263,7 @@ gtag('config', 'G-JFP2NNX9DX');
       {img:"assets/fd4e66595e085168.jpg", ic:"bed"},
       {img:"assets/b823a55b0232a72a.jpg", ic:"blocks"},
       {img:"assets/cf6d26947322f15c.jpg", ic:"file"},
-      {img:"assets/c1c5966fc63b5fe7.jpg", ic:"spray"}
+      {img:"assets/71dbaedac22965c5.jpg", ic:"spray"}
     ]
   };
   /* Découpe la liste de produits d'un groupe en pastilles individuelles,
