@@ -275,6 +275,57 @@
     .lang-btn{padding:6px 9px}
   }
 
+  /* ---------- Mobile menu (burger) ---------- */
+  .menu-btn{display:none}
+  .mnav,.mnav-scrim{display:none}
+  @media (max-width:1060px){
+    .topbar-in{position:relative;z-index:2}
+    .menu-btn{
+      display:inline-flex;align-items:center;justify-content:center;flex:none;
+      width:44px;height:44px;padding:0;cursor:pointer;appearance:none;
+      background:rgba(255,255,255,.05);color:#fff;
+      border:1px solid rgba(212,175,55,.55);border-radius:10px;
+    }
+    .menu-btn:active{background:rgba(212,175,55,.18)}
+    .menu-btn-bars{display:flex;flex-direction:column;gap:5px;width:20px;pointer-events:none}
+    .menu-btn-bars span{
+      display:block;height:2px;border-radius:2px;background:#e8ecf3;
+      transition:transform .22s ease,opacity .18s ease;
+    }
+    .topbar.menu-open .menu-btn{border-color:var(--gold)}
+    .topbar.menu-open .menu-btn-bars span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .topbar.menu-open .menu-btn-bars span:nth-child(2){opacity:0}
+    .topbar.menu-open .menu-btn-bars span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+    .mnav-scrim{position:fixed;inset:0;z-index:1;background:rgba(3,10,20,.5)}
+    .topbar.menu-open .mnav-scrim{display:block;animation:mnav-fade .22s ease}
+    .mnav{
+      position:absolute;left:0;right:0;top:100%;z-index:3;
+      background:#081a33;border-bottom:2px solid rgba(212,175,55,.6);
+      box-shadow:0 26px 44px rgba(2,8,18,.5);
+      padding:6px 0 10px;max-height:calc(100dvh - 72px);overflow-y:auto;
+    }
+    .topbar.menu-open .mnav{display:block;animation:mnav-in .22s ease}
+    .mnav a{
+      display:flex;align-items:center;justify-content:space-between;gap:14px;
+      min-height:52px;padding:13px 22px;
+      color:#e8ecf3;text-decoration:none;font-weight:600;font-size:1.03rem;letter-spacing:.01em;
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+    .mnav a:last-child{border-bottom:0}
+    .mnav a::after{content:"›";color:var(--gold);font-size:1.35rem;font-weight:700;line-height:1}
+    .mnav a:active{background:rgba(212,175,55,.12);color:var(--gold-2)}
+  }
+  @keyframes mnav-in{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+  @keyframes mnav-fade{from{opacity:0}to{opacity:1}}
+  .visually-hidden{
+    position:absolute;width:1px;height:1px;margin:-1px;padding:0;
+    overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .menu-btn-bars span{transition:none}
+    .topbar.menu-open .mnav,.topbar.menu-open .mnav-scrim{animation:none}
+  }
+
   /* ---------- Hero ---------- */
   .hero{background:var(--navy);color:#fff;position:relative;overflow:hidden}
   .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:0;align-items:stretch}
@@ -491,13 +542,17 @@
     .topnav{gap:15px}
     .topnav a{font-size:.9rem}
   }
-  /* Mobile header: logo on its own row, then one compact row —
+  /* Mobile header: logo + burger on the first row, then one compact row —
      quote list + language + WhatsApp, all small enough to fit side by side */
   @media (max-width:640px){
     .topbar-in{gap:6px 8px;padding:8px 0;flex-wrap:wrap}
-    .topbar .logo{flex:1 1 100%}
+    .topbar .logo{flex:1 1 auto;order:1}
     .topbar .logo img{height:42px}
     .topnav{display:none}
+    .menu-btn{order:2;width:40px;height:40px}
+    .topbar .btn-ghost{order:3}
+    .lang-switch{order:4}
+    .topbar .btn-wa{order:5}
     .lang-switch{margin-left:auto}
     .lang-btn{padding:4px 7px;font-size:.68rem}
     .topbar .btn{
@@ -886,6 +941,7 @@
 
 <!-- ======================= TOP BAR ======================= -->
 <header class="topbar">
+  <div class="mnav-scrim" id="mnav-scrim" aria-hidden="true"></div>
   <div class="wrap topbar-in">
     <a class="logo" href="#haut" aria-label="CIZA SUPPLY — accueil">
       <img src="assets/b80a04e40bcd23d4.png" alt="CIZA SUPPLY — Global Sourcing &amp; Supply, Burundi" />
@@ -905,11 +961,25 @@
       <button type="button" class="lang-btn is-active" data-lang-btn="fr">FR</button>
       <button type="button" class="lang-btn" data-lang-btn="en">EN</button>
     </div>
+    <button type="button" class="menu-btn" id="menu-btn" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mnav">
+      <span class="visually-hidden">Menu</span>
+      <span class="menu-btn-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+    </button>
     <a class="btn btn-wa wa" data-wa="general" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis." target="_blank" rel="noopener">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m0 1.8c2.16 0 4.19.84 5.72 2.37a8.04 8.04 0 0 1 2.36 5.74c0 4.47-3.64 8.11-8.11 8.11-1.52 0-3-.42-4.28-1.21l-.31-.18-3.19.84.85-3.11-.2-.32a8.08 8.08 0 0 1-1.24-4.29c0-4.47 3.64-8.11 8.11-8.11m-4.1 3.9c-.19 0-.5.07-.76.35-.26.28-1 .97-1 2.37s1.02 2.75 1.16 2.94c.14.19 2 3.06 4.85 4.29.68.29 1.21.47 1.62.6.68.22 1.28.19 1.77.11.54-.08 1.66-.68 1.9-1.55.23-.87.23-1.62.16-1.77-.07-.15-.25-.24-.53-.42-.28-.14-1.64-.81-1.94-.9-.3-.09-.52-.14-.74.14-.22.28-.85 1.05-1.06 1.28-.21.23-.42.26-.7.09-.28-.14-1.18-.44-2.25-1.39-.83-.74-1.39-1.66-1.55-1.94-.16-.28-.02-.43.12-.57.13-.13.28-.33.42-.49.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.49-.07-.14-.74-1.79-.99-2.45-.26-.63-.53-.54-.73-.55z"/></svg>
       WhatsApp
     </a>
   </div>
+  <nav class="mnav" id="mnav" aria-label="Menu">
+    <a href="#finition" data-i18n="nav.finition">Finition &amp; confort</a>
+    <a href="#categories" data-i18n="nav.categories">Catégories</a>
+    <a href="#kit-maison" data-i18n="nav.kit">Kit Maison solaire</a>
+    <a href="#processus" data-i18n="nav.process">Comment ça marche</a>
+    <a href="#apropos" data-i18n="nav.about">À propos</a>
+    <a href="#confiance" data-i18n="nav.trust">Confiance</a>
+    <a href="#devis" data-i18n="nav.quote">Devis</a>
+    <a href="#contact" data-i18n="nav.contact">Contact</a>
+  </nav>
 </header>
 
 <!-- ======================= HERO ======================= -->
@@ -2318,6 +2388,8 @@
       "ui.next": "Suivant",
       "ui.zoom": "Agrandir la photo",
       "ui.close": "Fermer",
+      "ui.menu": "Ouvrir le menu",
+      "ui.closeMenu": "Fermer le menu",
       "ui.viewer": "Visionneuse photo",
       "ui.lbHint": "Glissez ou utilisez les flèches pour défiler — pincez ou double-touchez pour zoomer",
       "fin.kicker": "Finition de construction — finition esthétique",
@@ -2681,6 +2753,8 @@
       "ui.next": "Next",
       "ui.zoom": "Enlarge the photo",
       "ui.close": "Close",
+      "ui.menu": "Open menu",
+      "ui.closeMenu": "Close menu",
       "ui.viewer": "Photo viewer",
       "ui.lbHint": "Swipe or use the arrows to browse — pinch or double-tap to zoom",
       "fin.kicker": "Construction finishing — aesthetic finishing",
@@ -3045,11 +3119,34 @@
     document.querySelectorAll("[data-lang-btn]").forEach(function(b){
       b.classList.toggle("is-active", b.getAttribute("data-lang-btn") === lang);
     });
+    var mb = document.getElementById("menu-btn");
+    if(mb) mb.setAttribute("aria-label", mb.getAttribute("aria-expanded") === "true" ? d["ui.closeMenu"] : d["ui.menu"]);
     document.documentElement.setAttribute("lang", lang);
   }
 
   document.querySelectorAll("[data-lang-btn]").forEach(function(b){
     b.addEventListener("click", function(){ setLang(b.getAttribute("data-lang-btn")); });
+  });
+
+  /* ================= Mobile menu ================= */
+  var topbarEl = document.querySelector(".topbar");
+  var menuBtn = document.getElementById("menu-btn");
+  function menuIsOpen(){ return topbarEl.classList.contains("menu-open"); }
+  function setMenu(open){
+    topbarEl.classList.toggle("menu-open", open);
+    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    menuBtn.setAttribute("aria-label", I18N[currentLang][open ? "ui.closeMenu" : "ui.menu"]);
+  }
+  menuBtn.addEventListener("click", function(){ setMenu(!menuIsOpen()); });
+  document.getElementById("mnav-scrim").addEventListener("click", function(){ setMenu(false); });
+  document.querySelectorAll("#mnav a").forEach(function(a){
+    a.addEventListener("click", function(){ setMenu(false); });
+  });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape" && menuIsOpen()) setMenu(false);
+  });
+  window.addEventListener("resize", function(){
+    if(window.innerWidth > 1060 && menuIsOpen()) setMenu(false);
   });
 
   /* ================= Legal pages ================= */
