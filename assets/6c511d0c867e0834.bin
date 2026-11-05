@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Plan du site CIZA SUPPLY — page d'accueil + les 9 pages catégories.
+     À placer à la racine du domaine (https://cizasupply.com/sitemap.xml). -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://cizasupply.com/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/"/>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://cizasupply.com/quincaillerie</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/quincaillerie"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/quincaillerie"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/quincaillerie"/>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cizasupply.com/energie-solaire</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/energie-solaire"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/energie-solaire"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/energie-solaire"/>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cizasupply.com/telephones-accessoires</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/telephones-accessoires"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/telephones-accessoires"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/telephones-accessoires"/>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cizasupply.com/beaute-mode</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/beaute-mode"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/beaute-mode"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/beaute-mode"/>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cizasupply.com/equipement-industriel</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/equipement-industriel"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/equipement-industriel"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/equipement-industriel"/>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cizasupply.com/usines-transformation</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/usines-transformation"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/usines-transformation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/usines-transformation"/>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cizasupply.com/pieces-automobiles</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/pieces-automobiles"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/pieces-automobiles"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/pieces-automobiles"/>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cizasupply.com/moto</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/moto"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/moto"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/moto"/>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cizasupply.com/maison-divers</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/maison-divers"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/maison-divers"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/maison-divers"/>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>

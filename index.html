@@ -16,6 +16,7 @@
 <link rel="alternate" hreflang="fr" href="https://cizasupply.com/" />
 <link rel="alternate" hreflang="en" href="https://cizasupply.com/" />
 <link rel="alternate" hreflang="x-default" href="https://cizasupply.com/" />
+<link rel="sitemap" type="application/xml" title="Plan du site / Sitemap" href="assets/6c511d0c867e0834.bin" />
 <link rel="icon" type="image/png" sizes="512x512" href="assets/556d5f493cd621a5.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="assets/ce7b2110417d6851.png" />
 
@@ -186,6 +187,42 @@ gtag('config', 'G-JFP2NNX9DX');
     }
   ]
 }
+</script>
+<!-- Pages catégories — une page dédiée par catégorie, avec son adresse propre -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "CIZA SUPPLY — Pages des 9 catégories / The 9 category pages",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "item": { "@type": "WebPage", "url": "https://cizasupply.com/quincaillerie", "name": "Quincaillerie au Burundi — outillage, câbles cuivre, vannes inox", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } },
+    { "@type": "ListItem", "position": 2, "item": { "@type": "WebPage", "url": "https://cizasupply.com/energie-solaire", "name": "Énergie solaire au Burundi — panneaux 650 Wc, onduleurs, batteries lithium", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } },
+    { "@type": "ListItem", "position": 3, "item": { "@type": "WebPage", "url": "https://cizasupply.com/telephones-accessoires", "name": "Téléphones & accessoires au Burundi — chargeurs rapides, power banks, coques", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } },
+    { "@type": "ListItem", "position": 4, "item": { "@type": "WebPage", "url": "https://cizasupply.com/beaute-mode", "name": "Beauté & mode au Burundi — cosmétiques, cheveux et tissages, mode", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } },
+    { "@type": "ListItem", "position": 5, "item": { "@type": "WebPage", "url": "https://cizasupply.com/equipement-industriel", "name": "Équipement industriel au Burundi — groupes électrogènes, compresseurs, machines", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } },
+    { "@type": "ListItem", "position": 6, "item": { "@type": "WebPage", "url": "https://cizasupply.com/usines-transformation", "name": "Usines de transformation agroalimentaire — lignes jus, huiles, embouteillage", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } },
+    { "@type": "ListItem", "position": 7, "item": { "@type": "WebPage", "url": "https://cizasupply.com/pieces-automobiles", "name": "Pièces automobiles au Burundi — freinage, filtres, suspension", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } },
+    { "@type": "ListItem", "position": 8, "item": { "@type": "WebPage", "url": "https://cizasupply.com/moto", "name": "Motos au Burundi — 100 à 250 cm³, tricycles cargo, pièces détachées", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } },
+    { "@type": "ListItem", "position": 9, "item": { "@type": "WebPage", "url": "https://cizasupply.com/maison-divers", "name": "Maison & divers au Burundi — cuisine, literie, jouets, papeterie", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } }
+  ]
+}
+</script>
+<!-- Page catégorie demandée directement (?page=<slug>) : on masque
+     l'accueil dès le départ pour afficher la page demandée sans flash.
+     Le routeur (bas de page) retire cette classe une fois la page en
+     place ; filet de sécurité à 1,5 s si quoi que ce soit échoue. -->
+<script>
+(function(){
+  try {
+    var p = new URLSearchParams(window.location.search).get("page");
+    var ok = ["quincaillerie","energie-solaire","telephones-accessoires","beaute-mode","equipement-industriel","usines-transformation","pieces-automobiles","moto","maison-divers"];
+    var seg = window.location.pathname.split("/").filter(Boolean).pop() || "";
+    if((p && ok.indexOf(p) > -1) || ok.indexOf(seg) > -1){
+      document.documentElement.classList.add("cat-pending");
+      setTimeout(function(){ document.documentElement.classList.remove("cat-pending"); }, 1500);
+    }
+  } catch(e){}
+})();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -475,6 +512,96 @@ gtag('config', 'G-JFP2NNX9DX');
   }
   .cats-note p{margin:0;font-weight:600}
   .cats-note a{font-weight:700;color:#0a6e38}
+  .cat a.page-link{
+    margin-top:8px;font-weight:700;font-size:.95rem;color:var(--ink);
+    text-decoration:none;display:inline-flex;align-items:center;gap:7px;
+  }
+  .cat a.page-link:hover{color:#8a6d1f}
+  .cat a.page-link .arr{transition:transform .15s ease}
+  .cat a.page-link:hover .arr{transform:translateX(3px)}
+
+  /* ---------- Page catégorie dédiée ---------- */
+  body.catmode > section:not(#catpage),
+  body.catmode > .trust{display:none}
+  /* Arrivée directe sur une page catégorie : l'accueil reste masqué
+     le temps que le routeur affiche la page demandée. */
+  html.cat-pending body > section:not(#catpage),
+  html.cat-pending body > .trust{display:none}
+  #catpage[hidden]{display:none}
+  #catpage{padding:34px 0 84px}
+  .cp-crumb{
+    display:flex;flex-wrap:wrap;align-items:center;gap:8px;
+    font-size:.92rem;color:var(--muted);margin-bottom:26px;
+  }
+  .cp-crumb a{color:var(--muted);text-decoration:none;font-weight:600}
+  .cp-crumb a:hover{color:var(--ink)}
+  .cp-crumb .cp-sep{opacity:.6}
+  .cp-crumb-cur{color:var(--ink);font-weight:700}
+  #catpage .cp-title{
+    font-size:clamp(2rem,5vw,3.2rem);font-weight:900;text-transform:uppercase;
+    max-width:820px;
+  }
+  .cp-intro{margin:16px 0 0;color:var(--muted);font-size:1.08rem;max-width:760px}
+  .cp-url{
+    margin:14px 0 0;font-family:"IBM Plex Mono",monospace;font-size:.82rem;
+    letter-spacing:.06em;color:#8a6d1f;font-weight:600;
+  }
+  .cp-slot{margin-top:30px}
+  .cp-slot .cat{flex-direction:row;align-items:stretch}
+  .cp-slot .cat .gal{height:auto;min-height:430px;flex:1.25}
+  .cp-slot .cat-body{flex:1;padding:30px 30px 32px;justify-content:center}
+  .cp-slot .cat h3,
+  .cp-slot .cat-num{display:none}
+  .cp-slot .cat p{font-size:1.04rem;flex:none}
+  @media (max-width:820px){
+    .cp-slot .cat{flex-direction:column}
+    .cp-slot .cat .gal{height:300px;min-height:0;flex:none}
+    .cp-slot .cat-body{padding:22px 20px 24px}
+  }
+  .cp-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+  .cp-others-h{
+    margin:52px 0 16px;font-size:1.05rem;font-weight:800;
+    text-transform:uppercase;letter-spacing:.04em;
+  }
+  .cp-others{display:flex;flex-wrap:wrap;gap:10px}
+  .cp-others a{
+    border:1px solid var(--card-border);background:var(--card);border-radius:999px;
+    padding:9px 16px;font-weight:700;font-size:.92rem;text-decoration:none;color:var(--ink);
+  }
+  .cp-others a:hover{border-color:var(--gold);color:#8a6d1f}
+  .cp-ctas .btn-ghost{border-color:rgba(13,27,46,.45);color:var(--ink)}
+  .cp-ctas .btn-ghost:hover{border-color:var(--gold);color:#8a6d1f}
+  @media (prefers-color-scheme: dark){
+    .cat a.page-link{color:#fff}
+    .cat a.page-link:hover{color:var(--gold-2)}
+    .cp-crumb,.cp-crumb a{color:#a7b3c6}
+    .cp-crumb a:hover{color:#fff}
+    .cp-crumb-cur{color:#fff}
+    .cp-intro{color:#a7b3c6}
+    .cp-url{color:var(--gold-2)}
+    .cp-others a{background:#0c2242;border-color:rgba(255,255,255,.14);color:#e8ecf3}
+    .cp-others a:hover{color:var(--gold-2)}
+    .cp-ctas .btn-ghost{border-color:rgba(255,255,255,.55);color:#fff}
+    .cp-ctas .btn-ghost:hover{color:var(--gold-2)}
+  }
+
+  /* ---------- Catalogue produits (page catégorie) ---------- */
+  .cp-catalog{margin-top:48px}
+  .cp-catalog-h{font-size:clamp(1.4rem,3vw,1.9rem);font-weight:800;text-transform:uppercase}
+  .cp-catalog-note{margin:10px 0 0;color:var(--muted);max-width:720px}
+  .cp-groups{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+  @media (max-width:820px){.cp-groups{grid-template-columns:1fr}}
+  .cp-group{
+    background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);
+    padding:18px 20px;
+  }
+  .cp-group h3{font-size:1.02rem;font-weight:800;margin-bottom:8px}
+  .cp-group p{margin:0;color:var(--muted);font-size:.95rem}
+  @media (prefers-color-scheme: dark){
+    .cp-group{background:#0c2242;border-color:rgba(255,255,255,.12)}
+    .cp-group h3{color:#fff}
+    .cp-group p,.cp-catalog-note{color:#a7b3c6}
+  }
 
   /* ---------- Kit Maison ---------- */
   .kit{background:var(--navy);color:#fff;margin-top:74px;padding:76px 0}
@@ -1280,6 +1407,7 @@ gtag('config', 'G-JFP2NNX9DX');
             <li data-i18n="ph1c">Gaine ondulée — avec tire-fil acier, en rouleaux</li>
           </ul>
           <a class="devis wa" data-wa="quincaillerie" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20la%20cat%C3%A9gorie%20Quincaillerie%20compl%C3%A8te." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
+          <a class="page-link" href="?page=quincaillerie"><span data-i18n="ui.page">Page dédiée</span> <span class="arr">→</span></a>
         </div>
       </article>
 
@@ -1314,6 +1442,7 @@ gtag('config', 'G-JFP2NNX9DX');
             <li data-i18n="ph2c">Batterie LiFePO4 5,12 kWh — murale, ≥ 6 000 cycles, garantie 5 ans</li>
           </ul>
           <a class="devis wa" data-wa="energie" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20la%20cat%C3%A9gorie%20%C3%89nergie%20renouvelable." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
+          <a class="page-link" href="?page=energie-solaire"><span data-i18n="ui.page">Page dédiée</span> <span class="arr">→</span></a>
         </div>
       </article>
 
@@ -1339,6 +1468,7 @@ gtag('config', 'G-JFP2NNX9DX');
             <li data-i18n="ph3c">Coques et protections — modèles courants et récents</li>
           </ul>
           <a class="devis wa" data-wa="telephones" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20la%20cat%C3%A9gorie%20T%C3%A9l%C3%A9phones%20et%20accessoires." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
+          <a class="page-link" href="?page=telephones-accessoires"><span data-i18n="ui.page">Page dédiée</span> <span class="arr">→</span></a>
         </div>
       </article>
 
@@ -1364,6 +1494,7 @@ gtag('config', 'G-JFP2NNX9DX');
             <li data-i18n="ph4c">Mode et bijoux — femme et homme</li>
           </ul>
           <a class="devis wa" data-wa="beaute" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20la%20cat%C3%A9gorie%20Beaut%C3%A9%20et%20mode." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
+          <a class="page-link" href="?page=beaute-mode"><span data-i18n="ui.page">Page dédiée</span> <span class="arr">→</span></a>
         </div>
       </article>
 
@@ -1389,6 +1520,7 @@ gtag('config', 'G-JFP2NNX9DX');
             <li data-i18n="ph5c">Machines d'atelier — levage, manutention, mesure</li>
           </ul>
           <a class="devis wa" data-wa="industriel" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20la%20cat%C3%A9gorie%20%C3%89quipement%20industriel." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
+          <a class="page-link" href="?page=equipement-industriel"><span data-i18n="ui.page">Page dédiée</span> <span class="arr">→</span></a>
         </div>
       </article>
 
@@ -1414,6 +1546,7 @@ gtag('config', 'G-JFP2NNX9DX');
             <li data-i18n="ph6c">Embouteillage et conditionnement — formats variés</li>
           </ul>
           <a class="devis wa" data-wa="transformation" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20la%20cat%C3%A9gorie%20Usines%20de%20transformation." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
+          <a class="page-link" href="?page=usines-transformation"><span data-i18n="ui.page">Page dédiée</span> <span class="arr">→</span></a>
         </div>
       </article>
 
@@ -1439,6 +1572,7 @@ gtag('config', 'G-JFP2NNX9DX');
             <li data-i18n="ph7c">Suspension et direction — pièces d'usure</li>
           </ul>
           <a class="devis wa" data-wa="auto" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20la%20cat%C3%A9gorie%20Pi%C3%A8ces%20automobiles." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
+          <a class="page-link" href="?page=pieces-automobiles"><span data-i18n="ui.page">Page dédiée</span> <span class="arr">→</span></a>
         </div>
       </article>
 
@@ -1464,6 +1598,7 @@ gtag('config', 'G-JFP2NNX9DX');
             <li data-i18n="ph8c">Moteurs, cadres et pièces détachées</li>
           </ul>
           <a class="devis wa" data-wa="motos" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20la%20cat%C3%A9gorie%20Motos." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
+          <a class="page-link" href="?page=moto"><span data-i18n="ui.page">Page dédiée</span> <span class="arr">→</span></a>
         </div>
       </article>
 
@@ -1489,6 +1624,7 @@ gtag('config', 'G-JFP2NNX9DX');
             <li data-i18n="ph9c">Jouets et articles enfants — assortiments pour magasins</li>
           </ul>
           <a class="devis wa" data-wa="maison" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20la%20cat%C3%A9gorie%20Maison%20et%20divers." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
+          <a class="page-link" href="?page=maison-divers"><span data-i18n="ui.page">Page dédiée</span> <span class="arr">→</span></a>
         </div>
       </article>
 
@@ -1497,6 +1633,40 @@ gtag('config', 'G-JFP2NNX9DX');
       <p data-i18n="note.p">Un produit précis qui n'est pas listé ici ? Nous le sourçons à la demande.</p>
       <a class="wa" data-wa="special" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20cherche%20un%20produit%20pr%C3%A9cis%20%C3%A0%20sourcer." target="_blank" rel="noopener"><span data-i18n="note.a">Faire une demande spéciale</span> →</a>
     </div>
+  </div>
+</section>
+
+
+<!-- ======================= PAGES CATÉGORIES — 9 PAGES SÉPARÉES ======================= -->
+<!-- Une page séparée par catégorie, chacune avec sa propre adresse qui
+     fonctionne en visite directe : ?page=energie-solaire (en production :
+     cizasupply.com/energie-solaire), son titre et sa description pour
+     Google. Le routeur (bas de page) y déplace la carte complète de la
+     catégorie — photos, vidéos, description, produits phares — et le
+     catalogue complet des produits de la catégorie s'affiche dessous. -->
+<section id="catpage" hidden aria-label="Page catégorie">
+  <div class="wrap">
+    <nav class="cp-crumb" aria-label="Fil d'Ariane / Breadcrumb">
+      <a href="#haut" data-cp="home">Accueil</a> <span class="cp-sep" aria-hidden="true">›</span>
+      <a href="#categories" data-cp="cats">Catégories</a> <span class="cp-sep" aria-hidden="true">›</span>
+      <span class="cp-crumb-cur" id="cp-crumb-name"></span>
+    </nav>
+    <p class="kicker" id="cp-kicker"></p>
+    <h1 class="cp-title" id="cp-title"></h1>
+    <p class="cp-intro" id="cp-intro"></p>
+    <p class="cp-url" id="cp-url"></p>
+    <div class="cp-slot" id="cp-slot"></div>
+    <div class="cp-catalog" id="cp-catalog">
+      <h2 class="cp-catalog-h" data-cp="catalogH">Catalogue de la catégorie</h2>
+      <p class="cp-catalog-note" data-cp="catalogNote">Tous les produits que nous sourçons dans cette catégorie, directement auprès des usines. Références et modèles exacts confirmés au devis, avec la fiche technique du fournisseur.</p>
+      <div class="cp-groups" id="cp-groups"></div>
+    </div>
+    <div class="cp-ctas">
+      <a class="btn btn-ghost" href="#categories" data-cp="all">← Toutes les catégories</a>
+      <a class="btn btn-gold" href="#devis" data-cp="quote">Demander un devis</a>
+    </div>
+    <h2 class="cp-others-h" data-cp="others">Autres catégories</h2>
+    <nav class="cp-others" id="cp-others" aria-label="Autres catégories / Other categories"></nav>
   </div>
 </section>
 
@@ -1952,6 +2122,7 @@ gtag('config', 'G-JFP2NNX9DX');
       <a href="#cookies" data-open-page="pg-cookies" data-i18n="foot.cookies">Politique de cookies</a>
       <a href="#conditions" data-open-page="pg-terms" data-i18n="foot.terms">Conditions d'utilisation</a>
       <a href="#mentions-legales" data-open-page="pg-legal" data-i18n="foot.legal">Mentions légales</a>
+      <a href="assets/6c511d0c867e0834.bin" data-i18n="foot.sitemap">Plan du site</a>
     </nav>
     <div class="foot-in">
       <span class="brand-line" data-i18n="foot.brand">Ciza Supply, division de Ciza Group | Burundi</span>
@@ -2393,6 +2564,7 @@ gtag('config', 'G-JFP2NNX9DX');
       "ui.video": "Vidéo",
       "ui.scroll": "Faites défiler ›",
       "ui.quote": "Demander un devis",
+      "ui.page": "Page dédiée",
       "ui.prev": "Précédent",
       "ui.next": "Suivant",
       "ui.zoom": "Agrandir la photo",
@@ -2509,6 +2681,7 @@ gtag('config', 'G-JFP2NNX9DX');
       "flags.ug": "Ouganda",
       "foot.legalLine": "Ciza Group SURL — RC 0082870/26 — NIF 4003446905",
       "foot.legalFull": "Coordonnées complètes dans les mentions légales",
+      "foot.sitemap": "Plan du site",
       "pg.back": "← Retour au site",
       "about.kicker": "À propos",
       "about.h2": "Qui est CIZA SUPPLY ?",
@@ -2758,6 +2931,7 @@ gtag('config', 'G-JFP2NNX9DX');
       "ui.video": "Video",
       "ui.scroll": "Scroll ›",
       "ui.quote": "Request a quote",
+      "ui.page": "Dedicated page",
       "ui.prev": "Previous",
       "ui.next": "Next",
       "ui.zoom": "Enlarge the photo",
@@ -2874,6 +3048,7 @@ gtag('config', 'G-JFP2NNX9DX');
       "flags.ug": "Uganda",
       "foot.legalLine": "Ciza Group SURL — Trade register (RC) 0082870/26 — Tax ID (NIF) 4003446905",
       "foot.legalFull": "Full details in the legal notice",
+      "foot.sitemap": "Sitemap",
       "pg.back": "← Back to the site",
       "about.kicker": "About us",
       "about.h2": "Who is CIZA SUPPLY?",
@@ -3637,6 +3812,346 @@ gtag('config', 'G-JFP2NNX9DX');
   /* Langue : libellés dynamiques */
   new MutationObserver(function(){ refreshAddBtns(); buildIndex(); if(sInput && sInput.value) doSearch(); })
     .observe(document.documentElement, {attributes:true, attributeFilter:["lang"]});
+})();
+</script>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============ Pages catégories — 9 pages séparées ============
+     Chacune des 9 catégories est une page séparée, avec sa propre
+     adresse, qui s'affiche quand on la visite directement :
+       ?page=quincaillerie        ?page=energie-solaire
+       ?page=telephones-accessoires   ?page=beaute-mode
+       ?page=equipement-industriel    ?page=usines-transformation
+       ?page=pieces-automobiles   ?page=moto   ?page=maison-divers
+     (en production : cizasupply.com/<slug>, l'adresse canonique
+     déclarée à Google — canonical, Open Graph, sitemap.)
+     Chaque page garde le catalogue complet de sa catégorie : la
+     galerie photos et vidéos, la description, les produits phares
+     et tous les groupes de produits du catalogue. Le routeur lit
+     l'adresse dès l'arrivée — paramètre ?page=, chemin /<slug> ou
+     ancien lien #/<slug> (converti vers l'adresse propre) — et
+     n'affiche que la page demandée ; sans paramètre, c'est la page
+     d'accueil. Les liens des cartes et le bloc « Autres catégories »
+     sont de vrais liens (?page=<slug>) : navigation complète,
+     bouton Retour du navigateur inclus. */
+  var SITE = "https://cizasupply.com/";
+  var CATS = [
+    { slug:"quincaillerie", num:"01",
+      nameFr:"Quincaillerie complète", nameEn:"Full hardware",
+      seoTFr:"Quincaillerie au Burundi — outillage, câbles cuivre, vannes inox | CIZA SUPPLY",
+      seoTEn:"Hardware in Burundi — tools, copper cables, stainless valves | CIZA SUPPLY",
+      seoDFr:"Quincaillerie complète au Burundi : outillage, visserie, câbles cuivre BV/BVR, gaines ondulées, vannes à bille inox, clous — sourcés direct usine. Devis sur demande, bureau à Bujumbura.",
+      seoDEn:"Full hardware range in Burundi: tools, screws and fixings, BV/BVR copper cables, corrugated conduits, stainless ball valves, nails — sourced direct from factories. Quotes on request, Bujumbura office.",
+      introFr:"Tout le matériel de chantier et d'atelier, sourcé directement auprès des usines : outillage, fixation, plomberie, électricité du bâtiment et finitions. Nos arrivages réguliers — gaines ondulées, câbles cuivre, vannes à bille inox et clous de construction — alimentent quincailleries, entrepreneurs et chantiers dans tout le Burundi.",
+      introEn:"All site and workshop hardware, sourced directly from the factories: tools, fixings, plumbing, building electrics and finishes. Our regular arrivals — corrugated conduits, copper cables, stainless ball valves and construction nails — supply hardware stores, contractors and building sites across Burundi." },
+    { slug:"energie-solaire", num:"02",
+      nameFr:"Énergie renouvelable", nameEn:"Renewable energy",
+      seoTFr:"Énergie solaire au Burundi — panneaux 650 Wc, onduleurs, batteries lithium | CIZA SUPPLY",
+      seoTEn:"Solar Energy in Burundi — 650 Wp panels, inverters, lithium batteries | CIZA SUPPLY",
+      seoDFr:"Énergie solaire au Burundi : panneaux photovoltaïques 650 Wc double verre, onduleurs hybrides, batteries lithium LiFePO4 et kits solaires complets. Devis sur demande, bureau à Bujumbura.",
+      seoDEn:"Solar energy in Burundi: 650 Wp double-glass photovoltaic panels, hybrid inverters, LiFePO4 lithium batteries and complete solar kits. Quotes on request, Bujumbura office.",
+      introFr:"L'énergie qui ne s'éteint pas quand le réseau coupe : panneaux photovoltaïques, onduleurs hybrides et batteries lithium pour maisons, commerces et projets. Des kits portables d'éclairage au Kit Maison complet, chaque système est dimensionné pour le soleil du Burundi et contrôlé avant expédition.",
+      introEn:"Power that stays on when the grid goes down: photovoltaic panels, hybrid inverters and lithium batteries for homes, businesses and projects. From portable lighting kits to the complete Home Kit, every system is sized for Burundi's sun and inspected before shipping." },
+    { slug:"telephones-accessoires", num:"03",
+      nameFr:"Téléphones & accessoires", nameEn:"Phones & accessories",
+      seoTFr:"Téléphones & accessoires au Burundi — chargeurs rapides, power banks, coques | CIZA SUPPLY",
+      seoTEn:"Phones & Accessories in Burundi — fast chargers, power banks, cases | CIZA SUPPLY",
+      seoDFr:"Téléphones et accessoires au Burundi : chargeurs rapides, câbles, power banks, coques et protections, écouteurs — pour boutiques et revendeurs. Devis sur demande, bureau à Bujumbura.",
+      seoDEn:"Phones and accessories in Burundi: fast chargers, cables, power banks, cases and protection, earphones — for shops and resellers. Quotes on request, Bujumbura office.",
+      introFr:"Les accessoires qui font tourner les boutiques de téléphonie : chargeurs rapides, câbles, power banks, coques et audio, en assortiments pensés pour les revendeurs du Burundi et d'Afrique de l'Est.",
+      introEn:"The accessories that keep phone shops moving: fast chargers, cables, power banks, cases and audio, in assortments designed for resellers in Burundi and East Africa." },
+    { slug:"beaute-mode", num:"04",
+      nameFr:"Beauté & mode", nameEn:"Beauty & fashion",
+      seoTFr:"Beauté & mode au Burundi — cosmétiques, cheveux et tissages, mode | CIZA SUPPLY",
+      seoTEn:"Beauty & Fashion in Burundi — cosmetics, hair and weaves, fashion | CIZA SUPPLY",
+      seoDFr:"Beauté et mode au Burundi : soins et cosmétiques, cheveux et tissages, mode femme et homme, bijoux — assortiments pour boutiques, salons et revendeurs. Devis sur demande.",
+      seoDEn:"Beauty and fashion in Burundi: skincare and cosmetics, hair and weaves, women's and men's fashion, jewellery — assortments for shops, salons and resellers. Quotes on request.",
+      introFr:"Soins, cosmétiques, cheveux et mode : des assortiments complets pour boutiques, salons de coiffure et revendeurs, sélectionnés auprès des usines et vérifiés avant expédition.",
+      introEn:"Skincare, cosmetics, hair and fashion: complete assortments for shops, hair salons and resellers, selected at the factories and checked before shipping." },
+    { slug:"equipement-industriel", num:"05",
+      nameFr:"Équipement industriel", nameEn:"Industrial equipment",
+      seoTFr:"Équipement industriel au Burundi — groupes électrogènes, compresseurs, machines | CIZA SUPPLY",
+      seoTEn:"Industrial Equipment in Burundi — generators, compressors, machinery | CIZA SUPPLY",
+      seoDFr:"Équipement industriel au Burundi : groupes électrogènes, compresseurs d'air, machines d'atelier et de chantier, levage et manutention. Devis sur demande, bureau à Bujumbura.",
+      seoDEn:"Industrial equipment in Burundi: generators, air compressors, workshop and site machinery, lifting and handling equipment. Quotes on request, Bujumbura office.",
+      introFr:"Des machines qui font tourner ateliers et chantiers : groupes électrogènes, compresseurs, levage, manutention et mesure. Chaque équipement est spécifié avec vous, contrôlé en usine et importé jusqu'au Burundi.",
+      introEn:"Machines that keep workshops and sites running: generators, compressors, lifting, handling and measurement. Every machine is specified with you, inspected at the factory and imported to Burundi." },
+    { slug:"usines-transformation", num:"06",
+      nameFr:"Usines de transformation", nameEn:"Processing plants",
+      seoTFr:"Usines de transformation agroalimentaire — lignes jus, huiles, embouteillage | CIZA SUPPLY",
+      seoTEn:"Agri-food Processing Plants — juice, oil and bottling lines | CIZA SUPPLY",
+      seoDFr:"Lignes complètes de transformation agroalimentaire : jus, huiles, conditionnement et embouteillage, pour monter votre unité de production au Burundi. Étude et devis sur demande.",
+      seoDEn:"Complete agri-food processing lines: juices, oils, packaging and bottling, to set up your production unit in Burundi. Study and quotes on request.",
+      introFr:"Monter une unité de production locale plutôt qu'importer le produit fini : lignes de jus, d'huiles, de conditionnement et d'embouteillage, dimensionnées pour votre projet et votre budget.",
+      introEn:"Build a local production unit instead of importing the finished product: juice, oil, packaging and bottling lines, sized for your project and your budget." },
+    { slug:"pieces-automobiles", num:"07",
+      nameFr:"Pièces automobiles", nameEn:"Auto parts",
+      seoTFr:"Pièces automobiles au Burundi — freinage, filtres, suspension | CIZA SUPPLY",
+      seoTEn:"Auto Parts in Burundi — brakes, filters, suspension | CIZA SUPPLY",
+      seoDFr:"Pièces automobiles au Burundi : disques et plaquettes de frein, filtres, moteur et transmission, suspension et direction — pour garages et distributeurs. Devis sur demande.",
+      seoDEn:"Auto parts in Burundi: brake discs and pads, filters, engine and transmission, suspension and steering — for garages and distributors. Quotes on request.",
+      introFr:"Les pièces d'usure et d'entretien que les garages consomment chaque semaine : freinage, filtration, suspension et direction, pour les modèles courants du parc automobile d'Afrique de l'Est.",
+      introEn:"The wear and maintenance parts garages use every week: braking, filters, suspension and steering, for the common models on East African roads." },
+    { slug:"moto", num:"08",
+      nameFr:"Motos", nameEn:"Motorcycles",
+      seoTFr:"Motos au Burundi — 100 à 250 cm³, tricycles cargo, pièces détachées | CIZA SUPPLY",
+      seoTEn:"Motorcycles in Burundi — 100 to 250 cc, cargo tricycles, spare parts | CIZA SUPPLY",
+      seoDFr:"Motos 100 à 250 cm³, tricycles cargo, moteurs et pièces détachées, adaptées aux routes d'Afrique de l'Est. Pour revendeurs et flottes. Devis sur demande, bureau à Bujumbura.",
+      seoDEn:"Motorcycles from 100 to 250 cc, cargo tricycles, engines and spare parts, suited to East African roads. For resellers and fleets. Quotes on request, Bujumbura office.",
+      introFr:"Des motos pensées pour les routes et les usages d'ici : transport de personnes, tricycles cargo pour les charges du quotidien, et les pièces détachées qui vont avec.",
+      introEn:"Motorcycles designed for local roads and uses: passenger transport, cargo tricycles for everyday loads, and the spare parts that go with them." },
+    { slug:"maison-divers", num:"09",
+      nameFr:"Maison & divers", nameEn:"Home & more",
+      seoTFr:"Maison & divers au Burundi — cuisine, literie, jouets, papeterie | CIZA SUPPLY",
+      seoTEn:"Home & More in Burundi — kitchen, bedding, toys, stationery | CIZA SUPPLY",
+      seoDFr:"Maison et divers au Burundi : ustensiles de cuisine inox, literie et linge de maison, jouets, papeterie et bureau, articles du quotidien — pour magasins et hôtels. Devis sur demande.",
+      seoDEn:"Home and more in Burundi: stainless kitchen utensils, bedding and household linen, toys, stationery and office supplies, everyday items — for shops and hotels. Quotes on request.",
+      introFr:"Le quotidien des foyers et des magasins : cuisine, literie, jouets, papeterie et entretien, en assortiments prêts à mettre en rayon.",
+      introEn:"Everyday goods for homes and shops: kitchen, bedding, toys, stationery and cleaning, in shelf-ready assortments." }
+  ];
+  /* Catalogue produits par catégorie — transcription du catalogue produits
+     CIZA SUPPLY (document de travail) : noms de produits et caractéristiques
+     connues uniquement. Aucune fiche technique détaillée : elle viendra du
+     fournisseur et sera ajoutée après. */
+  var CATALOG = {
+    "quincaillerie": [
+      {hFr:"Outillage à main", hEn:"Hand tools", fr:"Marteaux (menuisier, maçon, arrache-clou), tournevis (plats, cruciformes, jeux), clés plates et à molette, clés Allen, pinces (universelle, coupante, à bec, étau), scies (à métaux, égoïne), niveaux à bulle, mètres ruban, cutters et lames, limes, burins et pointeaux, serre-joints, pistolets à colle, agrafeuses.", en:"Hammers (carpenter's, mason's, claw), screwdrivers (flat, Phillips, sets), flat and adjustable wrenches, Allen keys, pliers (combination, cutting, long-nose, locking), saws (hacksaws, handsaws), spirit levels, tape measures, utility knives and blades, files, chisels and punches, clamps, glue guns, staplers."},
+      {hFr:"Outillage électroportatif", hEn:"Power tools", fr:"Perceuses-visseuses, perforateurs, meuleuses d'angle, scies circulaires et sauteuses, ponceuses, rabots électriques, décapeurs thermiques, aspirateurs d'atelier, rallonges et enrouleurs, jeux de forets et embouts, disques et lames de rechange.", en:"Drill-drivers, rotary hammers, angle grinders, circular and jigsaws, sanders, electric planers, heat guns, workshop vacuum cleaners, extension leads and reels, drill bit and bit sets, spare discs and blades."},
+      {hFr:"Visserie, boulonnerie et fixation", hEn:"Screws, bolts and fixings", fr:"Vis à bois, vis à métaux, vis à béton, tirefonds, boulons, écrous, rondelles, chevilles (nylon, métalliques, à frapper), clous, pointes, rivets, tiges filetées, crochets et pitons, colliers de serrage.", en:"Wood screws, metal screws, concrete screws, lag bolts, bolts, nuts, washers, wall plugs (nylon, metal, hammer-in), nails, brads, rivets, threaded rods, hooks and eye bolts, hose clamps."},
+      {hFr:"Serrurerie et quincaillerie de bâtiment", hEn:"Locks and building hardware", fr:"Serrures (à encastrer, en applique, multipoints), cylindres et barillets, poignées de porte, boutons, charnières et paumelles, cadenas (haute sécurité, à code), verrous et targettes, ferme-portes, judas, heurtoirs, seuils et plinthes.", en:"Locks (mortise, surface-mounted, multipoint), cylinders and barrels, door handles, knobs, hinges, padlocks (high-security, combination), bolts and latches, door closers, peepholes, door knockers, thresholds and skirting boards."},
+      {hFr:"Quincaillerie d'ameublement", hEn:"Furniture hardware", fr:"Charnières invisibles, coulisses et glissières de tiroirs, poignées et boutons de meuble, pieds et vérins de meuble, serrures de meuble et de casier, aimants et loqueteaux, équerres d'assemblage, tourillons et vis d'assemblage.", en:"Concealed hinges, drawer slides and runners, furniture handles and knobs, furniture feet and levellers, furniture and locker locks, magnets and catches, assembly brackets, dowels and assembly screws."},
+      {hFr:"Plomberie et sanitaire", hEn:"Plumbing and sanitary ware", fr:"Robinets et mitigeurs, tuyaux PVC, PER et multicouche, raccords (coudes, tés, manchons, vannes), siphons, bondes, chauffe-eau électriques et solaires, pompes de relevage, colliers et fixations.", en:"Taps and mixer taps, PVC, PEX and multilayer pipes, fittings (elbows, tees, couplings, valves), traps, wastes, electric and solar water heaters, lifting pumps, clamps and fixings."},
+      {hFr:"Salle de bain", hEn:"Bathroom", fr:"Baignoires (droites, d'angle, îlots), cabines et colonnes de douche, parois de douche, WC au sol et suspendus, réservoirs et mécanismes de chasse, abattants WC, lavabos, vasques à poser et à encastrer, meubles de salle de bain, miroirs (simples, lumineux LED, grossissants), porte-serviettes, porte-papier hygiénique, porte-savons et distributeurs, patères et crochets, tapis de bain antidérapants, rideaux de douche et barres.", en:"Bathtubs (straight, corner, freestanding), shower cabins and columns, shower screens, floor-standing and wall-hung WCs, cisterns and flush mechanisms, WC seats, washbasins, countertop and inset basins, bathroom furniture, mirrors (plain, LED-lit, magnifying), towel rails, toilet roll holders, soap dishes and dispensers, hooks and pegs, non-slip bath mats, shower curtains and rails."},
+      {hFr:"Électricité du bâtiment", hEn:"Building electrics", fr:"Interrupteurs et prises, disjoncteurs et tableaux électriques, câbles et fils, gaines ICTA, boîtes de dérivation et d'encastrement, douilles, détecteurs de mouvement, sonnettes, variateurs de lumière, testeurs et multimètres.", en:"Switches and sockets, circuit breakers and distribution boards, cables and wires, ICTA conduits, junction and flush-mount boxes, lamp holders, motion detectors, doorbells, light dimmers, testers and multimeters."},
+      {hFr:"Luminaires", hEn:"Lighting", fr:"Lustres et suspensions, plafonniers, appliques murales (intérieur et extérieur), spots encastrés et en saillie, rubans LED et profilés aluminium, lampes de bureau et lampes de chevet, lampadaires d'intérieur, projecteurs LED extérieurs, hublots, veilleuses, détecteurs crépusculaires, ampoules LED (tous culots et puissances).", en:"Chandeliers and pendant lights, ceiling lights, wall lights (indoor and outdoor), recessed and surface spotlights, LED strips and aluminium profiles, desk and bedside lamps, indoor floor lamps, outdoor LED floodlights, bulkhead lights, night lights, dusk sensors, LED bulbs (all caps and wattages)."},
+      {hFr:"Peinture, enduits et finition", hEn:"Paint, coatings and finishing", fr:"Peintures (intérieur, extérieur, glycéro, acrylique), enduits et mastics, plâtre, pinceaux et rouleaux, bacs et grilles, rubans de masquage, bâches de protection, papier abrasif, spatules et couteaux à enduire, bandes d'étanchéité, silicones et colles.", en:"Paints (interior, exterior, oil-based, acrylic), fillers and sealants, plaster, brushes and rollers, trays and grids, masking tape, protective sheeting, abrasive paper, spatulas and filling knives, sealing tapes, silicones and glues."},
+      {hFr:"Soudure et métal", hEn:"Welding and metal", fr:"Postes à souder (arc, inverter), électrodes, masques et gants de soudeur, meules, étaux, fers plats, cornières et tubes acier.", en:"Welding machines (arc, inverter), electrodes, welding masks and gloves, grinding wheels, vices, flat bars, angle irons and steel tubes."},
+      {hFr:"Équipement de protection individuelle (EPI)", hEn:"Personal protective equipment (PPE)", fr:"Casques de chantier, gants (cuir, nitrile, anti-coupure), gilets haute visibilité, chaussures et bottes de sécurité, lunettes de protection, masques anti-poussière et respiratoires, bouchons d'oreille et casques antibruit, harnais antichute, genouillères.", en:"Safety helmets, gloves (leather, nitrile, cut-resistant), high-visibility vests, safety shoes and boots, protective glasses, dust and respirator masks, earplugs and ear defenders, fall-arrest harnesses, knee pads."},
+      {hFr:"Atelier et rangement", hEn:"Workshop and storage", fr:"Échelles et escabeaux, établis, boîtes et coffrets à outils, servantes d'atelier, rayonnages métalliques, bâches, sangles et tendeurs, diables et brouettes.", en:"Ladders and step ladders, workbenches, tool boxes and cases, workshop trolleys, metal shelving, tarpaulins, straps and tensioners, sack trucks and wheelbarrows."}
+    ],
+    "energie-solaire": [
+      {hFr:"Solaire photovoltaïque", hEn:"Solar photovoltaic", fr:"Panneaux solaires (rigides et flexibles), kits solaires résidentiels complets, onduleurs (hybrides et autonomes), batteries solaires (lithium, gel, AGM), régulateurs de charge MPPT et PWM, câbles et connecteurs solaires, structures de montage.", en:"Solar panels (rigid and flexible), complete residential solar kits, inverters (hybrid and off-grid), solar batteries (lithium, gel, AGM), MPPT and PWM charge controllers, solar cables and connectors, mounting structures."},
+      {hFr:"Éclairage solaire", hEn:"Solar lighting", fr:"Lampadaires solaires, projecteurs solaires, ampoules solaires autonomes, lampes portables et torches solaires, guirlandes solaires.", en:"Solar street lights, solar floodlights, standalone solar bulbs, portable solar lamps and torches, solar string lights."},
+      {hFr:"Applications solaires", hEn:"Solar applications", fr:"Pompes solaires (immergées et de surface), chauffe-eau solaires, réfrigérateurs et congélateurs solaires, ventilateurs solaires, chargeurs solaires portables, stations d'énergie portables.", en:"Solar pumps (submersible and surface), solar water heaters, solar refrigerators and freezers, solar fans, portable solar chargers, portable power stations."},
+      {hFr:"Compléments", hEn:"Complements", fr:"Groupes de secours hybrides, stabilisateurs de tension, parafoudres, coffrets de protection DC/AC.", en:"Hybrid backup units, voltage stabilisers, surge protectors, DC/AC protection boxes."}
+    ],
+    "telephones-accessoires": [
+      {hFr:"Téléphones", hEn:"Phones", fr:"Smartphones (entrée, milieu et haut de gamme), téléphones basiques à touches, téléphones robustes (antichoc).", en:"Smartphones (entry, mid and high range), basic keypad phones, rugged phones (shockproof)."},
+      {hFr:"Protection et habillage", hEn:"Protection and covers", fr:"Coques et housses (silicone, rigides, portefeuille), verres trempés et films de protection, skins et stickers.", en:"Cases and covers (silicone, hard, wallet), tempered glass and protective films, skins and stickers."},
+      {hFr:"Charge et énergie", hEn:"Charging and power", fr:"Chargeurs secteur et allume-cigare, chargeurs rapides, câbles (USB-C, Lightning, micro-USB), power banks, chargeurs sans fil, stations de charge multiples.", en:"Mains and car chargers, fast chargers, cables (USB-C, Lightning, micro-USB), power banks, wireless chargers, multi charging stations."},
+      {hFr:"Audio", hEn:"Audio", fr:"Écouteurs filaires et sans fil (TWS), casques audio, enceintes Bluetooth, kits mains libres, adaptateurs audio.", en:"Wired and wireless earphones (TWS), headphones, Bluetooth speakers, hands-free kits, audio adapters."},
+      {hFr:"Supports et divers", hEn:"Mounts and miscellaneous", fr:"Supports téléphone (voiture, bureau, trépieds), perches à selfie, anneaux et pop-sockets, stylets, cartes mémoire et clés USB, nettoyants d'écran.", en:"Phone mounts (car, desk, tripods), selfie sticks, rings and pop sockets, styluses, memory cards and USB sticks, screen cleaners."}
+    ],
+    "beaute-mode": [
+      {hFr:"Beauté femme", hEn:"Women's beauty", fr:"Maquillage (fonds de teint, rouges à lèvres, mascaras, palettes), soins visage (crèmes, sérums, nettoyants), soins corps (laits, gommages, huiles), parfums, vernis et soins des ongles.", en:"Make-up (foundations, lipsticks, mascaras, palettes), face care (creams, serums, cleansers), body care (lotions, scrubs, oils), perfumes, nail polish and nail care."},
+      {hFr:"Cheveux", hEn:"Hair", fr:"Perruques (naturelles et synthétiques), tissages et extensions, tresses et mèches, produits capillaires (shampooings, soins, huiles, gels), fers à lisser et à boucler, sèche-cheveux, brosses et peignes, colorations.", en:"Wigs (natural and synthetic), weaves and extensions, braids and hair bundles, hair products (shampoos, treatments, oils, gels), straighteners and curling irons, hair dryers, brushes and combs, hair dyes."},
+      {hFr:"Mode femme", hEn:"Women's fashion", fr:"Robes, ensembles et tailleurs, jupes, pantalons, chemisiers et tops, chaussures (escarpins, sandales, baskets), sacs à main et pochettes, foulards.", en:"Dresses, outfits and suits, skirts, trousers, blouses and tops, shoes (heels, sandals, trainers), handbags and clutches, scarves."},
+      {hFr:"Mode homme", hEn:"Men's fashion", fr:"Costumes et vestes, chemises, pantalons, jeans, t-shirts et polos, chaussures (ville, sport, mocassins), ceintures, portefeuilles, cravates.", en:"Suits and jackets, shirts, trousers, jeans, t-shirts and polos, shoes (dress, sport, loafers), belts, wallets, ties."},
+      {hFr:"Accessoires et bijoux", hEn:"Accessories and jewellery", fr:"Montres (homme et femme), lunettes de soleil, bijoux fantaisie (colliers, bracelets, boucles d'oreilles, bagues), sacs à dos et bagagerie, parapluies.", en:"Watches (men's and women's), sunglasses, fashion jewellery (necklaces, bracelets, earrings, rings), backpacks and luggage, umbrellas."}
+    ],
+    "equipement-industriel": [
+      {hFr:"Énergie et motorisation", hEn:"Power and motorisation", fr:"Groupes électrogènes (essence, diesel, insonorisés), moteurs électriques, compresseurs d'air, motopompes, surpresseurs.", en:"Generators (petrol, diesel, silent), electric motors, air compressors, motor pumps, booster pumps."},
+      {hFr:"Machines d'atelier et de chantier", hEn:"Workshop and site machinery", fr:"Postes à souder professionnels, bétonnières, aiguilles vibrantes, plaques vibrantes, scies à béton, tronçonneuses, débroussailleuses, taille-haies, souffleurs.", en:"Professional welding machines, concrete mixers, poker vibrators, plate compactors, concrete saws, chainsaws, brush cutters, hedge trimmers, blowers."},
+      {hFr:"Levage et manutention", hEn:"Lifting and handling", fr:"Palans et treuils, crics (bouteille, rouleur), chariots et transpalettes, sangles de levage, élingues.", en:"Hoists and winches, jacks (bottle, trolley), trolleys and pallet trucks, lifting straps, slings."},
+      {hFr:"Agro-transformation et agriculture", hEn:"Agri-processing and farming", fr:"Motoculteurs et motobineuses, moulins (grain, manioc), décortiqueuses, pressoirs, concasseurs, pompes d'irrigation, pulvérisateurs, couveuses.", en:"Power tillers and cultivators, mills (grain, cassava), hullers, presses, crushers, irrigation pumps, sprayers, incubators."},
+      {hFr:"Équipement de mesure et contrôle", hEn:"Measurement and control equipment", fr:"Multimètres et pinces ampèremétriques, télémètres laser, détecteurs, balances industrielles, manomètres.", en:"Multimeters and clamp meters, laser distance meters, detectors, industrial scales, pressure gauges."}
+    ],
+    "usines-transformation": [
+      {hFr:"Ligne de jus et boissons", hEn:"Juice and beverage lines", fr:"Laveuses et trieuses de fruits, broyeurs et extracteurs de jus, pasteurisateurs, cuves de stockage inox, remplisseuses (bouteilles, briques), boucheuses et capsuleuses, étiqueteuses, emballeuses et fardeleuses.", en:"Fruit washers and sorters, juice crushers and extractors, pasteurisers, stainless storage tanks, fillers (bottles, cartons), capping machines, labelling machines, wrapping and bundling machines."},
+      {hFr:"Huilerie", hEn:"Oil production", fr:"Presses à huile (vis, hydrauliques), filtres à huile, lignes de raffinage (dégommage, neutralisation, décoloration, désodorisation), décanteurs et centrifugeuses, cuves de stockage, lignes de conditionnement (bouteilles, bidons).", en:"Oil presses (screw, hydraulic), oil filters, refining lines (degumming, neutralisation, bleaching, deodorisation), decanters and centrifuges, storage tanks, packaging lines (bottles, jerrycans)."},
+      {hFr:"Transformation alimentaire", hEn:"Food processing", fr:"Moulins industriels, décortiqueuses et polisseuses, séchoirs (plateaux, rotatifs, solaires industriels), torréfacteurs, malaxeurs et pétrins, fours industriels, ensacheuses et thermoformeuses, scelleuses.", en:"Industrial mills, hullers and polishers, dryers (tray, rotary, industrial solar), roasters, mixers and kneaders, industrial ovens, bagging and thermoforming machines, sealers."},
+      {hFr:"Utilités et services", hEn:"Utilities", fr:"Chaudières vapeur, groupes de froid industriel, compresseurs d'air alimentaire, surpresseurs, groupes électrogènes industriels, transformateurs, châteaux d'eau et réservoirs.", en:"Steam boilers, industrial refrigeration units, food-grade air compressors, booster pumps, industrial generators, transformers, water towers and tanks."},
+      {hFr:"Convoyage et manutention", hEn:"Conveying and handling", fr:"Convoyeurs à bande et à vis, élévateurs à godets, trémies, ensacheuses automatiques, palettiseurs, transpalettes et chariots élévateurs.", en:"Belt and screw conveyors, bucket elevators, hoppers, automatic bagging machines, palletisers, pallet trucks and forklifts."},
+      {hFr:"Laboratoire et contrôle qualité", hEn:"Laboratory and quality control", fr:"Équipements de laboratoire (pH-mètres, réfractomètres, balances de précision), kits d'analyse, chambres froides de stockage.", en:"Laboratory equipment (pH meters, refractometers, precision balances), analysis kits, cold storage rooms."}
+    ],
+    "pieces-automobiles": [
+      {hFr:"Freinage", hEn:"Braking", fr:"Plaquettes de frein, disques de frein, tambours, mâchoires, flexibles et liquides de frein.", en:"Brake pads, brake discs, drums, brake shoes, brake hoses and fluids."},
+      {hFr:"Filtration et entretien", hEn:"Filters and maintenance", fr:"Filtres à huile, à air, à carburant et d'habitacle, huiles moteur et liquides (refroidissement, direction, lave-glace), bougies d'allumage et de préchauffage.", en:"Oil, air, fuel and cabin filters, engine oils and fluids (coolant, steering, screenwash), spark and glow plugs."},
+      {hFr:"Moteur et transmission", hEn:"Engine and transmission", fr:"Courroies (distribution, accessoires), pompes à eau et à carburant, alternateurs et démarreurs, embrayages (kits), joints et pochettes, radiateurs et ventilateurs.", en:"Belts (timing, accessory), water and fuel pumps, alternators and starter motors, clutch kits, gaskets and gasket sets, radiators and fans."},
+      {hFr:"Suspension et direction", hEn:"Suspension and steering", fr:"Amortisseurs, rotules, bras de suspension, biellettes, roulements de roue, crémaillères et pompes de direction assistée.", en:"Shock absorbers, ball joints, suspension arms, links, wheel bearings, steering racks and power steering pumps."},
+      {hFr:"Pneus et roues", hEn:"Tyres and wheels", fr:"Pneus (tourisme, utilitaire, 4x4), chambres à air, jantes, enjoliveurs, crics et clés en croix.", en:"Tyres (passenger, utility, 4x4), inner tubes, rims, hubcaps, jacks and cross wrenches."},
+      {hFr:"Électricité et éclairage auto", hEn:"Auto electrics and lighting", fr:"Batteries 12V, phares et feux (avant, arrière, antibrouillard), ampoules auto, klaxons, essuie-glaces, rétroviseurs.", en:"12V batteries, headlights and lights (front, rear, fog), auto bulbs, horns, wipers, mirrors."},
+      {hFr:"Accessoires auto", hEn:"Car accessories", fr:"Tapis et housses de siège, alarmes et antivols, autoradios et haut-parleurs, caméras de recul, pare-soleil, extincteurs auto, triangles et gilets de signalisation, câbles de démarrage.", en:"Floor mats and seat covers, alarms and anti-theft devices, car radios and speakers, reversing cameras, sunshades, car fire extinguishers, warning triangles and vests, jump leads."}
+    ],
+    "moto": [
+      {hFr:"Motos complètes", hEn:"Complete motorcycles", fr:"Motos utilitaires (125cc, 150cc), motos de transport (boda), scooters, motos tout-terrain légères.", en:"Utility motorcycles (125 cc, 150 cc), transport motorcycles (boda), scooters, light off-road motorcycles."},
+      {hFr:"Pièces détachées moto", hEn:"Motorcycle spare parts", fr:"Pneus et chambres à air moto, kits chaîne (chaîne, pignon, couronne), plaquettes et mâchoires de frein, câbles (embrayage, frein, accélérateur, compteur), bougies, filtres à air et à huile, amortisseurs avant et arrière, guidons et poignées, leviers, rétroviseurs, phares et feux arrière, clignotants, compteurs, batteries moto, selles, garde-boue, pots d'échappement, joints moteur, kits piston et cylindre.", en:"Motorcycle tyres and inner tubes, chain kits (chain, sprocket, rear sprocket), brake pads and shoes, cables (clutch, brake, throttle, speedometer), spark plugs, air and oil filters, front and rear shock absorbers, handlebars and grips, levers, mirrors, headlights and tail lights, indicators, speedometers, motorcycle batteries, seats, mudguards, exhausts, engine gaskets, piston and cylinder kits."},
+      {hFr:"Équipement motard", hEn:"Rider equipment", fr:"Casques (intégraux, jets), gants moto, vestes et gilets de protection, imperméables moto, antivols (U, chaîne, bloque-disque).", en:"Helmets (full-face, open-face), motorcycle gloves, protective jackets and vests, motorcycle rain gear, locks (U-lock, chain, disc lock)."},
+      {hFr:"Accessoires moto", hEn:"Motorcycle accessories", fr:"Top-cases et sacoches, porte-bagages, protège-mains, tapis de réservoir, klaxons, chargeurs USB moto, housses de protection.", en:"Top cases and saddlebags, luggage racks, hand guards, tank pads, horns, motorcycle USB chargers, protective covers."}
+    ],
+    "maison-divers": [
+      {hFr:"Maison et cuisine", hEn:"Home and kitchen", fr:"Ustensiles de cuisine (marmites, poêles, casseroles), couverts et vaisselle, boîtes de conservation, thermos et gourdes, paniers et rangements, cintres, horloges murales, ventilateurs, fers à repasser.", en:"Kitchen utensils (pots, frying pans, saucepans), cutlery and tableware, storage boxes, flasks and water bottles, baskets and storage, hangers, wall clocks, fans, irons."},
+      {hFr:"Literie et linge", hEn:"Bedding and linen", fr:"Draps et housses, couvertures, oreillers, moustiquaires, serviettes de bain.", en:"Sheets and covers, blankets, pillows, mosquito nets, bath towels."},
+      {hFr:"Jouets et enfants", hEn:"Toys and children", fr:"Jouets (voitures, poupées, jeux de construction), vélos enfants, trottinettes, articles scolaires de base.", en:"Toys (cars, dolls, construction sets), children's bicycles, scooters, basic school supplies."},
+      {hFr:"Papeterie et bureau", hEn:"Stationery and office", fr:"Cahiers, stylos, classeurs, agrafeuses, calculatrices, tableaux blancs.", en:"Notebooks, pens, binders, staplers, calculators, whiteboards."},
+      {hFr:"Entretien et divers", hEn:"Cleaning and miscellaneous", fr:"Balais et serpillières, seaux et bassines, cordes et ficelles, piles et batteries, lampes torches, bougies, allumettes et briquets, parapluies, nattes.", en:"Brooms and mops, buckets and basins, ropes and string, cells and batteries, torches, candles, matches and lighters, umbrellas, mats."}
+    ]
+  };
+  var UI = {
+    fr: {home:"Accueil", cats:"Catégories", all:"← Toutes les catégories", quote:"Demander un devis", others:"Autres catégories", cat:"Catégorie", catalogH:"Catalogue de la catégorie", catalogNote:"Tous les produits que nous sourçons dans cette catégorie, directement auprès des usines. Références et modèles exacts confirmés au devis, avec la fiche technique du fournisseur."},
+    en: {home:"Home", cats:"Categories", all:"← All categories", quote:"Request a quote", others:"Other categories", cat:"Category", catalogH:"Category catalogue", catalogNote:"Every product we source in this category, directly from the factories. Exact references and models confirmed in the quote, with the supplier's technical data sheet."}
+  };
+
+  var page = document.getElementById("catpage");
+  var slot = document.getElementById("cp-slot");
+  if(!page || !slot) return;
+  var articles = Array.prototype.slice.call(document.querySelectorAll(".cat-grid > article.cat"));
+  var homes = [];
+  articles.forEach(function(a, i){
+    var ph = document.createComment("emplacement-carte-" + (CATS[i] ? CATS[i].slug : i));
+    a.parentNode.insertBefore(ph, a);
+    homes.push(ph);
+  });
+
+  var metaDesc = document.querySelector('meta[name="description"]');
+  var canon = document.querySelector('link[rel="canonical"]');
+  var ogT = document.querySelector('meta[property="og:title"]');
+  var ogD = document.querySelector('meta[property="og:description"]');
+  var ogU = document.querySelector('meta[property="og:url"]');
+  var twT = document.querySelector('meta[name="twitter:title"]');
+  var twD = document.querySelector('meta[name="twitter:description"]');
+  function getC(el){ return el ? (el.getAttribute("content") || "") : ""; }
+  var HOME_SEO = { title: document.title, desc: getC(metaDesc), ogT: getC(ogT), ogD: getC(ogD), twT: getC(twT), twD: getC(twD) };
+
+  function lang(){ return document.documentElement.getAttribute("lang") === "en" ? "en" : "fr"; }
+  function bySlug(slug){ for(var i = 0; i < CATS.length; i++) if(CATS[i].slug === slug) return CATS[i]; return null; }
+  var current = null;
+
+  function setMeta(title, desc, url, ogTitle, ogDesc){
+    document.title = title;
+    if(metaDesc) metaDesc.setAttribute("content", desc);
+    if(canon) canon.setAttribute("href", url);
+    if(ogT) ogT.setAttribute("content", ogTitle);
+    if(ogD) ogD.setAttribute("content", ogDesc);
+    if(ogU) ogU.setAttribute("content", url);
+    if(twT) twT.setAttribute("content", ogTitle);
+    if(twD) twD.setAttribute("content", ogDesc);
+  }
+  function applySeo(cat){
+    var L = lang();
+    var title = L === "en" ? cat.seoTEn : cat.seoTFr;
+    var desc = L === "en" ? cat.seoDEn : cat.seoDFr;
+    setMeta(title, desc, SITE + cat.slug, title, desc);
+  }
+  function fillHeader(cat){
+    var L = lang(), ui = UI[L];
+    var name = L === "en" ? cat.nameEn : cat.nameFr;
+    page.querySelectorAll("[data-cp]").forEach(function(el){
+      var k = el.getAttribute("data-cp");
+      if(ui[k]) el.textContent = ui[k];
+    });
+    document.getElementById("cp-crumb-name").textContent = name;
+    document.getElementById("cp-kicker").textContent = ui.cat + " " + cat.num + " — CIZA SUPPLY";
+    document.getElementById("cp-title").textContent = name;
+    document.getElementById("cp-intro").textContent = L === "en" ? cat.introEn : cat.introFr;
+    document.getElementById("cp-url").textContent = "cizasupply.com/" + cat.slug;
+    var nav = document.getElementById("cp-others");
+    nav.innerHTML = "";
+    CATS.forEach(function(c){
+      if(c === cat) return;
+      var a = document.createElement("a");
+      a.setAttribute("href", "?page=" + c.slug);
+      a.textContent = L === "en" ? c.nameEn : c.nameFr;
+      nav.appendChild(a);
+    });
+    var groups = document.getElementById("cp-groups");
+    groups.innerHTML = "";
+    (CATALOG[cat.slug] || []).forEach(function(g){
+      var d = document.createElement("div");
+      d.className = "cp-group";
+      var h = document.createElement("h3");
+      h.textContent = L === "en" ? g.hEn : g.hFr;
+      var p = document.createElement("p");
+      p.textContent = L === "en" ? g.en : g.fr;
+      d.appendChild(h);
+      d.appendChild(p);
+      groups.appendChild(d);
+    });
+  }
+  function restoreArticle(){
+    if(!current) return;
+    var i = CATS.indexOf(current);
+    if(homes[i] && homes[i].parentNode) homes[i].parentNode.insertBefore(articles[i], homes[i].nextSibling);
+    current = null;
+  }
+  function enter(cat){
+    if(current === cat){ fillHeader(cat); applySeo(cat); return; }
+    restoreArticle();
+    current = cat;
+    slot.appendChild(articles[CATS.indexOf(cat)]);
+    page.hidden = false;
+    document.body.classList.add("catmode");
+    fillHeader(cat);
+    applySeo(cat);
+    window.scrollTo(0, 0);
+    if(window.gtag) gtag("event", "page_view", {page_title: document.title, page_location: SITE + cat.slug});
+  }
+  function exit(){
+    if(!current) return;
+    restoreArticle();
+    page.hidden = true;
+    document.body.classList.remove("catmode");
+    setMeta(HOME_SEO.title, HOME_SEO.desc, SITE, HOME_SEO.ogT, HOME_SEO.ogD);
+  }
+  function slugFromLocation(){
+    /* 1) Adresse propre de la page : ?page=<slug> (visite directe) */
+    try {
+      var q = new URLSearchParams(window.location.search);
+      var qp = q.get("page") || q.get("categorie") || q.get("cat");
+      if(qp && bySlug(qp)) return qp;
+    } catch(e){}
+    /* 2) Chemin /<slug> (hébergement qui sert la page à cette adresse) */
+    var seg = window.location.pathname.split("/").filter(Boolean).pop() || "";
+    try { seg = decodeURIComponent(seg); } catch(e){}
+    if(seg && bySlug(seg)) return seg;
+    /* 3) Ancien format #/<slug> */
+    var h = window.location.hash || "";
+    if(h.indexOf("#/") === 0 && bySlug(h.slice(2))) return h.slice(2);
+    return null;
+  }
+  function route(){
+    var h = window.location.hash || "";
+    /* Ancien lien #/<slug> : conversion vers l'adresse propre de la page */
+    if(h.indexOf("#/") === 0 && bySlug(h.slice(2))){
+      window.location.replace("?page=" + h.slice(2));
+      return;
+    }
+    var slug = slugFromLocation();
+    if(slug){
+      /* Depuis une page catégorie, un lien d'ancre de l'accueil
+         (#categories, #devis, #haut…) ramène à la page d'accueil :
+         on retire le paramètre de page de l'adresse, puis on défile. */
+      if(h.length > 1 && h.indexOf("#/") !== 0){
+        var target = document.getElementById(h.slice(1));
+        if(target && h.slice(1) !== "catpage"){
+          try { history.replaceState(null, "", window.location.pathname + h); } catch(e){}
+          exit();
+          document.documentElement.classList.remove("cat-pending");
+          setTimeout(function(){ target.scrollIntoView(); }, 40);
+          return;
+        }
+      }
+      enter(bySlug(slug));
+      document.documentElement.classList.remove("cat-pending");
+      return;
+    }
+    var was = !!current;
+    exit();
+    document.documentElement.classList.remove("cat-pending");
+    if(was && h.length > 1){
+      var el = document.getElementById(h.slice(1));
+      if(el) setTimeout(function(){ el.scrollIntoView(); }, 40);
+    }
+  }
+  window.addEventListener("hashchange", route);
+  window.addEventListener("popstate", route);
+  new MutationObserver(function(){
+    if(current){ fillHeader(current); applySeo(current); }
+  }).observe(document.documentElement, {attributes: true, attributeFilter: ["lang"]});
+  route();
 })();
 </script>
 
