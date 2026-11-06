@@ -1,448 +1,442 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Plan du site CIZA SUPPLY — page d'accueil + les 9 pages catégories,
-     avec les images et les vidéos de chaque page (espaces de noms image et vidéo).
-     À placer à la racine du domaine (https://cizasupply.com/sitemap.xml). -->
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<?xml version='1.0' encoding='utf-8'?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://cizasupply.com/</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/" />
     <image:image>
-      <image:loc>https://cizasupply.com/assets/poster-chine-entrepot.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/fa7b7123af46a0c9.jpg</image:loc>
       <image:title>Sur le terrain en Chine — Visite d'un entrepôt partenaire</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/poster-chine-usine.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/ab34600a0e8dd47d.jpg</image:loc>
       <image:title>Sur le terrain en Chine — Visite d'usine, ligne de production</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/poster-kit-film.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/3b90294ec98f4123.jpg</image:loc>
       <image:title>Le Kit Maison solaire en film</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/poster-douche.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/1c47eefdc2efa599.jpg</image:loc>
       <image:title>Colonnes de douche — gamme Finition &amp; confort</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/poster-colonne.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/2396c711deba2dd5.jpg</image:loc>
       <image:title>Colonne de douche en fonctionnement</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/poster-meuble.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/362d09be082c0e2d.jpg</image:loc>
       <image:title>Meuble de salle de bain — gamme Finition &amp; confort</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/poster-baignoire.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/d728c9eb9be31427.jpg</image:loc>
       <image:title>Baignoire balnéo — gamme Finition &amp; confort</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/poster-baignoire2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/7e4d1037295432cd.jpg</image:loc>
       <image:title>Baignoire îlot en surface solide — gamme Finition &amp; confort</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/poster-luminaires.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/b9d87c4e948312ae.jpg</image:loc>
       <image:title>Luminaires décoratifs — gamme Finition &amp; confort</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/poster-atelier-lum.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/4f38f24afa5e9373.jpg</image:loc>
       <image:title>Atelier luminaires — fabrication et contrôle qualité</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/poster-panneaux.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/57a2a348fda9950f.jpg</image:loc>
       <image:title>Panneaux muraux décoratifs — gamme Finition &amp; confort</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/poster-mosaiques.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/eb5be5432f36107f.jpg</image:loc>
       <image:title>Mosaïques et carreaux décoratifs — gamme Finition &amp; confort</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/poster-plinthe.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/0a872a1a302d5417.jpg</image:loc>
       <image:title>Plinthes LED en aluminium — gamme Finition &amp; confort</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/poster-vasques.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/f7b86f1f3140877a.jpg</image:loc>
       <image:title>Vasques en surface solide — gamme Finition &amp; confort</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/hero-entrepot.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/94db940f22703484.jpg</image:loc>
       <image:title>Entrepôt de quincaillerie et de matériaux approvisionné par CIZA SUPPLY</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/kit-panneau.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/820dfc687756efb1.jpg</image:loc>
       <image:title>Panneau solaire 650 Wc double verre, tenu en usine</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/kit-onduleur.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/a5d07d75d596e37b.jpg</image:loc>
       <image:title>Onduleur hybride solaire</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/kit-batterie.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/205591d1b6c7638c.jpg</image:loc>
       <image:title>Batterie lithium murale 5,12 kWh</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/kit-extra-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/21819c3debeea4b2.jpg</image:loc>
       <image:title>Panneau solaire 650 Wc, autre vue en usine</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/kit-extra-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/77b2af77219f8de7.jpg</image:loc>
       <image:title>Batterie lithium murale 10 kWh</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/kit-extra-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/7fe899a0935b927f.jpg</image:loc>
       <image:title>Onduleur hybride triphasé, gamme supérieure</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/kit-extra-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/8afff44d66cd5a5e.jpg</image:loc>
       <image:title>Batterie lithium murale 2,5 kWh, format compact</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/cat-quincaillerie.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/a251c32224926414.jpg</image:loc>
       <image:title>Outillage à main : marteau, tournevis, clé, pince, mètre et niveau</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/cat-energie.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/a2d56b1b98ecf377.jpg</image:loc>
       <image:title>Panneaux solaires photovoltaïques</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/cat-telephones.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/671fef92a991a43e.jpg</image:loc>
       <image:title>Smartphones et accessoires de téléphonie</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/cat-beaute.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/a7f08f3c956862a3.jpg</image:loc>
       <image:title>Produits de beauté : parfum, soins et maquillage</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/cat-industriel.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/948dd3d47941fd2c.jpg</image:loc>
       <image:title>Groupe électrogène et compresseur d'air industriels</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/cat-transformation.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/d3c7430fb44783a9.jpg</image:loc>
       <image:title>Ligne de production agroalimentaire en usine</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/cat-auto.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/3729d663ca8b500b.jpg</image:loc>
       <image:title>Disques et plaquettes de frein automobiles</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/cat-moto.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/f4d0272a94249096.jpg</image:loc>
       <image:title>Moto routière rouge</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/cat-maison.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/c1c5966fc63b5fe7.jpg</image:loc>
       <image:title>Ustensiles de cuisine en inox</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/fin-douche-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/f5612caa31d1076e.jpg</image:loc>
       <image:title>Colonne de douche noire avec pommeau pluie et douchette</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/fin-douche-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/8ee9d72a3288ca49.jpg</image:loc>
       <image:title>Colonne de douche moderne en finition métal</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/fin-douche-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/ccd7fb68f949718c.jpg</image:loc>
       <image:title>Ensemble de douche avec mitigeur thermostatique</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/fin-douche-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/01522f2b70e4f8b1.jpg</image:loc>
       <image:title>Douchette et flexible inox</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/fin-cabine-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/fcc9e3b43850abf2.jpg</image:loc>
       <image:title>Cabine de douche en verre avec profilés métal</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/fin-cabine-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/bf596070d0dae4ab.jpg</image:loc>
       <image:title>Cabine de douche d'angle en verre trempé</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/fin-cabine-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/14cec5177e9d8415.jpg</image:loc>
       <image:title>Paroi de douche en verre, finition haut de gamme</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/fin-bain-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/d60eb9ef2fab807e.jpg</image:loc>
       <image:title>Baignoire balnéo avec jets hydromassants</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/fin-bain-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/546b94c209e1c40d.jpg</image:loc>
       <image:title>Baignoire balnéo en situation dans une salle de bain</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/fin-bain-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/91df1b447b771e10.jpg</image:loc>
       <image:title>Détail des jets et de la robinetterie de baignoire</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/fin-bain-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/fc6a022f643be58c.jpg</image:loc>
       <image:title>Baignoire de confort, finition brillante</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/fin-lum-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/beadf4ca113765d7.jpg</image:loc>
       <image:title>Luminaire design pour salon ou salle à manger</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/fin-lum-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/fe97b43836924eff.jpg</image:loc>
       <image:title>Suspension décorative, finition métal</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/fin-lum-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/c70b3fd1f2759e4f.jpg</image:loc>
       <image:title>Éclairage LED de salle de bain</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/fin-lum-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/82525921535ab27e.jpg</image:loc>
       <image:title>Luminaire décoratif en situation</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/fin-surface-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/0b1aca4f42fa63f4.jpg</image:loc>
       <image:title>Vasque suspendue en surface solide blanche</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/fin-surface-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/98e44b4e438eccaf.jpg</image:loc>
       <image:title>Plan vasque en surface solide, finition mate</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/fin-surface-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/ed92e577499c2ae8.jpg</image:loc>
       <image:title>Vasque en surface solide sur plan marbré</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-douche-colonne-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/59b784bb357c334d.jpg</image:loc>
       <image:title>Ensemble de douche noir : pommeau pluie, douchette et flexibles</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-douche-colonne-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/15c24776cdb1c3c9.jpg</image:loc>
       <image:title>Mitigeur de douche noir en fonctionnement, eau qui coule</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-douche-colonne-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/09e864f37a307afb.jpg</image:loc>
       <image:title>Colonne de douche digitale avec affichage de la température</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-douche-colonne-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/309f50cfb4c2582e.jpg</image:loc>
       <image:title>Colonne de douche chromée avec pommeau pluie près d'une fenêtre</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-douche-colonne-5.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/1fe5ea5b1cda1370.jpg</image:loc>
       <image:title>Colonne de douche en action, jet pluie</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-douche-mitigeur.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/6e5eb4ad3dce6d4b.jpg</image:loc>
       <image:title>Mitigeur thermostatique sur balance, affichage digital</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-douche-detail.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/d1e0bbca1b125700.jpg</image:loc>
       <image:title>Vue technique d'un mitigeur de douche : cartouche et raccords</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-cabine-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/42e6234ba53a3245.jpg</image:loc>
       <image:title>Cabine de douche d'angle en verre dans une salle de bain en brique</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-cabine-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/195766e5d5ce34d1.jpg</image:loc>
       <image:title>Cabine de douche en verre dépoli avec porte battante</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-cabine-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/8e9f49b73d67b451.jpg</image:loc>
       <image:title>Cabine de douche arrondie en verre avec receveur</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-cabine-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/8898c37e7a45e74b.jpg</image:loc>
       <image:title>Paroi de douche en verre à cadre noir dans une salle de bain carrelée</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-cabine-5.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/79fab0c0bf304089.jpg</image:loc>
       <image:title>Cabine de douche d'angle en verre, intérieur bois sombre</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-cabine-6.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/f4d7643e2ba870bc.jpg</image:loc>
       <image:title>Cabine de douche noire en verre dans une salle de bain claire</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-bain-robinet-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/c411c10265b71a02.jpg</image:loc>
       <image:title>Robinets de baignoire sur pied : finitions or, chrome et noir mat</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-bain-spa-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/e56c71b52bb1ebcf.jpg</image:loc>
       <image:title>Spa de nage intérieur : bassin, jets et sièges hydromassants</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-bain-spa-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/9f15880c93b81de4.jpg</image:loc>
       <image:title>Spa de nage extérieur installé dans un jardin</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-bain-spa-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/0fcb0160cb5c5882.jpg</image:loc>
       <image:title>Spa balnéo : jets et appuie-tête, vue intérieure</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-bain-spa-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/482255444361c454.jpg</image:loc>
       <image:title>Spa de nage vu du dessus : forme et équipements</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-bain-catalogue-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/4068aec52faeefff.jpg</image:loc>
       <image:title>Baignoire îlot ovale en surface solide, finition nervurée</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-bain-catalogue-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/54d6c9f22aa57996.jpg</image:loc>
       <image:title>Baignoire îlot ronde en surface solide blanche</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-lum-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/dd37e3e591cb2eec.jpg</image:loc>
       <image:title>Suspension globe avec cotes : hauteur 180 cm, globe 33 cm</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-lum-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/0270f99aa6cc2789.jpg</image:loc>
       <image:title>Suspensions globe au-dessus d'un lit, ambiance chambre</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-lum-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/89006fee199f7083.jpg</image:loc>
       <image:title>Suspension globe sur tige noire, fond clair</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-lum-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/1ea04ce7493ff286.jpg</image:loc>
       <image:title>Suspension globe allumée dans une chambre aux tons chauds</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-lum-5.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/d0d23905f5ec386e.jpg</image:loc>
       <image:title>Suspension globe dans une chambre aux panneaux bois sombres</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-vasque-miroir.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/a69ec70a9652192f.jpg</image:loc>
       <image:title>Meuble vasque bois avec miroir LED rond et vasque blanche</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-plinthe-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/c3d2c14baa042bde.jpg</image:loc>
       <image:title>Profilé de plinthe LED en aluminium, finitions noir et or</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-plinthe-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/d13d876b2e60125f.jpg</image:loc>
       <image:title>Plinthe LED installée au pied d'un mur, éclairage indirect</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-plinthe-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/8d6ad07486aaa554.jpg</image:loc>
       <image:title>Plinthe en aluminium brossé or, détail de finition</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-plinthe-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/0538b120b7976f38.jpg</image:loc>
       <image:title>Plinthe LED noire et profilé or posés au sol</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-panneau-pierre-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/deec2b4ebb666dd9.jpg</image:loc>
       <image:title>Panneaux muraux effet pierre empilée, trois coloris</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-panneau-pierre-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/761f30a30e1c110f.jpg</image:loc>
       <image:title>Carreaux muraux effet pierre naturelle, tons chauds</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-panneau-pierre-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/e9e505761e002da4.jpg</image:loc>
       <image:title>Carreaux effet pierre : gris anthracite et terracotta</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-panneau-pierre-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/1cfd24c9f59cf51a.jpg</image:loc>
       <image:title>Carreaux muraux effet pierre grise, pose verticale et horizontale</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-surface-cuisine.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/7c6deaded6e9c053.jpg</image:loc>
       <image:title>Plan de travail de cuisine en surface solide, finition marbre</image:title>
     </image:image>
     <video:video>
       <video:thumbnail_loc>https://cizasupply.com/assets/poster-chine-entrepot.jpg</video:thumbnail_loc>
       <video:title>Sur le terrain en Chine — Visite d'un entrepôt partenaire</video:title>
       <video:description>Visite d'un entrepôt partenaire en Chine : les stocks et les colis contrôlés avant expédition vers le Burundi, filmés sur le terrain par CIZA SUPPLY.</video:description>
-      <video:content_loc>https://cizasupply.com/assets/vid-chine-entrepot.mp4</video:content_loc>
+      <video:content_loc>https://cizasupply.com/assets/b920be89db3f327b.mp4</video:content_loc>
       <video:duration>11</video:duration>
     </video:video>
     <video:video>
       <video:thumbnail_loc>https://cizasupply.com/assets/poster-chine-usine.jpg</video:thumbnail_loc>
       <video:title>Sur le terrain en Chine — Visite d'usine, ligne de production</video:title>
       <video:description>Visite d'usine en Chine : la ligne de production d'un fabricant partenaire de CIZA SUPPLY, expliquée sur place.</video:description>
-      <video:content_loc>https://cizasupply.com/assets/vid-chine-usine.mp4</video:content_loc>
+      <video:content_loc>https://cizasupply.com/assets/a84ab8a9b7441b1f.mp4</video:content_loc>
       <video:duration>8</video:duration>
     </video:video>
     <video:video>
       <video:thumbnail_loc>https://cizasupply.com/assets/poster-kit-film.jpg</video:thumbnail_loc>
       <video:title>Le Kit Maison solaire en film</video:title>
       <video:description>Présentation filmée du Kit Maison solaire CIZA SUPPLY : panneaux solaires 650 Wc double verre, onduleur hybride et batteries lithium murales, pour alimenter une maison au Burundi.</video:description>
-      <video:content_loc>https://cizasupply.com/assets/vid-kit-film.mp4</video:content_loc>
+      <video:content_loc>https://cizasupply.com/assets/49b08fe2bacfc8de.mp4</video:content_loc>
       <video:duration>54</video:duration>
     </video:video>
     <video:video>
       <video:thumbnail_loc>https://cizasupply.com/assets/poster-douche.jpg</video:thumbnail_loc>
       <video:title>Colonnes de douche — gamme Finition &amp; confort</video:title>
       <video:description>Colonnes et ensembles de douche de la gamme Finition &amp; confort CIZA SUPPLY : pommeau pluie, douchette et mitigeur, en direct des usines partenaires.</video:description>
-      <video:content_loc>https://cizasupply.com/assets/vid-douche.mp4</video:content_loc>
+      <video:content_loc>https://cizasupply.com/assets/c34cd98bc87c93b5.mp4</video:content_loc>
       <video:duration>29</video:duration>
     </video:video>
     <video:video>
       <video:thumbnail_loc>https://cizasupply.com/assets/poster-colonne.jpg</video:thumbnail_loc>
       <video:title>Colonne de douche en fonctionnement</video:title>
       <video:description>Colonne de douche en action : jet pluie, douchette et réglage de la température — gamme Finition &amp; confort CIZA SUPPLY.</video:description>
-      <video:content_loc>https://cizasupply.com/assets/vid-colonne.mp4</video:content_loc>
+      <video:content_loc>https://cizasupply.com/assets/188dcdd3bf7c9a6f.mp4</video:content_loc>
       <video:duration>36</video:duration>
     </video:video>
     <video:video>
       <video:thumbnail_loc>https://cizasupply.com/assets/poster-meuble.jpg</video:thumbnail_loc>
       <video:title>Meuble de salle de bain — gamme Finition &amp; confort</video:title>
       <video:description>Meuble de salle de bain et vasque de la gamme Finition &amp; confort CIZA SUPPLY, pour une finition de construction soignée.</video:description>
-      <video:content_loc>https://cizasupply.com/assets/vid-meuble.mp4</video:content_loc>
+      <video:content_loc>https://cizasupply.com/assets/3479b870da0b9d18.mp4</video:content_loc>
       <video:duration>8</video:duration>
     </video:video>
     <video:video>
       <video:thumbnail_loc>https://cizasupply.com/assets/poster-baignoire.jpg</video:thumbnail_loc>
       <video:title>Baignoire balnéo — gamme Finition &amp; confort</video:title>
       <video:description>Baignoire balnéo avec jets hydromassants, de la gamme Finition &amp; confort CIZA SUPPLY, pour l'espace bien-être de la maison.</video:description>
-      <video:content_loc>https://cizasupply.com/assets/vid-baignoire.mp4</video:content_loc>
+      <video:content_loc>https://cizasupply.com/assets/f73a003fa61837b6.mp4</video:content_loc>
       <video:duration>26</video:duration>
     </video:video>
     <video:video>
       <video:thumbnail_loc>https://cizasupply.com/assets/poster-baignoire2.jpg</video:thumbnail_loc>
       <video:title>Baignoire îlot en surface solide — gamme Finition &amp; confort</video:title>
       <video:description>Baignoire îlot en surface solide de la gamme Finition &amp; confort CIZA SUPPLY : finition brillante et lignes épurées.</video:description>
-      <video:content_loc>https://cizasupply.com/assets/vid-baignoire2.mp4</video:content_loc>
+      <video:content_loc>https://cizasupply.com/assets/3b0adb8a264fec21.mp4</video:content_loc>
       <video:duration>27</video:duration>
     </video:video>
     <video:video>
       <video:thumbnail_loc>https://cizasupply.com/assets/poster-luminaires.jpg</video:thumbnail_loc>
       <video:title>Luminaires décoratifs — gamme Finition &amp; confort</video:title>
       <video:description>Luminaires et suspensions décoratives de la gamme Finition &amp; confort CIZA SUPPLY, pour salons et salles à manger.</video:description>
-      <video:content_loc>https://cizasupply.com/assets/vid-luminaires.mp4</video:content_loc>
+      <video:content_loc>https://cizasupply.com/assets/3a1df098f9ed176a.mp4</video:content_loc>
       <video:duration>16</video:duration>
     </video:video>
     <video:video>
       <video:thumbnail_loc>https://cizasupply.com/assets/poster-atelier-lum.jpg</video:thumbnail_loc>
       <video:title>Atelier luminaires — fabrication et contrôle qualité</video:title>
       <video:description>Dans l'atelier du fabricant partenaire : assemblage et contrôle des luminaires avant expédition, pour la gamme Finition &amp; confort CIZA SUPPLY.</video:description>
-      <video:content_loc>https://cizasupply.com/assets/vid-atelier-lum.mp4</video:content_loc>
+      <video:content_loc>https://cizasupply.com/assets/9f1d5c238ab12c01.mp4</video:content_loc>
       <video:duration>40</video:duration>
     </video:video>
     <video:video>
       <video:thumbnail_loc>https://cizasupply.com/assets/poster-panneaux.jpg</video:thumbnail_loc>
       <video:title>Panneaux muraux décoratifs — gamme Finition &amp; confort</video:title>
       <video:description>Panneaux muraux décoratifs de la gamme Finition &amp; confort CIZA SUPPLY : effets pierre et finitions pour murs intérieurs.</video:description>
-      <video:content_loc>https://cizasupply.com/assets/vid-panneaux.mp4</video:content_loc>
+      <video:content_loc>https://cizasupply.com/assets/cee38dc2086e0336.mp4</video:content_loc>
       <video:duration>27</video:duration>
     </video:video>
     <video:video>
       <video:thumbnail_loc>https://cizasupply.com/assets/poster-mosaiques.jpg</video:thumbnail_loc>
       <video:title>Mosaïques et carreaux décoratifs — gamme Finition &amp; confort</video:title>
       <video:description>Mosaïques et carreaux décoratifs de la gamme Finition &amp; confort CIZA SUPPLY, pour salles de bain et cuisines.</video:description>
-      <video:content_loc>https://cizasupply.com/assets/vid-mosaiques.mp4</video:content_loc>
+      <video:content_loc>https://cizasupply.com/assets/b0abb67a5eff7452.mp4</video:content_loc>
       <video:duration>18</video:duration>
     </video:video>
     <video:video>
       <video:thumbnail_loc>https://cizasupply.com/assets/poster-plinthe.jpg</video:thumbnail_loc>
       <video:title>Plinthes LED en aluminium — gamme Finition &amp; confort</video:title>
       <video:description>Plinthes LED en aluminium de la gamme Finition &amp; confort CIZA SUPPLY : éclairage indirect au pied des murs.</video:description>
-      <video:content_loc>https://cizasupply.com/assets/vid-plinthe.mp4</video:content_loc>
+      <video:content_loc>https://cizasupply.com/assets/19cae8b12d11e175.mp4</video:content_loc>
       <video:duration>16</video:duration>
     </video:video>
     <video:video>
       <video:thumbnail_loc>https://cizasupply.com/assets/poster-vasques.jpg</video:thumbnail_loc>
       <video:title>Vasques en surface solide — gamme Finition &amp; confort</video:title>
       <video:description>Vasques et plans vasques en surface solide de la gamme Finition &amp; confort CIZA SUPPLY, finition mate ou brillant.</video:description>
-      <video:content_loc>https://cizasupply.com/assets/vid-vasques.mp4</video:content_loc>
+      <video:content_loc>https://cizasupply.com/assets/33c0285a125468fe.mp4</video:content_loc>
       <video:duration>18</video:duration>
     </video:video>
     <lastmod>2026-11-05</lastmod>
@@ -451,144 +445,144 @@
   </url>
   <url>
     <loc>https://cizasupply.com/quincaillerie</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/quincaillerie"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/quincaillerie"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/quincaillerie"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/quincaillerie" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/quincaillerie" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/quincaillerie" />
     <image:image>
-      <image:loc>https://cizasupply.com/assets/poster-quincaillerie.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/8c804c3a4660ef8d.jpg</image:loc>
       <image:title>Quincaillerie complète — arrivages direct usine</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/poster-cable.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/9a06598b69c65720.jpg</image:loc>
       <image:title>Câbles cuivre BV/BVR — quincaillerie</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/poster-vanne.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/d69b385eb6741a5b.jpg</image:loc>
       <image:title>Vannes à bille inox — quincaillerie</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-quin-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/01bc81a1db6bf10a.jpg</image:loc>
       <image:title>Matériel de quincaillerie et outillage</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-quin-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/9812281ef37139be.jpg</image:loc>
       <image:title>Outillage et accessoires de chantier</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-quin-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/cbbef81345d4fdb7.jpg</image:loc>
       <image:title>Visserie, fixation et petit matériel</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-quin-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/d9efaa3bb0521938.jpg</image:loc>
       <image:title>Tuyaux et raccords de plomberie</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-quin-gaine-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/9f14b8be4108cfd9.jpg</image:loc>
       <image:title>Gaine électrique ondulée noire en rouleau, avec tire-fil</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-quin-gaine-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/f2a5d8b9e189307a.jpg</image:loc>
       <image:title>Gaines ondulées blanches et noires pour câblage</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-quin-gaine-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/b04d93f20dc95b9c.jpg</image:loc>
       <image:title>Rouleau de gaine ondulée grise pour installation électrique</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-quin-gaine-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/05b24da4fb907382.jpg</image:loc>
       <image:title>Gaines ondulées colorées : orange, noir et jaune</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-quin-gaine-5.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/034e922ecb8dceda.jpg</image:loc>
       <image:title>Tubes ondulés noirs alignés, vue de détail</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-quin-vanne-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/3cb0726d3d4c403b.jpg</image:loc>
       <image:title>Vannes à bille inox à levier bleu, gamme complète de diamètres</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-quin-vanne-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/6c72f846b2c8cd2c.jpg</image:loc>
       <image:title>Vannes à bille inox deux pièces, filetage mâle</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-quin-vanne-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/a417080b0e12b358.jpg</image:loc>
       <image:title>Détails techniques d'une vanne à bille inox</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-quin-cable-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/90843cb4e92441a1.jpg</image:loc>
       <image:title>Rouleaux de câbles électriques cuivre, couleurs assorties</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-quin-cable-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/7f611959c7df52f0.jpg</image:loc>
       <image:title>Extrémités de câbles cuivre multibrins dénudées</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-quin-cable-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/9baf1574c7889118.jpg</image:loc>
       <image:title>Fils électriques cuivre rouge, jaune et vert-jaune</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-quin-cable-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/bf6ce0d17632197d.jpg</image:loc>
       <image:title>Câble cuivre deux conducteurs, âme multibrins</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-quin-cable-6.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/abe108cb444c52b5.jpg</image:loc>
       <image:title>Câbles électriques colorés aux extrémités cuivre</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-quin-clou-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/574e00db39d85640.jpg</image:loc>
       <image:title>Clous de toiture galvanisés à tête large</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-quin-clou-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/1fb881ad634fdc02.jpg</image:loc>
       <image:title>Clous en acier pour la construction</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-quin-detail-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/f1cf4ad2d44ddb95.jpg</image:loc>
       <image:title>Gaine ondulée avec tire-fil acier sur mesure</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/card-quin-electro.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/46b9d7d27ec37531.jpg</image:loc>
       <image:title>Électricité du bâtiment — carte catalogue quincaillerie</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/card-quin-serrurerie.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/21f56c88e3615a47.jpg</image:loc>
       <image:title>Serrurerie et sécurité — carte catalogue quincaillerie</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/card-quin-ameublement.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/dbc203bfe1da04f8.jpg</image:loc>
       <image:title>Ameublement et rangement — carte catalogue quincaillerie</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/card-quin-peinture.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/5161c78be036c27e.jpg</image:loc>
       <image:title>Peinture et finitions — carte catalogue quincaillerie</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/card-quin-soudure.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/d423995932dcecce.jpg</image:loc>
       <image:title>Soudure et métal — carte catalogue quincaillerie</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/card-quin-epi.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/f4dbdd94345f302b.jpg</image:loc>
       <image:title>Équipement de protection individuelle (EPI) — carte catalogue quincaillerie</image:title>
     </image:image>
     <video:video>
       <video:thumbnail_loc>https://cizasupply.com/assets/poster-quincaillerie.jpg</video:thumbnail_loc>
       <video:title>Quincaillerie complète — arrivages direct usine</video:title>
       <video:description>Outillage, visserie, fixation et petit matériel de chantier : les arrivages de quincaillerie direct usine de CIZA SUPPLY pour le Burundi.</video:description>
-      <video:content_loc>https://cizasupply.com/assets/vid-quincaillerie.mp4</video:content_loc>
+      <video:content_loc>https://cizasupply.com/assets/8b6de66f3151efec.mp4</video:content_loc>
       <video:duration>26</video:duration>
     </video:video>
     <video:video>
       <video:thumbnail_loc>https://cizasupply.com/assets/poster-cable.jpg</video:thumbnail_loc>
       <video:title>Câbles cuivre BV/BVR — quincaillerie</video:title>
       <video:description>Câbles électriques en cuivre BV/BVR 450/750 V, âme multibrins, en rouleaux : gamme quincaillerie CIZA SUPPLY, direct usine.</video:description>
-      <video:content_loc>https://cizasupply.com/assets/vid-cable.mp4</video:content_loc>
+      <video:content_loc>https://cizasupply.com/assets/fbba162530939045.mp4</video:content_loc>
       <video:duration>31</video:duration>
     </video:video>
     <video:video>
       <video:thumbnail_loc>https://cizasupply.com/assets/poster-vanne.jpg</video:thumbnail_loc>
       <video:title>Vannes à bille inox — quincaillerie</video:title>
       <video:description>Vannes à bille en inox à levier bleu, gamme complète de diamètres : plomberie et sanitaire, gamme quincaillerie CIZA SUPPLY.</video:description>
-      <video:content_loc>https://cizasupply.com/assets/vid-vanne.mp4</video:content_loc>
+      <video:content_loc>https://cizasupply.com/assets/2ed3b895ebbc29b2.mp4</video:content_loc>
       <video:duration>31</video:duration>
     </video:video>
     <lastmod>2026-11-05</lastmod>
@@ -597,81 +591,81 @@
   </url>
   <url>
     <loc>https://cizasupply.com/energie-solaire</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/energie-solaire"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/energie-solaire"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/energie-solaire"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/energie-solaire" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/energie-solaire" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/energie-solaire" />
     <image:image>
-      <image:loc>https://cizasupply.com/assets/poster-match.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/ad37799034814a2b.jpg</image:loc>
       <image:title>Film « Le match » — le Kit Maison solaire garde la maison allumée pendant le match</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/poster-energie.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/1d77363cb2a1ef07.jpg</image:loc>
       <image:title>Énergie solaire — panneaux, kits et batteries direct usine</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-ener-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/50a01cb807e08fa6.jpg</image:loc>
       <image:title>Panneau solaire 650 Wc en production</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-ener-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/7cf7ee409e69c403.jpg</image:loc>
       <image:title>Onduleur hybride solaire</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-ener-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/86ce53a49d4dda8e.jpg</image:loc>
       <image:title>Batterie lithium murale de stockage</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-ener-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/6beb294ba8035b4e.jpg</image:loc>
       <image:title>Détail d'un panneau solaire double verre</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-ener-kit-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/39162d20334587c1.jpg</image:loc>
       <image:title>Station solaire 100 W avec panneau : recharge USB et éclairage</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-ener-kit-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/6ffc95192e48c4e7.jpg</image:loc>
       <image:title>Station solaire 80 W pour l'éclairage de toute la maison</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-ener-kit-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/1e9c1275a3a70241.jpg</image:loc>
       <image:title>Kit solaire complet : ventilateur, panneau, ampoules LED, radio et station</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-ener-kit-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/a0efbaef5e6c6416.jpg</image:loc>
       <image:title>Système d'éclairage solaire : ventilateur, TV 32 pouces et ampoules LED</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-ener-tv.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/1c8c452b62419996.jpg</image:loc>
       <image:title>Télévision LED solaire 32 pouces avec tuner intégré</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-ener-radio.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/b911830ef8f68ceb.jpg</image:loc>
       <image:title>Radio solaire portable avec lampe LED</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-ener-ampoules.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/99addba160c80568.jpg</image:loc>
       <image:title>Ampoules LED 5 W pour kit solaire, lot de 4</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/new-ener-panneau-100.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/3391f08592fb0ce6.jpg</image:loc>
       <image:title>Panneau solaire monocristallin 100 W, schéma technique</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/card-ener-eclairage.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/90400c4907ddda26.jpg</image:loc>
       <image:title>Éclairage LED — carte catalogue énergie solaire</image:title>
     </image:image>
     <video:video>
       <video:thumbnail_loc>https://cizasupply.com/assets/poster-match.jpg</video:thumbnail_loc>
       <video:title>Film « Le match » — le Kit Maison solaire garde la maison allumée pendant le match</video:title>
       <video:description>Film CIZA SUPPLY : le soir du match, la coupure de courant éteint le quartier — la maison équipée du Kit Maison solaire reste allumée et la fête continue.</video:description>
-      <video:content_loc>https://cizasupply.com/assets/vid-match.mp4</video:content_loc>
+      <video:content_loc>https://cizasupply.com/assets/382fb760f42ef342.mp4</video:content_loc>
       <video:duration>38</video:duration>
     </video:video>
     <video:video>
       <video:thumbnail_loc>https://cizasupply.com/assets/poster-energie.jpg</video:thumbnail_loc>
       <video:title>Énergie solaire — panneaux, kits et batteries direct usine</video:title>
       <video:description>Panneaux solaires, kits d'éclairage, onduleurs hybrides et batteries lithium : l'énergie renouvelable direct usine de CIZA SUPPLY pour le Burundi.</video:description>
-      <video:content_loc>https://cizasupply.com/assets/vid-energie.mp4</video:content_loc>
+      <video:content_loc>https://cizasupply.com/assets/75682cc0dace8798.mp4</video:content_loc>
       <video:duration>19</video:duration>
     </video:video>
     <lastmod>2026-11-05</lastmod>
@@ -680,27 +674,27 @@
   </url>
   <url>
     <loc>https://cizasupply.com/telephones-accessoires</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/telephones-accessoires"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/telephones-accessoires"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/telephones-accessoires"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/telephones-accessoires" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/telephones-accessoires" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/telephones-accessoires" />
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-tel-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/ded8ca4df5b5e7b5.jpg</image:loc>
       <image:title>Téléphones et accessoires en stock</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-tel-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/644bd1439fda519e.jpg</image:loc>
       <image:title>Chargeurs, câbles et power banks</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-tel-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/9c3b11e60cf925d9.jpg</image:loc>
       <image:title>Coques et protections de téléphones</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-tel-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/2568e68ddc572f78.jpg</image:loc>
       <image:title>Écouteurs et accessoires audio</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/card-tel-supports.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/61e6ea8c083cbf76.jpg</image:loc>
       <image:title>Supports et accessoires pour téléphones — carte catalogue téléphones</image:title>
     </image:image>
     <lastmod>2026-11-05</lastmod>
@@ -709,27 +703,27 @@
   </url>
   <url>
     <loc>https://cizasupply.com/beaute-mode</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/beaute-mode"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/beaute-mode"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/beaute-mode"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/beaute-mode" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/beaute-mode" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/beaute-mode" />
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-beaute-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/b0d9ee5f652a5850.jpg</image:loc>
       <image:title>Soins et cosmétiques pour boutiques</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-beaute-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/a8ef4dbf155fe7cd.jpg</image:loc>
       <image:title>Produits capillaires et tissages</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-beaute-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/9371fa83eefb52f9.jpg</image:loc>
       <image:title>Mode et accessoires</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-beaute-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/b0fe6bab1e48fa37.jpg</image:loc>
       <image:title>Assortiment beauté pour revendeurs</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/card-beaute-bijoux.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/0c8799802bd94d3e.jpg</image:loc>
       <image:title>Bijoux et accessoires — carte catalogue beauté et mode</image:title>
     </image:image>
     <lastmod>2026-11-05</lastmod>
@@ -738,27 +732,27 @@
   </url>
   <url>
     <loc>https://cizasupply.com/equipement-industriel</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/equipement-industriel"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/equipement-industriel"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/equipement-industriel"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/equipement-industriel" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/equipement-industriel" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/equipement-industriel" />
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-indus-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/a67365ea6409f26b.jpg</image:loc>
       <image:title>Équipement industriel et machines d'atelier</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-indus-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/0e3581bc80f5f628.jpg</image:loc>
       <image:title>Machines de chantier et de production</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-indus-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/bc4fd687cd446252.jpg</image:loc>
       <image:title>Levage et manutention</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-indus-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/2e7f048760f42a8d.jpg</image:loc>
       <image:title>Mesure et contrôle industriel</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/card-indus-mesure.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/0f234240aba54e81.jpg</image:loc>
       <image:title>Mesure et contrôle — carte catalogue équipement industriel</image:title>
     </image:image>
     <lastmod>2026-11-05</lastmod>
@@ -767,31 +761,31 @@
   </url>
   <url>
     <loc>https://cizasupply.com/usines-transformation</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/usines-transformation"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/usines-transformation"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/usines-transformation"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/usines-transformation" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/usines-transformation" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/usines-transformation" />
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-transfo-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/b829f3501d4482e1.jpg</image:loc>
       <image:title>Ligne de transformation agroalimentaire</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-transfo-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/f4136785a02bad87.jpg</image:loc>
       <image:title>Machines de conditionnement et d'embouteillage</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-transfo-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/28ba19bc55b5fc8b.jpg</image:loc>
       <image:title>Équipement d'usine de transformation</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-transfo-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/8dc045f37cefce93.jpg</image:loc>
       <image:title>Unité de production complète</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/card-usine-huilerie.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/27153c078610e12a.jpg</image:loc>
       <image:title>Huilerie et transformation — carte catalogue usines de transformation</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/card-usine-labo.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/776b5865c6263d6c.jpg</image:loc>
       <image:title>Équipement de laboratoire — carte catalogue usines de transformation</image:title>
     </image:image>
     <lastmod>2026-11-05</lastmod>
@@ -800,35 +794,35 @@
   </url>
   <url>
     <loc>https://cizasupply.com/pieces-automobiles</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/pieces-automobiles"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/pieces-automobiles"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/pieces-automobiles"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/pieces-automobiles" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/pieces-automobiles" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/pieces-automobiles" />
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-auto-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/598b59c413ed95fb.jpg</image:loc>
       <image:title>Pièces automobiles : freinage et entretien</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-auto-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/a32f841c8740520e.jpg</image:loc>
       <image:title>Pièces moteur et transmission</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-auto-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/386e55776bb4a220.jpg</image:loc>
       <image:title>Filtration et pièces d'usure</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-auto-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/cad24910877edaf3.jpg</image:loc>
       <image:title>Suspension et direction</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/card-auto-pneus.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/55a25daf500ffa08.jpg</image:loc>
       <image:title>Pneus automobiles — carte catalogue pièces automobiles</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/card-auto-elec.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/015a4e49dfd91b15.jpg</image:loc>
       <image:title>Électricité et batteries automobiles — carte catalogue pièces automobiles</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/card-auto-accessoires.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/e840659d30d5d8df.jpg</image:loc>
       <image:title>Accessoires automobiles — carte catalogue pièces automobiles</image:title>
     </image:image>
     <lastmod>2026-11-05</lastmod>
@@ -837,23 +831,23 @@
   </url>
   <url>
     <loc>https://cizasupply.com/moto</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/moto"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/moto"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/moto"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/moto" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/moto" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/moto" />
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-moto-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/9472ed7ca23a41c4.jpg</image:loc>
       <image:title>Motos 100 à 250 cm³</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-moto-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/b37da0238f3fe6a7.jpg</image:loc>
       <image:title>Tricycle cargo pour le transport de charges</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-moto-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/540982fa804f4057.jpg</image:loc>
       <image:title>Moteurs et pièces détachées moto</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-moto-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/0398a6415d125be5.jpg</image:loc>
       <image:title>Moto adaptée aux routes d'Afrique de l'Est</image:title>
     </image:image>
     <lastmod>2026-11-05</lastmod>
@@ -862,27 +856,27 @@
   </url>
   <url>
     <loc>https://cizasupply.com/maison-divers</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/maison-divers"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/maison-divers"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/maison-divers"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/maison-divers" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/maison-divers" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/maison-divers" />
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-maison-1.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/f2fd3322313c7196.jpg</image:loc>
       <image:title>Articles de cuisine et de maison</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-maison-2.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/fd4e66595e085168.jpg</image:loc>
       <image:title>Literie et linge de maison</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-maison-3.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/b823a55b0232a72a.jpg</image:loc>
       <image:title>Jouets et articles enfants</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/gal-maison-4.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/cf6d26947322f15c.jpg</image:loc>
       <image:title>Papeterie, bureau et entretien</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://cizasupply.com/assets/card-maison-entretien.jpg</image:loc>
+      <image:loc>https://cizasupply.com/assets/71dbaedac22965c5.jpg</image:loc>
       <image:title>Entretien de la maison — carte catalogue maison et divers</image:title>
     </image:image>
     <lastmod>2026-11-05</lastmod>
