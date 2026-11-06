@@ -1108,25 +1108,54 @@ gtag('config', 'G-JFP2NNX9DX');
   .promo-pdfline a{color:var(--gold-2);font-weight:700;text-decoration:none;border-bottom:1.5px solid rgba(232,201,92,.5)}
   .promo-pdfline a:hover{color:#fff;border-bottom-color:#fff}
 
-  /* ---------- Taux de change (bandeau discret) ---------- */
-  .fx{padding:20px 0 2px}
-  .fx-band{
-    display:flex;flex-wrap:wrap;align-items:center;gap:6px 20px;
-    background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);
-    padding:11px 18px;
+  /* ---------- Taux de change LIVE (bandeau fin, haut de page) ----------
+     Bandeau utilitaire placé sous l'en-tête, au-dessus du hero : une
+     seule ligne fine sur desktop, retour à la ligne propre sur mobile
+     (jamais de défilement horizontal). Fond bleu marine légèrement plus
+     clair que l'en-tête et le hero pour rester discret mais distinct.
+     Les taux sont récupérés en direct à chaque visite (voir le script
+     autonome « Taux de change en direct » juste sous le bandeau) ; le
+     point vert signale le direct, le point ambre les taux indicatifs
+     de repli. */
+  .fx-strip{
+    background:var(--navy-3);color:#d6dde8;
+    border-bottom:1px solid rgba(212,175,55,.30);
   }
-  .fx-label{
-    font-family:"IBM Plex Mono",monospace;font-size:.72rem;font-weight:600;
-    letter-spacing:.16em;text-transform:uppercase;color:#8a6d1f;
+  .fx-strip-in{
+    display:flex;align-items:center;flex-wrap:wrap;
+    gap:5px 12px;padding:7px 0;min-height:38px;
   }
-  .fx-rate{font-family:"IBM Plex Mono",monospace;font-size:.88rem;font-weight:600;color:var(--ink)}
-  .fx-date{font-size:.8rem;color:var(--muted);font-weight:600}
-  .fx-note{flex-basis:100%;font-size:.8rem;color:var(--muted)}
-  @media (prefers-color-scheme: dark){
-    .fx-band{background:#0c2242;border-color:rgba(255,255,255,.12)}
-    .fx-label{color:var(--gold-2)}
-    .fx-rate{color:#fff}
-    .fx-date,.fx-note{color:#a7b3c6}
+  .fx-status{
+    display:inline-flex;align-items:center;gap:7px;flex:none;
+    font-family:"IBM Plex Mono",monospace;font-size:.68rem;font-weight:600;
+    letter-spacing:.15em;text-transform:uppercase;color:var(--gold-2);
+  }
+  .fx-dot{
+    width:7px;height:7px;border-radius:50%;flex:none;
+    background:#e8a33d;box-shadow:0 0 0 3px rgba(232,163,61,.16);
+  }
+  .fx-dot.is-live{background:#35d07f;box-shadow:0 0 0 3px rgba(53,208,127,.16);animation:fx-pulse 2.4s ease-in-out infinite}
+  @keyframes fx-pulse{0%,100%{box-shadow:0 0 0 3px rgba(53,208,127,.16)}50%{box-shadow:0 0 0 5px rgba(53,208,127,.07)}}
+  @media (prefers-reduced-motion: reduce){.fx-dot.is-live{animation:none}}
+  .fx-base{
+    font-family:"IBM Plex Mono",monospace;font-size:.8rem;font-weight:500;color:#aeb9c9;white-space:nowrap;
+  }
+  .fx-pair{
+    font-family:"IBM Plex Mono",monospace;font-size:.82rem;font-weight:500;
+    color:#aeb9c9;white-space:nowrap;
+  }
+  .fx-pair b{font-weight:600;color:#fff}
+  .fx-div{width:1px;height:14px;background:rgba(255,255,255,.20);flex:none}
+  .fx-meta{
+    margin-left:auto;font-size:.74rem;font-weight:600;color:#aeb9c9;white-space:nowrap;
+  }
+  .fx-note-inline{font-size:.74rem;color:#8fa0b8}
+  @media (max-width:900px){.fx-note-inline{display:none}}
+  @media (max-width:640px){
+    .fx-strip-in{gap:4px 9px;padding:7px 0 8px}
+    .fx-status{font-size:.64rem;letter-spacing:.12em}
+    .fx-base,.fx-pair{font-size:.76rem}
+    .fx-meta{margin-left:0;flex-basis:100%;font-size:.7rem;white-space:normal}
   }
 
   /* ---------- Partenariat ---------- */
@@ -1278,6 +1307,141 @@ gtag('config', 'G-JFP2NNX9DX');
   </nav>
 </header>
 
+<!-- ======================= TAUX DE CHANGE EN DIRECT =======================
+     Bandeau fin en haut de page (sous l'en-tête, au-dessus du hero).
+     Les taux sont récupérés en direct à chaque visite depuis
+     ExchangeRate-API (open.er-api.com, sans clé) par le script autonome
+     juste sous ce bandeau, qui met aussi à jour la date et l'heure
+     affichées. Les valeurs ci-dessous sont les derniers taux connus
+     (5 novembre 2026) : elles restent affichées, avec la mention « taux
+     indicatifs », si l'API ne répond pas. Le taux retenu pour une
+     commande est toujours celui confirmé dans le devis. -->
+<div class="fx-strip" id="taux-change" role="region" aria-label="Taux de change en direct / Live exchange rates" title="Taux du marché à titre indicatif : le taux retenu pour votre commande est celui confirmé dans votre devis.">
+  <div class="wrap fx-strip-in">
+    <span class="fx-status"><span class="fx-dot" id="fx-dot" aria-hidden="true"></span><span id="fx-status-label">Taux indicatifs</span></span>
+    <span class="fx-base">1 USD =</span>
+    <span class="fx-pair"><b id="fx-cny">6,6854</b> CNY</span>
+    <span class="fx-div" aria-hidden="true"></span>
+    <span class="fx-pair"><b id="fx-bif">3 000,95</b> BIF</span>
+    <span class="fx-div" aria-hidden="true"></span>
+    <span class="fx-pair"><b id="fx-eur">0,8899</b> EUR</span>
+    <span class="fx-note-inline" id="fx-note">Taux indicatif — confirmé au devis</span>
+    <span class="fx-meta" id="fx-updated">Derniers taux connus · 5 nov. 2026 · ExchangeRate-API</span>
+  </div>
+</div>
+<script>
+(function(){
+  "use strict";
+  /* ================= Taux de change en direct (ExchangeRate-API) =================
+     Script AUTONOME, placé juste sous le bandeau : il démarre dès que le
+     bandeau existe dans la page, sans attendre le gros script principal
+     (vidéos, galeries, dictionnaires) — auparavant la récupération était
+     enfouie à la fin de ce script et les deux appels partaient l'un après
+     l'autre avec 8 s de délai chacun, si bien que le bandeau restait sur
+     les taux de repli pendant de longues secondes (ou indéfiniment si le
+     script principal tardait). Désormais les deux endpoints partent EN
+     PARALLÈLE et la première réponse valide gagne ; un second essai a
+     lieu 5 s plus tard si les deux échouent. Si rien ne répond, on garde
+     les derniers taux connus (5 novembre 2026) et le bandeau affiche
+     « taux indicatifs » avec un point ambre ; en direct, point vert et
+     mention « En direct » + date et heure de mise à jour de l'API.
+     renderFx est exposée en global : le sélecteur de langue du script
+     principal la rappelle pour réafficher le bandeau dans la langue
+     choisie (la langue courante se lit sur <html lang="…">). */
+  var FX_FALLBACK = { CNY: 6.6854, BIF: 3000.95, EUR: 0.8899 };
+  var FX_FALLBACK_DATE = new Date(2026, 10, 5);
+  var fxState = { live: false, rates: FX_FALLBACK, updated: null };
+  var FX_TXT = {
+    fr: { live: "En direct", fallback: "Taux indicatifs", updated: "Mis à jour le ", lastKnown: "Derniers taux connus · ", note: "Taux indicatif — confirmé au devis", source: " · ExchangeRate-API" },
+    en: { live: "Live", fallback: "Indicative rates", updated: "Updated ", lastKnown: "Last known rates · ", note: "Indicative rate — confirmed in your quote", source: " · ExchangeRate-API" }
+  };
+  function fxLang(){
+    return (document.documentElement.getAttribute("lang") || "fr").toLowerCase().indexOf("en") === 0 ? "en" : "fr";
+  }
+  function fxFmt(value, decimals){
+    try {
+      return new Intl.NumberFormat(fxLang() === "en" ? "en-US" : "fr-FR", {
+        minimumFractionDigits: decimals, maximumFractionDigits: decimals
+      }).format(value);
+    } catch(e){
+      return String(value);
+    }
+  }
+  window.renderFx = function(){
+    var lang = fxLang();
+    var t = FX_TXT[lang] || FX_TXT.fr;
+    var dot = document.getElementById("fx-dot");
+    var label = document.getElementById("fx-status-label");
+    var cny = document.getElementById("fx-cny");
+    var bif = document.getElementById("fx-bif");
+    var eur = document.getElementById("fx-eur");
+    var meta = document.getElementById("fx-updated");
+    var note = document.getElementById("fx-note");
+    if(!cny || !bif || !eur) return;
+    cny.textContent = fxFmt(fxState.rates.CNY, 4);
+    bif.textContent = fxFmt(fxState.rates.BIF, 2);
+    eur.textContent = fxFmt(fxState.rates.EUR, 4);
+    if(dot) dot.classList.toggle("is-live", fxState.live);
+    if(label) label.textContent = fxState.live ? t.live : t.fallback;
+    if(note) note.textContent = t.note;
+    if(meta){
+      var when = fxState.updated || FX_FALLBACK_DATE;
+      var loc = lang === "en" ? "en-US" : "fr-FR";
+      var ds = "";
+      try {
+        ds = new Intl.DateTimeFormat(loc, { day: "numeric", month: "short", year: "numeric" }).format(when);
+        if(fxState.live){
+          ds += " · " + new Intl.DateTimeFormat(loc, { hour: "2-digit", minute: "2-digit" }).format(when);
+        }
+      } catch(e){ ds = when.toLocaleDateString(); }
+      meta.textContent = (fxState.live ? t.updated + ds : t.lastKnown + ds) + t.source;
+    }
+  };
+  function fxFetch(url){
+    var ctrl = ("AbortController" in window) ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function(){ ctrl.abort(); }, 6000) : null;
+    function done(){ if(timer) clearTimeout(timer); }
+    return fetch(url, ctrl ? { signal: ctrl.signal, cache: "no-store" } : { cache: "no-store" }).then(function(r){
+      done();
+      if(!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    }, function(err){ done(); throw err; });
+  }
+  function fxApply(data){
+    var rates = data && data.rates;
+    if(!rates || !(rates.CNY > 0) || !(rates.BIF > 0) || !(rates.EUR > 0)) throw new Error("bad payload");
+    fxState.rates = { CNY: rates.CNY, BIF: rates.BIF, EUR: rates.EUR };
+    /* open.er-api.com : time_last_update_utc (chaîne) ; endpoint v4 :
+       time_last_updated (secondes Unix). */
+    var d = null;
+    if(data.time_last_update_utc) d = new Date(data.time_last_update_utc);
+    else if(data.time_last_updated) d = new Date(data.time_last_updated * 1000);
+    fxState.updated = (d && !isNaN(d.getTime())) ? d : new Date();
+    fxState.live = true;
+    window.renderFx();
+  }
+  function fxLoad(){
+    if(fxState.live || !window.fetch) return;
+    var settled = false;
+    function win(data){ if(!settled){ settled = true; fxApply(data); } }
+    function lose(){
+      if(settled) return;
+      lose.count = (lose.count || 0) + 1;
+      if(lose.count >= 2) settled = true;
+    }
+    fxFetch("https://open.er-api.com/v6/latest/USD").then(win, lose);
+    fxFetch("https://api.exchangerate-api.com/v4/latest/USD").then(win, lose);
+  }
+  window.renderFx();
+  fxLoad();
+  /* Second essai unique si le premier tour n'a rien donné (coupure
+     réseau passagère) ; ensuite le bandeau reste sur les taux connus. */
+  setTimeout(function(){
+    if(!fxState.live){ fxLoad(); if(!fxState.live) window.renderFx(); }
+  }, 5000);
+})();
+</script>
+
 <!-- ======================= HERO ======================= -->
 <section class="hero" id="haut">
   <div class="wrap hero-grid">
@@ -1352,24 +1516,6 @@ gtag('config', 'G-JFP2NNX9DX');
         <p class="promo-pdfline"><a href="assets/f328526adb221962.pdf" download="fiche-technique-kit-maison-solaire.pdf" data-i18n="promo.pdf">Fiche technique v3 (PDF)</a></p>
       </div>
       <div class="promo-media" data-promo-media><img src="assets/820dfc687756efb1.jpg" alt="Panneau solaire 650 Wc du Kit Maison solaire CIZA SUPPLY, tenu en usine" data-alt-en="650 Wp solar panel from the CIZA SUPPLY Solar Home Kit, held at the factory" loading="lazy" /><span class="promo-cap"><b data-i18n="promo.media">Kit Maison solaire :</b> <span data-i18n="promo.media2">6 × 650 Wc + onduleur hybride 3 000 W + 2 × 5,12 kWh</span></span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= TAUX DE CHANGE =======================
-     Bandeau discret : taux réels récupérés auprès de l'API gratuite
-     sans clé ExchangeRate-API (open.er-api.com) au moment de la
-     mise à jour du site, affichés avec leur date. Taux indicatifs :
-     le taux retenu pour une commande est celui confirmé au devis. -->
-<section class="fx" id="taux-change" aria-label="Taux de change indicatifs / Indicative exchange rates">
-  <div class="wrap">
-    <div class="fx-band">
-      <span class="fx-label" data-i18n="fx.label">Taux de change indicatifs</span>
-      <span class="fx-rate" data-i18n="fx.r1">1 USD = 6,6854 CNY</span>
-      <span class="fx-rate" data-i18n="fx.r2">1 USD = 3 000,95 BIF</span>
-      <span class="fx-rate" data-i18n="fx.r3">1 USD = 0,8899 EUR</span>
-      <span class="fx-date" data-i18n="fx.date">Mis à jour le 5 novembre 2026 · Source : ExchangeRate-API</span>
-      <span class="fx-note" data-i18n="fx.note">Taux du marché à titre indicatif : le taux retenu pour votre commande est celui confirmé dans votre devis.</span>
     </div>
   </div>
 </section>
@@ -3602,11 +3748,17 @@ gtag('config', 'G-JFP2NNX9DX');
     var mb = document.getElementById("menu-btn");
     if(mb) mb.setAttribute("aria-label", mb.getAttribute("aria-expanded") === "true" ? d["ui.closeMenu"] : d["ui.menu"]);
     document.documentElement.setAttribute("lang", lang);
+    if(typeof renderFx === "function") renderFx();
   }
 
   document.querySelectorAll("[data-lang-btn]").forEach(function(b){
     b.addEventListener("click", function(){ setLang(b.getAttribute("data-lang-btn")); });
   });
+
+  /* Taux de change en direct : voir le script autonome juste sous le
+     bandeau #taux-change (en haut de page). Il expose renderFx() en
+     global ; setLang() ci-dessus la rappelle à chaque changement de
+     langue. */
 
   /* ================= Mobile menu ================= */
   var topbarEl = document.querySelector(".topbar");
