@@ -84,6 +84,18 @@ gtag('config', 'G-JFP2NNX9DX');
         "addressRegion": "Province Bujumbura",
         "addressCountry": "BI"
       },
+      "location": [
+        {
+          "@type": "Place",
+          "name": "CIZA SUPPLY — Bureau Chine, Shanghai",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "No. 80, Xiujiang Road, Zhujing Town, Jinshan District",
+            "addressLocality": "Shanghai",
+            "addressCountry": "CN"
+          }
+        }
+      ],
       "areaServed": [
         { "@type": "Country", "name": "Burundi" },
         { "@type": "Country", "name": "Kenya" },
@@ -1018,6 +1030,29 @@ gtag('config', 'G-JFP2NNX9DX');
   }
   .reg-line{margin-top:16px;font-family:"IBM Plex Mono",monospace;font-size:.8rem;letter-spacing:.06em;color:var(--muted)}
   @media (prefers-color-scheme: dark){.reg-line{color:#a7b3c6}}
+  /* ---------- Deuxième bureau (Chine — Shanghai) ---------- */
+  .office-china{margin-top:20px;padding-top:18px;border-top:1px solid var(--card-border)}
+  .office-china .addr{margin-bottom:6px}
+  .office-china .addr-sub{margin-bottom:16px}
+  .contact .office .office-china{border-top:1px solid var(--line-dark)}
+  .contact .office .office-china h3{margin-top:6px}
+  .office-map-link{margin-top:14px}
+  @media (prefers-color-scheme: dark){.office-china{border-color:rgba(255,255,255,.14)}}
+  /* ---------- Adresses au pied de page ---------- */
+  .foot-addresses{
+    display:grid;grid-template-columns:1fr 1fr;gap:18px 36px;
+    padding-bottom:18px;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,.12);
+  }
+  @media (max-width:620px){.foot-addresses{grid-template-columns:1fr}}
+  .foot-addr .fa-k{
+    display:block;font-family:"IBM Plex Mono",monospace;font-size:.76rem;font-weight:600;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;
+  }
+  .foot-addr .fa-v{color:#c9d4e4;line-height:1.5}
+  .foot-addr a.fa-map{
+    display:inline-block;margin-top:7px;color:#c9d4e4;font-weight:700;font-size:.88rem;
+  }
+  .foot-addr a.fa-map:hover{color:var(--gold-2)}
 
   /* ---------- Formulaire de devis ---------- */
   .qform-sec{background:var(--navy);color:#fff;padding:76px 0 84px;margin-top:74px}
@@ -2177,6 +2212,15 @@ gtag('config', 'G-JFP2NNX9DX');
             <a class="btn btn-navy" href="https://www.google.com/maps/dir/?api=1&destination=CIZA%20SUPPLY%20%E2%80%94%20Bureau%20de%20Bujumbura%2C%206%C3%A8me%20Avenue%2C%20Quartier%20Buhomba%2C%20Zone%20Mutimbuzi%2C%20Commune%20Ntahangwa%2C%20Burundi" target="_blank" rel="noopener" data-i18n="ofc.dir">Itinéraire</a>
             <a class="btn btn-outline-navy" href="https://www.google.com/maps/search/?api=1&query=CIZA%20SUPPLY%20%E2%80%94%20Bureau%20de%20Bujumbura%2C%206%C3%A8me%20Avenue%2C%20Quartier%20Buhomba%2C%20Zone%20Mutimbuzi%2C%20Commune%20Ntahangwa%2C%20Burundi" target="_blank" rel="noopener" data-i18n="ofc.open">Ouvrir dans Google Maps</a>
           </div>
+          <div class="office-china">
+            <p class="mono" style="color:var(--gold);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;margin:0 0 6px" data-i18n="ofc.kChina">Bureau Chine — Shanghai</p>
+            <p class="addr">No. 80, Xiujiang Road, Zhujing Town, Jinshan District, Shanghai, China</p>
+            <p class="addr-sub" data-i18n="ofc.subChina">Sourcing, contrôle qualité et coordination avec les usines partenaires, au plus près de la production.</p>
+            <div class="office-actions">
+              <a class="btn btn-navy" href="https://www.google.com/maps/dir/?api=1&destination=No.%2080%2C%20Xiujiang%20Road%2C%20Zhujing%20Town%2C%20Jinshan%20District%2C%20Shanghai%2C%20China" target="_blank" rel="noopener" data-i18n="ofc.dir">Itinéraire</a>
+              <a class="btn btn-outline-navy" href="https://www.google.com/maps/search/?api=1&query=No.%2080%2C%20Xiujiang%20Road%2C%20Zhujing%20Town%2C%20Jinshan%20District%2C%20Shanghai%2C%20China" target="_blank" rel="noopener" data-i18n="ofc.openChina">Ouvrir Shanghai dans Google Maps</a>
+            </div>
+          </div>
           <p class="reg-line">Ciza Group SURL — RC 0082870/26 — NIF 4003446905</p>
         </div>
       </div>
@@ -2458,6 +2502,15 @@ gtag('config', 'G-JFP2NNX9DX');
         <div class="kit-ctas">
           <a class="btn btn-gold wa" data-wa="rdv" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20prendre%20rendez-vous%20au%20bureau%20de%20Bujumbura." target="_blank" rel="noopener" data-i18n="ct.rdv">Prendre rendez-vous</a>
         </div>
+        <div class="office-china">
+          <p class="mono" data-i18n="ct.officeChinaK">Bureau Chine</p>
+          <h3 data-i18n="ct.officeChinaH">Bureau Chine — Shanghai</h3>
+          <p data-i18n="ct.officeChinaP">Notre bureau de sourcing et de contrôle, au plus près des usines partenaires.</p>
+          <p><span class="mono" style="font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)" data-i18n="ofc.kChina">Bureau Chine — Shanghai</span><br /><span>No. 80, Xiujiang Road, Zhujing Town, Jinshan District, Shanghai, China</span></p>
+          <div class="kit-ctas">
+            <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=No.%2080%2C%20Xiujiang%20Road%2C%20Zhujing%20Town%2C%20Jinshan%20District%2C%20Shanghai%2C%20China" target="_blank" rel="noopener" data-i18n="ofc.openChina">Ouvrir Shanghai dans Google Maps</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -2484,6 +2537,18 @@ gtag('config', 'G-JFP2NNX9DX');
       <a href="#mentions-legales" data-open-page="pg-legal" data-i18n="foot.legal">Mentions légales</a>
       <a href="assets/1dda5f9ffde99cf3.bin" data-i18n="foot.sitemap">Plan du site</a>
     </nav>
+    <div class="foot-addresses">
+      <div class="foot-addr">
+        <span class="fa-k" data-i18n="foot.addrBiK">Bureau Burundi — Bujumbura</span>
+        <span class="fa-v" data-i18n="ofc.addr">6ème Avenue, Quartier Buhomba — Zone Mutimbuzi, Commune Ntahangwa, Province Bujumbura, Burundi</span>
+        <br /><a class="fa-map" href="https://www.google.com/maps/search/?api=1&query=CIZA%20SUPPLY%20%E2%80%94%20Bureau%20de%20Bujumbura%2C%206%C3%A8me%20Avenue%2C%20Quartier%20Buhomba%2C%20Zone%20Mutimbuzi%2C%20Commune%20Ntahangwa%2C%20Burundi" target="_blank" rel="noopener" data-i18n="ofc.open">Ouvrir dans Google Maps</a>
+      </div>
+      <div class="foot-addr">
+        <span class="fa-k" data-i18n="foot.addrCnK">Bureau Chine — Shanghai</span>
+        <span class="fa-v">No. 80, Xiujiang Road, Zhujing Town, Jinshan District, Shanghai, China</span>
+        <br /><a class="fa-map" href="https://www.google.com/maps/search/?api=1&query=No.%2080%2C%20Xiujiang%20Road%2C%20Zhujing%20Town%2C%20Jinshan%20District%2C%20Shanghai%2C%20China" target="_blank" rel="noopener" data-i18n="ofc.openChina">Ouvrir Shanghai dans Google Maps</a>
+      </div>
+    </div>
     <div class="foot-in">
       <span class="brand-line" data-i18n="foot.brand">Ciza Supply, division de Ciza Group | Burundi</span>
       <span data-i18n="foot.mid">Global Sourcing &amp; Supply — devis sur demande.</span>
@@ -3073,7 +3138,12 @@ gtag('config', 'G-JFP2NNX9DX');
       "ct.officeH": "Bujumbura, Burundi",
       "ct.officeP1": "C'est ici que tout se conclut : présentation des produits, validation du devis et signature de la commande, en face à face.",
       "ct.officeP2": "Écrivez-nous sur WhatsApp avant de passer — nous vous confirmons le rendez-vous et préparons votre dossier.",
+      "ct.officeChinaK": "Bureau Chine",
+      "ct.officeChinaH": "Bureau Chine — Shanghai",
+      "ct.officeChinaP": "Notre bureau de sourcing et de contrôle, au plus près des usines partenaires.",
       "ct.rdv": "Prendre rendez-vous",
+      "foot.addrBiK": "Bureau Burundi — Bujumbura",
+      "foot.addrCnK": "Bureau Chine — Shanghai",
       "foot.brand": "Ciza Supply, division de Ciza Group | Burundi",
       "foot.mid": "Global Sourcing & Supply — devis sur demande.",
       "nav.about": "À propos",
@@ -3284,6 +3354,9 @@ gtag('config', 'G-JFP2NNX9DX');
       "ofc.sub": "C'est ici que les devis se valident et que les commandes se signent, en face à face.",
       "ofc.dir": "Itinéraire",
       "ofc.open": "Ouvrir dans Google Maps",
+      "ofc.kChina": "Bureau Chine — Shanghai",
+      "ofc.subChina": "Sourcing, contrôle qualité et coordination avec les usines partenaires, au plus près de la production.",
+      "ofc.openChina": "Ouvrir Shanghai dans Google Maps",
       "ofc.mapFallback": "Carte de Bujumbura — retrouvez le bureau à l'adresse ci-dessous, ou ouvrez l'itinéraire.",
       "qf.kicker": "Formulaire de devis",
       "qf.h2": "Demander un devis, sans WhatsApp",
@@ -3457,7 +3530,12 @@ gtag('config', 'G-JFP2NNX9DX');
       "ct.officeH": "Bujumbura, Burundi",
       "ct.officeP1": "This is where everything is concluded: product presentation, quote approval and order signing, face to face.",
       "ct.officeP2": "Message us on WhatsApp before coming — we will confirm the appointment and prepare your file.",
+      "ct.officeChinaK": "China office",
+      "ct.officeChinaH": "China office — Shanghai",
+      "ct.officeChinaP": "Our sourcing and inspection office, close to our partner factories.",
       "ct.rdv": "Book an appointment",
+      "foot.addrBiK": "Burundi office — Bujumbura",
+      "foot.addrCnK": "China office — Shanghai",
       "foot.brand": "Ciza Supply, a division of Ciza Group | Burundi",
       "foot.mid": "Global Sourcing & Supply — quotes on request.",
       "nav.about": "About",
@@ -3668,6 +3746,9 @@ gtag('config', 'G-JFP2NNX9DX');
       "ofc.sub": "This is where quotes are approved and orders are signed, face to face.",
       "ofc.dir": "Directions",
       "ofc.open": "Open in Google Maps",
+      "ofc.kChina": "China office — Shanghai",
+      "ofc.subChina": "Sourcing, quality control and coordination with partner factories, close to production.",
+      "ofc.openChina": "Open Shanghai in Google Maps",
       "ofc.mapFallback": "Map of Bujumbura — find the office at the address below, or open the directions.",
       "qf.kicker": "Quote form",
       "qf.h2": "Request a quote, without WhatsApp",
