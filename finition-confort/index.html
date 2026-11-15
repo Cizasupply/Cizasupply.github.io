@@ -1266,20 +1266,11 @@ gtag('config', 'G-JFP2NNX9DX');
   .mini-result{display:none;margin-top:14px;border:1px solid rgba(212,175,55,.55);background:rgba(212,175,55,.09);border-radius:4px;padding:13px;font-size:.94rem}
   .mini-result.show{display:block}
   .list-count-badge{background:var(--gold);color:#241a02;border-radius:999px;padding:1px 8px;font-size:.8rem;font-weight:800}
-  .chat-fab{position:fixed;right:18px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:131;appearance:none;border:0;cursor:pointer;font:inherit;font-weight:800;background:var(--navy);color:#fff;border:1.5px solid rgba(212,175,55,.6);border-radius:999px;padding:12px 16px;box-shadow:0 6px 20px rgba(3,20,12,.35)}
-  .chat-panel{position:fixed;right:18px;bottom:calc(142px + env(safe-area-inset-bottom));z-index:132;width:min(340px,calc(100vw - 36px));background:#fff;color:var(--ink);border:1px solid rgba(13,27,46,.18);border-radius:8px;box-shadow:0 14px 40px rgba(3,10,20,.35);padding:18px}
-  .chat-panel[hidden]{display:none}
-  .chat-panel h3{font-size:1.05rem;margin-bottom:6px}
-  .chat-panel p{color:var(--muted);font-size:.92rem;margin:0 0 12px}
-  .chat-panel textarea{width:100%;font:inherit;padding:11px;border:1.5px solid rgba(13,27,46,.25);border-radius:4px;min-height:84px;resize:vertical}
-  .chat-panel .chat-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
   /* Mobile: floating buttons compact as well (after the base rules above,
      so these win on phones) */
   @media (max-width:640px){
-    .chat-fab{right:12px;padding:8px 12px;font-size:.82rem;bottom:calc(66px + env(safe-area-inset-bottom))}
     .float-wa{right:12px;width:46px;height:46px;bottom:calc(12px + env(safe-area-inset-bottom))}
     .float-wa svg{width:24px;height:24px}
-    .chat-panel{right:12px;bottom:calc(118px + env(safe-area-inset-bottom))}
   }
   @media (prefers-color-scheme: dark){
     .search-box,.ql-box,.mini-form.light{background:#0c2242;color:#e8ecf3}
@@ -1421,13 +1412,9 @@ gtag('config', 'G-JFP2NNX9DX');
   @media (min-width:900px){
     .pa-bar{left:auto;right:26px;bottom:20px;width:auto;border-radius:14px;padding:10px}
     .pa-bar a{flex:none;padding:12px 20px}
-    .chat-fab{bottom:calc(100px + env(safe-area-inset-bottom))}
-    .chat-panel{bottom:calc(158px + env(safe-area-inset-bottom))}
   }
   @media (max-width:899px){
     body{padding-bottom:64px}
-    .chat-fab{bottom:calc(80px + env(safe-area-inset-bottom))}
-    .chat-panel{bottom:calc(138px + env(safe-area-inset-bottom))}
   }
   .float-wa{display:none !important}
   @media (prefers-color-scheme: dark){
@@ -1468,10 +1455,6 @@ gtag('config', 'G-JFP2NNX9DX');
       <span class="visually-hidden">Menu</span>
       <span class="menu-btn-bars" aria-hidden="true"><span></span><span></span><span></span></span>
     </button>
-    <a class="btn btn-wa wa" data-wa="general" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis." target="_blank" rel="noopener">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m0 1.8c2.16 0 4.19.84 5.72 2.37a8.04 8.04 0 0 1 2.36 5.74c0 4.47-3.64 8.11-8.11 8.11-1.52 0-3-.42-4.28-1.21l-.31-.18-3.19.84.85-3.11-.2-.32a8.08 8.08 0 0 1-1.24-4.29c0-4.47 3.64-8.11 8.11-8.11m-4.1 3.9c-.19 0-.5.07-.76.35-.26.28-1 .97-1 2.37s1.02 2.75 1.16 2.94c.14.19 2 3.06 4.85 4.29.68.29 1.21.47 1.62.6.68.22 1.28.19 1.77.11.54-.08 1.66-.68 1.9-1.55.23-.87.23-1.62.16-1.77-.07-.15-.25-.24-.53-.42-.28-.14-1.64-.81-1.94-.9-.3-.09-.52-.14-.74.14-.22.28-.85 1.05-1.06 1.28-.21.23-.42.26-.7.09-.28-.14-1.18-.44-2.25-1.39-.83-.74-1.39-1.66-1.55-1.94-.16-.28-.02-.43.12-.57.13-.13.28-.33.42-.49.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.49-.07-.14-.74-1.79-.99-2.45-.26-.63-.53-.54-.73-.55z"/></svg>
-      WhatsApp
-    </a>
   </div>
   <nav class="mnav" id="mnav" aria-label="Menu">
     <a href="#finition" data-i18n="nav.finition">Finition &amp; confort</a>
@@ -2754,17 +2737,6 @@ gtag('config', 'G-JFP2NNX9DX');
 </footer>
 
 
-<!-- ======================= CHAT EN DIRECT (via WhatsApp) ======================= -->
-<button type="button" class="chat-fab" id="chat-open" data-i18n="chat.open">💬 Discuter en direct</button>
-<div class="chat-panel" id="chat-panel" hidden role="dialog" aria-label="Chat">
-  <h3 data-i18n="chat.h">Discutez avec CIZA SUPPLY</h3>
-  <p data-i18n="chat.p">Écrivez votre message ici : il part sur le WhatsApp de la Direction des ventes (Liaison Internationale) au +1 514 502 9503, où l'équipe vous répond.</p>
-  <textarea id="chat-msg" data-ph-fr="Votre message…" data-ph-en="Your message…" placeholder="Votre message…"></textarea>
-  <div class="chat-actions">
-    <button type="button" class="btn btn-wa" id="chat-send" data-i18n="chat.send">Envoyer sur WhatsApp</button>
-    <button type="button" class="btn btn-line" id="chat-close" style="color:var(--ink);border-color:rgba(13,27,46,.4)" data-i18n="chat.close">Fermer</button>
-  </div>
-</div>
 
 <!-- ======================= WHATSAPP FLOTTANT ======================= -->
 <a class="float-wa wa" data-wa="general" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis." target="_blank" rel="noopener" aria-label="WhatsApp — +1 514 502 9503">
@@ -3528,11 +3500,6 @@ gtag('config', 'G-JFP2NNX9DX');
       "rv.sub": "Réservez votre passage au bureau : 6ème Avenue, Quartier Buhomba, Zone Mutimbuzi, Commune Ntahangwa.",
       "rv.date": "Date souhaitée", "rv.time": "Heure souhaitée", "rv.why": "Motif de la visite",
       "rv.send": "Réserver ma visite",
-      "chat.open": "Discuter en direct",
-      "chat.h": "Discutez avec CIZA SUPPLY",
-      "chat.p": "Écrivez votre message ici : il part sur le WhatsApp de la Direction des ventes (Liaison Internationale) au +1 514 502 9503, où l'équipe vous répond.",
-      "chat.send": "Envoyer sur WhatsApp",
-      "chat.close": "Fermer",
 
       "ph.lab": "Produits phares",
       "ph1a": "Vanne à bille inox 3/4″ — levier bleu, gamme complète de diamètres",
@@ -3952,11 +3919,6 @@ gtag('config', 'G-JFP2NNX9DX');
       "rv.sub": "Book your visit to the office: 6ème Avenue, Quartier Buhomba, Zone Mutimbuzi, Commune Ntahangwa.",
       "rv.date": "Preferred date", "rv.time": "Preferred time", "rv.why": "Reason for the visit",
       "rv.send": "Book my visit",
-      "chat.open": "Live chat",
-      "chat.h": "Chat with CIZA SUPPLY",
-      "chat.p": "Write your message here: it goes to the Sales Management WhatsApp (International Liaison) on +1 514 502 9503, where the team replies.",
-      "chat.send": "Send via WhatsApp",
-      "chat.close": "Close",
 
       "ph.lab": "Featured products",
       "ph1a": "Stainless ball valve 3/4″ — blue lever, full size range",
@@ -4595,17 +4557,6 @@ gtag('config', 'G-JFP2NNX9DX');
     return "LISTE DE DEVIS / QUOTE LIST\nNom / Name : "+val("ql-name")+"\nContact : "+val("ql-contact")+"\nProduits / Products :\n- "+list.join("\n- ")+"\nMessage : "+val("ql-msg");
   });
 
-  /* ----- Chat en direct -> WhatsApp Direction des ventes (+1, Canada) ----- */
-  var panel=document.getElementById("chat-panel");
-  var openB=document.getElementById("chat-open");
-  if(openB && panel){
-    openB.addEventListener("click", function(){ panel.hidden = !panel.hidden; });
-    document.getElementById("chat-close").addEventListener("click", function(){ panel.hidden=true; });
-    document.getElementById("chat-send").addEventListener("click", function(){
-      var m=document.getElementById("chat-msg").value.trim() || (L()==="en"?"Hello CIZA SUPPLY, I would like information.":"Bonjour CIZA SUPPLY, je souhaite un renseignement.");
-      window.open("https://wa.me/15145029503?text="+encodeURIComponent(m), "_blank", "noopener");
-    });
-  }
 
   /* Langue : libellés dynamiques */
   new MutationObserver(function(){ refreshAddBtns(); buildIndex(); if(sInput && sInput.value) doSearch(); })
