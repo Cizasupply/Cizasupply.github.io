@@ -1332,18 +1332,19 @@ gtag('config', 'G-JFP2NNX9DX');
   .pa-qc{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   @media (min-width:900px){.pa-qc{grid-template-columns:repeat(4,1fr)}}
   .pa-qc-item{background:var(--card);border:1px solid var(--card-border);border-radius:12px;overflow:hidden;margin:0}
-  .pa-qc-item img{width:100%;height:110px;object-fit:cover;display:block}
-  @media (min-width:900px){.pa-qc-item img{height:140px}}
-  /* Recadrage QC (2026-11-14, passe visages) : object-fit:cover rogne le
-     détail parlant de chaque photo ; on recentre la fenêtre de la vignette
-     sur ce détail, desktop et mobile (les fichiers ne changent pas).
-     1 : le haut du panneau tenu en usine et la main gantée à droite.
-     2 : le mitigeur ET l'eau qui coule (moitié basse de la photo).
-     3 : l'écran digital de la balance (bas de la photo, 13,40).
+  .pa-qc-item img,.pa-qc-item video{width:100%;height:110px;object-fit:cover;display:block}
+  @media (min-width:900px){.pa-qc-item img,.pa-qc-item video{height:140px}}
+  /* Recadrage QC (2026-11-14, passe concordance) : object-fit:cover rogne
+     le détail parlant de chaque vignette ; on recentre la fenêtre sur
+     l'ACTION que le texte annonce, desktop et mobile (vérifié par
+     simulation du rendu aux deux tailles).
+     1 : l'homme et le carton ouvert, main qui contrôle le contenu.
+     2 : le jet d'eau du mitigeur, au centre.
+     3 : vidéo du contrôle en entrepôt (boucle) — l'homme et le carton.
      4 : le chariot élévateur et la bouche du conteneur (haut de la photo). */
-  .pa-qc-item:nth-child(1) img{object-position:80% 0%}
-  .pa-qc-item:nth-child(2) img{object-position:50% 72%}
-  .pa-qc-item:nth-child(3) img{object-position:50% 88%}
+  .pa-qc-item:nth-child(1) img{object-position:50% 50%}
+  .pa-qc-item:nth-child(2) img{object-position:38% 60%}
+  .pa-qc-item:nth-child(3) video{object-position:50% 50%}
   .pa-qc-item:nth-child(4) img{object-position:50% 30%}
   .pa-qc-item figcaption{padding:10px 12px 12px;font-size:.88rem;line-height:1.45;display:flex;gap:8px}
   .pa-qn{flex:none;background:var(--gold);color:#231a00;font-weight:900;border-radius:50%;width:20px;height:20px;line-height:20px;text-align:center;font-size:.78rem;margin-top:1px}
@@ -1654,7 +1655,7 @@ gtag('config', 'G-JFP2NNX9DX');
     </div>
     <div class="pa-qc">
       <figure class="pa-qc-item">
-        <img src="assets/820dfc687756efb1.jpg" alt="Panneau solaire 650 Wc double verre, tenu en usine" data-alt-en="650 Wp double-glass solar panel, held at the factory" loading="lazy" />
+        <img src="assets/qc-controle-carton.jpg" alt="Contrôle d'un carton à l'entrepôt en Chine : ouverture et vérification du contenu, article par article" data-alt-en="Checking a carton at the warehouse in China: opening it and inspecting the contents, item by item" loading="lazy" />
         <figcaption><span class="pa-qn" aria-hidden="true">1</span><span><b data-i18n="qc.1t">Conformité au devis</b><br /><span data-i18n="pa.qc1">Modèles et quantités comparés article par article.</span></span></figcaption>
       </figure>
       <figure class="pa-qc-item">
@@ -1662,7 +1663,7 @@ gtag('config', 'G-JFP2NNX9DX');
         <figcaption><span class="pa-qn" aria-hidden="true">2</span><span><b data-i18n="qc.2t">État et fonctionnement</b><br /><span data-i18n="pa.qc2">Inspection et tests de fonctionnement sur échantillons.</span></span></figcaption>
       </figure>
       <figure class="pa-qc-item">
-        <img src="assets/6e5eb4ad3dce6d4b.jpg" alt="Mitigeur thermostatique sur balance, affichage digital 13,40" data-alt-en="Thermostatic mixer on a scale, digital display" loading="lazy" />
+        <video src="assets/qc-controle-video.mp4" poster="assets/qc-inspection-article.jpg" autoplay muted loop playsinline aria-label="Vidéo du contrôle à l'entrepôt en Chine : ouverture d'un carton et inspection des articles" data-alt-en="Video of the check at the warehouse in China: opening a carton and inspecting the items"></video>
         <figcaption><span class="pa-qn" aria-hidden="true">3</span><span><b data-i18n="qc.3t">Preuve documentée</b><br /><span data-i18n="pa.qc3">Le contrôle est documenté en photos et en vidéos, avant l'emballage.</span></span></figcaption>
       </figure>
       <figure class="pa-qc-item">
