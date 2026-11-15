@@ -1282,6 +1282,17 @@ gtag('config', 'G-JFP2NNX9DX');
   .pa-hero-txt h1{margin:6px 0 0}
   .pa-hero-sub{margin:12px 0 0;font-size:clamp(1rem,1.5vw,1.15rem);line-height:1.55;color:#e6ebf5;max-width:580px}
   .pa-hero-ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  @media (max-width:899px){
+    /* Correctif hero mobile (2026-11-14) : le bloc texte, ancré en absolu
+       au bas d'un média figé à 340 px, le dépassait de 80 à 142 px selon
+       la largeur et overflow:hidden rognait le titre. Le média prend
+       désormais la hauteur du texte (340 px minimum), la photo le couvre
+       en absolu et le texte passe dans le flux, collé en bas : plus
+       aucun rognage, quelle que soit la largeur ou la langue. */
+    .pa-hero-media{display:flex;flex-direction:column;justify-content:flex-end;min-height:340px}
+    .pa-hero-img{position:absolute;inset:0;height:100%}
+    .pa-hero-txt{position:relative}
+  }
   .pa-sec{padding:56px 0 8px}
   .pa-idcard{background:var(--card);border:2px solid var(--gold);border-radius:12px;padding:18px 20px;max-width:680px;box-shadow:0 2px 10px rgba(7,26,51,.08)}
   .pa-idname{font-size:1.15rem;font-weight:900;letter-spacing:.02em;color:var(--ink);margin:0 0 6px}
@@ -1623,7 +1634,7 @@ gtag('config', 'G-JFP2NNX9DX');
         <figcaption><span class="pa-qn" aria-hidden="true">3</span><span><b data-i18n="qc.3t">Preuve documentée</b><br /><span data-i18n="pa.qc3">Le contrôle est documenté en photos et en vidéos, avant l'emballage.</span></span></figcaption>
       </figure>
       <figure class="pa-qc-item">
-        <img src="assets/01bc81a1db6bf10a.jpg" alt="Matériel de quincaillerie et outillage" data-alt-en="Hardware supplies and tools" loading="lazy" />
+        <img src="assets/01bc81a1db6bf10a.jpg" alt="Chargement du conteneur : un chariot élévateur charge la marchandise dans le camion" data-alt-en="Loading the container: a forklift loads the goods into the truck" loading="lazy" />
         <figcaption><span class="pa-qn" aria-hidden="true">4</span><span><b data-i18n="qc.4t">Emballage et départ</b><br /><span data-i18n="pa.qc4">Marchandise protégée et comptée : l'expédition ne part qu'après validation du contrôle.</span></span></figcaption>
       </figure>
     </div>
