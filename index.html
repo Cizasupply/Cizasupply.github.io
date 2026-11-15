@@ -1299,6 +1299,117 @@ gtag('config', 'G-JFP2NNX9DX');
     html{scroll-behavior:auto}
     .btn,.cat a.devis .arr{transition:none}
   }
+  /* ================= Refonte accueil « Preuve d'abord » (2026-11-14) =================
+     Nouvel accueil : hero court, carte d'identité, contrôle qualité en
+     photos, visages, témoignage, grille de catégories compacte (photo +
+     nom + page dédiée ; le détail vit sur les pages catégories), barre
+     de contact fixe. La section Finition vit sur sa page dédiée
+     /finition-confort/ (classe « finmode » posée par l'en-tête de cette
+     copie) ; elle est masquée ici, sans être retirée du fichier. */
+  .hero.pa-hero{padding:0}
+  .pa-hero-media{position:relative}
+  .pa-hero-img{width:100%;height:340px;object-fit:cover;display:block}
+  @media (min-width:900px){.pa-hero-img{height:430px}}
+  .pa-hero-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,26,51,.12) 35%,rgba(7,26,51,.9))}
+  .pa-hero-txt{position:absolute;left:0;right:0;bottom:0;padding:22px 0 24px}
+  .pa-hero-txt .kicker{color:var(--gold-2)}
+  .pa-hero-txt h1{margin:6px 0 0}
+  .pa-hero-sub{margin:12px 0 0;font-size:clamp(1rem,1.5vw,1.15rem);line-height:1.55;color:#e6ebf5;max-width:580px}
+  .pa-hero-ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .pa-sec{padding:56px 0 8px}
+  .pa-idcard{background:var(--card);border:2px solid var(--gold);border-radius:12px;padding:18px 20px;max-width:680px;box-shadow:0 2px 10px rgba(7,26,51,.08)}
+  .pa-idname{font-size:1.15rem;font-weight:900;letter-spacing:.02em;color:var(--ink);margin:0 0 6px}
+  .pa-ligne{display:flex;justify-content:space-between;gap:14px;padding:8px 0;border-bottom:1px dashed rgba(13,27,46,.18);font-size:.95rem}
+  .pa-ligne:last-of-type{border-bottom:none}
+  .pa-k{color:var(--muted);font-weight:600}
+  .pa-v{font-weight:800;text-align:right}
+  .pa-verif{margin:12px 0 0;background:#e8f5e9;color:#1e6b2e;font-size:.9rem;font-weight:700;border-radius:8px;padding:9px 12px;text-align:center}
+  .pa-faits{display:flex;gap:10px;margin-top:14px;max-width:680px}
+  .pa-fait{flex:1;background:var(--navy-2);color:#fff;border-radius:12px;padding:12px 10px;text-align:center;font-size:.82rem;font-weight:700;line-height:1.4;display:flex;flex-direction:column;gap:5px;align-items:center}
+  .pa-fait-ic{font-size:1.25rem}
+  .pa-qc{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (min-width:900px){.pa-qc{grid-template-columns:repeat(4,1fr)}}
+  .pa-qc-item{background:var(--card);border:1px solid var(--card-border);border-radius:12px;overflow:hidden;margin:0}
+  .pa-qc-item img{width:100%;height:110px;object-fit:cover;display:block}
+  @media (min-width:900px){.pa-qc-item img{height:140px}}
+  .pa-qc-item figcaption{padding:10px 12px 12px;font-size:.88rem;line-height:1.45;display:flex;gap:8px}
+  .pa-qn{flex:none;background:var(--gold);color:#231a00;font-weight:900;border-radius:50%;width:20px;height:20px;line-height:20px;text-align:center;font-size:.78rem;margin-top:1px}
+  .pa-visages{display:flex;gap:12px;max-width:680px}
+  .pa-pers{flex:1;background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 10px;text-align:center}
+  .pa-ava{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--navy-2);color:var(--gold-2);font-weight:900;font-size:1.05rem;margin:0 auto 8px;border:2px solid var(--gold)}
+  .pa-pers-nm{font-size:.92rem;font-weight:800;margin:0}
+  .pa-pers-rl{font-size:.8rem;color:var(--muted);margin:3px 0 0;line-height:1.4}
+  .pa-visnote{color:var(--muted);font-size:.95rem;line-height:1.55;margin:14px 0 0;max-width:680px}
+  .pa-temoin{background:var(--navy);border-radius:14px;padding:20px;color:#fff;max-width:780px}
+  .pa-temoin-q{font-size:1.05rem;line-height:1.6;font-style:italic;margin:0}
+  .pa-temoin-q::before{content:"\00ab "}
+  .pa-temoin-q::after{content:" \00bb"}
+  .pa-temoin-qui{margin:10px 0 0;font-size:.9rem;color:var(--gold-2);font-weight:700}
+  .pa-temoin-cta{margin:14px 0 0}
+  /* Catégories : tuiles compactes sur l'accueil (articles intacts, déplacés
+     tels quels par le routeur vers les pages catégories). */
+  .cats .sec-head p:not(.kicker){display:none}
+  .cats .cat-num,.cats .cat-body p,.cats .stars,.cats .cat-body a.devis,.cats .cat-body .add-list-btn{display:none}
+  .cats .gal-ui,.cats .gal-zoom{display:none}
+  .cats .gal-track{overflow:hidden}
+  .cats .gal-track>*{display:none}
+  .cats .gal-track>img:first-of-type{display:block}
+  .fin-card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);overflow:hidden;text-decoration:none;color:var(--ink)}
+  .fin-card-img{display:block;height:200px;overflow:hidden}
+  .fin-card-img img{width:100%;height:100%;object-fit:cover;display:block}
+  .fin-card-body{padding:20px 20px 22px;display:flex;flex-direction:column;gap:8px}
+  .fin-card-name{font-size:1.28rem;font-weight:800;line-height:1.25}
+  .fin-card-link{margin-top:8px;font-weight:700;font-size:.95rem;color:var(--ink);display:inline-flex;align-items:center;gap:7px}
+  .fin-card:hover .fin-card-link{color:#8a6d1f}
+  @media (max-width:620px){
+    .cats .cat-grid{grid-template-columns:repeat(3,1fr);gap:9px}
+    .cats .cat .gal{height:74px}
+    .cats .cat-body{padding:8px 8px 10px;gap:4px}
+    .cats .cat h3{font-size:.8rem;line-height:1.3}
+    .cats .cat a.page-link{font-size:.75rem;margin-top:2px}
+    .fin-card-img{height:74px}
+    .fin-card-body{padding:8px 8px 10px;gap:4px}
+    .fin-card-name{font-size:.8rem;line-height:1.3}
+    .fin-card-link{font-size:.75rem;margin-top:2px}
+    .pa-fait{font-size:.72rem;padding:10px 6px}
+    .pa-visages{gap:8px}
+    .pa-pers{padding:12px 6px}
+    .pa-pers-nm{font-size:.82rem}
+    .pa-pers-rl{font-size:.72rem}
+  }
+  /* Processus condensé en 3 pas (maquette validée). */
+  .steps-3{grid-template-columns:repeat(3,1fr)}
+  @media (max-width:560px){.steps-3{grid-template-columns:repeat(3,1fr);gap:10px}.steps-3 .step h3{font-size:.95rem}.steps-3 .step p{font-size:.85rem}}
+  /* Section Finition : page dédiée /finition-confort/ (masquée sur l'accueil). */
+  section.fin{display:none}
+  html.finmode section.fin{display:block}
+  html.finmode body>section:not(#finition):not(#liste-devis){display:none !important}
+  /* Barre de contact fixe (le bouton WhatsApp flottant devient redondant). */
+  .pa-bar{position:fixed;left:0;right:0;bottom:0;z-index:120;background:var(--navy);display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -3px 14px rgba(3,10,20,.35)}
+  .pa-bar a{flex:1;text-align:center;padding:12px 4px;border-radius:8px;font-weight:800;font-size:.95rem;text-decoration:none}
+  .pa-bar-wa{background:var(--wa);color:#06281a}
+  .pa-bar-dv{background:var(--gold);color:#231a00}
+  .pa-bar-ap{background:#fff;color:var(--navy)}
+  @media (min-width:900px){
+    .pa-bar{left:auto;right:26px;bottom:20px;width:auto;border-radius:14px;padding:10px}
+    .pa-bar a{flex:none;padding:12px 20px}
+    .chat-fab{bottom:calc(100px + env(safe-area-inset-bottom))}
+    .chat-panel{bottom:calc(158px + env(safe-area-inset-bottom))}
+  }
+  @media (max-width:899px){
+    body{padding-bottom:64px}
+    .chat-fab{bottom:calc(80px + env(safe-area-inset-bottom))}
+    .chat-panel{bottom:calc(138px + env(safe-area-inset-bottom))}
+  }
+  .float-wa{display:none !important}
+  @media (prefers-color-scheme: dark){
+    .pa-idcard,.pa-qc-item,.pa-pers,.fin-card{background:var(--navy-2);color:#fff}
+    .pa-idname{color:#fff}
+    .pa-ligne{border-color:rgba(255,255,255,.16)}
+    .pa-k{color:#aeb9c9}
+    .pa-pers-rl,.pa-visnote{color:#aeb9c9}
+    .fin-card,.fin-card-link{color:#fff}
+  }
 </style>
 </head>
 <body>
@@ -1482,39 +1593,109 @@ gtag('config', 'G-JFP2NNX9DX');
 </script>
 
 <!-- ======================= HERO ======================= -->
-<section class="hero" id="haut">
-  <div class="wrap hero-grid">
-    <div class="hero-copy">
-      <p class="kicker">Global Sourcing &amp; Supply — Burundi</p>
-      <h1><span data-i18n="hero.h1a">Direct usine.</span><br /><span class="gold" data-i18n="hero.h1b">Direct chez vous.</span></h1>
-      <p class="lede"><span data-i18n="hero.lede1">CIZA SUPPLY est le bureau de vente au Burundi d'usines en Chine,</span> <a href="#processus" data-i18n="hero.ledeLink">sans intermédiaire</a><span data-i18n="hero.lede2">. Nous sourçons, contrôlons et importons pour les commerçants, les entrepreneurs et les porteurs de projets.</span></p>
-      <div class="hero-ctas">
-        <a class="btn btn-gold" href="#finition" data-i18n="hero.cta1">Découvrir la finition &amp; le confort</a>
-        <a class="btn btn-ghost" href="#categories" data-i18n="hero.cta2">Voir les 9 catégories</a>
+<section class="hero pa-hero" id="haut">
+  <div class="pa-hero-media">
+    <img class="pa-hero-img" src="assets/94db940f22703484.jpg" alt="Entrepôt de quincaillerie et de matériaux approvisionné par CIZA SUPPLY" data-alt-en="Hardware and building materials warehouse supplied by CIZA SUPPLY" />
+    <div class="pa-hero-veil" aria-hidden="true"></div>
+    <div class="pa-hero-txt">
+      <div class="wrap">
+        <p class="kicker">Global Sourcing &amp; Supply — Burundi</p>
+        <h1><span data-i18n="hero.h1a">Direct usine.</span><br /><span class="gold" data-i18n="hero.h1b">Direct chez vous.</span></h1>
+        <p class="pa-hero-sub" data-i18n="pa.heroSub">Le bureau de vente au Burundi d'usines partenaires en Chine — sans intermédiaire. Nous sourçons, contrôlons et importons pour les commerçants et les porteurs de projets.</p>
+        <div class="pa-hero-ctas">
+          <a class="btn btn-wa wa" data-wa="general" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis." target="_blank" rel="noopener" data-i18n="pa.ctaWa">Devis sur WhatsApp</a>
+          <a class="btn btn-ghost" href="#categories" data-i18n="hero.cta2">Voir les 9 catégories</a>
+        </div>
       </div>
-      <div class="hero-facts">
-        <div><div class="n">9</div><div class="l" data-i18n="hero.f1">Catégories de produits</div></div>
-        <div><div class="n">2</div><div class="l" data-i18n="hero.f2">Bureaux — Burundi &amp; Chine</div></div>
-        <div><div class="n">100&nbsp;%</div><div class="l" data-i18n="hero.f3">Devis sur demande</div></div>
-      </div>
-    </div>
-    <div class="hero-photo">
-      <img src="assets/94db940f22703484.jpg" alt="Entrepôt de quincaillerie et de matériaux approvisionné par CIZA SUPPLY" data-alt-en="Hardware and building materials warehouse supplied by CIZA SUPPLY" />
-      <div class="hero-tag"><span data-i18n="hero.tagA">La vente se fait</span> <b data-i18n="hero.tagB">au bureau, à Bujumbura</b></div>
     </div>
   </div>
 </section>
 
-<!-- ======================= TRUST STRIP ======================= -->
-<div class="trust">
-  <div class="wrap trust-in">
-    <span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="trust.1">Entreprise légalement enregistrée au Burundi</span></span>
-    <span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="trust.2">Aucun prix affiché — devis sur demande</span></span>
-    <span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="trust.3">Contrôle qualité avant expédition</span></span>
-    <span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="trust.4">Bureau à Bujumbura</span></span>
-  </div>
-</div>
 
+<!-- ======================= PREUVE D'ABORD — IDENTITÉ ======================= -->
+<section class="pa-sec" id="verifiez-nous">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker" data-i18n="pa.idKicker">Vérifiez-nous</p>
+      <h2 data-i18n="pa.idH2">Une entreprise réelle, des papiers en règle</h2>
+    </div>
+    <div class="pa-idcard">
+      <p class="pa-idname">CIZA GROUP SURL</p>
+      <div class="pa-ligne"><span class="pa-k" data-i18n="pa.idRcK">Registre de commerce</span><span class="pa-v" data-i18n="pa.idRcV">RC 0082870/26</span></div>
+      <div class="pa-ligne"><span class="pa-k" data-i18n="pa.idNifK">NIF</span><span class="pa-v" data-i18n="pa.idNifV">4003446905</span></div>
+      <div class="pa-ligne"><span class="pa-k" data-i18n="pa.idOffK">Bureau de vente</span><span class="pa-v" data-i18n="pa.idOffV">Bujumbura</span></div>
+      <div class="pa-ligne"><span class="pa-k" data-i18n="pa.idAddrK">Adresse</span><span class="pa-v" data-i18n="pa.idAddrV">6e Avenue, Quartier Buhomba, Zone Mutimbuzi, Commune Ntahangwa, Bujumbura</span></div>
+      <p class="pa-verif" data-i18n="pa.idVerif">✓ Entreprise légalement enregistrée au Burundi — passez au bureau, la vente se conclut en face à face.</p>
+    </div>
+    <div class="pa-faits">
+      <div class="pa-fait"><span class="pa-fait-ic" aria-hidden="true">🏢</span><span data-i18n="pa.fait1">Bureau physique à Bujumbura</span></div>
+      <div class="pa-fait"><span class="pa-fait-ic" aria-hidden="true">🔍</span><span data-i18n="pa.fait2">Contrôle avant chaque expédition</span></div>
+      <div class="pa-fait"><span class="pa-fait-ic" aria-hidden="true">📄</span><span data-i18n="pa.fait3">Devis clair, sur demande</span></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================= PREUVE D'ABORD — CONTRÔLE QUALITÉ ======================= -->
+<section class="pa-sec" id="controle-qualite">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker" data-i18n="pa.qcKicker">La preuve</p>
+      <h2 data-i18n="pa.qcH2">Votre marchandise est contrôlée avant de partir</h2>
+    </div>
+    <div class="pa-qc">
+      <figure class="pa-qc-item">
+        <img src="assets/820dfc687756efb1.jpg" alt="Panneau solaire 650 Wc double verre, tenu en usine" data-alt-en="650 Wp double-glass solar panel, held at the factory" loading="lazy" />
+        <figcaption><span class="pa-qn" aria-hidden="true">1</span><span><b data-i18n="qc.1t">Conformité au devis</b><br /><span data-i18n="pa.qc1">Modèles et quantités comparés article par article.</span></span></figcaption>
+      </figure>
+      <figure class="pa-qc-item">
+        <img src="assets/15c24776cdb1c3c9.jpg" alt="Mitigeur de douche noir en fonctionnement, eau qui coule" data-alt-en="Black shower mixer in operation, running water" loading="lazy" />
+        <figcaption><span class="pa-qn" aria-hidden="true">2</span><span><b data-i18n="qc.2t">État et fonctionnement</b><br /><span data-i18n="pa.qc2">Inspection et tests de fonctionnement sur échantillons.</span></span></figcaption>
+      </figure>
+      <figure class="pa-qc-item">
+        <img src="assets/6e5eb4ad3dce6d4b.jpg" alt="Mitigeur thermostatique sur balance, affichage digital 13,40" data-alt-en="Thermostatic mixer on a scale, digital display" loading="lazy" />
+        <figcaption><span class="pa-qn" aria-hidden="true">3</span><span><b data-i18n="qc.3t">Preuve documentée</b><br /><span data-i18n="pa.qc3">Le contrôle est documenté en photos et en vidéos, avant l'emballage.</span></span></figcaption>
+      </figure>
+      <figure class="pa-qc-item">
+        <img src="assets/01bc81a1db6bf10a.jpg" alt="Matériel de quincaillerie et outillage" data-alt-en="Hardware supplies and tools" loading="lazy" />
+        <figcaption><span class="pa-qn" aria-hidden="true">4</span><span><b data-i18n="qc.4t">Emballage et départ</b><br /><span data-i18n="pa.qc4">Marchandise protégée et comptée : l'expédition ne part qu'après validation du contrôle.</span></span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================= PREUVE D'ABORD — QUI VOUS REÇOIT ======================= -->
+<section class="pa-sec" id="qui-vous-recoit">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker" data-i18n="pa.visKicker">Les visages</p>
+      <h2 data-i18n="pa.visH2">Qui vous reçoit</h2>
+    </div>
+    <div class="pa-visages">
+      <div class="pa-pers"><span class="pa-ava" aria-hidden="true">CM</span><p class="pa-pers-nm">Ciza Misigaro</p><p class="pa-pers-rl" data-i18n="pa.p1r">Fondateur — Ciza Group</p></div>
+      <div class="pa-pers"><span class="pa-ava" aria-hidden="true">IU</span><p class="pa-pers-nm">Ida Uwimana</p><p class="pa-pers-rl" data-i18n="pa.p2r">Commerciale — Bujumbura</p></div>
+      <div class="pa-pers"><span class="pa-ava" aria-hidden="true">S</span><p class="pa-pers-nm">Simon</p><p class="pa-pers-rl" data-i18n="pa.p3r">Bureau Chine — Sourcing &amp; contrôle</p></div>
+    </div>
+    <p class="pa-visnote" data-i18n="pa.visNote">Des personnes, pas un site anonyme : vous savez à qui vous confiez votre commande, des deux côtés — Bujumbura et la Chine.</p>
+  </div>
+</section>
+
+
+<!-- ======================= TÉMOIGNAGES ======================= -->
+<section class="testi" id="temoignages">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker" data-i18n="testi.kicker">Témoignages</p>
+      <h2 data-i18n="testi.h2">Ce que disent nos clients</h2>
+    </div>
+    <div class="pa-temoin">
+      <p class="pa-temoin-q" data-i18n="pa.temoin">On a trouvé CIZA SUPPLY sur Google. Le devis était clair, la marchandise est arrivée conforme à ce qu'on avait validé au bureau.</p>
+      <p class="pa-temoin-qui" data-i18n="pa.temoinQui">— Un client commerçant, Bujumbura</p>
+    </div>
+    <p class="pa-temoin-cta"><a class="devis wa" data-wa="general" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis." target="_blank" rel="noopener"><span data-i18n="testi.cta">Vous êtes client ? Partagez votre expérience</span> <span class="arr">→</span></a></p>
+  </div>
+</section>
 
 <!-- ======================= RECHERCHE PRODUITS ======================= -->
 <section class="search-sec" id="recherche">
@@ -1527,226 +1708,6 @@ gtag('config', 'G-JFP2NNX9DX');
       </div>
       <div class="search-results" id="search-results" aria-live="polite"></div>
     </div>
-  </div>
-</section>
-
-<!-- ======================= PROMOTION — KIT MAISON SOLAIRE =======================
-     Produit phare mis en avant : le Kit Maison solaire (fiche technique v3).
-     Renvois : page dédiée Énergie solaire (?page=energie-solaire),
-     formulaire de devis (#devis) et fiche technique PDF. Aucun prix :
-     le site reste « devis sur demande ». -->
-<section class="promo" id="promo" data-promo-slot aria-label="Promotion">
-  <div class="wrap">
-    <div class="promo-slot">
-      <div class="promo-copy">
-        <p class="kicker" data-i18n="promo.kicker">Promotion — Produit phare</p>
-        <h2 data-promo-title data-i18n="promo.title">Kit Maison solaire</h2>
-        <p data-promo-text data-i18n="promo.text">Le kit complet pour garder la maison allumée, même quand le réseau coupe : production, conversion et stockage réunis, selon notre fiche technique v3. Devis sur demande — aucun prix affiché.</p>
-        <div class="promo-specs">
-          <span data-i18n="promo.sp1">6 × 650 Wc double verre</span>
-          <span data-i18n="promo.sp2">Onduleur hybride 3 000 W</span>
-          <span data-i18n="promo.sp3">2 × 5,12 kWh LiFePO4</span>
-          <span data-i18n="promo.sp4">Batterie garantie 5 ans</span>
-        </div>
-        <div class="hero-ctas" style="margin-top:0">
-          <a class="btn btn-gold" href="#devis" data-promo-cta data-i18n="promo.cta">Demander un devis du kit</a>
-          <a class="btn btn-ghost" href="?page=energie-solaire" data-i18n="promo.cta2">Voir la page Énergie solaire</a>
-        </div>
-        <p class="promo-pdfline"><a href="assets/f328526adb221962.pdf" download="fiche-technique-kit-maison-solaire.pdf" data-i18n="promo.pdf">Fiche technique v3 (PDF)</a></p>
-      </div>
-      <div class="promo-media" data-promo-media><img src="assets/820dfc687756efb1.jpg" alt="Panneau solaire 650 Wc du Kit Maison solaire CIZA SUPPLY, tenu en usine" data-alt-en="650 Wp solar panel from the CIZA SUPPLY Solar Home Kit, held at the factory" loading="lazy" /><span class="promo-cap"><b data-i18n="promo.media">Kit Maison solaire :</b> <span data-i18n="promo.media2">6 × 650 Wc + onduleur hybride 3 000 W + 2 × 5,12 kWh</span></span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= SUR LE TERRAIN EN CHINE ======================= -->
-<section class="terrain" id="terrain-chine" aria-label="Sur le terrain en Chine / On the ground in China">
-  <div class="wrap">
-    <div class="terrain-band">
-      <div class="terrain-head">
-        <p class="kicker" data-i18n="terrain.kicker">CIZA SUPPLY · Chine</p>
-        <h2 data-i18n="terrain.title">Sur le terrain en Chine</h2>
-        <p data-i18n="terrain.text">Nous visitons les usines et les entrepôts nous-mêmes : contrôle des lignes de production et des stocks, avant chaque commande.</p>
-      </div>
-      <div class="terrain-grid">
-        <figure class="terrain-item">
-          <video controls playsinline preload="none" poster="assets/fa7b7123af46a0c9.jpg" data-src="assets/b920be89db3f327b.mp4" aria-label="Visite d'un entrepôt partenaire en Chine / Visit to a partner warehouse in China"></video>
-          <figcaption data-i18n="terrain.c1">Entrepôt partenaire</figcaption>
-        </figure>
-        <figure class="terrain-item">
-          <video controls playsinline preload="none" poster="assets/ab34600a0e8dd47d.jpg" data-src="assets/a84ab8a9b7441b1f.mp4" aria-label="Visite d'usine en Chine, ligne de production / Factory visit in China, production line"></video>
-          <figcaption data-i18n="terrain.c2">Visite d'usine</figcaption>
-        </figure>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= FINITION & CONFORT ======================= -->
-<section class="fin on-dark" id="finition">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="kicker" data-i18n="fin.kicker">Finition de construction — finition esthétique</p>
-      <h2 data-i18n="fin.h2">Finition &amp; confort</h2>
-      <p data-i18n="fin.sub">C'est la finition qui fait la valeur d'une maison. Douches, baignoires, luminaires, panneaux et surfaces : faites défiler les photos, touchez une photo pour l'agrandir en plein écran, regardez les vidéos, et choisissez ce qui donnera du caractère à vos pièces.</p>
-    </div>
-
-    <!-- Douches & cabines -->
-    <div class="fin-block">
-      <div class="fin-media">
-        <div class="gal" data-gal>
-          <div class="gal-track">
-            <div><video controls playsinline preload="none" poster="assets/1c47eefdc2efa599.jpg" data-src="assets/c34cd98bc87c93b5.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
-            <img src="assets/f5612caa31d1076e.jpg" alt="Colonne de douche noire avec pommeau pluie et douchette" data-alt-en="Black shower column with rain head and hand shower" loading="lazy" />
-            <img src="assets/8ee9d72a3288ca49.jpg" alt="Colonne de douche moderne en finition métal" data-alt-en="Modern shower column in metal finish" loading="lazy" />
-            <img src="assets/ccd7fb68f949718c.jpg" alt="Ensemble de douche avec mitigeur thermostatique" data-alt-en="Shower set with thermostatic mixer" loading="lazy" />
-            <img src="assets/01522f2b70e4f8b1.jpg" alt="Douchette et flexible inox" data-alt-en="Hand shower and stainless hose" loading="lazy" />
-            <img src="assets/fcc9e3b43850abf2.jpg" alt="Cabine de douche en verre avec profilés métal" data-alt-en="Glass shower cabin with metal profiles" loading="lazy" />
-            <img src="assets/bf596070d0dae4ab.jpg" alt="Cabine de douche d'angle en verre trempé" data-alt-en="Corner shower cabin in tempered glass" loading="lazy" />
-            <img src="assets/14cec5177e9d8415.jpg" alt="Paroi de douche en verre, finition haut de gamme" data-alt-en="Glass shower screen, premium finish" loading="lazy" />
-            <div><video controls playsinline preload="none" poster="assets/2396c711deba2dd5.jpg" data-src="assets/188dcdd3bf7c9a6f.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
-            <div><video controls playsinline preload="none" poster="assets/362d09be082c0e2d.jpg" data-src="assets/3479b870da0b9d18.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
-            <img src="assets/59b784bb357c334d.jpg" alt="Ensemble de douche noir : pommeau pluie, douchette et flexibles" data-alt-en="Black shower set: rain head, hand shower and hoses" loading="lazy" />
-            <img src="assets/15c24776cdb1c3c9.jpg" alt="Mitigeur de douche noir en fonctionnement, eau qui coule" data-alt-en="Black shower mixer in operation, running water" loading="lazy" />
-            <img src="assets/09e864f37a307afb.jpg" alt="Colonne de douche digitale avec affichage de la température" data-alt-en="Digital shower column with temperature display" loading="lazy" />
-            <img src="assets/309f50cfb4c2582e.jpg" alt="Colonne de douche chromée avec pommeau pluie près d'une fenêtre" data-alt-en="Chrome shower column with rain head by a window" loading="lazy" />
-            <img src="assets/1fe5ea5b1cda1370.jpg" alt="Colonne de douche en action, jet pluie" data-alt-en="Shower column in action, rain jet" loading="lazy" />
-            <img src="assets/6e5eb4ad3dce6d4b.jpg" alt="Mitigeur thermostatique sur balance, affichage digital 13,40" data-alt-en="Thermostatic mixer on a scale, digital display" loading="lazy" />
-            <img src="assets/d1e0bbca1b125700.jpg" alt="Vue technique d'un mitigeur de douche : cartouche et raccords" data-alt-en="Technical view of a shower mixer: cartridge and fittings" loading="lazy" />
-            <img src="assets/42e6234ba53a3245.jpg" alt="Cabine de douche d'angle en verre dans une salle de bain en brique" data-alt-en="Corner glass shower cabin in a brick bathroom" loading="lazy" />
-            <img src="assets/195766e5d5ce34d1.jpg" alt="Cabine de douche en verre dépoli avec porte battante" data-alt-en="Frosted glass shower cabin with hinged door" loading="lazy" />
-            <img src="assets/8e9f49b73d67b451.jpg" alt="Cabine de douche arrondie en verre avec receveur" data-alt-en="Rounded glass shower cabin with tray" loading="lazy" />
-            <img src="assets/8898c37e7a45e74b.jpg" alt="Paroi de douche en verre à cadre noir dans une salle de bain carrelée" data-alt-en="Black-framed glass shower screen in a tiled bathroom" loading="lazy" />
-            <img src="assets/79fab0c0bf304089.jpg" alt="Cabine de douche d'angle en verre, intérieur bois sombre" data-alt-en="Corner glass shower cabin, dark wood interior" loading="lazy" />
-            <img src="assets/f4d7643e2ba870bc.jpg" alt="Cabine de douche noire en verre dans une salle de bain claire" data-alt-en="Black glass shower cabin in a bright bathroom" loading="lazy" />
-          </div>
-          <span class="gal-hint" data-i18n="ui.scroll">Faites défiler ›</span>
-          <div class="gal-ui"><span class="gal-count">1 / 23</span><button type="button" class="gal-btn" data-gal-prev aria-label="Précédent">‹</button><button type="button" class="gal-btn" data-gal-next aria-label="Suivant">›</button></div>
-        </div>
-      </div>
-      <div class="fin-copy">
-        <span class="cat-num" data-i18n="fin1.num">Finition 01 — Salle de bain</span>
-        <h3 data-i18n="fin1.title">Douches &amp; cabines de douche</h3>
-        <p data-i18n="fin1.p">La salle de bain est la pièce où la finition se voit le plus. Nos colonnes de douche — thermostatiques ou digitales, avec pommeau pluie et douchette — et nos cabines en verre trempé transforment une salle d'eau ordinaire en espace de confort, pour les maisons, hôtels et résidences.</p>
-        <ul class="fin-list">
-          <li data-i18n="fin1.li1">Colonnes de douche thermostatiques et digitales</li>
-          <li data-i18n="fin1.li2">Cabines et parois en verre trempé, profilés métal</li>
-          <li data-i18n="fin1.li3">Robinetterie, flexibles et accessoires inox assortis</li>
-        </ul>
-        <a class="devis wa" data-wa="fin-douche" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20les%20douches%20et%20cabines%20de%20douche%20(finition)." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
-      </div>
-    </div>
-
-    <!-- Baignoires -->
-    <div class="fin-block flip">
-      <div class="fin-media">
-        <div class="gal" data-gal>
-          <div class="gal-track">
-            <div><video controls playsinline preload="none" poster="assets/d728c9eb9be31427.jpg" data-src="assets/f73a003fa61837b6.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
-            <img src="assets/d60eb9ef2fab807e.jpg" alt="Baignoire balnéo avec jets hydromassants" data-alt-en="Whirlpool bathtub with hydro-massage jets" loading="lazy" />
-            <img src="assets/546b94c209e1c40d.jpg" alt="Baignoire balnéo en situation dans une salle de bain" data-alt-en="Whirlpool bathtub fitted in a bathroom" loading="lazy" />
-            <img src="assets/91df1b447b771e10.jpg" alt="Détail des jets et de la robinetterie de baignoire" data-alt-en="Detail of bathtub jets and fittings" loading="lazy" />
-            <img src="assets/fc6a022f643be58c.jpg" alt="Baignoire de confort, finition brillante" data-alt-en="Comfort bathtub, glossy finish" loading="lazy" />
-            <div><video controls playsinline preload="none" poster="assets/7e4d1037295432cd.jpg" data-src="assets/3b0adb8a264fec21.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
-            <img src="assets/c411c10265b71a02.jpg" alt="Robinets de baignoire sur pied : finitions or, chrome et noir mat" data-alt-en="Freestanding bathtub faucets: gold, chrome and matte black finishes" loading="lazy" />
-            <img src="assets/e56c71b52bb1ebcf.jpg" alt="Spa de nage intérieur : bassin, jets et sièges hydromassants" data-alt-en="Indoor swim spa: basin, jets and hydro-massage seats" loading="lazy" />
-            <img src="assets/9f15880c93b81de4.jpg" alt="Spa de nage extérieur installé dans un jardin" data-alt-en="Outdoor swim spa installed in a garden" loading="lazy" />
-            <img src="assets/0fcb0160cb5c5882.jpg" alt="Spa balnéo : jets et appuie-tête, vue intérieure" data-alt-en="Whirlpool spa: jets and headrests, interior view" loading="lazy" />
-            <img src="assets/482255444361c454.jpg" alt="Spa de nage vu du dessus : forme et équipements" data-alt-en="Swim spa seen from above: shape and fittings" loading="lazy" />
-            <img src="assets/4068aec52faeefff.jpg" alt="Baignoire îlot ovale en surface solide, finition nervurée" data-alt-en="Oval freestanding solid surface bathtub, ribbed finish" loading="lazy" />
-            <img src="assets/54d6c9f22aa57996.jpg" alt="Baignoire îlot ronde en surface solide blanche" data-alt-en="Round freestanding solid surface bathtub in white" loading="lazy" />
-          </div>
-          <span class="gal-hint" data-i18n="ui.scroll">Faites défiler ›</span>
-          <div class="gal-ui"><span class="gal-count">1 / 13</span><button type="button" class="gal-btn" data-gal-prev aria-label="Précédent">‹</button><button type="button" class="gal-btn" data-gal-next aria-label="Suivant">›</button></div>
-        </div>
-      </div>
-      <div class="fin-copy">
-        <span class="cat-num" data-i18n="fin2.num">Finition 02 — Bien-être</span>
-        <h3 data-i18n="fin2.title">Baignoires &amp; espace bien-être</h3>
-        <p data-i18n="fin2.p">Baignoires balnéo à jets hydromassants, modèles îlot ou d'angle, finitions acrylique ou effet pierre — et désormais les spas de nage et spas balnéo, pour les maisons, villas et hôtels : le niveau de confort d'un hôtel, chez vous. Regardez les vidéos pour voir les jets et les finitions en action, puis demandez le devis du modèle qui vous plaît.</p>
-        <ul class="fin-list">
-          <li data-i18n="fin2.li1">Baignoires balnéo à jets hydromassants et spas de nage</li>
-          <li data-i18n="fin2.li2">Modèles îlot, d'angle et encastrables</li>
-          <li data-i18n="fin2.li3">Finitions acrylique brillante ou effet pierre</li>
-        </ul>
-        <a class="devis wa" data-wa="fin-baignoire" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20les%20baignoires%20(finition)." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
-      </div>
-    </div>
-
-    <!-- Luminaires -->
-    <div class="fin-block">
-      <div class="fin-media">
-        <div class="gal" data-gal>
-          <div class="gal-track">
-            <div><video controls playsinline preload="none" poster="assets/b9d87c4e948312ae.jpg" data-src="assets/3a1df098f9ed176a.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
-            <img src="assets/beadf4ca113765d7.jpg" alt="Luminaire design pour salon ou salle à manger" data-alt-en="Designer light fitting for living or dining room" loading="lazy" />
-            <img src="assets/fe97b43836924eff.jpg" alt="Suspension décorative, finition métal" data-alt-en="Decorative pendant light, metal finish" loading="lazy" />
-            <img src="assets/c70b3fd1f2759e4f.jpg" alt="Éclairage LED de salle de bain" data-alt-en="LED bathroom lighting" loading="lazy" />
-            <img src="assets/82525921535ab27e.jpg" alt="Luminaire décoratif en situation" data-alt-en="Decorative light fitting in place" loading="lazy" />
-            <div><video controls playsinline preload="none" poster="assets/4f38f24afa5e9373.jpg" data-src="assets/9f1d5c238ab12c01.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
-            <img src="assets/dd37e3e591cb2eec.jpg" alt="Suspension globe avec cotes : hauteur 180 cm, globe 33 cm" data-alt-en="Globe pendant light with dimensions: 180 cm drop, 33 cm globe" loading="lazy" />
-            <img src="assets/0270f99aa6cc2789.jpg" alt="Suspensions globe au-dessus d'un lit, ambiance chambre" data-alt-en="Globe pendant lights above a bed, bedroom mood" loading="lazy" />
-            <img src="assets/89006fee199f7083.jpg" alt="Suspension globe sur tige noire, fond clair" data-alt-en="Globe pendant light on a black stem, light background" loading="lazy" />
-            <img src="assets/1ea04ce7493ff286.jpg" alt="Suspension globe allumée dans une chambre aux tons chauds" data-alt-en="Globe pendant light switched on in a warm-toned bedroom" loading="lazy" />
-            <img src="assets/d0d23905f5ec386e.jpg" alt="Suspension globe dans une chambre aux panneaux bois sombres" data-alt-en="Globe pendant light in a dark wood-panelled bedroom" loading="lazy" />
-            <img src="assets/a69ec70a9652192f.jpg" alt="Meuble vasque bois avec miroir LED rond et vasque blanche" data-alt-en="Wood vanity unit with round LED mirror and white basin" loading="lazy" />
-          </div>
-          <span class="gal-hint" data-i18n="ui.scroll">Faites défiler ›</span>
-          <div class="gal-ui"><span class="gal-count">1 / 12</span><button type="button" class="gal-btn" data-gal-prev aria-label="Précédent">‹</button><button type="button" class="gal-btn" data-gal-next aria-label="Suivant">›</button></div>
-        </div>
-      </div>
-      <div class="fin-copy">
-        <span class="cat-num" data-i18n="fin3.num">Finition 03 — Éclairage</span>
-        <h3 data-i18n="fin3.title">Luminaires &amp; éclairage décoratif</h3>
-        <p data-i18n="fin3.p">Un beau plafond et une belle lumière changent toute une pièce. Lustres, suspensions, spots et appliques LED : nous importons l'éclairage décoratif des salons, salles à manger, cuisines et salles de bain, avec les finitions métal, verre et laiton que l'on trouve dans les grands hôtels.</p>
-        <ul class="fin-list">
-          <li data-i18n="fin3.li1">Lustres et suspensions design</li>
-          <li data-i18n="fin3.li2">Spots, appliques et éclairage LED de salle de bain</li>
-          <li data-i18n="fin3.li3">Finitions métal, verre et laiton</li>
-        </ul>
-        <a class="devis wa" data-wa="fin-luminaires" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20les%20luminaires%20(finition)." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
-      </div>
-    </div>
-
-    <!-- Panneaux, mosaïques & surfaces -->
-    <div class="fin-block flip">
-      <div class="fin-media">
-        <div class="gal" data-gal>
-          <div class="gal-track">
-            <div><video controls playsinline preload="none" poster="assets/57a2a348fda9950f.jpg" data-src="assets/cee38dc2086e0336.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
-            <div><video controls playsinline preload="none" poster="assets/eb5be5432f36107f.jpg" data-src="assets/b0abb67a5eff7452.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
-            <img src="assets/0b1aca4f42fa63f4.jpg" alt="Vasque suspendue en surface solide blanche" data-alt-en="Wall-hung solid surface washbasin in white" loading="lazy" />
-            <img src="assets/98e44b4e438eccaf.jpg" alt="Plan vasque en surface solide, finition mate" data-alt-en="Solid surface vanity top, matte finish" loading="lazy" />
-            <img src="assets/ed92e577499c2ae8.jpg" alt="Vasque en surface solide sur plan marbré" data-alt-en="Solid surface basin on a marble-look counter" loading="lazy" />
-            <div><video controls playsinline preload="none" poster="assets/0a872a1a302d5417.jpg" data-src="assets/19cae8b12d11e175.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
-            <div><video controls playsinline preload="none" poster="assets/f7b86f1f3140877a.jpg" data-src="assets/33c0285a125468fe.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
-            <img src="assets/c3d2c14baa042bde.jpg" alt="Profilé de plinthe LED en aluminium, finitions noir et or" data-alt-en="Aluminium LED skirting profile, black and gold finishes" loading="lazy" />
-            <img src="assets/d13d876b2e60125f.jpg" alt="Plinthe LED installée au pied d'un mur, éclairage indirect" data-alt-en="LED skirting board fitted at the foot of a wall, indirect lighting" loading="lazy" />
-            <img src="assets/8d6ad07486aaa554.jpg" alt="Plinthe en aluminium brossé or, détail de finition" data-alt-en="Brushed gold aluminium skirting board, finish detail" loading="lazy" />
-            <img src="assets/0538b120b7976f38.jpg" alt="Plinthe LED noire et profilé or posés au sol" data-alt-en="Black LED skirting and gold profile laid on the floor" loading="lazy" />
-            <img src="assets/deec2b4ebb666dd9.jpg" alt="Panneaux muraux effet pierre empilée, trois coloris" data-alt-en="Stacked-stone effect wall panels, three colours" loading="lazy" />
-            <img src="assets/761f30a30e1c110f.jpg" alt="Carreaux muraux effet pierre naturelle, tons chauds" data-alt-en="Natural stone-effect wall tiles, warm tones" loading="lazy" />
-            <img src="assets/e9e505761e002da4.jpg" alt="Carreaux effet pierre : gris anthracite et terracotta" data-alt-en="Stone-effect tiles: anthracite grey and terracotta" loading="lazy" />
-            <img src="assets/1cfd24c9f59cf51a.jpg" alt="Carreaux muraux effet pierre grise, pose verticale et horizontale" data-alt-en="Grey stone-effect wall tiles, vertical and horizontal laying" loading="lazy" />
-            <img src="assets/7c6deaded6e9c053.jpg" alt="Plan de travail de cuisine en surface solide, finition marbre" data-alt-en="Kitchen worktop in solid surface, marble finish" loading="lazy" />
-          </div>
-          <span class="gal-hint" data-i18n="ui.scroll">Faites défiler ›</span>
-          <div class="gal-ui"><span class="gal-count">1 / 16</span><button type="button" class="gal-btn" data-gal-prev aria-label="Précédent">‹</button><button type="button" class="gal-btn" data-gal-next aria-label="Suivant">›</button></div>
-        </div>
-      </div>
-      <div class="fin-copy">
-        <span class="cat-num" data-i18n="fin4.num">Finition 04 — Murs &amp; surfaces</span>
-        <h3 data-i18n="fin4.title">Panneaux, mosaïques &amp; surfaces solides</h3>
-        <p data-i18n="fin4.p">Les murs et les plans de travail donnent le ton d'une finition haut de gamme : panneaux muraux décoratifs, mosaïques, marches d'escalier finies et surfaces solides taillées sur mesure pour vasques, plans de cuisine et comptoirs — sans joints visibles, faciles à entretenir, pensées pour durer.</p>
-        <ul class="fin-list">
-          <li data-i18n="fin4.li1">Panneaux muraux décoratifs, mosaïques et plinthes LED aluminium</li>
-          <li data-i18n="fin4.li2">Vasques et plans en surface solide, sur mesure</li>
-          <li data-i18n="fin4.li3">Marches d'escalier et finitions assorties</li>
-        </ul>
-        <a class="devis wa" data-wa="fin-surfaces" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20les%20panneaux%2C%20mosa%C3%AFques%20et%20surfaces%20solides%20(finition)." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -2023,6 +1984,10 @@ gtag('config', 'G-JFP2NNX9DX');
         </div>
       </article>
 
+      <a class="fin-card" id="finition" href="/finition-confort/">
+        <span class="fin-card-img"><img src="assets/f5612caa31d1076e.jpg" alt="Colonne de douche noire avec pommeau pluie et douchette" data-alt-en="Black shower column with rain head and hand shower" loading="lazy" /></span>
+        <span class="fin-card-body"><span class="fin-card-name" data-i18n="fin.h2">Finition &amp; confort</span><span class="fin-card-link"><span data-i18n="ui.page">Page dédiée</span> <span class="arr">→</span></span></span>
+      </a>
     </div>
     <div class="cats-note">
       <p data-i18n="note.p">Un produit précis qui n'est pas listé ici ? Nous le sourçons à la demande.</p>
@@ -2090,6 +2055,63 @@ gtag('config', 'G-JFP2NNX9DX');
   </div>
 </section>
 
+<!-- ======================= PROMOTION — KIT MAISON SOLAIRE =======================
+     Produit phare mis en avant : le Kit Maison solaire (fiche technique v3).
+     Renvois : page dédiée Énergie solaire (?page=energie-solaire),
+     formulaire de devis (#devis) et fiche technique PDF. Aucun prix :
+     le site reste « devis sur demande ». -->
+<section class="promo" id="promo" data-promo-slot aria-label="Promotion">
+  <div class="wrap">
+    <div class="promo-slot">
+      <div class="promo-copy">
+        <p class="kicker" data-i18n="promo.kicker">Promotion — Produit phare</p>
+        <h2 data-promo-title data-i18n="promo.title">Kit Maison solaire</h2>
+        <p data-promo-text data-i18n="promo.text">Le kit complet pour garder la maison allumée, même quand le réseau coupe : production, conversion et stockage réunis, selon notre fiche technique v3. Devis sur demande — aucun prix affiché.</p>
+        <div class="promo-specs">
+          <span data-i18n="promo.sp1">6 × 650 Wc double verre</span>
+          <span data-i18n="promo.sp2">Onduleur hybride 3 000 W</span>
+          <span data-i18n="promo.sp3">2 × 5,12 kWh LiFePO4</span>
+          <span data-i18n="promo.sp4">Batterie garantie 5 ans</span>
+        </div>
+        <div class="hero-ctas" style="margin-top:0">
+          <a class="btn btn-gold" href="#devis" data-promo-cta data-i18n="promo.cta">Demander un devis du kit</a>
+          <a class="btn btn-ghost" href="?page=energie-solaire" data-i18n="promo.cta2">Voir la page Énergie solaire</a>
+        </div>
+        <p class="promo-pdfline"><a href="assets/f328526adb221962.pdf" download="fiche-technique-kit-maison-solaire.pdf" data-i18n="promo.pdf">Fiche technique v3 (PDF)</a></p>
+      </div>
+      <div class="promo-media" data-promo-media><img src="assets/820dfc687756efb1.jpg" alt="Panneau solaire 650 Wc du Kit Maison solaire CIZA SUPPLY, tenu en usine" data-alt-en="650 Wp solar panel from the CIZA SUPPLY Solar Home Kit, held at the factory" loading="lazy" /><span class="promo-cap"><b data-i18n="promo.media">Kit Maison solaire :</b> <span data-i18n="promo.media2">6 × 650 Wc + onduleur hybride 3 000 W + 2 × 5,12 kWh</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= PROCESS ======================= -->
+<section class="process" id="processus">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker" data-i18n="proc.kicker">Comment ça marche</p>
+      <h2 data-i18n="proc.h2">Pas de vente en ligne. Du contact, du devis, du bureau.</h2>
+      <p data-i18n="proc.sub">La relation commerciale se fait en personne — c'est ce qui protège votre commande et vos marges.</p>
+    </div>
+    <div class="steps steps-3">
+      <div class="step">
+        <div class="n">01</div>
+        <h3 data-i18n="st1.t">Vous nous contactez</h3>
+        <p data-i18n="st1.p">Par WhatsApp, par le formulaire de devis ou directement au bureau, avec le produit ou la catégorie qui vous intéresse.</p>
+      </div>
+      <div class="step">
+        <div class="n">02</div>
+        <h3 data-i18n="st2.t">Nous préparons votre devis</h3>
+        <p data-i18n="st2.p">Notre bureau en Chine confirme disponibilités et conditions directement auprès des usines.</p>
+      </div>
+      <div class="step">
+        <div class="n">03</div>
+        <h3 data-i18n="st3.t">Vous validez au bureau</h3>
+        <p data-i18n="st3.p">La commande se finalise en face à face, dans notre bureau de Bujumbura. Rien ne se conclut en ligne.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ======================= KIT MAISON ======================= -->
 <section class="kit on-dark" id="kit-maison">
   <div class="wrap">
@@ -2141,36 +2163,194 @@ gtag('config', 'G-JFP2NNX9DX');
   </div>
 </section>
 
-<!-- ======================= PROCESS ======================= -->
-<section class="process" id="processus">
+<!-- ======================= SUR LE TERRAIN EN CHINE ======================= -->
+<section class="terrain" id="terrain-chine" aria-label="Sur le terrain en Chine / On the ground in China">
+  <div class="wrap">
+    <div class="terrain-band">
+      <div class="terrain-head">
+        <p class="kicker" data-i18n="terrain.kicker">CIZA SUPPLY · Chine</p>
+        <h2 data-i18n="terrain.title">Sur le terrain en Chine</h2>
+        <p data-i18n="terrain.text">Nous visitons les usines et les entrepôts nous-mêmes : contrôle des lignes de production et des stocks, avant chaque commande.</p>
+      </div>
+      <div class="terrain-grid">
+        <figure class="terrain-item">
+          <video controls playsinline preload="none" poster="assets/fa7b7123af46a0c9.jpg" data-src="assets/b920be89db3f327b.mp4" aria-label="Visite d'un entrepôt partenaire en Chine / Visit to a partner warehouse in China"></video>
+          <figcaption data-i18n="terrain.c1">Entrepôt partenaire</figcaption>
+        </figure>
+        <figure class="terrain-item">
+          <video controls playsinline preload="none" poster="assets/ab34600a0e8dd47d.jpg" data-src="assets/a84ab8a9b7441b1f.mp4" aria-label="Visite d'usine en Chine, ligne de production / Factory visit in China, production line"></video>
+          <figcaption data-i18n="terrain.c2">Visite d'usine</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= FINITION & CONFORT ======================= -->
+<section class="fin on-dark">
   <div class="wrap">
     <div class="sec-head">
-      <p class="kicker" data-i18n="proc.kicker">Comment ça marche</p>
-      <h2 data-i18n="proc.h2">Pas de vente en ligne. Du contact, du devis, du bureau.</h2>
-      <p data-i18n="proc.sub">La relation commerciale se fait en personne — c'est ce qui protège votre commande et vos marges.</p>
+      <p class="kicker" data-i18n="fin.kicker">Finition de construction — finition esthétique</p>
+      <h2 data-i18n="fin.h2">Finition &amp; confort</h2>
+      <p data-i18n="fin.sub">C'est la finition qui fait la valeur d'une maison. Douches, baignoires, luminaires, panneaux et surfaces : faites défiler les photos, touchez une photo pour l'agrandir en plein écran, regardez les vidéos, et choisissez ce qui donnera du caractère à vos pièces.</p>
     </div>
-    <div class="steps">
-      <div class="step">
-        <div class="n">01</div>
-        <h3 data-i18n="st1.t">Vous nous contactez</h3>
-        <p data-i18n="st1.p">Par WhatsApp, par le formulaire de devis ou directement au bureau, avec le produit ou la catégorie qui vous intéresse.</p>
+
+    <!-- Douches & cabines -->
+    <div class="fin-block">
+      <div class="fin-media">
+        <div class="gal" data-gal>
+          <div class="gal-track">
+            <div><video controls playsinline preload="none" poster="assets/1c47eefdc2efa599.jpg" data-src="assets/c34cd98bc87c93b5.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
+            <img src="assets/f5612caa31d1076e.jpg" alt="Colonne de douche noire avec pommeau pluie et douchette" data-alt-en="Black shower column with rain head and hand shower" loading="lazy" />
+            <img src="assets/8ee9d72a3288ca49.jpg" alt="Colonne de douche moderne en finition métal" data-alt-en="Modern shower column in metal finish" loading="lazy" />
+            <img src="assets/ccd7fb68f949718c.jpg" alt="Ensemble de douche avec mitigeur thermostatique" data-alt-en="Shower set with thermostatic mixer" loading="lazy" />
+            <img src="assets/01522f2b70e4f8b1.jpg" alt="Douchette et flexible inox" data-alt-en="Hand shower and stainless hose" loading="lazy" />
+            <img src="assets/fcc9e3b43850abf2.jpg" alt="Cabine de douche en verre avec profilés métal" data-alt-en="Glass shower cabin with metal profiles" loading="lazy" />
+            <img src="assets/bf596070d0dae4ab.jpg" alt="Cabine de douche d'angle en verre trempé" data-alt-en="Corner shower cabin in tempered glass" loading="lazy" />
+            <img src="assets/14cec5177e9d8415.jpg" alt="Paroi de douche en verre, finition haut de gamme" data-alt-en="Glass shower screen, premium finish" loading="lazy" />
+            <div><video controls playsinline preload="none" poster="assets/2396c711deba2dd5.jpg" data-src="assets/188dcdd3bf7c9a6f.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
+            <div><video controls playsinline preload="none" poster="assets/362d09be082c0e2d.jpg" data-src="assets/3479b870da0b9d18.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
+            <img src="assets/59b784bb357c334d.jpg" alt="Ensemble de douche noir : pommeau pluie, douchette et flexibles" data-alt-en="Black shower set: rain head, hand shower and hoses" loading="lazy" />
+            <img src="assets/15c24776cdb1c3c9.jpg" alt="Mitigeur de douche noir en fonctionnement, eau qui coule" data-alt-en="Black shower mixer in operation, running water" loading="lazy" />
+            <img src="assets/09e864f37a307afb.jpg" alt="Colonne de douche digitale avec affichage de la température" data-alt-en="Digital shower column with temperature display" loading="lazy" />
+            <img src="assets/309f50cfb4c2582e.jpg" alt="Colonne de douche chromée avec pommeau pluie près d'une fenêtre" data-alt-en="Chrome shower column with rain head by a window" loading="lazy" />
+            <img src="assets/1fe5ea5b1cda1370.jpg" alt="Colonne de douche en action, jet pluie" data-alt-en="Shower column in action, rain jet" loading="lazy" />
+            <img src="assets/6e5eb4ad3dce6d4b.jpg" alt="Mitigeur thermostatique sur balance, affichage digital 13,40" data-alt-en="Thermostatic mixer on a scale, digital display" loading="lazy" />
+            <img src="assets/d1e0bbca1b125700.jpg" alt="Vue technique d'un mitigeur de douche : cartouche et raccords" data-alt-en="Technical view of a shower mixer: cartridge and fittings" loading="lazy" />
+            <img src="assets/42e6234ba53a3245.jpg" alt="Cabine de douche d'angle en verre dans une salle de bain en brique" data-alt-en="Corner glass shower cabin in a brick bathroom" loading="lazy" />
+            <img src="assets/195766e5d5ce34d1.jpg" alt="Cabine de douche en verre dépoli avec porte battante" data-alt-en="Frosted glass shower cabin with hinged door" loading="lazy" />
+            <img src="assets/8e9f49b73d67b451.jpg" alt="Cabine de douche arrondie en verre avec receveur" data-alt-en="Rounded glass shower cabin with tray" loading="lazy" />
+            <img src="assets/8898c37e7a45e74b.jpg" alt="Paroi de douche en verre à cadre noir dans une salle de bain carrelée" data-alt-en="Black-framed glass shower screen in a tiled bathroom" loading="lazy" />
+            <img src="assets/79fab0c0bf304089.jpg" alt="Cabine de douche d'angle en verre, intérieur bois sombre" data-alt-en="Corner glass shower cabin, dark wood interior" loading="lazy" />
+            <img src="assets/f4d7643e2ba870bc.jpg" alt="Cabine de douche noire en verre dans une salle de bain claire" data-alt-en="Black glass shower cabin in a bright bathroom" loading="lazy" />
+          </div>
+          <span class="gal-hint" data-i18n="ui.scroll">Faites défiler ›</span>
+          <div class="gal-ui"><span class="gal-count">1 / 23</span><button type="button" class="gal-btn" data-gal-prev aria-label="Précédent">‹</button><button type="button" class="gal-btn" data-gal-next aria-label="Suivant">›</button></div>
+        </div>
       </div>
-      <div class="step">
-        <div class="n">02</div>
-        <h3 data-i18n="st2.t">Nous préparons votre devis</h3>
-        <p data-i18n="st2.p">Notre bureau en Chine confirme disponibilités et conditions directement auprès des usines.</p>
-      </div>
-      <div class="step">
-        <div class="n">03</div>
-        <h3 data-i18n="st3.t">Vous validez au bureau</h3>
-        <p data-i18n="st3.p">La commande se finalise en face à face, dans notre bureau de Bujumbura. Rien ne se conclut en ligne.</p>
-      </div>
-      <div class="step">
-        <div class="n">04</div>
-        <h3 data-i18n="st4.t">Production, contrôle, expédition</h3>
-        <p data-i18n="st4.p">La marchandise est produite, contrôlée qualité, puis expédiée vers le Burundi.</p>
+      <div class="fin-copy">
+        <span class="cat-num" data-i18n="fin1.num">Finition 01 — Salle de bain</span>
+        <h3 data-i18n="fin1.title">Douches &amp; cabines de douche</h3>
+        <p data-i18n="fin1.p">La salle de bain est la pièce où la finition se voit le plus. Nos colonnes de douche — thermostatiques ou digitales, avec pommeau pluie et douchette — et nos cabines en verre trempé transforment une salle d'eau ordinaire en espace de confort, pour les maisons, hôtels et résidences.</p>
+        <ul class="fin-list">
+          <li data-i18n="fin1.li1">Colonnes de douche thermostatiques et digitales</li>
+          <li data-i18n="fin1.li2">Cabines et parois en verre trempé, profilés métal</li>
+          <li data-i18n="fin1.li3">Robinetterie, flexibles et accessoires inox assortis</li>
+        </ul>
+        <a class="devis wa" data-wa="fin-douche" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20les%20douches%20et%20cabines%20de%20douche%20(finition)." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
       </div>
     </div>
+
+    <!-- Baignoires -->
+    <div class="fin-block flip">
+      <div class="fin-media">
+        <div class="gal" data-gal>
+          <div class="gal-track">
+            <div><video controls playsinline preload="none" poster="assets/d728c9eb9be31427.jpg" data-src="assets/f73a003fa61837b6.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
+            <img src="assets/d60eb9ef2fab807e.jpg" alt="Baignoire balnéo avec jets hydromassants" data-alt-en="Whirlpool bathtub with hydro-massage jets" loading="lazy" />
+            <img src="assets/546b94c209e1c40d.jpg" alt="Baignoire balnéo en situation dans une salle de bain" data-alt-en="Whirlpool bathtub fitted in a bathroom" loading="lazy" />
+            <img src="assets/91df1b447b771e10.jpg" alt="Détail des jets et de la robinetterie de baignoire" data-alt-en="Detail of bathtub jets and fittings" loading="lazy" />
+            <img src="assets/fc6a022f643be58c.jpg" alt="Baignoire de confort, finition brillante" data-alt-en="Comfort bathtub, glossy finish" loading="lazy" />
+            <div><video controls playsinline preload="none" poster="assets/7e4d1037295432cd.jpg" data-src="assets/3b0adb8a264fec21.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
+            <img src="assets/c411c10265b71a02.jpg" alt="Robinets de baignoire sur pied : finitions or, chrome et noir mat" data-alt-en="Freestanding bathtub faucets: gold, chrome and matte black finishes" loading="lazy" />
+            <img src="assets/e56c71b52bb1ebcf.jpg" alt="Spa de nage intérieur : bassin, jets et sièges hydromassants" data-alt-en="Indoor swim spa: basin, jets and hydro-massage seats" loading="lazy" />
+            <img src="assets/9f15880c93b81de4.jpg" alt="Spa de nage extérieur installé dans un jardin" data-alt-en="Outdoor swim spa installed in a garden" loading="lazy" />
+            <img src="assets/0fcb0160cb5c5882.jpg" alt="Spa balnéo : jets et appuie-tête, vue intérieure" data-alt-en="Whirlpool spa: jets and headrests, interior view" loading="lazy" />
+            <img src="assets/482255444361c454.jpg" alt="Spa de nage vu du dessus : forme et équipements" data-alt-en="Swim spa seen from above: shape and fittings" loading="lazy" />
+            <img src="assets/4068aec52faeefff.jpg" alt="Baignoire îlot ovale en surface solide, finition nervurée" data-alt-en="Oval freestanding solid surface bathtub, ribbed finish" loading="lazy" />
+            <img src="assets/54d6c9f22aa57996.jpg" alt="Baignoire îlot ronde en surface solide blanche" data-alt-en="Round freestanding solid surface bathtub in white" loading="lazy" />
+          </div>
+          <span class="gal-hint" data-i18n="ui.scroll">Faites défiler ›</span>
+          <div class="gal-ui"><span class="gal-count">1 / 13</span><button type="button" class="gal-btn" data-gal-prev aria-label="Précédent">‹</button><button type="button" class="gal-btn" data-gal-next aria-label="Suivant">›</button></div>
+        </div>
+      </div>
+      <div class="fin-copy">
+        <span class="cat-num" data-i18n="fin2.num">Finition 02 — Bien-être</span>
+        <h3 data-i18n="fin2.title">Baignoires &amp; espace bien-être</h3>
+        <p data-i18n="fin2.p">Baignoires balnéo à jets hydromassants, modèles îlot ou d'angle, finitions acrylique ou effet pierre — et désormais les spas de nage et spas balnéo, pour les maisons, villas et hôtels : le niveau de confort d'un hôtel, chez vous. Regardez les vidéos pour voir les jets et les finitions en action, puis demandez le devis du modèle qui vous plaît.</p>
+        <ul class="fin-list">
+          <li data-i18n="fin2.li1">Baignoires balnéo à jets hydromassants et spas de nage</li>
+          <li data-i18n="fin2.li2">Modèles îlot, d'angle et encastrables</li>
+          <li data-i18n="fin2.li3">Finitions acrylique brillante ou effet pierre</li>
+        </ul>
+        <a class="devis wa" data-wa="fin-baignoire" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20les%20baignoires%20(finition)." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
+      </div>
+    </div>
+
+    <!-- Luminaires -->
+    <div class="fin-block">
+      <div class="fin-media">
+        <div class="gal" data-gal>
+          <div class="gal-track">
+            <div><video controls playsinline preload="none" poster="assets/b9d87c4e948312ae.jpg" data-src="assets/3a1df098f9ed176a.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
+            <img src="assets/beadf4ca113765d7.jpg" alt="Luminaire design pour salon ou salle à manger" data-alt-en="Designer light fitting for living or dining room" loading="lazy" />
+            <img src="assets/fe97b43836924eff.jpg" alt="Suspension décorative, finition métal" data-alt-en="Decorative pendant light, metal finish" loading="lazy" />
+            <img src="assets/c70b3fd1f2759e4f.jpg" alt="Éclairage LED de salle de bain" data-alt-en="LED bathroom lighting" loading="lazy" />
+            <img src="assets/82525921535ab27e.jpg" alt="Luminaire décoratif en situation" data-alt-en="Decorative light fitting in place" loading="lazy" />
+            <div><video controls playsinline preload="none" poster="assets/4f38f24afa5e9373.jpg" data-src="assets/9f1d5c238ab12c01.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
+            <img src="assets/dd37e3e591cb2eec.jpg" alt="Suspension globe avec cotes : hauteur 180 cm, globe 33 cm" data-alt-en="Globe pendant light with dimensions: 180 cm drop, 33 cm globe" loading="lazy" />
+            <img src="assets/0270f99aa6cc2789.jpg" alt="Suspensions globe au-dessus d'un lit, ambiance chambre" data-alt-en="Globe pendant lights above a bed, bedroom mood" loading="lazy" />
+            <img src="assets/89006fee199f7083.jpg" alt="Suspension globe sur tige noire, fond clair" data-alt-en="Globe pendant light on a black stem, light background" loading="lazy" />
+            <img src="assets/1ea04ce7493ff286.jpg" alt="Suspension globe allumée dans une chambre aux tons chauds" data-alt-en="Globe pendant light switched on in a warm-toned bedroom" loading="lazy" />
+            <img src="assets/d0d23905f5ec386e.jpg" alt="Suspension globe dans une chambre aux panneaux bois sombres" data-alt-en="Globe pendant light in a dark wood-panelled bedroom" loading="lazy" />
+            <img src="assets/a69ec70a9652192f.jpg" alt="Meuble vasque bois avec miroir LED rond et vasque blanche" data-alt-en="Wood vanity unit with round LED mirror and white basin" loading="lazy" />
+          </div>
+          <span class="gal-hint" data-i18n="ui.scroll">Faites défiler ›</span>
+          <div class="gal-ui"><span class="gal-count">1 / 12</span><button type="button" class="gal-btn" data-gal-prev aria-label="Précédent">‹</button><button type="button" class="gal-btn" data-gal-next aria-label="Suivant">›</button></div>
+        </div>
+      </div>
+      <div class="fin-copy">
+        <span class="cat-num" data-i18n="fin3.num">Finition 03 — Éclairage</span>
+        <h3 data-i18n="fin3.title">Luminaires &amp; éclairage décoratif</h3>
+        <p data-i18n="fin3.p">Un beau plafond et une belle lumière changent toute une pièce. Lustres, suspensions, spots et appliques LED : nous importons l'éclairage décoratif des salons, salles à manger, cuisines et salles de bain, avec les finitions métal, verre et laiton que l'on trouve dans les grands hôtels.</p>
+        <ul class="fin-list">
+          <li data-i18n="fin3.li1">Lustres et suspensions design</li>
+          <li data-i18n="fin3.li2">Spots, appliques et éclairage LED de salle de bain</li>
+          <li data-i18n="fin3.li3">Finitions métal, verre et laiton</li>
+        </ul>
+        <a class="devis wa" data-wa="fin-luminaires" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20les%20luminaires%20(finition)." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
+      </div>
+    </div>
+
+    <!-- Panneaux, mosaïques & surfaces -->
+    <div class="fin-block flip">
+      <div class="fin-media">
+        <div class="gal" data-gal>
+          <div class="gal-track">
+            <div><video controls playsinline preload="none" poster="assets/57a2a348fda9950f.jpg" data-src="assets/cee38dc2086e0336.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
+            <div><video controls playsinline preload="none" poster="assets/eb5be5432f36107f.jpg" data-src="assets/b0abb67a5eff7452.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
+            <img src="assets/0b1aca4f42fa63f4.jpg" alt="Vasque suspendue en surface solide blanche" data-alt-en="Wall-hung solid surface washbasin in white" loading="lazy" />
+            <img src="assets/98e44b4e438eccaf.jpg" alt="Plan vasque en surface solide, finition mate" data-alt-en="Solid surface vanity top, matte finish" loading="lazy" />
+            <img src="assets/ed92e577499c2ae8.jpg" alt="Vasque en surface solide sur plan marbré" data-alt-en="Solid surface basin on a marble-look counter" loading="lazy" />
+            <div><video controls playsinline preload="none" poster="assets/0a872a1a302d5417.jpg" data-src="assets/19cae8b12d11e175.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
+            <div><video controls playsinline preload="none" poster="assets/f7b86f1f3140877a.jpg" data-src="assets/33c0285a125468fe.mp4"></video><span class="gal-badge" data-i18n="ui.video">Vidéo</span></div>
+            <img src="assets/c3d2c14baa042bde.jpg" alt="Profilé de plinthe LED en aluminium, finitions noir et or" data-alt-en="Aluminium LED skirting profile, black and gold finishes" loading="lazy" />
+            <img src="assets/d13d876b2e60125f.jpg" alt="Plinthe LED installée au pied d'un mur, éclairage indirect" data-alt-en="LED skirting board fitted at the foot of a wall, indirect lighting" loading="lazy" />
+            <img src="assets/8d6ad07486aaa554.jpg" alt="Plinthe en aluminium brossé or, détail de finition" data-alt-en="Brushed gold aluminium skirting board, finish detail" loading="lazy" />
+            <img src="assets/0538b120b7976f38.jpg" alt="Plinthe LED noire et profilé or posés au sol" data-alt-en="Black LED skirting and gold profile laid on the floor" loading="lazy" />
+            <img src="assets/deec2b4ebb666dd9.jpg" alt="Panneaux muraux effet pierre empilée, trois coloris" data-alt-en="Stacked-stone effect wall panels, three colours" loading="lazy" />
+            <img src="assets/761f30a30e1c110f.jpg" alt="Carreaux muraux effet pierre naturelle, tons chauds" data-alt-en="Natural stone-effect wall tiles, warm tones" loading="lazy" />
+            <img src="assets/e9e505761e002da4.jpg" alt="Carreaux effet pierre : gris anthracite et terracotta" data-alt-en="Stone-effect tiles: anthracite grey and terracotta" loading="lazy" />
+            <img src="assets/1cfd24c9f59cf51a.jpg" alt="Carreaux muraux effet pierre grise, pose verticale et horizontale" data-alt-en="Grey stone-effect wall tiles, vertical and horizontal laying" loading="lazy" />
+            <img src="assets/7c6deaded6e9c053.jpg" alt="Plan de travail de cuisine en surface solide, finition marbre" data-alt-en="Kitchen worktop in solid surface, marble finish" loading="lazy" />
+          </div>
+          <span class="gal-hint" data-i18n="ui.scroll">Faites défiler ›</span>
+          <div class="gal-ui"><span class="gal-count">1 / 16</span><button type="button" class="gal-btn" data-gal-prev aria-label="Précédent">‹</button><button type="button" class="gal-btn" data-gal-next aria-label="Suivant">›</button></div>
+        </div>
+      </div>
+      <div class="fin-copy">
+        <span class="cat-num" data-i18n="fin4.num">Finition 04 — Murs &amp; surfaces</span>
+        <h3 data-i18n="fin4.title">Panneaux, mosaïques &amp; surfaces solides</h3>
+        <p data-i18n="fin4.p">Les murs et les plans de travail donnent le ton d'une finition haut de gamme : panneaux muraux décoratifs, mosaïques, marches d'escalier finies et surfaces solides taillées sur mesure pour vasques, plans de cuisine et comptoirs — sans joints visibles, faciles à entretenir, pensées pour durer.</p>
+        <ul class="fin-list">
+          <li data-i18n="fin4.li1">Panneaux muraux décoratifs, mosaïques et plinthes LED aluminium</li>
+          <li data-i18n="fin4.li2">Vasques et plans en surface solide, sur mesure</li>
+          <li data-i18n="fin4.li3">Marches d'escalier et finitions assorties</li>
+        </ul>
+        <a class="devis wa" data-wa="fin-surfaces" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20les%20panneaux%2C%20mosa%C3%AFques%20et%20surfaces%20solides%20(finition)." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -2255,20 +2435,6 @@ gtag('config', 'G-JFP2NNX9DX');
           <p data-i18n="ab.3p">La vente se conclut en face à face, dans notre bureau — vous savez à qui vous avez affaire.</p>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= TÉMOIGNAGES ======================= -->
-<section class="testi" id="temoignages">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="kicker" data-i18n="testi.kicker">Témoignages</p>
-      <h2 data-i18n="testi.h2">Ce que disent nos clients</h2>
-    </div>
-    <div class="testi-empty">
-      <p data-i18n="testi.empty">Les témoignages de nos premiers clients seront publiés sur cette page au fil de leurs commandes.</p>
-      <a class="devis wa" data-wa="general" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis." target="_blank" rel="noopener"><span data-i18n="testi.cta">Vous êtes client ? Partagez votre expérience</span> <span class="arr">→</span></a>
     </div>
   </div>
 </section>
@@ -2577,6 +2743,13 @@ gtag('config', 'G-JFP2NNX9DX');
   <span class="fw-lab" data-i18n="fw.lab">Écrivez-nous sur WhatsApp</span>
   <svg width="27" height="27" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m0 1.8c2.16 0 4.19.84 5.72 2.37a8.04 8.04 0 0 1 2.36 5.74c0 4.47-3.64 8.11-8.11 8.11-1.52 0-3-.42-4.28-1.21l-.31-.18-3.19.84.85-3.11-.2-.32a8.08 8.08 0 0 1-1.24-4.29c0-4.47 3.64-8.11 8.11-8.11m-4.1 3.9c-.19 0-.5.07-.76.35-.26.28-1 .97-1 2.37s1.02 2.75 1.16 2.94c.14.19 2 3.06 4.85 4.29.68.29 1.21.47 1.62.6.68.22 1.28.19 1.77.11.54-.08 1.66-.68 1.9-1.55.23-.87.23-1.62.16-1.77-.07-.15-.25-.24-.53-.42-.28-.14-1.64-.81-1.94-.9-.3-.09-.52-.14-.74.14-.22.28-.85 1.05-1.06 1.28-.21.23-.42.26-.7.09-.28-.14-1.18-.44-2.25-1.39-.83-.74-1.39-1.66-1.55-1.94-.16-.28-.02-.43.12-.57.13-.13.28-.33.42-.49.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.49-.07-.14-.74-1.79-.99-2.45-.26-.63-.53-.54-.73-.55z"/></svg>
 </a>
+
+<!-- ======================= BARRE DE CONTACT FIXE ======================= -->
+<div class="pa-bar" role="navigation" aria-label="Contact rapide / Quick contact">
+  <a class="pa-bar-wa wa" data-wa="general" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis." target="_blank" rel="noopener">WhatsApp</a>
+  <a class="pa-bar-dv" href="#devis" data-i18n="pa.barDevis">Devis</a>
+  <a class="pa-bar-ap" href="tel:+15145029503" data-i18n="pa.barAppel">Appeler</a>
+</div>
 
 <!-- ======================= PAGE : CONFIDENTIALITÉ ======================= -->
 <div class="page-overlay" id="pg-privacy" hidden role="dialog" aria-modal="true">
@@ -3023,6 +3196,38 @@ gtag('config', 'G-JFP2NNX9DX');
       "nav.contact": "Contact",
       "hero.h1a": "Direct usine.",
       "hero.h1b": "Direct chez vous.",
+      "pa.heroSub": "Le bureau de vente au Burundi d'usines partenaires en Chine — sans intermédiaire. Nous sourçons, contrôlons et importons pour les commerçants et les porteurs de projets.",
+      "pa.ctaWa": "Devis sur WhatsApp",
+      "pa.idKicker": "Vérifiez-nous",
+      "pa.idH2": "Une entreprise réelle, des papiers en règle",
+      "pa.idRcK": "Registre de commerce",
+      "pa.idRcV": "RC 0082870/26",
+      "pa.idNifK": "NIF",
+      "pa.idNifV": "4003446905",
+      "pa.idOffK": "Bureau de vente",
+      "pa.idOffV": "Bujumbura",
+      "pa.idAddrK": "Adresse",
+      "pa.idAddrV": "6e Avenue, Quartier Buhomba, Zone Mutimbuzi, Commune Ntahangwa, Bujumbura",
+      "pa.idVerif": "✓ Entreprise légalement enregistrée au Burundi — passez au bureau, la vente se conclut en face à face.",
+      "pa.fait1": "Bureau physique à Bujumbura",
+      "pa.fait2": "Contrôle avant chaque expédition",
+      "pa.fait3": "Devis clair, sur demande",
+      "pa.qcKicker": "La preuve",
+      "pa.qcH2": "Votre marchandise est contrôlée avant de partir",
+      "pa.qc1": "Modèles et quantités comparés article par article.",
+      "pa.qc2": "Inspection et tests de fonctionnement sur échantillons.",
+      "pa.qc3": "Le contrôle est documenté en photos et en vidéos, avant l'emballage.",
+      "pa.qc4": "Marchandise protégée et comptée : l'expédition ne part qu'après validation du contrôle.",
+      "pa.visKicker": "Les visages",
+      "pa.visH2": "Qui vous reçoit",
+      "pa.p1r": "Fondateur — Ciza Group",
+      "pa.p2r": "Commerciale — Bujumbura",
+      "pa.p3r": "Bureau Chine — Sourcing & contrôle",
+      "pa.visNote": "Des personnes, pas un site anonyme : vous savez à qui vous confiez votre commande, des deux côtés — Bujumbura et la Chine.",
+      "pa.temoin": "On a trouvé CIZA SUPPLY sur Google. Le devis était clair, la marchandise est arrivée conforme à ce qu'on avait validé au bureau.",
+      "pa.temoinQui": "— Un client commerçant, Bujumbura",
+      "pa.barDevis": "Devis",
+      "pa.barAppel": "Appeler",
       "hero.lede1": "CIZA SUPPLY est le bureau de vente au Burundi d'usines en Chine,",
       "hero.ledeLink": "sans intermédiaire",
       "hero.lede2": ". Nous sourçons, contrôlons et importons pour les commerçants, les entrepreneurs et les porteurs de projets.",
@@ -3415,6 +3620,38 @@ gtag('config', 'G-JFP2NNX9DX');
       "nav.contact": "Contact",
       "hero.h1a": "Factory direct.",
       "hero.h1b": "Straight to you.",
+      "pa.heroSub": "The Burundi sales office of partner factories in China — no middleman. We source, inspect and import for traders, entrepreneurs and project owners.",
+      "pa.ctaWa": "Quote on WhatsApp",
+      "pa.idKicker": "Verify us",
+      "pa.idH2": "A real company, with its papers in order",
+      "pa.idRcK": "Trade register",
+      "pa.idRcV": "RC 0082870/26",
+      "pa.idNifK": "Tax ID (NIF)",
+      "pa.idNifV": "4003446905",
+      "pa.idOffK": "Sales office",
+      "pa.idOffV": "Bujumbura",
+      "pa.idAddrK": "Address",
+      "pa.idAddrV": "6th Avenue, Buhomba Quarter, Mutimbuzi Zone, Ntahangwa Commune, Bujumbura",
+      "pa.idVerif": "✓ Legally registered company in Burundi — come to the office: sales are concluded face to face.",
+      "pa.fait1": "Physical office in Bujumbura",
+      "pa.fait2": "Inspection before every shipment",
+      "pa.fait3": "Clear quote, on request",
+      "pa.qcKicker": "The proof",
+      "pa.qcH2": "Your goods are inspected before they leave",
+      "pa.qc1": "Models and quantities compared, item by item.",
+      "pa.qc2": "Inspection and functional tests on samples.",
+      "pa.qc3": "The inspection is documented in photos and videos, before packing.",
+      "pa.qc4": "Goods protected and counted: the shipment only leaves once the inspection is approved.",
+      "pa.visKicker": "The people",
+      "pa.visH2": "Who welcomes you",
+      "pa.p1r": "Founder — Ciza Group",
+      "pa.p2r": "Sales — Bujumbura",
+      "pa.p3r": "China office — Sourcing & inspection",
+      "pa.visNote": "Real people, not an anonymous website: you know exactly who you are entrusting your order with, on both sides — Bujumbura and China.",
+      "pa.temoin": "We found CIZA SUPPLY on Google. The quote was clear, and the goods arrived exactly as we had approved them at the office.",
+      "pa.temoinQui": "— A trader client, Bujumbura",
+      "pa.barDevis": "Quote",
+      "pa.barAppel": "Call",
       "hero.lede1": "CIZA SUPPLY is the Burundi sales office of factories in China,",
       "hero.ledeLink": "with no middleman",
       "hero.lede2": ". We source, inspect and import for traders, contractors and project developers.",

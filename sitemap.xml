@@ -883,4 +883,22 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://cizasupply.com/finition-confort</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/finition-confort" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/finition-confort" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/finition-confort" />
+    <image:image>
+      <image:loc>https://cizasupply.com/assets/f5612caa31d1076e.jpg</image:loc>
+      <image:title>Finition &amp; confort — Douches &amp; cabines de douche</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://cizasupply.com/assets/d60eb9ef2fab807e.jpg</image:loc>
+      <image:title>Finition &amp; confort — Baignoires &amp; espace bien-être</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://cizasupply.com/assets/beadf4ca113765d7.jpg</image:loc>
+      <image:title>Finition &amp; confort — Luminaires &amp; éclairage décoratif</image:title>
+    </image:image>
+  </url>
 </urlset>
