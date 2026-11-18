@@ -174,7 +174,7 @@
     #zone-impression .sig-ligne{border-top:1.5px solid #0A1E3C;margin-top:44px;padding-top:5px;font-size:12px;color:#333}
     #zone-impression .doc-pied{margin-top:26px;border-top:1px solid #bbb;padding-top:6px;font-size:11px;color:#666}
   }
-</style>
+.tel-flex{display:flex;gap:6px}.tel-flex .prefixe{max-width:96px;text-align:center;font-weight:700}.barre-filtres{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}.barre-filtres input,.barre-filtres select{flex:1;min-width:150px}</style>
 </head>
 <body>
 
@@ -479,7 +479,7 @@ function poserPastille(cle, n){
 }
 async function majPastilles(){
   var r1 = await sb.from("rendez_vous").select("id", { count: "exact", head: true }).eq("date_souhaite", aujourdhui()).in("statut", ["nouvelle", "confirme"]);
-  poserPastille("rendez-vous", r1.error ? 0 : (r1.count || 0));
+  poserPastille("rendezvous", r1.error ? 0 : (r1.count || 0));
   var nom = await resoudreMonNom();
   var r2 = await sb.from("assignations").select("*").in("statut", ["a_faire", "en_cours"]);
   var n2 = (!r2.error && r2.data) ? r2.data.filter(function(a){ return estPourMoi(a, nom); }).length : 0;
@@ -543,6 +543,17 @@ function libelle(options, valeur){
   for(var i = 0; i < options.length; i++) if(String(options[i][0]) === String(valeur)) return options[i][1];
   return valeur || "—";
 }
+var PAYS_TEL = [["Burundi","257"],["Canada","1"],["Chine","86"],["Australie","61"],["France","33"],["Belgique","32"],["États-Unis","1"],["Rwanda","250"],["Kenya","254"],["Tanzanie","255"],["Ouganda","256"],["RD Congo","243"],["Afghanistan","93"],["Afrique du Sud","27"],["Albanie","355"],["Algérie","213"],["Allemagne","49"],["Angola","244"],["Arabie saoudite","966"],["Argentine","54"],["Arménie","374"],["Autriche","43"],["Azerbaïdjan","994"],["Bahreïn","973"],["Bangladesh","880"],["Bénin","229"],["Biélorussie","375"],["Bolivie","591"],["Bosnie-Herzégovine","387"],["Botswana","267"],["Brésil","55"],["Bulgarie","359"],["Burkina Faso","226"],["Cambodge","855"],["Cameroun","237"],["Cap-Vert","238"],["Centrafrique","236"],["Chili","56"],["Chypre","357"],["Colombie","57"],["Comores","269"],["Congo","242"],["Corée du Sud","82"],["Costa Rica","506"],["Côte d'Ivoire","225"],["Croatie","385"],["Cuba","53"],["Danemark","45"],["Djibouti","253"],["Égypte","20"],["Émirats arabes unis","971"],["Équateur","593"],["Érythrée","291"],["Espagne","34"],["Estonie","372"],["Éthiopie","251"],["Finlande","358"],["Gabon","241"],["Gambie","220"],["Géorgie","995"],["Ghana","233"],["Grèce","30"],["Guatemala","502"],["Guinée","224"],["Guinée-Bissau","245"],["Guinée équatoriale","240"],["Haïti","509"],["Honduras","504"],["Hongrie","36"],["Inde","91"],["Indonésie","62"],["Irak","964"],["Iran","98"],["Irlande","353"],["Islande","354"],["Israël","972"],["Italie","39"],["Jamaïque","1876"],["Japon","81"],["Jordanie","962"],["Kazakhstan","7"],["Kirghizistan","996"],["Koweït","965"],["Laos","856"],["Lesotho","266"],["Lettonie","371"],["Liban","961"],["Liberia","231"],["Libye","218"],["Lituanie","370"],["Luxembourg","352"],["Macédoine du Nord","389"],["Madagascar","261"],["Malaisie","60"],["Malawi","265"],["Mali","223"],["Malte","356"],["Maroc","212"],["Maurice","230"],["Mauritanie","222"],["Mexique","52"],["Moldavie","373"],["Mongolie","976"],["Monténégro","382"],["Mozambique","258"],["Myanmar","95"],["Namibie","264"],["Népal","977"],["Nicaragua","505"],["Niger","227"],["Nigeria","234"],["Norvège","47"],["Nouvelle-Zélande","64"],["Oman","968"],["Ouzbékistan","998"],["Pakistan","92"],["Palestine","970"],["Panama","507"],["Paraguay","595"],["Pays-Bas","31"],["Pérou","51"],["Philippines","63"],["Pologne","48"],["Portugal","351"],["Qatar","974"],["République dominicaine","1809"],["République tchèque","420"],["Roumanie","40"],["Royaume-Uni","44"],["Russie","7"],["Salvador","503"],["Sénégal","221"],["Serbie","381"],["Seychelles","248"],["Sierra Leone","232"],["Singapour","65"],["Slovaquie","421"],["Slovénie","386"],["Somalie","252"],["Soudan","249"],["Soudan du Sud","211"],["Sri Lanka","94"],["Suède","46"],["Suisse","41"],["Syrie","963"],["Tadjikistan","992"],["Taïwan","886"],["Tchad","235"],["Thaïlande","66"],["Togo","228"],["Tunisie","216"],["Turkménistan","993"],["Turquie","90"],["Ukraine","380"],["Uruguay","598"],["Venezuela","58"],["Vietnam","84"],["Yémen","967"],["Zambie","260"],["Zimbabwe","263"]];
+function indicatifPays(nom){ for(var i = 0; i < PAYS_TEL.length; i++) if(PAYS_TEL[i][0] === nom) return PAYS_TEL[i][1]; return ""; }
+function decouperTel(v){
+  var t = String(v == null ? "" : v).replace(/[\s\-()]/g, "");
+  if(t.charAt(0) === "+"){
+    var d = t.slice(1);
+    for(var L = 4; L >= 1; L--){ var c = d.slice(0, L); for(var i = 0; i < PAYS_TEL.length; i++) if(PAYS_TEL[i][1] === c) return ["+" + c, d.slice(L)]; }
+    return ["+" + d.slice(0, 3), d.slice(3)];
+  }
+  return ["+257", t];
+}
 function champHTML(f, val){
   var v = val == null ? "" : val;
   if(f.type === "booleen") return '<select name="' + f.nom + '"><option value="false"' + (v !== true && v !== "true" ? " selected" : "") + '>Non</option><option value="true"' + (v === true || v === "true" ? " selected" : "") + '>Oui</option></select>';
@@ -550,6 +561,16 @@ function champHTML(f, val){
   if(f.type === "textarea") return '<textarea name="' + f.nom + '">' + esc(v) + '</textarea>';
   if(f.type === "date") return '<input type="date" name="' + f.nom + '" value="' + esc(v ? String(v).slice(0, 10) : "") + '" />';
   if(f.type === "number") return '<input type="number" step="any" name="' + f.nom + '" value="' + esc(v) + '" />';
+  if(f.type === "pays"){
+    var conn = PAYS_TEL.some(function(p){ return p[0] === v; });
+    var opts = PAYS_TEL.map(function(p){ return '<option value="' + esc(p[0]) + '"' + (v === p[0] ? " selected" : "") + '>' + esc(p[0]) + ' (+ ' + p[1] + ')</option>'; }).join("");
+    if(v && !conn) opts = '<option value="' + esc(v) + '" selected>' + esc(v) + '</option>' + opts;
+    return '<select name="' + f.nom + '"><option value="">— Choisir le pays —</option>' + opts + '</select>';
+  }
+  if(f.type === "tel"){
+    var dt = decouperTel(v);
+    return '<span class="tel-flex"><input type="text" class="prefixe" name="' + f.nom + '__prefixe" value="' + esc(dt[0]) + '" aria-label="Préfixe du pays" /><input type="tel" name="' + f.nom + '" value="' + esc(dt[1]) + '" placeholder="Numéro" /></span>';
+  }
   return '<input type="text" name="' + f.nom + '" value="' + esc(v) + '" />';
 }
 function lireFormulaire(form, champs){
@@ -557,7 +578,14 @@ function lireFormulaire(form, champs){
   champs.forEach(function(f){
     var el = form.elements[f.nom]; if(!el) return;
     var v = el.value;
-    if(f.type === "number") obj[f.nom] = v === "" ? null : parseFloat(v);
+    if(f.type === "tel"){
+      var preEl = form.elements[f.nom + "__prefixe"];
+      var p = preEl ? preEl.value.trim() : "";
+      var num = v.replace(/\s+/g, "");
+      if(!num) obj[f.nom] = null;
+      else { if(p && p.charAt(0) !== "+") p = "+" + p; obj[f.nom] = (p ? p + " " : "") + num; }
+    }
+    else if(f.type === "number") obj[f.nom] = v === "" ? null : parseFloat(v);
     else if(f.type === "booleen") obj[f.nom] = v === "true";
     else obj[f.nom] = v === "" ? null : v;
   });
@@ -664,7 +692,6 @@ function moduleGenerique(conteneur, cfg){
         if(r.error) alert("Enregistrement refusé : " + r.error.message); else charger();
       }); });
     }
-  }
     if(cfg.photo){
       zoneListe.querySelectorAll("[data-photo-img]").forEach(async function(img){
         var row = etat.lignes.find(function(x){ return x.id === img.dataset.photoImg; });
@@ -685,6 +712,7 @@ function moduleGenerique(conteneur, cfg){
         ouvrirCamera(cfg, row, function(){ charger(); });
       }); });
     }
+  }
   function ouvrirForm(record){
     etat.edition = record || null;
     zoneForm.innerHTML = '<form class="formulaire"><div class="grille">' +
@@ -692,6 +720,8 @@ function moduleGenerique(conteneur, cfg){
       '</div><div class="actions" style="margin-top:12px;display:flex;gap:8px"><button class="btn" type="submit">' + (record ? "Enregistrer" : "Ajouter") + '</button>' +
       '<button class="btn secondaire" type="button" data-act="annuler">Annuler</button></div></form>';
     var form = zoneForm.querySelector("form");
+    var selPays = form.elements["pays"];
+    if(selPays) cfg.champs.forEach(function(f){ if(f.type === "tel"){ var pre = form.elements[f.nom + "__prefixe"]; if(pre) selPays.addEventListener("change", function(){ var ind = indicatifPays(selPays.value); if(ind) pre.value = "+" + ind; }); } });
     form.addEventListener("submit", async function(e){
       e.preventDefault();
       var obj = lireFormulaire(form, cfg.champs);
@@ -740,7 +770,7 @@ var CFG_RDV = {
   sous: "Les demandes envoyées depuis le formulaire du site arrivent ici (source : site). Vous pouvez aussi créer un rendez-vous vous-même.",
   champs: [
     { nom: "nom", label: "Nom", requis: true },
-    { nom: "telephone", label: "Téléphone" },
+    { nom: "telephone", label: "Téléphone", type: "tel" },
     { nom: "email", label: "E-mail" },
     { nom: "sujet", label: "Sujet" },
     { nom: "date_souhaite", label: "Date souhaitée", type: "date" },
@@ -762,9 +792,9 @@ var CFG_CLIENTS = {
   titre: "Clients", table: "clients", sous: "Enregistrement des nouveaux clients et registre du bureau.",
   champs: [
     { nom: "nom", label: "Nom", requis: true }, { nom: "societe", label: "Société" },
-    { nom: "telephone", label: "Téléphone" }, { nom: "email", label: "E-mail" },
+    { nom: "telephone", label: "Téléphone", type: "tel" }, { nom: "email", label: "E-mail" },
     { nom: "email_compte", label: "E-mail du compte client (connexion à son espace)" },
-    { nom: "pays", label: "Pays" }, { nom: "ville", label: "Ville" },
+    { nom: "pays", label: "Pays", type: "pays" }, { nom: "ville", label: "Ville" },
     { nom: "source", label: "Source (WhatsApp, bureau, site…)" }, { nom: "notes", label: "Notes", type: "textarea" }
   ],
   colonnes: [
@@ -782,7 +812,7 @@ var CFG_PARTENAIRES = {
   titre: "Partenaires", table: "partenaires", sous: "Partenaires et fournisseurs : registre et statut.",
   champs: [
     { nom: "entreprise", label: "Entreprise", requis: true }, { nom: "contact", label: "Personne de contact" },
-    { nom: "telephone", label: "Téléphone" }, { nom: "email", label: "E-mail" }, { nom: "pays", label: "Pays" },
+    { nom: "telephone", label: "Téléphone", type: "tel" }, { nom: "email", label: "E-mail" }, { nom: "pays", label: "Pays", type: "pays" },
     { nom: "produits", label: "Produits / services", type: "textarea" },
     { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_PART, defaut: "en_discussion" },
     { nom: "notes", label: "Notes", type: "textarea" }
@@ -891,10 +921,12 @@ function rendreDepenses(c){ moduleGenerique(c, CFG_DEPENSES); }
 async function rendreDossiers(c){
   c.innerHTML = entetePage("Dossiers clients", "Ce que le client voit sur la page publique de suivi : cizasupply.com/suivi-dossier/ — il tape sa référence. Ici, vous faites avancer l'étape et vous déposez sa facture et les photos de ses échantillons.") +
     '<div class="outils"><button class="btn" type="button" data-act="nouveau">+ Nouveau dossier</button></div>' +
+    '<div class="barre-filtres"><input type="search" data-f="q" placeholder="Rechercher : référence, catégorie…" /><select data-f="etape"><option value="">Toutes les étapes</option>' + ETAPES.map(function(e, i){ return '<option value="' + (i + 1) + '">Étape ' + (i + 1) + ' — ' + esc(e) + '</option>'; }).join("") + '</select><select data-f="etat"><option value="">Tous les dossiers</option><option value="cours">En cours</option><option value="cloture">Clôturés (étape 8)</option></select></div>' +
     '<div data-zone="form"></div><div data-zone="liste"><p class="vide">Chargement…</p></div>';
   var zoneForm = c.querySelector('[data-zone="form"]');
   var zoneListe = c.querySelector('[data-zone="liste"]');
   var dossiers = [], documents = [];
+  var fQ = "", fEtape = "", fEtat = "";
   async function charger(){
     var r1 = await sb.from("suivi_dossiers").select("*").order("maj", { ascending: false });
     var r2 = await sb.from("suivi_documents").select("*").order("cree_le", { ascending: false });
@@ -906,7 +938,15 @@ async function rendreDossiers(c){
   function urlPublique(chemin){ return SUPABASE_URL + "/storage/v1/object/public/dossiers-suivi/" + chemin; }
   function afficher(){
     if(!dossiers.length){ zoneListe.innerHTML = '<p class="vide">Aucun dossier. Créez le premier avec le bouton ci-dessus (référence donnée au client, par exemple CS-20261118-0001).</p>'; return; }
-    zoneListe.innerHTML = dossiers.map(function(d){
+    var liste = dossiers.filter(function(d){
+      if(fEtape && d.etape !== Number(fEtape)) return false;
+      if(fEtat === "cours" && d.etape >= 8) return false;
+      if(fEtat === "cloture" && d.etape !== 8) return false;
+      if(fQ){ var t = ((d.ref || "") + " " + (d.categorie || "")).toLowerCase(); if(t.indexOf(fQ) < 0) return false; }
+      return true;
+    });
+    if(!liste.length){ zoneListe.innerHTML = '<p class="vide">Aucun dossier ne correspond aux filtres.</p>'; return; }
+    zoneListe.innerHTML = liste.map(function(d){
       var docs = docsDe(d.ref);
       var factures = docs.filter(function(x){ return x.type === "facture"; });
       var echant = docs.filter(function(x){ return x.type === "echantillon"; });
@@ -970,6 +1010,9 @@ async function rendreDossiers(c){
     });
     zoneForm.querySelector('[data-act="annuler"]').addEventListener("click", function(){ zoneForm.innerHTML = ""; });
   });
+  c.querySelector('[data-f="q"]').addEventListener("input", function(e){ fQ = e.target.value.trim().toLowerCase(); afficher(); });
+  c.querySelector('[data-f="etape"]').addEventListener("change", function(e){ fEtape = e.target.value; afficher(); });
+  c.querySelector('[data-f="etat"]').addEventListener("change", function(e){ fEtat = e.target.value; afficher(); });
   charger();
 }
 
@@ -1073,7 +1116,7 @@ async function rendreEmployes(c){
   function formulaireEmploye(record){
     var champs = [
       { nom: "nom", label: "Nom complet", requis: true }, { nom: "poste", label: "Poste" },
-      { nom: "telephone", label: "Téléphone" }, { nom: "email", label: "E-mail" },
+      { nom: "telephone", label: "Téléphone", type: "tel" }, { nom: "email", label: "E-mail" },
       { nom: "date_embauche", label: "Date d'embauche", type: "date" },
       { nom: "salaire", label: "Salaire", type: "number" },
       { nom: "devise", label: "Devise", type: "select", options: [["BIF","BIF"],["USD","USD"],["EUR","EUR"]], defaut: "BIF" },
@@ -1220,7 +1263,7 @@ async function rendreAccueil(c){
   var perfCmdN = await compte("commandes", function(q){ return q.gte("cree_le", moisDebut).lte("cree_le", ajd + "T23:59:59"); });
   var perfCmdTxt = await sommeMois("commandes");
   var clientsMois = await compte("clients", function(q){ return q.gte("cree_le", moisDebut).lte("cree_le", ajd + "T23:59:59"); });
-  var paiesMois = await sb.from("paies").select("montant, devise").eq("statut", "paye").gte("date_paiement", moisDebut).lte("date_paiement", ajd);
+  var paiesMois = await sb.from("paies").select("montant, devise").eq("statut", "paye").eq("mois", ajd.slice(0, 7));
   var totPaies = {};
   if(!paiesMois.error && paiesMois.data) paiesMois.data.forEach(function(p){ totPaies[p.devise || "BIF"] = (totPaies[p.devise || "BIF"] || 0) + Number(p.montant || 0); });
   var paiesTxt = Object.keys(totPaies).length ? Object.keys(totPaies).map(function(dv){ return fmtMontant(totPaies[dv], dv); }).join(" · ") : "0";
