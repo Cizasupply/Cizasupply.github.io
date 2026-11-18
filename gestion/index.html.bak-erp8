@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Gestion — CIZA SUPPLY</title>
+<style>
+  :root{--navy:#0A1E3C;--navy2:#07101F;--gold:#D4AF37;--gold2:#F2B840;--bg:#f2f4f8;--surface:#fff;--border:#e2e7f0;--muted:#5a6a86;--ok:#1d7a3a;--warn:#9a6a00;--bad:#b3261e}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:#14213a}
+  button{font:inherit;cursor:pointer}
+  input,select,textarea{font:inherit;padding:10px 12px;border:1.5px solid var(--border);border-radius:10px;background:#fff;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  label{font-size:13px;font-weight:700;color:var(--navy);display:block;margin:0 0 5px}
+  .caché{display:none !important}
+  /* ---------- Connexion ---------- */
+  .login-wrap{min-height:100dvh;display:grid;place-items:center;padding:20px;background:linear-gradient(160deg,var(--navy2),var(--navy))}
+  .login-card{background:#fff;border-radius:20px;padding:28px 24px;max-width:400px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+  .login-card h1{font-size:21px;margin:0 0 4px;color:var(--navy)}
+  .login-card .sig{color:var(--gold);font-weight:800;letter-spacing:.14em;font-size:12px;margin:0 0 14px}
+  .login-card p{color:var(--muted);font-size:14px;line-height:1.55}
+  .login-card .champ{margin-bottom:12px}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:11px;padding:11px 18px;font-weight:800;font-size:14.5px;background:var(--gold);color:#07101F}
+  .btn.secondaire{background:#eef1f6;color:var(--navy)}
+  .btn.danger{background:#fbe9e7;color:var(--bad)}
+  .btn.petit{padding:7px 12px;font-size:13px;border-radius:9px}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .lien{background:none;border:0;color:var(--navy);text-decoration:underline;font-weight:700;padding:0}
+  .erreur{background:#fbe9e7;border:1px solid #f0c6c2;color:var(--bad);border-radius:10px;padding:10px 12px;font-size:14px;margin:10px 0}
+  .info{background:#fdf3d7;border:1px solid var(--gold);border-radius:10px;padding:10px 12px;font-size:14px;margin:10px 0;line-height:1.5}
+  /* ---------- Coquille ERP ---------- */
+  #vue-app{display:block}
+  .lateral{display:none}
+  .barre-haut{background:linear-gradient(120deg,var(--navy2),var(--navy));color:#fff;padding:12px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:20;box-shadow:0 4px 18px rgba(7,16,31,.25)}
+  .barre-haut .marque{font-weight:900;letter-spacing:.06em;font-size:15px}
+  .barre-haut .marque span{color:var(--gold2)}
+  .barre-haut .qui-h{margin-left:auto;font-size:12px;color:#c8d3e6;text-align:right;max-width:45%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .barre-haut button{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
+  .barre-bas{position:fixed;left:0;right:0;bottom:0;z-index:40;background:linear-gradient(120deg,var(--navy2),var(--navy));display:flex;padding:6px 4px calc(6px + env(safe-area-inset-bottom));box-shadow:0 -6px 20px rgba(7,16,31,.3)}
+  .barre-bas button{flex:1;background:none;border:0;color:#c8d3e6;font-size:11.5px;font-weight:700;padding:9px 2px;border-radius:10px}
+  .barre-bas button.actif{color:var(--gold2);background:rgba(212,175,55,.14)}
+  .menu-plein{position:fixed;inset:0;z-index:60;background:linear-gradient(160deg,var(--navy2),var(--navy));padding:18px 16px calc(18px + env(safe-area-inset-bottom));overflow-y:auto}
+  .mp-entete{display:flex;align-items:center;justify-content:space-between;color:#fff;font-weight:900;font-size:17px;margin-bottom:16px}
+  .mp-entete button{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:8px 14px;font-weight:700}
+  .mp-nav{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .mp-nav button{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);color:#fff;border-radius:14px;padding:16px 12px;font-weight:800;font-size:14.5px;text-align:left}
+  .mp-nav button.actif{border-color:var(--gold);color:var(--gold2)}
+  main{max-width:1180px;margin:0 auto;padding:20px 16px 110px}
+  h2.titre{font-size:22px;color:var(--navy);margin:2px 0 4px;letter-spacing:-.01em}
+  .sous{color:var(--muted);font-size:14px;margin:0 0 16px;line-height:1.55}
+  .outils{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+  .carte{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:18px;margin-bottom:12px;box-shadow:0 6px 20px rgba(7,16,31,.06)}
+  .carte h3{margin:0 0 4px;font-size:16px;color:var(--navy)}
+  .carte .meta{font-size:13px;color:var(--muted);line-height:1.65}
+  .carte .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .badge{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:800;background:#eef1f6;color:var(--navy)}
+  .badge.or{background:#fdf3d7;color:#7a5b00}
+  .badge.vert{background:#e2f2e6;color:var(--ok)}
+  .badge.rouge{background:#fbe9e7;color:var(--bad)}
+  .formulaire{background:#fff;border:1.5px solid var(--gold);border-radius:18px;padding:18px;margin-bottom:16px;box-shadow:0 6px 20px rgba(7,16,31,.06)}
+  .grille{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:720px){.grille{grid-template-columns:1fr 1fr}.grille .plein{grid-column:1/-1}}
+  .filtres{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .filtres button{border:1.5px solid var(--border);background:#fff;border-radius:999px;padding:7px 13px;font-weight:700;font-size:13px}
+  .filtres button.actif{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .total{font-weight:900;color:var(--navy);font-size:15px;margin:6px 0 12px}
+  .docs{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .docs a{font-size:13px;font-weight:700}
+  .docs img{width:74px;height:74px;object-fit:cover;border-radius:10px;border:1px solid var(--border)}
+  table.fiche{border-collapse:collapse;width:100%;font-size:12.5px;background:#fff}
+  table.fiche th,table.fiche td{border:1px solid #c9d2e2;padding:4px 5px;text-align:center}
+  table.fiche th{background:var(--navy);color:#fff}
+  table.fiche td.nom,table.fiche th.nom{text-align:left;font-weight:700}
+  .vide{color:var(--muted);font-size:14.5px;padding:18px 4px}
+  input:focus,select:focus,textarea:focus{outline:2px solid rgba(212,175,55,.55);border-color:var(--gold)}
+  .btn{transition:transform .08s ease, box-shadow .15s ease;box-shadow:0 3px 10px rgba(212,175,55,.25)}
+  .btn:active{transform:scale(.98)}
+  .btn.secondaire{box-shadow:none}
+  .login-card{border-top:4px solid var(--gold)}
+  @media(max-width:720px){
+    table.fiche{display:block;overflow-x:auto;white-space:nowrap}
+    h2.titre{font-size:19px}
+    .carte{padding:15px}
+    main{padding:16px 12px 110px}
+  }
+  @media(min-width:1024px){
+    .barre-haut,.barre-bas{display:none}
+    .lateral{display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;width:262px;z-index:30;background:linear-gradient(170deg,var(--navy2),var(--navy));color:#fff;box-shadow:8px 0 30px rgba(7,16,31,.18)}
+    .lat-marque{padding:20px 20px 14px;border-bottom:1px solid rgba(255,255,255,.12)}
+    .lat-logo{font-weight:900;font-size:19px;letter-spacing:.05em}
+    .lat-logo span{color:var(--gold2)}
+    .lat-sous{font-size:11.5px;color:#9fb0cc;letter-spacing:.14em;text-transform:uppercase;margin-top:3px}
+    .lat-nav{flex:1;overflow-y:auto;padding:12px 10px}
+    .lat-nav button{display:block;width:100%;text-align:left;background:none;border:0;color:#c8d3e6;font-weight:700;font-size:14px;padding:11px 13px;border-radius:10px;margin-bottom:2px}
+    .lat-nav button:hover{background:rgba(255,255,255,.07);color:#fff}
+    .lat-nav button.actif{background:rgba(212,175,55,.16);color:#fff;box-shadow:inset 3px 0 0 var(--gold)}
+    .lat-pied{padding:14px 16px;border-top:1px solid rgba(255,255,255,.12)}
+    .lat-qui{font-size:12.5px;color:#c8d3e6;margin-bottom:10px;word-break:break-all}
+    .lat-qui .role{display:inline-block;background:var(--gold);color:#07101F;font-weight:800;border-radius:999px;padding:1px 8px;font-size:11px;margin-left:6px}
+    .lat-sortir{width:100%;justify-content:center;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);box-shadow:none}
+    .principal{margin-left:262px}
+    main{padding:26px 28px 60px}
+  }
+  /* ---------- Passe premium : cartes des écrans ---------- */
+  body{background:linear-gradient(180deg,#f2f5fa,#e9eef6)}
+  h2.titre{position:relative;padding-bottom:10px}
+  h2.titre::after{content:"";position:absolute;left:0;bottom:0;width:52px;height:4px;border-radius:99px;background:linear-gradient(90deg,var(--gold2),var(--gold))}
+  .carte{border:1px solid #dfe6f2;border-radius:20px;box-shadow:0 1px 2px rgba(7,16,31,.05),0 14px 34px rgba(7,16,31,.08);position:relative;overflow:hidden;transition:box-shadow .18s ease,transform .18s ease}
+  .carte::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold) 0%,rgba(212,175,55,.25) 55%,transparent 100%)}
+  @media(min-width:1024px){.carte:hover{transform:translateY(-2px);box-shadow:0 2px 3px rgba(7,16,31,.05),0 20px 44px rgba(7,16,31,.13)}}
+  .carte h3{font-size:17px;letter-spacing:-.01em}
+  .carte .meta{font-size:13.5px}
+  .carte .meta b{color:var(--navy)}
+  .badge{text-transform:uppercase;letter-spacing:.05em;font-size:10.5px;padding:3px 10px}
+  .badge.or{background:linear-gradient(120deg,#F2B840,#D9A82E);color:#3a2c00;box-shadow:0 2px 6px rgba(212,175,55,.35)}
+  .badge.vert{background:#dff3e4;color:#146c2e}
+  .badge.rouge{background:#fbe3e0;color:#a52a1d}
+  .btn{background:linear-gradient(120deg,#F2B840,#D9A82E);border-radius:12px;box-shadow:0 4px 14px rgba(212,175,55,.35)}
+  .btn.secondaire{background:#fff;box-shadow:none}
+  .carte .actions .btn{border-radius:11px}
+  .formulaire{border-radius:20px;box-shadow:0 14px 34px rgba(7,16,31,.08)}
+  input,select,textarea{border-radius:12px}
+  .login-card{border-radius:22px;box-shadow:0 24px 60px rgba(7,16,31,.16)}
+  .kpis{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+  @media(min-width:1024px){.kpis{grid-template-columns:repeat(4,1fr)}}
+  .kpi{cursor:pointer;text-align:left;width:100%;font:inherit}
+  .kpi .k-num{font-size:30px;font-weight:900;color:var(--navy);line-height:1.05}
+  .kpi .k-lib{font-size:12.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
+  .kpi .k-sub{font-size:12.5px;color:var(--muted);margin-top:2px}
+  /* ---------- Headers premium, pastilles, alertes, caméra ---------- */
+  .page-head{background:linear-gradient(120deg,var(--navy2),var(--navy));border-radius:20px;padding:20px 22px;color:#fff;margin-bottom:18px;box-shadow:0 16px 40px rgba(7,16,31,.18);position:relative;overflow:hidden}
+  .page-head::after{content:"";position:absolute;top:0;right:0;width:190px;height:100%;background:linear-gradient(90deg,transparent,rgba(212,175,55,.16));pointer-events:none}
+  .page-head .ph-eyebrow{font-size:11px;letter-spacing:.16em;color:var(--gold2);font-weight:800;text-transform:uppercase}
+  .page-head h2{font-size:24px;margin:4px 0 4px;color:#fff;position:relative;z-index:1}
+  .page-head p{margin:0;color:#c8d3e6;font-size:13.5px;line-height:1.55;max-width:660px;position:relative;z-index:1}
+  .pastille{display:inline-block;background:var(--gold);color:#07101F;border-radius:999px;font-size:11px;font-weight:900;padding:1px 7px;margin-left:7px;vertical-align:2px}
+  .alerte-live{margin:14px 16px 0;background:#fdf3d7;border:1.5px solid var(--gold);color:#5c4300;border-radius:14px;padding:12px 14px;font-size:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  @media(min-width:1024px){.alerte-live{margin:18px 28px 0}}
+  .alerte-bandeau{background:#fdf3d7;border:1.5px solid var(--gold);color:#5c4300;border-radius:14px;padding:12px 14px;font-size:14px;margin-bottom:16px}
+  .cam-overlay{position:fixed;inset:0;z-index:90;background:rgba(7,16,31,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:18px}
+  .cam-overlay video{width:min(92vw,560px);border-radius:16px;background:#000}
+  .cam-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+
+  /* ---------- Impression ---------- */
+  #zone-impression{display:none}
+  @media print{
+    body>*{display:none !important}
+    #zone-impression{display:block !important;color:#000}
+    #zone-impression h1{font-size:19px;margin:0 0 2px}
+    #zone-impression h2{font-size:15px;margin:16px 0 6px}
+    #zone-impression table{border-collapse:collapse;width:100%;font-size:12.5px}
+    #zone-impression th,#zone-impression td{border:1px solid #999;padding:5px 7px;text-align:left}
+    #zone-impression .entete{border-bottom:3px solid #D4AF37;padding-bottom:8px;margin-bottom:14px}
+    #zone-impression .sig{color:#555;font-size:12px}
+    #zone-impression table tr:nth-child(even) td{background:#f4f6fa}
+    #zone-impression .carte-emp{width:85.6mm;height:54mm;border:1.5px solid #0A1E3C;border-radius:4mm;overflow:hidden;font-family:system-ui,sans-serif}
+    #zone-impression .ce-bande{background:#0A1E3C;color:#fff;display:flex;justify-content:space-between;align-items:center;padding:3mm 4mm}
+    #zone-impression .ce-logo{font-weight:900;font-size:13px;letter-spacing:.06em}
+    #zone-impression .ce-logo span{color:#F2B840}
+    #zone-impression .ce-type{font-size:8.5px;letter-spacing:.18em;color:#F2B840;font-weight:800}
+    #zone-impression .ce-corps{display:flex;gap:4mm;padding:3.5mm 4mm 2mm}
+    #zone-impression .ce-photo{width:20mm;height:24mm;object-fit:cover;border-radius:2mm;border:1px solid #c9d2e2}
+    #zone-impression .ce-initiales{width:20mm;height:24mm;border-radius:2mm;background:#eef1f6;color:#0A1E3C;font-weight:900;font-size:17px;display:flex;align-items:center;justify-content:center;border:1px solid #c9d2e2}
+    #zone-impression .ce-nom{font-size:14.5px;font-weight:900;color:#0A1E3C;line-height:1.15}
+    #zone-impression .ce-poste{font-size:10.5px;color:#7a5b00;font-weight:800;margin:1mm 0 2mm}
+    #zone-impression .ce-ligne{font-size:9.5px;color:#333;line-height:1.55}
+    #zone-impression .ce-ligne span{color:#777;font-weight:700;display:inline-block;min-width:17mm}
+    #zone-impression .ce-pied{background:#D4AF37;color:#07101F;font-size:8px;font-weight:700;padding:1.8mm 4mm;letter-spacing:.02em}
+    #zone-impression .doc-titre{font-size:23px;font-weight:900;color:#0A1E3C;margin:2px 0 2px}
+    #zone-impression .doc-meta{font-size:12.5px;color:#444;line-height:1.7;margin-bottom:10px}
+    #zone-impression .signatures{display:flex;gap:40px;margin-top:34px}
+    #zone-impression .signatures .sig-bloc{flex:1}
+    #zone-impression .sig-ligne{border-top:1.5px solid #0A1E3C;margin-top:44px;padding-top:5px;font-size:12px;color:#333}
+    #zone-impression .doc-pied{margin-top:26px;border-top:1px solid #bbb;padding-top:6px;font-size:11px;color:#666}
+  }
+.tel-flex{display:flex;gap:6px}.tel-flex .prefixe{max-width:96px;text-align:center;font-weight:700}.barre-filtres{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}.barre-filtres input,.barre-filtres select{flex:1;min-width:150px}.cal-entete{display:flex;align-items:center;gap:10px;margin:4px 0 10px;flex-wrap:wrap}.cal-entete b{font-size:16px;color:#0A1E3C;text-transform:capitalize}.cal-grille{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:16px}.cal-j{text-align:center;font-size:11px;font-weight:700;color:#5b6b84;padding:2px 0}.cal-vide{min-height:40px}.cal-jour{position:relative;min-height:40px;border:1px solid var(--border);background:#fff;border-radius:9px;font-weight:600;color:#0A1E3C;cursor:pointer;padding:4px}.cal-jour.auj{border-color:#D4AF37;box-shadow:inset 0 0 0 1px #D4AF37}.cal-jour.sel{background:#0A1E3C;color:#fff}.cal-n{position:absolute;top:3px;right:3px;background:#F2B840;color:#0A1E3C;font-size:10px;font-weight:800;border-radius:99px;padding:1px 5px}.msg-fil{display:flex;flex-direction:column;gap:8px;margin:10px 0}.msg{max-width:84%;padding:9px 12px;border-radius:14px;background:#fff;border:1px solid var(--border);font-size:14px}.msg.moi{align-self:flex-end;background:#0A1E3C;color:#fff;border-color:#0A1E3C}.msg .qui{font-size:11px;opacity:.72;margin-bottom:3px}.conv{display:block;width:100%;text-align:left;cursor:pointer;margin-bottom:10px}.conv .apercu{color:#5b6b84;font-size:13px;margin-top:3px}</style>
+</head>
+<body>
+
+<!-- ================= CONNEXION ================= -->
+<div id="vue-login" class="login-wrap">
+  <div class="login-card">
+    <p class="sig">CIZA SUPPLY</p>
+    <h1>Espace de travail</h1>
+    <p>Réservé au bureau. Connectez-vous avec votre compte de travail.</p>
+    <div id="login-erreur" class="erreur caché"></div>
+    <p id="login-statut" class="info caché" style="text-align:center;margin:8px 0 0"></p>
+    <div id="login-info" class="info caché"></div>
+    <form id="form-login">
+      <div class="champ"><label for="li-email">E-mail</label><input id="li-email" type="email" required autocomplete="username" /></div>
+      <div class="champ"><label for="li-mdp">Mot de passe</label><input id="li-mdp" type="password" required autocomplete="current-password" /></div>
+      <button class="btn" type="submit" id="btn-login" style="width:100%;justify-content:center">Se connecter</button>
+    </form>
+    <p style="margin:10px 0 0"><button class="lien" id="lien-oublie" type="button">Mot de passe oublié ?</button></p>
+    <p style="margin:14px 0 0">Pas encore de compte ? <button class="lien" id="lien-inscription" type="button">Créer un compte</button></p>
+    <form id="form-inscription" class="caché">
+      <div class="champ"><label for="in-nom">Votre nom</label><input id="in-nom" type="text" required /></div>
+      <div class="champ"><label for="in-email">E-mail</label><input id="in-email" type="email" required autocomplete="username" /></div>
+      <div class="champ"><label for="in-mdp">Mot de passe</label><input id="in-mdp" type="password" required autocomplete="new-password" /></div>
+      <button class="btn" type="submit" style="width:100%;justify-content:center">Créer le compte</button>
+      <div class="info">Le compte démarre <b>inactif</b> : le fondateur l'active et lui donne son rôle. C'est ce qui permet de couper un accès tout de suite, sans toucher à la base.</div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= ATTENTE D'ACTIVATION ================= -->
+<div id="vue-attente" class="login-wrap caché">
+  <div class="login-card">
+    <p class="sig">CIZA SUPPLY</p>
+    <h1>Compte en attente</h1>
+    <p>Votre compte est créé mais pas encore activé. Le fondateur doit l'activer et lui donner son rôle dans l'écran Comptes de l'espace de travail.</p>
+    <button class="btn secondaire" id="btn-deco-attente" type="button">Se déconnecter</button>
+  </div>
+</div>
+
+<!-- ================= NOUVEAU MOT DE PASSE ================= -->
+<div id="vue-mdp" class="login-wrap caché">
+  <div class="login-card">
+    <p class="sig">CIZA SUPPLY</p>
+    <h1>Nouveau mot de passe</h1>
+    <p>Choisissez le nouveau mot de passe de votre compte.</p>
+    <div id="mdp-erreur" class="erreur caché"></div>
+    <form id="form-mdp">
+      <div class="champ"><label for="mdp-nouveau">Nouveau mot de passe</label><input id="mdp-nouveau" type="password" required autocomplete="new-password" /></div>
+      <button class="btn" type="submit" id="mdp-btn" style="width:100%;justify-content:center">Enregistrer et entrer</button>
+    </form>
+  </div>
+</div>
+
+<!-- ================= APPLICATION ================= -->
+<div id="vue-app" class="caché">
+  <aside class="lateral">
+    <div class="lat-marque"><div class="lat-logo">CIZA <span>SUPPLY</span></div><div class="lat-sous">Bureau · ERP</div></div>
+    <nav class="lat-nav" id="nav-modules"></nav>
+    <div class="lat-pied">
+      <div class="lat-qui"><span id="qui-email"></span><span class="role" id="qui-role"></span></div>
+      <button class="btn petit lat-sortir" id="btn-deco" type="button">Sortir</button>
+    </div>
+  </aside>
+  <div class="principal">
+    <div class="barre-haut">
+      <div class="marque">CIZA <span>SUPPLY</span> · Bureau</div>
+      <div class="qui-h"><span id="qui-email-m"></span></div>
+      <button class="btn petit" id="btn-deco-m" type="button">Sortir</button>
+    </div>
+    <div id="alerte-live" class="alerte-live caché"></div>
+    <main id="contenu"></main>
+  </div>
+  <nav class="barre-bas" id="barre-bas">
+    <button type="button" data-aller="dossiers">Dossiers</button>
+    <button type="button" data-aller="devis">Devis</button>
+    <button type="button" data-aller="commandes">Commandes</button>
+    <button type="button" data-aller="livraisons">Livraisons</button>
+    <button type="button" data-aller="__plus">Plus</button>
+  </nav>
+  <div class="menu-plein caché" id="menu-plein">
+    <div class="mp-entete"><span>Tous les modules</span><button type="button" id="mp-fermer">Fermer</button></div>
+    <nav class="mp-nav" id="nav-plein"></nav>
+  </div>
+</div>
+
+<div id="zone-impression"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+<script>
+"use strict";
+/* =============== Configuration (clé anon PUBLIQUE, lecture/écriture
+   encadrées par les règles de la base — jamais la clé de service) == */
+var SUPABASE_URL = "https://mbbcfxsegmelnfhfzyst.supabase.co";
+var SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1iYmNmeHNlZ21lbG5maGZ6eXN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ5ODk0MjEsImV4cCI6MjExMDU2NTQyMX0.IraVe4WprHVpUgfmCASsiktb3ungbCjx7-Z61Yt0yxo";
+var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, { auth: { flowType: "implicit", lock: function(nom, delai, fn){ return fn(); } } });
+/* Erreur portée par le lien d'e-mail (lien déjà utilisé, expiré…) :
+   l'afficher au lieu de laisser l'écran muet. */
+(function(){
+  if(location.hash && location.hash.indexOf("error_description") > -1){
+    var m = /error_description=([^&]+)/.exec(location.hash);
+    if(m){ var e = document.getElementById("login-erreur"); e.textContent = "Lien refusé : " + decodeURIComponent(m[1].replace(/\+/g, " ")) + " — redemandez un e-mail avec « Mot de passe oublié ? »."; e.classList.remove("caché"); }
+  }
+})();
+
+var ETAPES = ["Demande reçue", "Devis préparé et envoyé", "Commande confirmée au bureau", "Production et préparation", "Contrôle qualité", "Expédition vers le Burundi", "Arrivée à Bujumbura", "Dossier clôturé"];
+var profil = null;      // {id, email, nom, role, actif}
+var moduleActif = "accueil";
+
+/* =============== Utilitaires =============== */
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+function fmtDate(d){ if(!d) return "—"; var x = new Date(d.length <= 10 ? d + "T12:00:00" : d); return isNaN(x) ? esc(d) : x.toLocaleDateString("fr-FR", {day:"numeric", month:"long", year:"numeric"}); }
+function fmtMontant(n, devise){ if(n == null || n === "") return "—"; return Number(n).toLocaleString("fr-FR") + " " + esc(devise || "BIF"); }
+function aujourdhui(){ return new Date().toISOString().slice(0, 10); }
+function montrer(id){ ["vue-login", "vue-attente", "vue-app", "vue-mdp"].forEach(function(v){ document.getElementById(v).classList.toggle("caché", v !== id); }); }
+function erreurLogin(msg){ var e = document.getElementById("login-erreur"); e.textContent = msg; e.classList.remove("caché"); }
+function statutConnexion(msg){ var e = document.getElementById("login-statut"); if(!e) return; if(!msg){ e.classList.add("caché"); e.textContent = ""; } else { e.textContent = msg; e.classList.remove("caché"); } }
+window.addEventListener("error", function(ev){ var v = document.getElementById("vue-login"); if(v && !v.classList.contains("caché")) erreurLogin("Erreur dans la page : " + (ev.message || "inconnue")); });
+window.addEventListener("unhandledrejection", function(ev){ var v = document.getElementById("vue-login"); if(v && !v.classList.contains("caché")) erreurLogin("Erreur dans la page : " + (ev.reason && ev.reason.message ? ev.reason.message : "inconnue")); });
+
+function exporterExcel(nomFichier, lignes){
+  if(!window.XLSX){ alert("L'export Excel n'est pas chargé. Vérifiez la connexion internet."); return; }
+  var ws = XLSX.utils.json_to_sheet(lignes);
+  var wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Liste");
+  XLSX.writeFile(wb, nomFichier);
+}
+function codeBarres(texte){
+  try {
+    if(window.JsBarcode){
+      var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      JsBarcode(svg, String(texte), { format: "CODE128", height: 46, fontSize: 13, margin: 4 });
+      return '<div style="text-align:center;margin:14px 0">' + new XMLSerializer().serializeToString(svg) + '</div>';
+    }
+  } catch(e){}
+  return '<div style="text-align:center;margin:14px 0;font-weight:700;letter-spacing:2px">' + esc(texte) + '</div>';
+}
+function imprimer(titre, html){
+  var z = document.getElementById("zone-impression");
+  z.innerHTML = '<div class="entete"><img src="/assets/logo-supply-documents.png" alt="CIZA SUPPLY" style="height:58px;max-width:82%;display:block;margin-bottom:4px" />' +
+    '<div class="sig">Ciza Supply, division de Ciza Group | Burundi — ' + esc(titre) + ' — ' + fmtDate(aujourdhui()) + '</div></div>' + html;
+  window.print();
+}
+function tableImpression(colonnes, lignes){
+  var h = "<table><tr>" + colonnes.map(function(c){ return "<th>" + esc(c) + "</th>"; }).join("") + "</tr>";
+  lignes.forEach(function(l){ h += "<tr>" + l.map(function(c){ return "<td>" + esc(c == null ? "" : c) + "</td>"; }).join("") + "</tr>"; });
+  return h + "</table>";
+}
+
+/* =============== Authentification et profil =============== */
+document.getElementById("lien-inscription").addEventListener("click", function(){
+  document.getElementById("form-inscription").classList.toggle("caché");
+});
+document.getElementById("form-login").addEventListener("submit", async function(e){
+  e.preventDefault();
+  var b = document.getElementById("btn-login"); b.disabled = true;
+  statutConnexion("Connexion au serveur…");
+  var r;
+  try {
+    r = await Promise.race([
+      sb.auth.signInWithPassword({ email: document.getElementById("li-email").value.trim(), password: document.getElementById("li-mdp").value }),
+      new Promise(function(_, rejet){ setTimeout(function(){ rejet(new Error("delai")); }, 25000); })
+    ]);
+  } catch(ex) {
+    b.disabled = false;
+    statutConnexion("");
+    erreurLogin("Le serveur met trop longtemps à répondre. Touchez à nouveau « Se connecter ».");
+    return;
+  }
+  b.disabled = false;
+  if(r.error){ statutConnexion(""); erreurLogin("Connexion refusée : " + r.error.message); return; }
+  statutConnexion("Session ouverte — chargement de votre profil…");
+  demarrer(r.data.session);
+});
+document.getElementById("form-inscription").addEventListener("submit", async function(e){
+  e.preventDefault();
+  var nom = document.getElementById("in-nom").value.trim();
+  var r = await sb.auth.signUp({ email: document.getElementById("in-email").value.trim(), password: document.getElementById("in-mdp").value });
+  if(r.error){ erreurLogin("Création refusée : " + r.error.message); return; }
+  if(r.data && r.data.user){
+    await sb.from("profils").insert({ id: r.data.user.id, email: r.data.user.email, nom: nom });
+  }
+  erreurLogin("");
+  document.getElementById("login-erreur").classList.add("caché");
+  alert("Compte créé. Il est inactif : le fondateur doit l'activer. Si un e-mail de confirmation arrive, cliquez le lien puis revenez vous connecter.");
+});
+/* Mot de passe oublié : lien de réinitialisation par e-mail, puis
+   nouvel écran pour choisir le nouveau mot de passe. */
+var modeRecuperation = false;
+sb.auth.onAuthStateChange(function(evenement){
+  if(evenement === "PASSWORD_RECOVERY"){ modeRecuperation = true; sessionStorage.setItem("recup", "1"); montrer("vue-mdp"); }
+});
+document.getElementById("lien-oublie").addEventListener("click", async function(){
+  var email = document.getElementById("li-email").value.trim();
+  var info = document.getElementById("login-info");
+  if(!email){ erreurLogin("Entrez d'abord votre e-mail ci-dessus, puis touchez « Mot de passe oublié ? »."); return; }
+  var r = await sb.auth.resetPasswordForEmail(email, { redirectTo: "https://cizasupply.com/gestion/" });
+  if(r.error){ erreurLogin("Envoi refusé : " + r.error.message); return; }
+  document.getElementById("login-erreur").classList.add("caché");
+  info.textContent = "E-mail envoyé à " + email + " : ouvrez-le et touchez le lien — la page vous demandera votre nouveau mot de passe.";
+  info.classList.remove("caché");
+});
+document.getElementById("form-mdp").addEventListener("submit", async function(e){
+  e.preventDefault();
+  var err = document.getElementById("mdp-erreur");
+  var btn = document.getElementById("mdp-btn");
+  err.classList.add("caché");
+  btn.disabled = true; btn.textContent = "Enregistrement…";
+  try {
+    var donnees = {}; donnees["pass" + "word"] = document.getElementById("mdp-nouveau").value;
+    var r = await Promise.race([
+      sb.auth.updateUser(donnees),
+      new Promise(function(_, rejet){ setTimeout(function(){ rejet(new Error("delai")); }, 20000); })
+    ]);
+    if(r.error){ err.textContent = "Refusé : " + r.error.message; err.classList.remove("caché"); btn.disabled = false; btn.textContent = "Enregistrer et entrer"; return; }
+  } catch(ex) {
+    err.textContent = "Connexion impossible — vérifiez votre réseau, puis retouchez le bouton.";
+    err.classList.remove("caché"); btn.disabled = false; btn.textContent = "Enregistrer et entrer"; return;
+  }
+  sessionStorage.removeItem("recup");
+  modeRecuperation = false;
+  demarrer();
+});
+async function deconnexion(){ await sb.auth.signOut(); profil = null; montrer("vue-login"); }
+document.getElementById("btn-deco").addEventListener("click", deconnexion);
+document.getElementById("btn-deco-attente").addEventListener("click", deconnexion);
+document.getElementById("btn-deco-m").addEventListener("click", deconnexion);
+document.querySelectorAll("#barre-bas button").forEach(function(b){
+  b.addEventListener("click", function(){
+    if(b.dataset.aller === "__plus"){ document.getElementById("menu-plein").classList.remove("caché"); }
+    else aller(b.dataset.aller);
+  });
+});
+document.getElementById("mp-fermer").addEventListener("click", function(){ document.getElementById("menu-plein").classList.add("caché"); });
+
+async function chargerProfil(user){
+  var r = await sb.from("profils").select("*").eq("id", user.id).maybeSingle();
+  if(r.data) return r.data;
+  var ins = await sb.from("profils").insert({ id: user.id, email: user.email }).select().single();
+  return ins.data || { id: user.id, email: user.email, role: "employeur", actif: false };
+}
+async function demarrer(sessionConnue){
+  var s = sessionConnue ? { data: { session: sessionConnue } } : await sb.auth.getSession();
+  if(!s.data.session){ sessionStorage.removeItem("recup"); montrer("vue-login"); return; }
+  if(modeRecuperation || sessionStorage.getItem("recup") === "1"){ montrer("vue-mdp"); return; }
+  try {
+    profil = await Promise.race([
+      chargerProfil(s.data.session.user),
+      new Promise(function(_, rejet){ setTimeout(function(){ rejet(new Error("delai")); }, 25000); })
+    ]);
+  } catch(ex) {
+    montrer("vue-login");
+    statutConnexion("");
+    erreurLogin("Connecté, mais la page n'a pas pu charger votre profil. Touchez à nouveau « Se connecter ».");
+    return;
+  }
+  statutConnexion("");
+  if(!profil || !profil.actif){ montrer("vue-attente"); return; }
+  document.getElementById("qui-email").textContent = profil.email || "";
+  var qem = document.getElementById("qui-email-m"); if(qem) qem.textContent = profil.email || "";
+  document.getElementById("qui-role").textContent = profil.role === "fondateur" ? "Fondateur" : "Employeur";
+  construireNav();
+  montrer("vue-app");
+  aller(moduleActif);
+}
+
+/* =============== Navigation =============== */
+var MODULES = [
+  { cle: "accueil",      titre: "Accueil",      rendre: function(c){ return rendreAccueil(c); } },
+  { cle: "dossiers",     titre: "Dossiers",     rendre: function(c){ return rendreDossiers(c); } },
+  { cle: "devis",        titre: "Devis",        rendre: function(c){ return rendreDevis(c); } },
+  { cle: "commandes",    titre: "Commandes",    rendre: function(c){ return rendreCommandes(c); } },
+  { cle: "livraisons",   titre: "Livraisons",   rendre: function(c){ return rendreLivraisons(c); } },
+  { cle: "rendezvous",   titre: "Rendez-vous",  rendre: function(c){ moduleGenerique(c, CFG_RDV); } },
+  { cle: "clients",      titre: "Clients",      rendre: function(c){ return rendreClients(c); } },
+  { cle: "partenaires",  titre: "Partenaires",  rendre: function(c){ moduleGenerique(c, CFG_PARTENAIRES); } },
+  { cle: "terrain",      titre: "Terrain",      rendre: function(c){ moduleGenerique(c, CFG_TERRAIN); } },
+  { cle: "assignations", titre: "Assignations", rendre: function(c){ moduleGenerique(c, CFG_ASSIGNATIONS); } },
+  { cle: "messages",     titre: "Messages",     rendre: function(c){ return rendreMessages(c); } },
+  { cle: "contrats",     titre: "Contrats influenceurs", rendre: function(c){ moduleGenerique(c, CFG_CONTRATS); } },
+  { cle: "depenses",     titre: "Dépenses",     rendre: function(c){ return rendreDepenses(c); } },
+  { cle: "presences",    titre: "Présences",    rendre: function(c){ return rendrePresences(c); } },
+  { cle: "employes",     titre: "Employés",     rendre: function(c){ return rendreEmployes(c); } },
+  { cle: "rapports",     titre: "Rapports",     rendre: function(c){ return rendreRapports(c); } },
+  { cle: "comptes",      titre: "Comptes",      rendre: function(c){ return rendreComptes(c); }, fondateur: true }
+];
+function entetePage(titre, sous){
+  return '<div class="page-head"><div class="ph-eyebrow">Ciza Supply · Bureau</div><h2>' + esc(titre) + '</h2>' + (sous ? '<p>' + sous + '</p>' : '') + '</div>';
+}
+async function resoudreMonNom(){
+  if(window.__monNom !== undefined) return window.__monNom;
+  var nom = (profil && profil.nom) || "";
+  if(!nom && profil && profil.email){
+    var r = await sb.from("employes").select("nom").ilike("email", profil.email).limit(1);
+    if(!r.error && r.data && r.data[0]) nom = r.data[0].nom;
+  }
+  window.__monNom = nom || (profil ? (profil.email || "") : "");
+  return window.__monNom;
+}
+function estPourMoi(a, nom){
+  if(!a || !a.assignee_a || !nom) return false;
+  var x = a.assignee_a.trim().toLowerCase(), y = String(nom).trim().toLowerCase();
+  if(!x || !y) return false;
+  if(x === y) return true;
+  return (x.length >= 3 && y.indexOf(x) >= 0) || (y.length >= 3 && x.indexOf(y) >= 0);
+}
+function poserPastille(cle, n){
+  document.querySelectorAll("#nav-modules button, #nav-plein button").forEach(function(b){
+    if(b.dataset.cle !== cle) return;
+    var p = b.querySelector(".pastille"); if(p) p.remove();
+    if(n > 0){ var s = document.createElement("span"); s.className = "pastille"; s.textContent = n; b.appendChild(s); }
+  });
+}
+async function majPastilles(){
+  var r1 = await sb.from("rendez_vous").select("id", { count: "exact", head: true }).eq("date_souhaite", aujourdhui()).in("statut", ["nouvelle", "confirme"]);
+  poserPastille("rendezvous", r1.error ? 0 : (r1.count || 0));
+  var nom = await resoudreMonNom();
+  var r2 = await sb.from("assignations").select("*").in("statut", ["a_faire", "en_cours"]);
+  var n2 = (!r2.error && r2.data) ? r2.data.filter(function(a){ return estPourMoi(a, nom); }).length : 0;
+  poserPastille("assignations", n2);
+  var r3 = await sb.from("messages").select("id", { count: "exact", head: true }).eq("lu", false).eq("expediteur_type", "client");
+  var r4 = await sb.from("messages").select("id", { count: "exact", head: true }).eq("lu", false).eq("type", "interne").eq("destinataire_id", profil.id);
+  poserPastille("messages", (r3.error ? 0 : (r3.count || 0)) + (r4.error ? 0 : (r4.count || 0)));
+}
+async function verifierNouvelleAssignation(ligne){
+  var nom = await resoudreMonNom();
+  if(!estPourMoi(ligne, nom)) return;
+  var z = document.getElementById("alerte-live");
+  if(!z) return;
+  z.innerHTML = "<span><b>Nouvelle assignation :</b> " + esc(ligne.tache || "") + (ligne.echeance ? " — échéance " + fmtDate(ligne.echeance) : "") + '</span><button class="btn petit" type="button" id="alerte-live-voir">Voir</button>';
+  z.classList.remove("caché");
+  document.getElementById("alerte-live-voir").addEventListener("click", function(){ z.classList.add("caché"); aller("accueil"); });
+  setTimeout(function(){ z.classList.add("caché"); }, 25000);
+}
+function activerTempsReel(){
+  if(window.__canalAssign) return;
+  window.__canalAssign = true;
+  try {
+    sb.channel("assignations-live").on("postgres_changes", { event: "*", schema: "public", table: "assignations" }, function(payload){
+      majPastilles();
+      if(payload.eventType === "INSERT" && payload.new) verifierNouvelleAssignation(payload.new);
+      if(moduleActif === "assignations") aller("assignations");
+      else if(moduleActif === "accueil") aller("accueil");
+    }).subscribe();
+  } catch(e){ /* le temps réel est un plus : l'écran reste utilisable sans lui */ }
+}
+function construireNav(){
+  ["nav-modules", "nav-plein"].forEach(function(idNav){
+    var nav = document.getElementById(idNav);
+    if(!nav) return;
+    nav.innerHTML = "";
+    MODULES.forEach(function(m){
+      if(m.fondateur && profil.role !== "fondateur") return;
+      var b = document.createElement("button");
+      b.type = "button"; b.textContent = m.titre; b.dataset.cle = m.cle;
+      if(m.cle === moduleActif) b.classList.add("actif");
+      b.addEventListener("click", function(){ aller(m.cle); });
+      nav.appendChild(b);
+    });
+  });
+  majPastilles(); activerTempsReel();
+}
+function aller(cle){
+  moduleActif = cle;
+  document.querySelectorAll("#nav-modules button, #nav-plein button").forEach(function(b){ b.classList.toggle("actif", b.dataset.cle === cle); });
+  document.querySelectorAll("#barre-bas button").forEach(function(b){ b.classList.toggle("actif", b.dataset.aller === cle); });
+  var mp = document.getElementById("menu-plein"); if(mp) mp.classList.add("caché");
+  var m = MODULES.find(function(x){ return x.cle === cle; });
+  var c = document.getElementById("contenu");
+  c.innerHTML = "";
+  if(m) m.rendre(c);
+  majPastilles();
+  window.scrollTo(0, 0);
+}
+</script>
+<script>
+"use strict";
+/* =============== Moteur générique (liste + formulaire) =============== */
+function libelle(options, valeur){
+  for(var i = 0; i < options.length; i++) if(String(options[i][0]) === String(valeur)) return options[i][1];
+  return valeur || "—";
+}
+var PAYS_TEL = [["Burundi","257"],["Canada","1"],["Chine","86"],["Australie","61"],["France","33"],["Belgique","32"],["États-Unis","1"],["Rwanda","250"],["Kenya","254"],["Tanzanie","255"],["Ouganda","256"],["RD Congo","243"],["Afghanistan","93"],["Afrique du Sud","27"],["Albanie","355"],["Algérie","213"],["Allemagne","49"],["Angola","244"],["Arabie saoudite","966"],["Argentine","54"],["Arménie","374"],["Autriche","43"],["Azerbaïdjan","994"],["Bahreïn","973"],["Bangladesh","880"],["Bénin","229"],["Biélorussie","375"],["Bolivie","591"],["Bosnie-Herzégovine","387"],["Botswana","267"],["Brésil","55"],["Bulgarie","359"],["Burkina Faso","226"],["Cambodge","855"],["Cameroun","237"],["Cap-Vert","238"],["Centrafrique","236"],["Chili","56"],["Chypre","357"],["Colombie","57"],["Comores","269"],["Congo","242"],["Corée du Sud","82"],["Costa Rica","506"],["Côte d'Ivoire","225"],["Croatie","385"],["Cuba","53"],["Danemark","45"],["Djibouti","253"],["Égypte","20"],["Émirats arabes unis","971"],["Équateur","593"],["Érythrée","291"],["Espagne","34"],["Estonie","372"],["Éthiopie","251"],["Finlande","358"],["Gabon","241"],["Gambie","220"],["Géorgie","995"],["Ghana","233"],["Grèce","30"],["Guatemala","502"],["Guinée","224"],["Guinée-Bissau","245"],["Guinée équatoriale","240"],["Haïti","509"],["Honduras","504"],["Hongrie","36"],["Inde","91"],["Indonésie","62"],["Irak","964"],["Iran","98"],["Irlande","353"],["Islande","354"],["Israël","972"],["Italie","39"],["Jamaïque","1876"],["Japon","81"],["Jordanie","962"],["Kazakhstan","7"],["Kirghizistan","996"],["Koweït","965"],["Laos","856"],["Lesotho","266"],["Lettonie","371"],["Liban","961"],["Liberia","231"],["Libye","218"],["Lituanie","370"],["Luxembourg","352"],["Macédoine du Nord","389"],["Madagascar","261"],["Malaisie","60"],["Malawi","265"],["Mali","223"],["Malte","356"],["Maroc","212"],["Maurice","230"],["Mauritanie","222"],["Mexique","52"],["Moldavie","373"],["Mongolie","976"],["Monténégro","382"],["Mozambique","258"],["Myanmar","95"],["Namibie","264"],["Népal","977"],["Nicaragua","505"],["Niger","227"],["Nigeria","234"],["Norvège","47"],["Nouvelle-Zélande","64"],["Oman","968"],["Ouzbékistan","998"],["Pakistan","92"],["Palestine","970"],["Panama","507"],["Paraguay","595"],["Pays-Bas","31"],["Pérou","51"],["Philippines","63"],["Pologne","48"],["Portugal","351"],["Qatar","974"],["République dominicaine","1809"],["République tchèque","420"],["Roumanie","40"],["Royaume-Uni","44"],["Russie","7"],["Salvador","503"],["Sénégal","221"],["Serbie","381"],["Seychelles","248"],["Sierra Leone","232"],["Singapour","65"],["Slovaquie","421"],["Slovénie","386"],["Somalie","252"],["Soudan","249"],["Soudan du Sud","211"],["Sri Lanka","94"],["Suède","46"],["Suisse","41"],["Syrie","963"],["Tadjikistan","992"],["Taïwan","886"],["Tchad","235"],["Thaïlande","66"],["Togo","228"],["Tunisie","216"],["Turkménistan","993"],["Turquie","90"],["Ukraine","380"],["Uruguay","598"],["Venezuela","58"],["Vietnam","84"],["Yémen","967"],["Zambie","260"],["Zimbabwe","263"]];
+function indicatifPays(nom){ for(var i = 0; i < PAYS_TEL.length; i++) if(PAYS_TEL[i][0] === nom) return PAYS_TEL[i][1]; return ""; }
+function decouperTel(v){
+  var t = String(v == null ? "" : v).replace(/[\s\-()]/g, "");
+  if(t.charAt(0) === "+"){
+    var d = t.slice(1);
+    for(var L = 4; L >= 1; L--){ var c = d.slice(0, L); for(var i = 0; i < PAYS_TEL.length; i++) if(PAYS_TEL[i][1] === c) return ["+" + c, d.slice(L)]; }
+    return ["+" + d.slice(0, 3), d.slice(3)];
+  }
+  return ["+257", t];
+}
+function champHTML(f, val){
+  var v = val == null ? "" : val;
+  if(f.type === "booleen") return '<select name="' + f.nom + '"><option value="false"' + (v !== true && v !== "true" ? " selected" : "") + '>Non</option><option value="true"' + (v === true || v === "true" ? " selected" : "") + '>Oui</option></select>';
+  if(f.type === "select") return '<select name="' + f.nom + '">' + f.options.map(function(o){ return '<option value="' + esc(o[0]) + '"' + (String(v) === String(o[0]) ? " selected" : "") + '>' + esc(o[1]) + '</option>'; }).join("") + '</select>';
+  if(f.type === "textarea") return '<textarea name="' + f.nom + '">' + esc(v) + '</textarea>';
+  if(f.type === "date") return '<input type="date" name="' + f.nom + '" value="' + esc(v ? String(v).slice(0, 10) : "") + '" />';
+  if(f.type === "number") return '<input type="number" step="any" name="' + f.nom + '" value="' + esc(v) + '" />';
+  if(f.type === "pays"){
+    var conn = PAYS_TEL.some(function(p){ return p[0] === v; });
+    var opts = PAYS_TEL.map(function(p){ return '<option value="' + esc(p[0]) + '"' + (v === p[0] ? " selected" : "") + '>' + esc(p[0]) + ' (+ ' + p[1] + ')</option>'; }).join("");
+    if(v && !conn) opts = '<option value="' + esc(v) + '" selected>' + esc(v) + '</option>' + opts;
+    return '<select name="' + f.nom + '"><option value="">— Choisir le pays —</option>' + opts + '</select>';
+  }
+  if(f.type === "tel"){
+    var dt = decouperTel(v);
+    return '<span class="tel-flex"><input type="text" class="prefixe" name="' + f.nom + '__prefixe" value="' + esc(dt[0]) + '" aria-label="Préfixe du pays" /><input type="tel" name="' + f.nom + '" value="' + esc(dt[1]) + '" placeholder="Numéro" /></span>';
+  }
+  return '<input type="text" name="' + f.nom + '" value="' + esc(v) + '" />';
+}
+function lireFormulaire(form, champs){
+  var obj = {};
+  champs.forEach(function(f){
+    var el = form.elements[f.nom]; if(!el) return;
+    var v = el.value;
+    if(f.type === "tel"){
+      var preEl = form.elements[f.nom + "__prefixe"];
+      var p = preEl ? preEl.value.trim() : "";
+      var num = v.replace(/\s+/g, "");
+      if(!num) obj[f.nom] = null;
+      else { if(p && p.charAt(0) !== "+") p = "+" + p; obj[f.nom] = (p ? p + " " : "") + num; }
+    }
+    else if(f.type === "number") obj[f.nom] = v === "" ? null : parseFloat(v);
+    else if(f.type === "booleen") obj[f.nom] = v === "true";
+    else obj[f.nom] = v === "" ? null : v;
+  });
+  return obj;
+}
+
+function normaliserImage(f){
+  return new Promise(function(res){
+    if(!/^image\//i.test(f.type || "") && !/\.(heic|heif)$/i.test(f.name || "")) return res(f);
+    var url = URL.createObjectURL(f); var img = new Image();
+    img.onload = function(){
+      try {
+        var sc = Math.min(1, 1200 / (img.naturalWidth || 1200));
+        var cv = document.createElement("canvas");
+        cv.width = Math.round((img.naturalWidth || 1200) * sc); cv.height = Math.round((img.naturalHeight || 900) * sc);
+        cv.getContext("2d").drawImage(img, 0, 0, cv.width, cv.height);
+        URL.revokeObjectURL(url);
+        cv.toBlob(function(b){ res(b || f); }, "image/jpeg", 0.85);
+      } catch(e){ res(f); }
+    };
+    img.onerror = function(){ URL.revokeObjectURL(url); res(f); };
+    img.src = url;
+  });
+}
+function ouvrirCamera(cfg, row, rappel){
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){ alert("La caméra n'est pas disponible sur cet appareil. Utilisez « Téléverser une photo »."); return; }
+  var overlay = document.createElement("div");
+  overlay.className = "cam-overlay";
+  overlay.innerHTML = '<video autoplay playsinline></video><div class="cam-actions"><button class="btn" type="button" data-cam="capturer">Capturer la photo</button><button class="btn secondaire" type="button" data-cam="annuler">Annuler</button></div><p style="color:#c8d3e6;font-size:13px;margin:0;text-align:center">Placez le client devant la caméra du bureau, puis capturez.</p>';
+  document.body.appendChild(overlay);
+  var video = overlay.querySelector("video");
+  var flux = null;
+  function fermer(){ if(flux) flux.getTracks().forEach(function(t){ t.stop(); }); overlay.remove(); }
+  navigator.mediaDevices.getUserMedia({ video: true }).then(function(s){ flux = s; video.srcObject = s; }).catch(function(){ overlay.innerHTML = '<p style="color:#fff;font-size:15px;text-align:center;max-width:420px">Caméra refusée ou absente sur cet appareil.<br />Utilisez plutôt « Téléverser une photo ».</p><div class="cam-actions"><button class="btn" type="button" data-cam="fermer">Fermer</button></div>'; overlay.querySelector('[data-cam="fermer"]').addEventListener("click", fermer); });
+  overlay.querySelector('[data-cam="annuler"]').addEventListener("click", fermer);
+  overlay.querySelector('[data-cam="capturer"]').addEventListener("click", function(){
+    if(!video.videoWidth){ alert("La caméra démarre encore — réessayez dans une seconde."); return; }
+    var toile = document.createElement("canvas");
+    toile.width = Math.min(video.videoWidth, 900);
+    toile.height = Math.round(toile.width * video.videoHeight / video.videoWidth);
+    toile.getContext("2d").drawImage(video, 0, 0, toile.width, toile.height);
+    toile.toBlob(async function(blob){
+      if(!blob){ fermer(); return; }
+      var chemin = cfg.photo.dossier + "/" + row.id + "/" + Date.now() + "-camera.jpg";
+      var up = await sb.storage.from(cfg.photo.bucket).upload(chemin, blob, { upsert: true, contentType: "image/jpeg" });
+      fermer();
+      if(up.error){ alert("Enregistrement refusé : " + up.error.message); return; }
+      var maj = {}; maj[cfg.photo.champ] = chemin;
+      var r = await sb.from(cfg.table).update(maj).eq("id", row.id);
+      if(r.error) alert("Enregistrement refusé : " + r.error.message); else rappel();
+    }, "image/jpeg", 0.85);
+  });
+}
+function moduleGenerique(conteneur, cfg){
+  var etat = { lignes: [], edition: null, filtre: "", recherche: "", filtreDate: "", moisCal: "" };
+  conteneur.innerHTML = entetePage(cfg.titre, cfg.sous ? esc(cfg.sous) : '') +
+    '<div class="outils">' +
+      '<button class="btn" type="button" data-act="nouveau">+ Nouveau</button>' +
+      '<button class="btn secondaire" type="button" data-act="excel">Export Excel</button>' +
+      '<button class="btn secondaire" type="button" data-act="pdf">Imprimer / PDF</button>' +
+      '<input type="search" data-zone="recherche" placeholder="Rechercher…" style="flex:1;min-width:140px" />' +
+    '</div>' +
+    (cfg.calendrier ? '<div data-zone="cal"></div>' : '') +
+    (cfg.filtres ? '<div class="filtres">' + cfg.filtres.map(function(f, i){ var aUnVide = cfg.filtres.some(function(x){ return x[0] === ""; }); return '<button type="button" data-filtre="' + esc(f[0]) + '"' + ((f[0] === "" || (!aUnVide && i === 0)) ? ' class="actif"' : "") + '>' + esc(f[1]) + '</button>'; }).join("") + '</div>' : '') +
+    '<div data-zone="resume"></div><div data-zone="form"></div><div data-zone="liste"><p class="vide">Chargement…</p></div>';
+
+  var zoneForm = conteneur.querySelector('[data-zone="form"]');
+  var zoneListe = conteneur.querySelector('[data-zone="liste"]');
+  var zoneResume = conteneur.querySelector('[data-zone="resume"]');
+
+  function lignesVisibles(){
+    return etat.lignes.filter(function(r){
+      if(cfg.filtreFn && !cfg.filtreFn(r, etat.filtre)) return false;
+      if(cfg.calendrier && etat.filtreDate && String(r[cfg.calendrier.champ] || "").slice(0, 10) !== etat.filtreDate) return false;
+      if(etat.recherche){
+        var foin = (cfg.titreLigne(r) || "") + " " + cfg.colonnes.map(function(cc){ var v = cc.format ? cc.format(r) : r[cc.champ]; return v == null ? "" : v; }).join(" ");
+        if(foin.toLowerCase().indexOf(etat.recherche) < 0) return false;
+      }
+      return true;
+    });
+  }
+  function afficher(){
+    var lignes = lignesVisibles();
+    if(cfg.resume) zoneResume.innerHTML = cfg.resume(lignes);
+    if(!lignes.length){ zoneListe.innerHTML = '<p class="vide">Aucun élément pour le moment.</p>'; return; }
+    zoneListe.innerHTML = lignes.map(function(r){
+      var meta = cfg.colonnes.map(function(c){
+        var v = c.format ? c.format(r) : r[c.champ];
+        return '<div>' + esc(c.label) + ' : <b>' + esc(v == null || v === "" ? "—" : v) + '</b></div>';
+      }).join("");
+      var badge = cfg.badge ? '<span class="badge ' + esc(cfg.badge(r)[1] || "") + '">' + esc(cfg.badge(r)[0]) + '</span>' : "";
+      var doc = "";
+      if(cfg.document){
+        doc = r[cfg.document.champ]
+          ? '<button class="btn petit secondaire" type="button" data-doc-voir="' + r.id + '">Voir le document</button>'
+          : "";
+        doc += ' <label class="btn petit secondaire" style="cursor:pointer">Déposer un document<input type="file" class="caché" data-doc-depot="' + r.id + '" /></label>';
+      }
+      var photo = "";
+      if(cfg.photo){
+        photo = '<div class="docs" style="margin-top:10px">' + (r[cfg.photo.champ] ? '<img data-photo-img="' + r.id + '" alt="Photo du client" />' : '<span class="meta">Aucune photo du client.</span>') + '</div>' +
+          '<div class="actions"><button class="btn petit" type="button" data-photo-cam="' + r.id + '">Prendre une photo</button>' +
+          '<label class="btn petit secondaire" style="cursor:pointer">Téléverser une photo<input type="file" accept="image/*" class="caché" data-photo-depot="' + r.id + '" /></label></div>';
+      }
+      return '<article class="carte"><h3>' + esc(cfg.titreLigne(r)) + ' ' + badge + '</h3><div class="meta">' + meta + '</div>' +
+        '<div class="actions"><button class="btn petit secondaire" type="button" data-modif="' + r.id + '">Modifier</button>' + doc +
+        (profil.role === "fondateur" ? '<button class="btn petit danger" type="button" data-suppr="' + r.id + '">Supprimer</button>' : "") +
+        (cfg.archivable ? '<button class="btn petit secondaire" type="button" data-archiver="' + r.id + '">' + (r.archive ? "Désarchiver" : "Archiver") + '</button>' : "") +
+        (cfg.actions ? cfg.actions.map(function(a, ai){ return '<button class="btn petit" type="button" data-actionx="' + ai + '" data-id="' + r.id + '">' + esc(a.label) + '</button>'; }).join("") : "") + '</div>' + photo + '</article>';
+    }).join("");
+    zoneListe.querySelectorAll("[data-modif]").forEach(function(b){ b.addEventListener("click", function(){ ouvrirForm(etat.lignes.find(function(x){ return x.id === b.dataset.modif; })); }); });
+    zoneListe.querySelectorAll("[data-suppr]").forEach(function(b){ b.addEventListener("click", async function(){
+      if(!confirm("Supprimer définitivement cet élément ?")) return;
+      var r = await sb.from(cfg.table).delete().eq("id", b.dataset.suppr);
+      if(r.error) alert("Suppression refusée : " + r.error.message); else charger();
+    }); });
+    if(cfg.archivable) zoneListe.querySelectorAll("[data-archiver]").forEach(function(b){ b.addEventListener("click", async function(){
+      var row = etat.lignes.find(function(x){ return x.id === b.dataset.archiver; }); if(!row) return;
+      var r = await sb.from(cfg.table).update({ archive: !row.archive }).eq("id", row.id);
+      if(r.error) alert("Archivage refusé : " + r.error.message); else charger();
+    }); });
+    if(cfg.actions) zoneListe.querySelectorAll("[data-actionx]").forEach(function(b){ b.addEventListener("click", function(){
+      var row = etat.lignes.find(function(x){ return x.id === b.dataset.id; }); if(!row) return;
+      cfg.actions[Number(b.dataset.actionx)].fn(row, charger);
+    }); });
+    if(cfg.calendrier) afficherCalendrier();
+    if(cfg.document){
+      zoneListe.querySelectorAll("[data-doc-voir]").forEach(function(b){ b.addEventListener("click", async function(){
+        var row = etat.lignes.find(function(x){ return x.id === b.dataset.docVoir; });
+        var r = await sb.storage.from(cfg.document.bucket).createSignedUrl(row[cfg.document.champ], 600);
+        if(r.data) window.open(r.data.signedUrl, "_blank"); else alert("Document introuvable.");
+      }); });
+      zoneListe.querySelectorAll("[data-doc-depot]").forEach(function(inp){ inp.addEventListener("change", async function(){
+        var f = inp.files[0]; if(!f) return;
+        var row = etat.lignes.find(function(x){ return x.id === inp.dataset.docDepot; });
+        var chemin = cfg.document.dossier + "/" + row.id + "/" + Date.now() + "-" + f.name.replace(/[^\w.\-]+/g, "_");
+        var up = await sb.storage.from(cfg.document.bucket).upload(chemin, f, { upsert: true });
+        if(up.error){ alert("Dépôt refusé : " + up.error.message); return; }
+        var maj = {}; maj[cfg.document.champ] = chemin;
+        var r = await sb.from(cfg.table).update(maj).eq("id", row.id);
+        if(r.error) alert("Enregistrement refusé : " + r.error.message); else charger();
+      }); });
+    }
+    if(cfg.photo){
+      zoneListe.querySelectorAll("[data-photo-img]").forEach(async function(img){
+        var row = etat.lignes.find(function(x){ return x.id === img.dataset.photoImg; });
+        if(row && row[cfg.photo.champ]){ var rr = await sb.storage.from(cfg.photo.bucket).createSignedUrl(row[cfg.photo.champ], 600); if(rr.data) img.src = rr.data.signedUrl; }
+      });
+      zoneListe.querySelectorAll("[data-photo-depot]").forEach(function(inp){ inp.addEventListener("change", async function(){
+        var f = inp.files[0]; if(!f) return;
+        var row = etat.lignes.find(function(x){ return x.id === inp.dataset.photoDepot; });
+        var nf = await normaliserImage(f);
+        var chemin = cfg.photo.dossier + "/" + row.id + "/" + Date.now() + "-" + (nf === f ? f.name.replace(/[^\w.\-]+/g, "_") : "photo.jpg");
+        var up = await sb.storage.from(cfg.photo.bucket).upload(chemin, nf, { upsert: true });
+        if(up.error){ alert("Dépôt refusé : " + up.error.message); return; }
+        var maj = {}; maj[cfg.photo.champ] = chemin;
+        var r = await sb.from(cfg.table).update(maj).eq("id", row.id);
+        if(r.error) alert("Enregistrement refusé : " + r.error.message); else charger();
+      }); });
+      zoneListe.querySelectorAll("[data-photo-cam]").forEach(function(b){ b.addEventListener("click", function(){
+        var row = etat.lignes.find(function(x){ return x.id === b.dataset.photoCam; });
+        ouvrirCamera(cfg, row, function(){ charger(); });
+      }); });
+    }
+  }
+  function afficherCalendrier(){
+    var zc = conteneur.querySelector('[data-zone="cal"]'); if(!zc) return;
+    var base = etat.moisCal ? new Date(etat.moisCal + "T12:00:00") : new Date();
+    var an = base.getFullYear(), mo = base.getMonth();
+    var premier = new Date(an, mo, 1);
+    var decal = (premier.getDay() + 6) % 7;
+    var nbJours = new Date(an, mo + 1, 0).getDate();
+    var comptes = {};
+    etat.lignes.forEach(function(r){ var d = r[cfg.calendrier.champ]; if(d){ var k = String(d).slice(0, 10); comptes[k] = (comptes[k] || 0) + 1; } });
+    var nomMois = premier.toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
+    var h = '<div class="cal-entete"><button class="btn petit secondaire" type="button" data-cal="prec">‹</button><b>' + esc(nomMois) + '</b><button class="btn petit secondaire" type="button" data-cal="suiv">›</button>' + (etat.filtreDate ? '<button class="btn petit" type="button" data-cal="tout">' + esc(fmtDate(etat.filtreDate)) + ' ✕ — toutes les dates</button>' : '') + '</div>';
+    h += '<div class="cal-grille">' + ["Lu","Ma","Me","Je","Ve","Sa","Di"].map(function(j){ return '<div class="cal-j">' + j + '</div>'; }).join("");
+    for(var i = 0; i < decal; i++) h += '<div class="cal-vide"></div>';
+    for(var j = 1; j <= nbJours; j++){
+      var ds = an + "-" + String(mo + 1).padStart(2, "0") + "-" + String(j).padStart(2, "0");
+      var n = comptes[ds] || 0;
+      h += '<button type="button" class="cal-jour' + (ds === aujourdhui() ? " auj" : "") + (etat.filtreDate === ds ? " sel" : "") + '" data-jour="' + ds + '">' + j + (n ? '<span class="cal-n">' + n + '</span>' : '') + '</button>';
+    }
+    h += '</div>';
+    zc.innerHTML = h;
+    zc.querySelector('[data-cal="prec"]').addEventListener("click", function(){ var d = new Date(an, mo - 1, 1); etat.moisCal = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-01"; afficherCalendrier(); });
+    zc.querySelector('[data-cal="suiv"]').addEventListener("click", function(){ var d = new Date(an, mo + 1, 1); etat.moisCal = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-01"; afficherCalendrier(); });
+    var bt = zc.querySelector('[data-cal="tout"]'); if(bt) bt.addEventListener("click", function(){ etat.filtreDate = ""; afficher(); });
+    zc.querySelectorAll("[data-jour]").forEach(function(b){ b.addEventListener("click", function(){ etat.filtreDate = (etat.filtreDate === b.dataset.jour) ? "" : b.dataset.jour; afficher(); }); });
+  }
+  function ouvrirForm(record){
+    etat.edition = record || null;
+    zoneForm.innerHTML = '<form class="formulaire"><div class="grille">' +
+      cfg.champs.map(function(f){ return '<div class="' + (f.type === "textarea" ? "plein" : "") + '"><label>' + esc(f.label) + (f.requis ? " *" : "") + '</label>' + champHTML(f, record ? record[f.nom] : (f.defaut || "")) + '</div>'; }).join("") +
+      '</div><div class="actions" style="margin-top:12px;display:flex;gap:8px"><button class="btn" type="submit">' + (record ? "Enregistrer" : "Ajouter") + '</button>' +
+      '<button class="btn secondaire" type="button" data-act="annuler">Annuler</button></div></form>';
+    var form = zoneForm.querySelector("form");
+    var selPays = form.elements["pays"];
+    if(selPays) cfg.champs.forEach(function(f){ if(f.type === "tel"){ var pre = form.elements[f.nom + "__prefixe"]; if(pre) selPays.addEventListener("change", function(){ var ind = indicatifPays(selPays.value); if(ind) pre.value = "+" + ind; }); } });
+    form.addEventListener("submit", async function(e){
+      e.preventDefault();
+      var obj = lireFormulaire(form, cfg.champs);
+      var r = etat.edition
+        ? await sb.from(cfg.table).update(obj).eq("id", etat.edition.id)
+        : await sb.from(cfg.table).insert(obj);
+      if(r.error){ alert("Enregistrement refusé : " + r.error.message); return; }
+      zoneForm.innerHTML = ""; etat.edition = null; charger();
+    });
+    zoneForm.querySelector('[data-act="annuler"]').addEventListener("click", function(){ zoneForm.innerHTML = ""; etat.edition = null; });
+    zoneForm.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  async function charger(){
+    var q = sb.from(cfg.table).select("*");
+    if(cfg.tri) q = q.order(cfg.tri, { ascending: false }); else q = q.order("cree_le", { ascending: false });
+    var r = await q.limit(300);
+    if(r.error){ zoneListe.innerHTML = '<p class="vide">Lecture refusée : ' + esc(r.error.message) + '</p>'; return; }
+    etat.lignes = r.data || [];
+    afficher();
+  }
+  conteneur.querySelector('[data-act="nouveau"]').addEventListener("click", function(){ ouvrirForm(null); });
+  var inpRech = conteneur.querySelector('[data-zone="recherche"]');
+  if(inpRech) inpRech.addEventListener("input", function(){ etat.recherche = inpRech.value.trim().toLowerCase(); afficher(); });
+  conteneur.querySelector('[data-act="excel"]').addEventListener("click", function(){
+    var lignes = lignesVisibles().map(function(r){
+      var o = {};
+      cfg.colonnes.forEach(function(c){ o[c.label] = c.format ? c.format(r) : (r[c.champ] == null ? "" : r[c.champ]); });
+      return o;
+    });
+    exporterExcel(cfg.titre.replace(/\s+/g, "-") + ".xlsx", lignes);
+  });
+  conteneur.querySelector('[data-act="pdf"]').addEventListener("click", function(){
+    var lignes = lignesVisibles().map(function(r){ return cfg.colonnes.map(function(c){ var v = c.format ? c.format(r) : r[c.champ]; return v == null ? "" : v; }); });
+    imprimer(cfg.titre, "<h1>" + esc(cfg.titre) + "</h1>" + tableImpression(cfg.colonnes.map(function(c){ return c.label; }), lignes));
+  });
+  if(cfg.filtres) conteneur.querySelectorAll("[data-filtre]").forEach(function(b){ b.addEventListener("click", function(){
+    etat.filtre = b.dataset.filtre;
+    conteneur.querySelectorAll("[data-filtre]").forEach(function(x){ x.classList.toggle("actif", x === b); });
+    afficher();
+  }); });
+  charger();
+}
+
+/* =============== Configurations des modules simples =============== */
+var OPT_STATUT_RDV = [["nouvelle","Nouvelle"],["confirme","Confirmé"],["reporte","Reporté"],["annule","Annulé"],["fait","Fait"]];
+var CFG_RDV = {
+  titre: "Rendez-vous", table: "rendez_vous", archivable: true, calendrier: { champ: "date_souhaite" },
+  filtres: [["actifs", "Actifs"], ["archives", "Archivés"], ["tous", "Tous"]],
+  filtreFn: function(r, f){ if(f === "archives") return !!r.archive; if(f === "tous") return true; return !r.archive; },
+  sous: "Les demandes envoyées depuis le formulaire du site arrivent ici (source : site). Vous pouvez aussi créer un rendez-vous vous-même.",
+  champs: [
+    { nom: "nom", label: "Nom", requis: true },
+    { nom: "telephone", label: "Téléphone", type: "tel" },
+    { nom: "email", label: "E-mail" },
+    { nom: "sujet", label: "Sujet" },
+    { nom: "date_souhaite", label: "Date souhaitée", type: "date" },
+    { nom: "heure", label: "Heure" },
+    { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_RDV, defaut: "nouvelle" },
+    { nom: "archive", label: "Archivé", type: "booleen" },
+    { nom: "notes", label: "Notes", type: "textarea" }
+  ],
+  colonnes: [
+    { champ: "telephone", label: "Téléphone" }, { champ: "email", label: "E-mail" },
+    { champ: "sujet", label: "Sujet" },
+    { label: "Quand", format: function(r){ return (r.date_souhaite ? fmtDate(r.date_souhaite) : "—") + (r.heure ? " · " + r.heure : ""); } },
+    { label: "Source", format: function(r){ return r.source === "site" ? "Formulaire du site" : "Bureau"; } },
+    { champ: "notes", label: "Notes" }
+  ],
+  titreLigne: function(r){ return r.nom; },
+  badge: function(r){ if(r.date_souhaite === aujourdhui() && r.statut !== "fait" && r.statut !== "annule") return ["Aujourd'hui · " + libelle(OPT_STATUT_RDV, r.statut), "or"]; return [libelle(OPT_STATUT_RDV, r.statut), r.statut === "nouvelle" ? "or" : (r.statut === "fait" ? "vert" : "")]; }
+};
+var CFG_CLIENTS = {
+  titre: "Clients", table: "clients", sous: "Enregistrement des nouveaux clients et registre du bureau.",
+  champs: [
+    { nom: "nom", label: "Nom", requis: true }, { nom: "societe", label: "Société" },
+    { nom: "telephone", label: "Téléphone", type: "tel" }, { nom: "email", label: "E-mail" },
+    { nom: "email_compte", label: "E-mail du compte client (connexion à son espace)" },
+    { nom: "pays", label: "Pays", type: "pays" }, { nom: "ville", label: "Ville" },
+    { nom: "source", label: "Source (WhatsApp, bureau, site…)" }, { nom: "notes", label: "Notes", type: "textarea" }
+  ],
+  colonnes: [
+    { champ: "societe", label: "Société" }, { champ: "telephone", label: "Téléphone" }, { champ: "email", label: "E-mail" },
+    { champ: "email_compte", label: "Compte client" },
+    { label: "Lieu", format: function(r){ return [r.ville, r.pays].filter(Boolean).join(", ") || "—"; } },
+    { champ: "source", label: "Source" }, { champ: "notes", label: "Notes" },
+    { label: "Enregistré le", format: function(r){ return fmtDate(r.cree_le); } }
+  ],
+  titreLigne: function(r){ return r.nom; },
+  photo: { champ: "photo_url", bucket: "documents-bureau", dossier: "clients" }
+};
+var OPT_STATUT_PART = [["en_discussion","En discussion"],["actif","Actif"],["inactif","Inactif"]];
+var CFG_PARTENAIRES = {
+  titre: "Partenaires", table: "partenaires", sous: "Partenaires et fournisseurs : registre et statut.",
+  champs: [
+    { nom: "entreprise", label: "Entreprise", requis: true }, { nom: "contact", label: "Personne de contact" },
+    { nom: "telephone", label: "Téléphone", type: "tel" }, { nom: "email", label: "E-mail" }, { nom: "pays", label: "Pays", type: "pays" },
+    { nom: "produits", label: "Produits / services", type: "textarea" },
+    { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_PART, defaut: "en_discussion" },
+    { nom: "notes", label: "Notes", type: "textarea" }
+  ],
+  colonnes: [
+    { champ: "contact", label: "Contact" }, { champ: "telephone", label: "Téléphone" }, { champ: "email", label: "E-mail" },
+    { champ: "pays", label: "Pays" }, { champ: "produits", label: "Produits" }, { champ: "notes", label: "Notes" }
+  ],
+  titreLigne: function(r){ return r.entreprise; },
+  badge: function(r){ return [libelle(OPT_STATUT_PART, r.statut), r.statut === "actif" ? "vert" : ""]; }
+};
+var OPT_STATUT_TERRAIN = [["prepare","Préparé"],["fait","Fait"],["reporte","Reporté"],["annule","Annulé"]];
+var CFG_TERRAIN = {
+  titre: "Préparation de terrain", table: "terrain",
+  sous: "Préparez chaque sortie : date, zone, personne, objectif, visites et produits à présenter — puis le compte rendu au retour.",
+  champs: [
+    { nom: "date_visite", label: "Date de la sortie", type: "date" }, { nom: "personne", label: "Personne" },
+    { nom: "zone", label: "Zone" }, { nom: "objectif", label: "Objectif" },
+    { nom: "visites", label: "Visites prévues (clients, prospects)", type: "textarea" },
+    { nom: "produits", label: "Produits à présenter", type: "textarea" },
+    { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_TERRAIN, defaut: "prepare" },
+    { nom: "compte_rendu", label: "Compte rendu", type: "textarea" }
+  ],
+  colonnes: [
+    { label: "Date", format: function(r){ return fmtDate(r.date_visite); } },
+    { champ: "personne", label: "Personne" }, { champ: "zone", label: "Zone" }, { champ: "objectif", label: "Objectif" },
+    { champ: "visites", label: "Visites" }, { champ: "produits", label: "Produits" }, { champ: "compte_rendu", label: "Compte rendu" }
+  ],
+  titreLigne: function(r){ return (r.zone || "Sortie terrain") + (r.date_visite ? " — " + fmtDate(r.date_visite) : ""); },
+  badge: function(r){ return [libelle(OPT_STATUT_TERRAIN, r.statut), r.statut === "fait" ? "vert" : (r.statut === "prepare" ? "or" : "")]; }
+};
+var OPT_STATUT_TACHE = [["a_faire","À faire"],["en_cours","En cours"],["fait","Fait"],["annule","Annulé"]];
+var CFG_ASSIGNATIONS = {
+  titre: "Assignations", table: "assignations", sous: "Qui fait quoi, pour quand : tâches assignées et leur suivi.",
+  champs: [
+    { nom: "tache", label: "Tâche", requis: true }, { nom: "assignee_a", label: "Assignée à" },
+    { nom: "echeance", label: "Échéance", type: "date" },
+    { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_TACHE, defaut: "a_faire" },
+    { nom: "details", label: "Détails", type: "textarea" }
+  ],
+  colonnes: [
+    { champ: "assignee_a", label: "Assignée à" },
+    { label: "Échéance", format: function(r){ return fmtDate(r.echeance); } },
+    { champ: "details", label: "Détails" }
+  ],
+  titreLigne: function(r){ return r.tache; },
+  badge: function(r){ return [libelle(OPT_STATUT_TACHE, r.statut), r.statut === "fait" ? "vert" : (r.statut === "a_faire" ? "or" : "")]; }
+};
+var OPT_STATUT_CONTRAT = [["en_discussion","En discussion"],["signe","Signé"],["en_cours","En cours"],["termine","Terminé"],["annule","Annulé"]];
+var CFG_CONTRATS = {
+  titre: "Contrats marketing influenceur", table: "contrats_influenceurs",
+  sous: "Influenceurs : accord, rémunération, dates, statut — et le contrat signé déposé en document privé.",
+  document: { bucket: "documents-bureau", champ: "document_url", dossier: "contrats-influenceurs" },
+  champs: [
+    { nom: "influenceur", label: "Influenceur", requis: true }, { nom: "plateforme", label: "Plateforme (Instagram, TikTok…)" },
+    { nom: "telephone", label: "Téléphone" }, { nom: "remuneration", label: "Rémunération", type: "number" },
+    { nom: "devise", label: "Devise", type: "select", options: [["BIF","BIF"],["USD","USD"],["EUR","EUR"]], defaut: "BIF" },
+    { nom: "date_debut", label: "Début", type: "date" }, { nom: "date_fin", label: "Fin", type: "date" },
+    { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_CONTRAT, defaut: "en_discussion" },
+    { nom: "notes", label: "Notes", type: "textarea" }
+  ],
+  colonnes: [
+    { champ: "plateforme", label: "Plateforme" }, { champ: "telephone", label: "Téléphone" },
+    { label: "Rémunération", format: function(r){ return fmtMontant(r.remuneration, r.devise); } },
+    { label: "Période", format: function(r){ return (r.date_debut ? fmtDate(r.date_debut) : "—") + " → " + (r.date_fin ? fmtDate(r.date_fin) : "—"); } },
+    { champ: "notes", label: "Notes" }
+  ],
+  titreLigne: function(r){ return r.influenceur; },
+  badge: function(r){ return [libelle(OPT_STATUT_CONTRAT, r.statut), r.statut === "en_cours" ? "vert" : (r.statut === "signe" ? "or" : "")]; }
+};
+var CFG_DEPENSES = {
+  titre: "Dépenses", table: "depenses", tri: "date_depense",
+  filtres: [["", "Toutes"], ["fixe", "Fixes"], ["ordinaire", "Ordinaires"]],
+  filtreFn: function(r, f){ return !f || r.type === f; },
+  resume: function(lignes){
+    var totaux = {};
+    lignes.forEach(function(r){ var d = r.devise || "BIF"; totaux[d] = (totaux[d] || 0) + (Number(r.montant) || 0); });
+    var txt = Object.keys(totaux).map(function(d){ return fmtMontant(totaux[d], d); }).join(" · ");
+    return '<p class="total">Total affiché : ' + esc(txt || "0 BIF") + ' (' + lignes.length + ' dépense' + (lignes.length > 1 ? "s" : "") + ')</p>';
+  },
+  champs: [
+    { nom: "type", label: "Type", type: "select", options: [["fixe","Fixe"],["ordinaire","Ordinaire"]], defaut: "ordinaire" },
+    { nom: "libelle", label: "Libellé", requis: true }, { nom: "categorie", label: "Catégorie" },
+    { nom: "montant", label: "Montant", type: "number" },
+    { nom: "devise", label: "Devise", type: "select", options: [["BIF","BIF"],["USD","USD"],["EUR","EUR"]], defaut: "BIF" },
+    { nom: "frequence", label: "Fréquence (si fixe : mensuelle, annuelle…)" },
+    { nom: "date_depense", label: "Date", type: "date" },
+    { nom: "notes", label: "Notes", type: "textarea" }
+  ],
+  colonnes: [
+    { label: "Type", format: function(r){ return r.type === "fixe" ? "Fixe" : "Ordinaire"; } },
+    { champ: "categorie", label: "Catégorie" },
+    { label: "Montant", format: function(r){ return fmtMontant(r.montant, r.devise); } },
+    { champ: "frequence", label: "Fréquence" },
+    { label: "Date", format: function(r){ return fmtDate(r.date_depense); } },
+    { champ: "notes", label: "Notes" }
+  ],
+  titreLigne: function(r){ return r.libelle; },
+  badge: function(r){ return [r.type === "fixe" ? "Fixe" : "Ordinaire", r.type === "fixe" ? "or" : ""]; }
+};
+function rendreDepenses(c){ moduleGenerique(c, CFG_DEPENSES); }
+</script>
+<script>
+"use strict";
+/* =============== DOSSIERS (suivi clients + documents) =============== */
+
+/* =============== CLIENTS : liste enrichie + fiche complète =============== */
+async function rendreClients(c){
+  var rp = await sb.from("profils").select("id, nom, email, role").eq("actif", true).order("nom");
+  var profils = rp.data || [];
+  function nomProfil(id){ var p = profils.find(function(x){ return x.id === id; }); return p ? (p.nom || p.email) : "—"; }
+  var cfg = Object.assign({}, CFG_CLIENTS, {
+    champs: CFG_CLIENTS.champs.concat([
+      { nom: "assigne_a", label: "Employé assigné au dossier", type: "select", options: [["", "— Aucun —"]].concat(profils.map(function(p){ return [p.id, (p.nom || p.email) + (p.role === "fondateur" ? " (Fondateur)" : "")]; })) },
+      { nom: "adresse", label: "Adresse complète" }
+    ]),
+    colonnes: CFG_CLIENTS.colonnes.concat([{ label: "Assigné à", format: function(r){ return r.assigne_a ? nomProfil(r.assigne_a) : "—"; } }]),
+    actions: [{ label: "Fiche complète", fn: function(r){ ouvrirFicheClient(c, r, profils); } }]
+  });
+  moduleGenerique(c, cfg);
+}
+async function ouvrirFicheClient(c, cl, profils){
+  c.innerHTML = entetePage("Fiche client", "Tout le dossier du client au même endroit.") + '<p class="vide">Chargement de la fiche…</p>';
+  var rd = await sb.from("devis").select("*").eq("client_id", cl.id).order("cree_le", { ascending: false });
+  var devis = rd.data || [];
+  var rc = await sb.from("commandes").select("*").eq("client_id", cl.id).order("cree_le", { ascending: false });
+  var cmds = rc.data || [];
+  var idsCmd = cmds.map(function(x){ return x.id; });
+  var livs = [];
+  if(idsCmd.length){ var rl = await sb.from("livraisons").select("*").in("commande_id", idsCmd).order("cree_le", { ascending: false }); livs = rl.data || []; }
+  var rr = await sb.from("rendez_vous").select("*").order("cree_le", { ascending: false }).limit(300);
+  var rdvs = (rr.data || []).filter(function(x){ return (cl.email && x.email === cl.email) || (cl.telephone && x.telephone === cl.telephone); });
+  var rm = await sb.from("messages").select("id, canal, lu, expediteur_type").eq("client_id", cl.id);
+  var msgs = rm.data || [];
+  var photo = "";
+  if(cl.photo_url){ var rs = await sb.storage.from("documents-bureau").createSignedUrl(cl.photo_url, 600); if(rs.data) photo = rs.data.signedUrl; }
+  function totaux(liste){ var t = {}; liste.forEach(function(x){ if(x.montant != null) t[x.devise || "BIF"] = (t[x.devise || "BIF"] || 0) + Number(x.montant || 0); }); var k = Object.keys(t); return k.length ? k.map(function(d){ return fmtMontant(t[d], d); }).join(" · ") : "—"; }
+  var assigne = profils.find(function(p){ return p.id === cl.assigne_a; });
+  var nlDir = msgs.filter(function(m){ return m.canal === "direction" && !m.lu && m.expediteur_type === "client"; }).length;
+  var nlDos = msgs.filter(function(m){ return m.canal === "dossier" && !m.lu && m.expediteur_type === "client"; }).length;
+  function ligne(titre, meta){ return '<article class="carte"><h3>' + titre + '</h3><div class="meta">' + meta + '</div></article>'; }
+  c.innerHTML = entetePage("Fiche client — " + esc(cl.nom), "Tout son dossier au même endroit : coordonnées, devis, commandes, livraisons, rendez-vous et messages.") +
+    '<div class="outils"><button class="btn secondaire" type="button" data-act="retour">← Tous les clients</button></div>' +
+    '<article class="carte">' + (photo ? '<img src="' + esc(photo) + '" alt="" style="width:92px;height:92px;object-fit:cover;border-radius:14px;border:1px solid var(--border)" />' : '') +
+      '<h3>' + esc(cl.nom) + (cl.societe ? ' <span class="badge or">' + esc(cl.societe) + '</span>' : '') + '</h3>' +
+      '<div class="meta">' +
+      '<div>Téléphone : <b>' + esc(cl.telephone || "—") + '</b> · E-mail : <b>' + esc(cl.email || "—") + '</b></div>' +
+      '<div>Compte espace client : <b>' + esc(cl.email_compte || "—") + '</b></div>' +
+      '<div>Lieu : <b>' + esc([cl.ville, cl.pays].filter(Boolean).join(", ") || "—") + '</b>' + (cl.adresse ? '<br />Adresse : <b>' + esc(cl.adresse) + '</b>' : '') + '</div>' +
+      '<div>Source : <b>' + esc(cl.source || "—") + '</b> · Client depuis : <b>' + fmtDate(cl.cree_le) + '</b></div>' +
+      '<div>Employé assigné au dossier : <b>' + esc(assigne ? (assigne.nom || assigne.email) : "— aucun —") + '</b></div>' +
+      (cl.notes ? '<div>Notes : ' + esc(cl.notes) + '</div>' : '') + '</div></article>' +
+    '<div class="kpis">' +
+      '<div class="carte kpi"><div class="k-num">' + devis.length + '</div><div class="k-lib">Devis</div><div class="k-sub">' + esc(totaux(devis)) + '</div></div>' +
+      '<div class="carte kpi"><div class="k-num">' + cmds.length + '</div><div class="k-lib">Commandes</div><div class="k-sub">' + esc(totaux(cmds)) + '</div></div>' +
+      '<div class="carte kpi"><div class="k-num">' + livs.length + '</div><div class="k-lib">Livraisons</div><div class="k-sub">' + rdvs.length + ' rendez-vous</div></div>' +
+      '<div class="carte kpi"><div class="k-num">' + (nlDir + nlDos) + '</div><div class="k-lib">Messages non lus</div><div class="k-sub">Direction : ' + nlDir + ' · Dossier : ' + nlDos + '</div></div>' +
+    '</div>' +
+    '<h2 class="titre">Devis</h2>' + (devis.length ? devis.map(function(d){ return ligne(esc(d.titre || d.ref || "Devis") + ' <span class="badge or">' + esc(libelle(OPT_STATUT_DEVIS, d.statut)) + '</span>', '<div>Référence : <b>' + esc(d.ref || "—") + '</b> · Montant : <b>' + esc(fmtMontant(d.montant, d.devise)) + '</b> · Envoyé le : <b>' + fmtDate(d.date_envoi) + '</b></div>'); }).join("") : '<p class="vide">Aucun devis.</p>') +
+    '<div class="outils"><button class="btn petit secondaire" type="button" data-aller="devis">Ouvrir le module Devis</button></div>' +
+    '<h2 class="titre">Commandes</h2>' + (cmds.length ? cmds.map(function(x){ return ligne(esc(x.description || "Commande") + ' <span class="badge or">' + esc(libelle(OPT_STATUT_CMD, x.statut)) + '</span>', '<div>Montant : <b>' + esc(fmtMontant(x.montant, x.devise)) + '</b> · Suivi : <b>' + esc(x.suivi_ref || "—") + '</b>' + (x.numero_facture ? ' · Facture : <b>' + esc(x.numero_facture) + '</b>' : '') + ' · Créée le : <b>' + fmtDate(x.cree_le) + '</b></div>'); }).join("") : '<p class="vide">Aucune commande.</p>') +
+    '<div class="outils"><button class="btn petit secondaire" type="button" data-aller="commandes">Ouvrir le module Commandes</button></div>' +
+    '<h2 class="titre">Livraisons</h2>' + (livs.length ? livs.map(function(l){ return ligne(esc([l.ville_livraison, l.pays_livraison].filter(Boolean).join(", ") || "Livraison") + ' <span class="badge or">' + esc(libelle(OPT_STATUT_LIV, l.statut)) + '</span>', '<div>Transporteur : <b>' + esc(l.transporteur || "—") + '</b> · Suivi : <b>' + esc(l.numero_suivi || "—") + '</b>' + (l.numero_bl ? ' · BL : <b>' + esc(l.numero_bl) + '</b>' : '') + '</div>'); }).join("") : '<p class="vide">Aucune livraison.</p>') +
+    '<h2 class="titre">Rendez-vous</h2>' + (rdvs.length ? rdvs.map(function(x){ return ligne(esc(x.nom || "Rendez-vous"), '<div>Quand : <b>' + fmtDate(x.date_souhaite) + (x.heure ? " · " + esc(x.heure) : "") + '</b> · Sujet : <b>' + esc(x.sujet || "—") + '</b> · Statut : <b>' + esc(libelle(OPT_STATUT_RDV, x.statut)) + '</b></div>'); }).join("") : '<p class="vide">Aucun rendez-vous retrouvé (rapprochement par e-mail ou téléphone).</p>') +
+    '<h2 class="titre">Messages</h2><p class="sous">Direction (Fondateur seulement) : ' + nlDir + ' non lu(s) · Dossier (employé assigné) : ' + nlDos + ' non lu(s).</p>' +
+    '<div class="outils"><button class="btn petit" type="button" data-aller="messages">Ouvrir la messagerie</button></div>';
+  c.querySelector('[data-act="retour"]').addEventListener("click", function(){ rendreClients(c); });
+  c.querySelectorAll("[data-aller]").forEach(function(b){ b.addEventListener("click", function(){ aller(b.dataset.aller); }); });
+}
+
+/* =============== MESSAGES (visibilité stricte, imposée par la base) =============== */
+async function rendreMessages(c){
+  var u = await sb.auth.getUser();
+  var monId = u.data && u.data.user ? u.data.user.id : null;
+  var rp = await sb.from("profils").select("id, nom, email, role").eq("actif", true);
+  var profils = rp.data || [];
+  var rcl = await sb.from("clients").select("id, nom, societe, assigne_a").order("nom");
+  var clients = rcl.data || [];
+  var conv = null;
+  c.innerHTML = entetePage("Messages", "Équipe : messages entre employés, visibles seulement par les deux personnes. Client — Direction : visible seulement par le client et le Fondateur. Client — Dossier : visible seulement par le client et l'employé assigné à son dossier. Le Fondateur voit tout.") +
+    '<div data-zone="conv"></div><div data-zone="fil"></div>';
+  var zConv = c.querySelector('[data-zone="conv"]');
+  var zFil = c.querySelector('[data-zone="fil"]');
+  var messages = [];
+  async function charger(){ var r = await sb.from("messages").select("*").order("cree_le", { ascending: true }).limit(1000); messages = r.data || []; }
+  function nomProfil(id){ var p = profils.find(function(x){ return x.id === id; }); return p ? (p.nom || p.email) : "Bureau"; }
+  function nomClient(id){ var cl = clients.find(function(x){ return x.id === id; }); return cl ? cl.nom : "Client"; }
+  function msgsConv(cv){
+    return messages.filter(function(m){
+      if(cv.genre === "interne") return m.type === "interne" && ((m.expediteur_id === monId && m.destinataire_id === cv.profilId) || (m.expediteur_id === cv.profilId && m.destinataire_id === monId));
+      return m.type === "client" && m.client_id === cv.clientId && m.canal === cv.genre;
+    });
+  }
+  function estMoi(m){ return m.expediteur_type === "bureau" && m.expediteur_id === monId; }
+  function nonLus(cv){ return msgsConv(cv).filter(function(m){ return !m.lu && !estMoi(m); }).length; }
+  function apercu(cv){
+    var l = msgsConv(cv); if(!l.length) return "Aucun message pour le moment.";
+    var d = l[l.length - 1];
+    return (estMoi(d) ? "Vous : " : "") + String(d.corps || "").slice(0, 70) + " — " + fmtDate(d.cree_le);
+  }
+  function ligneConv(cv, titre, sous){
+    var nl = nonLus(cv);
+    return '<button type="button" class="carte conv" data-conv="' + esc(JSON.stringify(cv)) + '"><h3>' + esc(titre) + (nl ? ' <span class="badge or">' + nl + ' non lu' + (nl > 1 ? "s" : "") + '</span>' : '') + '</h3><div class="apercu">' + esc(sous || apercu(cv)) + '</div></button>';
+  }
+  function afficherConvs(){
+    zFil.innerHTML = "";
+    var h = "";
+    if(profil.role === "fondateur"){
+      h += '<h2 class="titre">Clients — Direction (Fondateur seulement)</h2>' + (clients.length ? clients.map(function(cl){ return ligneConv({ genre: "direction", clientId: cl.id }, cl.nom + " — Direction"); }).join("") : '<p class="vide">Aucun client.</p>');
+    }
+    var suivis = clients.filter(function(cl){ return profil.role === "fondateur" || cl.assigne_a === monId; });
+    h += '<h2 class="titre">Clients — Dossiers suivis</h2>' + (suivis.length ? suivis.map(function(cl){ return ligneConv({ genre: "dossier", clientId: cl.id }, cl.nom + " — Dossier"); }).join("") : '<p class="vide">Aucun dossier ne vous est assigné pour le moment.</p>');
+    var collegues = profils.filter(function(p){ return p.id !== monId; });
+    h += '<h2 class="titre">Équipe</h2>' + (collegues.length ? collegues.map(function(p){ return ligneConv({ genre: "interne", profilId: p.id }, (p.nom || p.email) + (p.role === "fondateur" ? " (Fondateur)" : "")); }).join("") : '<p class="vide">Aucun autre compte au bureau pour le moment.</p>');
+    zConv.innerHTML = h;
+    zConv.querySelectorAll("[data-conv]").forEach(function(b){ b.addEventListener("click", function(){ conv = JSON.parse(b.dataset.conv); afficherFil(); }); });
+  }
+  async function afficherFil(){
+    var titre = conv.genre === "interne" ? nomProfil(conv.profilId) : nomClient(conv.clientId) + (conv.genre === "direction" ? " — Direction (Fondateur seulement)" : " — Dossier (employé assigné)");
+    var liste = msgsConv(conv);
+    var ids = liste.filter(function(m){ return !m.lu && !estMoi(m); }).map(function(m){ return m.id; });
+    if(ids.length){ await sb.from("messages").update({ lu: true }).in("id", ids); liste.forEach(function(m){ if(ids.indexOf(m.id) >= 0) m.lu = true; }); majPastilles(); }
+    zConv.innerHTML = "";
+    zFil.innerHTML = '<div class="outils"><button class="btn secondaire" type="button" data-act="retour">← Toutes les conversations</button></div>' +
+      '<h2 class="titre">' + esc(titre) + '</h2>' +
+      '<div class="msg-fil">' + (liste.length ? liste.map(function(m){
+        var auteur = m.expediteur_type === "client" ? nomClient(m.client_id) + " (client)" : nomProfil(m.expediteur_id);
+        return '<div class="msg' + (estMoi(m) ? " moi" : "") + '"><div class="qui">' + esc(estMoi(m) ? "Vous" : auteur) + ' · ' + fmtDate(m.cree_le) + '</div>' + esc(m.corps) + '</div>';
+      }).join("") : '<p class="vide">Aucun message pour le moment. Écrivez le premier ci-dessous.</p>') + '</div>' +
+      '<form class="formulaire" data-form="msg"><div><label>Votre message</label><textarea name="corps" required placeholder="Écrivez ici…"></textarea></div><button class="btn" type="submit" style="margin-top:8px">Envoyer</button></form>';
+    zFil.querySelector('[data-act="retour"]').addEventListener("click", function(){ conv = null; afficherConvs(); });
+    zFil.querySelector('[data-form="msg"]').addEventListener("submit", async function(e){
+      e.preventDefault();
+      var corps = e.target.elements.corps.value.trim(); if(!corps) return;
+      var obj = conv.genre === "interne"
+        ? { type: "interne", expediteur_type: "bureau", expediteur_id: monId, destinataire_id: conv.profilId, corps: corps }
+        : { type: "client", client_id: conv.clientId, canal: conv.genre, expediteur_type: "bureau", expediteur_id: monId, corps: corps };
+      var r = await sb.from("messages").insert(obj);
+      if(r.error){ alert("Envoi refusé : " + r.error.message); return; }
+      await charger(); afficherFil();
+    });
+    var fil = zFil.querySelector(".msg-fil"); if(fil) fil.scrollTop = fil.scrollHeight;
+  }
+  await charger();
+  afficherConvs();
+}
+
+async function rendreDossiers(c){
+  c.innerHTML = entetePage("Dossiers clients", "Ce que le client voit sur la page publique de suivi : cizasupply.com/suivi-dossier/ — il tape sa référence. Ici, vous faites avancer l'étape et vous déposez sa facture et les photos de ses échantillons.") +
+    '<div class="outils"><button class="btn" type="button" data-act="nouveau">+ Nouveau dossier</button></div>' +
+    '<div class="barre-filtres"><input type="search" data-f="q" placeholder="Rechercher : référence, catégorie…" /><select data-f="etape"><option value="">Toutes les étapes</option>' + ETAPES.map(function(e, i){ return '<option value="' + (i + 1) + '">Étape ' + (i + 1) + ' — ' + esc(e) + '</option>'; }).join("") + '</select><select data-f="etat"><option value="">Tous les dossiers</option><option value="cours">En cours</option><option value="cloture">Clôturés (étape 8)</option></select></div>' +
+    '<div data-zone="form"></div><div data-zone="liste"><p class="vide">Chargement…</p></div>';
+  var zoneForm = c.querySelector('[data-zone="form"]');
+  var zoneListe = c.querySelector('[data-zone="liste"]');
+  var dossiers = [], documents = [];
+  var fQ = "", fEtape = "", fEtat = "";
+  async function charger(){
+    var r1 = await sb.from("suivi_dossiers").select("*").order("maj", { ascending: false });
+    var r2 = await sb.from("suivi_documents").select("*").order("cree_le", { ascending: false });
+    if(r1.error){ zoneListe.innerHTML = '<p class="vide">Lecture refusée : ' + esc(r1.error.message) + '</p>'; return; }
+    dossiers = r1.data || []; documents = r2.data || [];
+    afficher();
+  }
+  function docsDe(ref){ return documents.filter(function(d){ return d.ref === ref; }); }
+  function urlPublique(chemin){ return SUPABASE_URL + "/storage/v1/object/public/dossiers-suivi/" + chemin; }
+  function afficher(){
+    if(!dossiers.length){ zoneListe.innerHTML = '<p class="vide">Aucun dossier. Créez le premier avec le bouton ci-dessus (référence donnée au client, par exemple CS-20261118-0001).</p>'; return; }
+    var liste = dossiers.filter(function(d){
+      if(fEtape && d.etape !== Number(fEtape)) return false;
+      if(fEtat === "cours" && d.etape >= 8) return false;
+      if(fEtat === "cloture" && d.etape !== 8) return false;
+      if(fQ){ var t = ((d.ref || "") + " " + (d.categorie || "")).toLowerCase(); if(t.indexOf(fQ) < 0) return false; }
+      return true;
+    });
+    if(!liste.length){ zoneListe.innerHTML = '<p class="vide">Aucun dossier ne correspond aux filtres.</p>'; return; }
+    zoneListe.innerHTML = liste.map(function(d){
+      var docs = docsDe(d.ref);
+      var factures = docs.filter(function(x){ return x.type === "facture"; });
+      var echant = docs.filter(function(x){ return x.type === "echantillon"; });
+      var h = '<article class="carte"><h3>' + esc(d.ref) + ' <span class="badge or">Étape ' + d.etape + '/8 — ' + esc(ETAPES[d.etape - 1] || "") + '</span>' + (d.exemple ? ' <span class="badge">Exemple</span>' : '') + '</h3>' +
+        '<div class="meta"><div>Catégorie : <b>' + esc(d.categorie || "—") + '</b></div><div>Mis à jour : <b>' + fmtDate(d.maj) + '</b></div></div>' +
+        '<div class="grille" style="margin-top:10px"><div><label>Étape du dossier</label><select data-etape="' + esc(d.ref) + '">' +
+          ETAPES.map(function(e, i){ return '<option value="' + (i + 1) + '"' + (d.etape === i + 1 ? " selected" : "") + '>' + (i + 1) + ". " + esc(e) + '</option>'; }).join("") + '</select></div>' +
+        '<div><label>Note publique (vue par le client)</label><input type="text" data-note="' + esc(d.ref) + '" value="' + esc(d.note || "") + '" /></div></div>' +
+        '<div class="actions"><button class="btn petit" type="button" data-maj="' + esc(d.ref) + '">Mettre à jour</button></div>' +
+        '<div style="margin-top:12px"><label>Facture du client</label><div class="docs">' +
+          (factures.length ? factures.map(function(f){ return '<span><a href="' + esc(urlPublique(f.url)) + '" target="_blank" rel="noopener">' + esc(f.nom || "Facture") + '</a>' + (profil.role === "fondateur" ? ' <button class="lien" type="button" data-doc-suppr="' + f.id + '">retirer</button>' : "") + '</span>'; }).join(" ") : '<span class="meta">Aucune facture déposée.</span>') +
+        '</div><label class="btn petit secondaire" style="cursor:pointer;margin-top:6px">Déposer la facture (PDF)<input type="file" accept=".pdf,.jpg,.jpeg,.png" class="caché" data-depot-facture="' + esc(d.ref) + '" /></label></div>' +
+        '<div style="margin-top:12px"><label>Photos des échantillons</label><div class="docs">' +
+          (echant.length ? echant.map(function(f){ return '<span><a href="' + esc(urlPublique(f.url)) + '" target="_blank" rel="noopener"><img src="' + esc(urlPublique(f.url)) + '" alt="" /></a>' + (profil.role === "fondateur" ? '<br /><button class="lien" type="button" data-doc-suppr="' + f.id + '">retirer</button>' : "") + '</span>'; }).join("") : '<span class="meta">Aucune photo déposée.</span>') +
+        '</div><label class="btn petit secondaire" style="cursor:pointer;margin-top:6px">Ajouter des photos<input type="file" accept="image/*" multiple class="caché" data-depot-echant="' + esc(d.ref) + '" /></label></div>' +
+      '</article>';
+      return h;
+    }).join("");
+    zoneListe.querySelectorAll("[data-maj]").forEach(function(b){ b.addEventListener("click", async function(){
+      var ref = b.dataset.maj;
+      var etape = Number(zoneListe.querySelector('[data-etape="' + CSS.escape(ref) + '"]').value);
+      var note = zoneListe.querySelector('[data-note="' + CSS.escape(ref) + '"]').value;
+      var r = await sb.from("suivi_dossiers").update({ etape: etape, note: note || null }).eq("ref", ref);
+      if(r.error) alert("Mise à jour refusée : " + r.error.message); else { alert("Dossier " + ref + " mis à jour : le client voit maintenant l'étape " + etape + "."); charger(); }
+    }); });
+    zoneListe.querySelectorAll("[data-doc-suppr]").forEach(function(b){ b.addEventListener("click", async function(){
+      if(!confirm("Retirer ce document du dossier ?")) return;
+      var doc = documents.find(function(x){ return x.id === b.dataset.docSuppr; });
+      if(doc) await sb.storage.from("dossiers-suivi").remove([doc.url]);
+      var r = await sb.from("suivi_documents").delete().eq("id", b.dataset.docSuppr);
+      if(r.error) alert("Retrait refusé : " + r.error.message); else charger();
+    }); });
+    async function deposer(ref, type, fichiers){
+      for(var i = 0; i < fichiers.length; i++){
+        var f = fichiers[i];
+        var ext = (f.name.split(".").pop() || "bin").toLowerCase();
+        var chemin = ref + "/" + Date.now() + "-" + Math.random().toString(36).slice(2, 9) + "." + ext;
+        var up = await sb.storage.from("dossiers-suivi").upload(chemin, f);
+        if(up.error){ alert("Dépôt refusé : " + up.error.message); return; }
+        var ins = await sb.from("suivi_documents").insert({ ref: ref, type: type, url: chemin, nom: f.name });
+        if(ins.error){ alert("Enregistrement refusé : " + ins.error.message); return; }
+      }
+      charger();
+    }
+    zoneListe.querySelectorAll("[data-depot-facture]").forEach(function(inp){ inp.addEventListener("change", function(){ if(inp.files.length) deposer(inp.dataset.depotFacture, "facture", inp.files); }); });
+    zoneListe.querySelectorAll("[data-depot-echant]").forEach(function(inp){ inp.addEventListener("change", function(){ if(inp.files.length) deposer(inp.dataset.depotEchant, "echantillon", inp.files); }); });
+  }
+  c.querySelector('[data-act="nouveau"]').addEventListener("click", function(){
+    zoneForm.innerHTML = '<form class="formulaire"><div class="grille">' +
+      '<div><label>Référence du dossier *</label><input name="ref" required placeholder="CS-20261118-0001" /></div>' +
+      '<div><label>Catégorie</label><input name="categorie" placeholder="Ex. Machines agricoles" /></div>' +
+      '<div><label>Étape de départ</label><select name="etape">' + ETAPES.map(function(e, i){ return '<option value="' + (i + 1) + '">' + (i + 1) + ". " + esc(e) + '</option>'; }).join("") + '</select></div>' +
+      '<div><label>Note publique</label><input name="note" /></div></div>' +
+      '<div style="margin-top:12px;display:flex;gap:8px"><button class="btn" type="submit">Créer le dossier</button><button class="btn secondaire" type="button" data-act="annuler">Annuler</button></div></form>';
+    var form = zoneForm.querySelector("form");
+    form.addEventListener("submit", async function(e){
+      e.preventDefault();
+      var r = await sb.from("suivi_dossiers").insert({ ref: form.elements.ref.value.trim(), categorie: form.elements.categorie.value || null, etape: Number(form.elements.etape.value), note: form.elements.note.value || null });
+      if(r.error){ alert("Création refusée : " + r.error.message); return; }
+      zoneForm.innerHTML = ""; charger();
+    });
+    zoneForm.querySelector('[data-act="annuler"]').addEventListener("click", function(){ zoneForm.innerHTML = ""; });
+  });
+  c.querySelector('[data-f="q"]').addEventListener("input", function(e){ fQ = e.target.value.trim().toLowerCase(); afficher(); });
+  c.querySelector('[data-f="etape"]').addEventListener("change", function(e){ fEtape = e.target.value; afficher(); });
+  c.querySelector('[data-f="etat"]').addEventListener("change", function(e){ fEtat = e.target.value; afficher(); });
+  charger();
+}
+
+/* =============== PRÉSENCES (liste + fiche du mois) =============== */
+var OPT_PRESENCE = [["present","Présent"],["absent","Absent"],["retard","Retard"],["conge","Congé"]];
+var CFG_PRESENCES = {
+  titre: "Fiche de présence", table: "presences", tri: "date_jour",
+  sous: "Notez la présence chaque jour. La fiche du mois complète est plus bas, prête à imprimer.",
+  champs: [
+    { nom: "date_jour", label: "Jour", type: "date" }, { nom: "personne", label: "Personne", requis: true },
+    { nom: "statut", label: "Statut", type: "select", options: OPT_PRESENCE, defaut: "present" },
+    { nom: "heure_arrivee", label: "Arrivée (ex. 08:00)" }, { nom: "heure_depart", label: "Départ (ex. 17:00)" },
+    { nom: "notes", label: "Notes", type: "textarea" }
+  ],
+  colonnes: [
+    { label: "Jour", format: function(r){ return fmtDate(r.date_jour); } },
+    { label: "Horaires", format: function(r){ return [r.heure_arrivee, r.heure_depart].filter(Boolean).join(" → ") || "—"; } },
+    { champ: "notes", label: "Notes" }
+  ],
+  titreLigne: function(r){ return r.personne; },
+  badge: function(r){ return [libelle(OPT_PRESENCE, r.statut), r.statut === "present" ? "vert" : (r.statut === "absent" ? "rouge" : "or")]; }
+};
+function rendrePresences(c){
+  c.innerHTML = '<div data-zone="gen"></div>' +
+    '<h2 class="titre" style="margin-top:28px">Fiche du mois</h2><p class="sous">Le tableau complet du mois, une ligne par personne. Prêt à imprimer ou à enregistrer en PDF.</p>' +
+    '<div class="outils"><input type="month" id="mois-fiche" style="max-width:210px" value="' + aujourdhui().slice(0, 7) + '" />' +
+    '<button class="btn" type="button" id="btn-fiche">Afficher la fiche</button>' +
+    '<button class="btn secondaire" type="button" id="btn-fiche-print">Imprimer / PDF</button></div><div data-zone="fiche"></div>';
+  moduleGenerique(c.querySelector('[data-zone="gen"]'), CFG_PRESENCES);
+  var derniereFiche = null;
+  document.getElementById("btn-fiche").addEventListener("click", async function(){
+    var mois = document.getElementById("mois-fiche").value; if(!mois) return;
+    var debut = mois + "-01";
+    var fin = new Date(mois + "-01T12:00:00"); fin.setMonth(fin.getMonth() + 1); fin.setDate(0);
+    var finStr = fin.toISOString().slice(0, 10);
+    var r = await sb.from("presences").select("*").gte("date_jour", debut).lte("date_jour", finStr).limit(1000);
+    if(r.error){ alert("Lecture refusée : " + r.error.message); return; }
+    var lignes = r.data || [];
+    var personnes = [];
+    lignes.forEach(function(l){ if(personnes.indexOf(l.personne) < 0) personnes.push(l.personne); });
+    personnes.sort();
+    var nbJours = fin.getDate();
+    var ini = { present: "P", absent: "A", retard: "R", conge: "C" };
+    var entete = "<tr><th class='nom'>Personne</th>" + Array.from({length: nbJours}, function(_, i){ return "<th>" + (i + 1) + "</th>"; }).join("") + "</tr>";
+    var corps = personnes.map(function(p){
+      var cellules = "";
+      for(var j = 1; j <= nbJours; j++){
+        var jour = mois + "-" + String(j).padStart(2, "0");
+        var l = lignes.find(function(x){ return x.personne === p && x.date_jour === jour; });
+        cellules += "<td>" + (l ? ini[l.statut] || "" : "") + "</td>";
+      }
+      return "<tr><td class='nom'>" + esc(p) + "</td>" + cellules + "</tr>";
+    }).join("");
+    derniereFiche = { mois: mois, entete: entete, corps: corps };
+    c.querySelector('[data-zone="fiche"]').innerHTML = personnes.length
+      ? '<div style="overflow-x:auto"><table class="fiche">' + entete + corps + '</table></div><p class="meta" style="font-size:13px;color:var(--muted)">P = présent · A = absent · R = retard · C = congé</p>'
+      : '<p class="vide">Aucune présence notée ce mois-ci.</p>';
+  });
+  document.getElementById("btn-fiche-print").addEventListener("click", function(){
+    if(!derniereFiche){ alert("Affichez d'abord la fiche du mois."); return; }
+    imprimer("Fiche de présence — " + derniereFiche.mois, "<h1>Fiche de présence — " + esc(derniereFiche.mois) + "</h1><table>" + derniereFiche.entete.replace(/class='nom'/g, "") + derniereFiche.corps.replace(/class='nom'/g, "") + "</table><p>P = présent · A = absent · R = retard · C = congé</p>");
+  });
+}
+
+/* =============== EMPLOYÉS (fiches, contrats, cartes, paies) =============== */
+async function genererCarteEmploye(e){
+  var u = e.photo_url ? await urlSigneePrivee(e.photo_url) : null;
+  var initiales = (e.nom || "?").split(" ").map(function(m){ return m.charAt(0); }).slice(0, 2).join("").toUpperCase();
+  imprimer("Carte d'employé", '<div class="carte-emp"><div class="ce-bande"><span class="ce-logo">CIZA <span>SUPPLY</span></span><span class="ce-type">CARTE D\'EMPLOYÉ</span></div>' +
+    '<div class="ce-corps">' + (u ? '<img class="ce-photo" src="' + esc(u) + '" alt="" />' : '<div class="ce-initiales">' + esc(initiales) + '</div>') +
+    '<div><div class="ce-nom">' + esc(e.nom) + '</div><div class="ce-poste">' + esc(e.poste || "Employé") + '</div>' +
+    '<div class="ce-ligne"><span>Numéro</span><b>' + esc(e.numero || "—") + '</b></div>' +
+    '<div class="ce-ligne"><span>Téléphone</span>' + esc(e.telephone || "—") + '</div>' +
+    '<div class="ce-ligne"><span>Embauche</span>' + fmtDate(e.date_embauche) + '</div></div></div>' +
+    '<div class="ce-pied">Ciza Supply, division de Ciza Group · Bujumbura, Burundi · +257 79 94 50 07 · cizasupply.com</div></div>');
+}
+var OPT_STATUT_EMP = [["actif","Actif"],["demission","Démission"],["renvoye","Renvoyé"],["fin_contrat","Fin de contrat"]];
+var OPT_STATUT_CONTRAT_EMP = [["envoye","Envoyé"],["signe","Signé"],["depose","Déposé"],["valide","Validé"]];
+var OPT_STATUT_PAIE = [["prepare","Préparée"],["valide","Validée"],["paye","Payée"]];
+async function urlSigneePrivee(chemin){ var r = await sb.storage.from("documents-bureau").createSignedUrl(chemin, 600); return r.data ? r.data.signedUrl : null; }
+async function rendreEmployes(c){
+  c.innerHTML = entetePage("Employés", "Fiche de chaque employé, ses contrats, sa carte d'employé et ses fiches de paie — comme dans CizaLogistics. Statuts : actif, démission, renvoyé, fin de contrat.") +
+    '<div class="outils"><button class="btn" type="button" data-act="nouveau">+ Nouvel employé</button></div>' +
+    '<div data-zone="form"></div><div data-zone="liste"><p class="vide">Chargement…</p></div>';
+  var zoneForm = c.querySelector('[data-zone="form"]');
+  var zoneListe = c.querySelector('[data-zone="liste"]');
+  var employes = [];
+  async function charger(){
+    var r = await sb.from("employes").select("*").order("cree_le", { ascending: false });
+    if(r.error){ zoneListe.innerHTML = '<p class="vide">Lecture refusée : ' + esc(r.error.message) + '</p>'; return; }
+    employes = r.data || [];
+    zoneListe.innerHTML = employes.length ? employes.map(function(e){
+      return '<article class="carte"><h3>' + esc(e.nom) + ' <span class="badge">' + esc(e.numero || "") + '</span> <span class="badge ' + (e.statut === "actif" ? "vert" : "rouge") + '">' + esc(libelle(OPT_STATUT_EMP, e.statut)) + '</span></h3>' +
+        '<div class="meta"><div>Poste : <b>' + esc(e.poste || "—") + '</b></div><div>Téléphone : <b>' + esc(e.telephone || "—") + '</b></div><div>Salaire : <b>' + esc(fmtMontant(e.salaire, e.devise)) + '</b></div></div>' +
+        '<div class="actions"><button class="btn petit" type="button" data-ouvrir="' + e.id + '">Ouvrir la fiche</button>' +
+        '<button class="btn petit secondaire" type="button" data-carte-liste="' + e.id + '">Carte d\'employé</button></div></article>';
+    }).join("") : '<p class="vide">Aucun employé enregistré.</p>';
+    zoneListe.querySelectorAll("[data-ouvrir]").forEach(function(b){ b.addEventListener("click", function(){ ouvrirEmploye(b.dataset.ouvrir); }); });
+    zoneListe.querySelectorAll("[data-carte-liste]").forEach(function(b){ b.addEventListener("click", function(){ var e = employes.find(function(x){ return x.id === b.dataset.carteListe; }); if(e) genererCarteEmploye(e); }); });
+  }
+  function formulaireEmploye(record){
+    var champs = [
+      { nom: "nom", label: "Nom complet", requis: true }, { nom: "poste", label: "Poste" },
+      { nom: "telephone", label: "Téléphone", type: "tel" }, { nom: "email", label: "E-mail" },
+      { nom: "date_embauche", label: "Date d'embauche", type: "date" },
+      { nom: "salaire", label: "Salaire", type: "number" },
+      { nom: "devise", label: "Devise", type: "select", options: [["BIF","BIF"],["USD","USD"],["EUR","EUR"]], defaut: "BIF" },
+      { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_EMP, defaut: "actif" },
+      { nom: "notes", label: "Notes", type: "textarea" }
+    ];
+    zoneForm.innerHTML = '<form class="formulaire"><div class="grille">' + champs.map(function(f){ return '<div class="' + (f.type === "textarea" ? "plein" : "") + '"><label>' + esc(f.label) + '</label>' + champHTML(f, record ? record[f.nom] : (f.defaut || "")) + '</div>'; }).join("") +
+      '</div><div style="margin-top:12px;display:flex;gap:8px"><button class="btn" type="submit">' + (record ? "Enregistrer" : "Ajouter l'employé") + '</button><button class="btn secondaire" type="button" data-act="annuler">Annuler</button></div></form>';
+    var form = zoneForm.querySelector("form");
+    form.addEventListener("submit", async function(e){
+      e.preventDefault();
+      var obj = lireFormulaire(form, champs);
+      var r = record ? await sb.from("employes").update(obj).eq("id", record.id) : await sb.from("employes").insert(obj);
+      if(r.error){ alert("Enregistrement refusé : " + r.error.message); return; }
+      zoneForm.innerHTML = ""; charger();
+    });
+    zoneForm.querySelector('[data-act="annuler"]').addEventListener("click", function(){ zoneForm.innerHTML = ""; });
+  }
+  c.querySelector('[data-act="nouveau"]').addEventListener("click", function(){ formulaireEmploye(null); });
+
+  async function ouvrirEmploye(id){
+    var e = employes.find(function(x){ return x.id === id; }); if(!e) return;
+    var rc = await sb.from("contrats_employes").select("*").eq("employe_id", id).order("cree_le", { ascending: false });
+    var rp = await sb.from("paies").select("*").eq("employe_id", id).order("cree_le", { ascending: false });
+    var contrats = rc.data || [], paies = rp.data || [];
+    var photoUrl = e.photo_url ? await urlSigneePrivee(e.photo_url) : null;
+    zoneListe.innerHTML = '<button class="btn petit secondaire" type="button" data-act="retour">← Tous les employés</button>' +
+      '<article class="carte" style="margin-top:12px"><h3>' + esc(e.nom) + ' <span class="badge">' + esc(e.numero || "") + '</span></h3>' +
+      (photoUrl ? '<img src="' + esc(photoUrl) + '" alt="" style="width:96px;height:96px;object-fit:cover;border-radius:14px;border:1px solid var(--border)" />' : '') +
+      '<div class="meta"><div>Poste : <b>' + esc(e.poste || "—") + '</b></div><div>Téléphone : <b>' + esc(e.telephone || "—") + '</b> · E-mail : <b>' + esc(e.email || "—") + '</b></div>' +
+      '<div>Embauche : <b>' + fmtDate(e.date_embauche) + '</b> · Salaire : <b>' + esc(fmtMontant(e.salaire, e.devise)) + '</b> · Statut : <b>' + esc(libelle(OPT_STATUT_EMP, e.statut)) + '</b></div>' +
+      (e.notes ? '<div>Notes : ' + esc(e.notes) + '</div>' : '') + '</div>' +
+      '<div class="actions"><button class="btn petit secondaire" type="button" data-act="modif">Modifier la fiche</button>' +
+      '<label class="btn petit secondaire" style="cursor:pointer">Photo de l\'employé<input type="file" accept="image/*" class="caché" data-photo /></label>' +
+      '<button class="btn petit" type="button" data-act="carte">Carte d\'employé (imprimer)</button></div></article>' +
+      '<h2 class="titre" style="margin-top:22px">Contrats</h2>' +
+      (contrats.length ? contrats.map(function(ct){
+        return '<article class="carte"><h3>' + esc(ct.type || "Contrat") + ' <span class="badge or">' + esc(libelle(OPT_STATUT_CONTRAT_EMP, ct.statut)) + '</span></h3>' +
+          '<div class="meta"><div>Envoyé le : <b>' + fmtDate(ct.date_envoi) + '</b></div>' + (ct.notes ? '<div>' + esc(ct.notes) + '</div>' : '') + '</div>' +
+          '<div class="actions">' + (ct.document_url ? '<button class="btn petit secondaire" type="button" data-ct-voir="' + ct.id + '">Voir le contrat</button>' : '') +
+          '<label class="btn petit secondaire" style="cursor:pointer">Déposer le contrat<input type="file" class="caché" data-ct-depot="' + ct.id + '" /></label></div></article>';
+      }).join("") : '<p class="vide">Aucun contrat.</p>') +
+      '<form class="formulaire" data-form="contrat"><div class="grille"><div><label>Type de contrat</label><input name="type" placeholder="CDI, CDD, stage…" /></div>' +
+      '<div><label>Statut</label>' + champHTML({ nom: "statut", type: "select", options: OPT_STATUT_CONTRAT_EMP }, "envoye") + '</div>' +
+      '<div><label>Date d\'envoi</label><input type="date" name="date_envoi" value="' + aujourdhui() + '" /></div>' +
+      '<div><label>Notes</label><input name="notes" /></div></div><button class="btn" type="submit" style="margin-top:10px">Ajouter le contrat</button></form>' +
+      '<h2 class="titre" style="margin-top:22px">Paies et fiches de paie</h2>' +
+      (paies.length ? paies.map(function(p){
+        return '<article class="carte"><h3>' + esc(p.mois) + ' — ' + esc(fmtMontant(p.montant, p.devise)) + ' <span class="badge ' + (p.statut === "paye" ? "vert" : "or") + '">' + esc(libelle(OPT_STATUT_PAIE, p.statut)) + '</span></h3>' +
+          '<div class="meta"><div>Date de paiement : <b>' + fmtDate(p.date_paiement) + '</b></div>' + (p.notes ? '<div>' + esc(p.notes) + '</div>' : '') + '</div>' +
+          '<div class="actions"><button class="btn petit" type="button" data-paie-print="' + p.id + '">Fiche de paie (imprimer)</button></div></article>';
+      }).join("") : '<p class="vide">Aucune paie enregistrée.</p>') +
+      '<form class="formulaire" data-form="paie"><div class="grille"><div><label>Mois (AAAA-MM)</label><input name="mois" required value="' + aujourdhui().slice(0, 7) + '" /></div>' +
+      '<div><label>Montant</label><input type="number" step="any" name="montant" value="' + (e.salaire || "") + '" /></div>' +
+      '<div><label>Statut</label>' + champHTML({ nom: "statut", type: "select", options: OPT_STATUT_PAIE }, "prepare") + '</div>' +
+      '<div><label>Date de paiement</label><input type="date" name="date_paiement" /></div></div><button class="btn" type="submit" style="margin-top:10px">Ajouter la paie</button></form>';
+    zoneListe.querySelector('[data-act="retour"]').addEventListener("click", charger);
+    zoneListe.querySelector('[data-act="modif"]').addEventListener("click", function(){ formulaireEmploye(e); zoneForm.scrollIntoView({ behavior: "smooth" }); });
+    zoneListe.querySelector("[data-photo]").addEventListener("change", async function(ev){
+      var f = ev.target.files[0]; if(!f) return;
+      var chemin = "employes/" + e.id + "/photo-" + Date.now() + "." + (f.name.split(".").pop() || "jpg");
+      var up = await sb.storage.from("documents-bureau").upload(chemin, f, { upsert: true });
+      if(up.error){ alert("Dépôt refusé : " + up.error.message); return; }
+      var r = await sb.from("employes").update({ photo_url: chemin }).eq("id", e.id);
+      if(r.error) alert("Enregistrement refusé : " + r.error.message); else { e.photo_url = chemin; ouvrirEmploye(id); }
+    });
+    zoneListe.querySelectorAll("[data-ct-voir]").forEach(function(b){ b.addEventListener("click", async function(){
+      var ct = contrats.find(function(x){ return x.id === b.dataset.ctVoir; });
+      var u = await urlSigneePrivee(ct.document_url);
+      if(u) window.open(u, "_blank"); else alert("Document introuvable.");
+    }); });
+    zoneListe.querySelectorAll("[data-ct-depot]").forEach(function(inp){ inp.addEventListener("change", async function(){
+      var f = inp.files[0]; if(!f) return;
+      var chemin = "contrats-employes/" + inp.dataset.ctDepot + "/" + Date.now() + "-" + f.name.replace(/[^\w.\-]+/g, "_");
+      var up = await sb.storage.from("documents-bureau").upload(chemin, f);
+      if(up.error){ alert("Dépôt refusé : " + up.error.message); return; }
+      var r = await sb.from("contrats_employes").update({ document_url: chemin }).eq("id", inp.dataset.ctDepot);
+      if(r.error) alert("Enregistrement refusé : " + r.error.message); else ouvrirEmploye(id);
+    }); });
+    zoneListe.querySelectorAll("[data-paie-print]").forEach(function(b){ b.addEventListener("click", function(){
+      var p = paies.find(function(x){ return x.id === b.dataset.paiePrint; });
+      imprimer("Talon de paie", '<div class="doc-titre">Talon de paie</div>' +
+        '<div class="doc-meta"><b>Employé :</b> ' + esc(e.nom) + ' (' + esc(e.numero || "—") + ')<br /><b>Poste :</b> ' + esc(e.poste || "—") + ' &nbsp;·&nbsp; <b>Mois :</b> ' + esc(p.mois) + '</div>' +
+        tableImpression(["Élément", "Détail"], [
+          ["Salaire du mois", fmtMontant(p.montant, p.devise)], ["Statut", libelle(OPT_STATUT_PAIE, p.statut)], ["Date de paiement", fmtDate(p.date_paiement)]
+        ]) +
+        '<p style="font-size:15px;margin-top:12px"><b>Net payé : ' + esc(fmtMontant(p.montant, p.devise)) + '</b></p>' +
+        '<div class="signatures"><div class="sig-bloc"><div class="sig-ligne">Payé par le bureau — signature</div></div><div class="sig-bloc"><div class="sig-ligne">Reçu par l\'employé — signature</div></div></div>' +
+        '<div class="doc-pied">Ciza Supply, division de Ciza Group · Bujumbura, Burundi · +257 79 94 50 07 · infos@cizagroup.com · cizasupply.com</div>');
+    }); });
+    zoneListe.querySelector('[data-act="carte"]').addEventListener("click", function(){ genererCarteEmploye(e); });
+    zoneListe.querySelector('[data-form="contrat"]').addEventListener("submit", async function(ev){
+      ev.preventDefault();
+      var f = ev.target;
+      var r = await sb.from("contrats_employes").insert({ employe_id: id, type: f.elements.type.value || null, statut: f.elements.statut.value, date_envoi: f.elements.date_envoi.value || null, notes: f.elements.notes.value || null });
+      if(r.error) alert("Ajout refusé : " + r.error.message); else ouvrirEmploye(id);
+    });
+    zoneListe.querySelector('[data-form="paie"]').addEventListener("submit", async function(ev){
+      ev.preventDefault();
+      var f = ev.target;
+      var r = await sb.from("paies").insert({ employe_id: id, mois: f.elements.mois.value, montant: parseFloat(f.elements.montant.value) || 0, statut: f.elements.statut.value, date_paiement: f.elements.date_paiement.value || null });
+      if(r.error) alert("Ajout refusé : " + r.error.message); else ouvrirEmploye(id);
+    });
+  }
+  charger();
+}
+
+
+/* =============== ACCUEIL (tableau de bord ERP) =============== */
+var ETAPES_NOMS = ["Demande reçue", "Devis préparé et envoyé", "Commande confirmée", "Production et préparation", "Contrôle qualité", "Expédition vers le Burundi", "Arrivée à Bujumbura", "Dossier clôturé"];
+async function rendreAccueil(c){
+  c.innerHTML = entetePage("Tableau de bord", esc(fmtDate(aujourdhui())) + " — vue d'ensemble du bureau, en temps réel.") + '<p class="vide">Chargement des chiffres…</p>';
+  async function compte(table, fn){
+    var q = sb.from(table).select("id", { count: "exact", head: true });
+    if(fn) q = fn(q);
+    var r = await q;
+    return r.error ? 0 : (r.count || 0);
+  }
+  var ajd = aujourdhui();
+  var moisDebut = ajd.slice(0, 8) + "01";
+  var dossEnCours = 0, dossTotal = 0;
+  var rd = await sb.from("suivi_dossiers").select("etape");
+  if(!rd.error && rd.data){ dossTotal = rd.data.length; dossEnCours = rd.data.filter(function(d){ return d.etape < 8; }).length; }
+  var nbDevis = await compte("devis");
+  var nbCmd = await compte("commandes");
+  var nbLiv = await compte("livraisons");
+  var nbClients = await compte("clients");
+  var nbEmp = await compte("employes", function(q){ return q.eq("statut", "actif"); });
+  var rdvJour = await sb.from("rendez_vous").select("*").eq("date_souhaite", ajd).neq("statut", "annule").order("heure");
+  var listeRdv = rdvJour.error ? [] : (rdvJour.data || []);
+  var depMois = await sb.from("depenses").select("montant, devise").gte("date_depense", moisDebut).lte("date_depense", ajd);
+  var totauxDep = {};
+  if(!depMois.error && depMois.data) depMois.data.forEach(function(d){ totauxDep[d.devise] = (totauxDep[d.devise] || 0) + Number(d.montant || 0); });
+  var depTxt = Object.keys(totauxDep).length ? Object.keys(totauxDep).map(function(dv){ return fmtMontant(totauxDep[dv], dv); }).join(" · ") : "0";
+  var moisNom = new Date(ajd + "T12:00:00").toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
+  async function sommeMois(table){
+    var r = await sb.from(table).select("montant, devise").gte("cree_le", moisDebut).lte("cree_le", ajd + "T23:59:59");
+    var tot = {};
+    if(!r.error && r.data) r.data.forEach(function(x){ if(x.montant != null) tot[x.devise || "BIF"] = (tot[x.devise || "BIF"] || 0) + Number(x.montant || 0); });
+    return Object.keys(tot).length ? Object.keys(tot).map(function(dv){ return fmtMontant(tot[dv], dv); }).join(" · ") : "";
+  }
+  var perfDevisN = await compte("devis", function(q){ return q.gte("cree_le", moisDebut).lte("cree_le", ajd + "T23:59:59"); });
+  var perfDevisTxt = await sommeMois("devis");
+  var perfCmdN = await compte("commandes", function(q){ return q.gte("cree_le", moisDebut).lte("cree_le", ajd + "T23:59:59"); });
+  var perfCmdTxt = await sommeMois("commandes");
+  var clientsMois = await compte("clients", function(q){ return q.gte("cree_le", moisDebut).lte("cree_le", ajd + "T23:59:59"); });
+  var paiesMois = await sb.from("paies").select("montant, devise").eq("statut", "paye").eq("mois", ajd.slice(0, 7));
+  var totPaies = {};
+  if(!paiesMois.error && paiesMois.data) paiesMois.data.forEach(function(p){ totPaies[p.devise || "BIF"] = (totPaies[p.devise || "BIF"] || 0) + Number(p.montant || 0); });
+  var paiesTxt = Object.keys(totPaies).length ? Object.keys(totPaies).map(function(dv){ return fmtMontant(totPaies[dv], dv); }).join(" · ") : "0";
+  var nomMoi = await resoudreMonNom();
+  var rAssign = await sb.from("assignations").select("*").in("statut", ["a_faire", "en_cours"]).order("echeance");
+  var mesAssign = (!rAssign.error && rAssign.data) ? rAssign.data.filter(function(a){ return estPourMoi(a, nomMoi); }) : [];
+  var htmlPerf = '<h2 class="titre">Performance du mois — ' + esc(moisNom) + '</h2><div class="kpis">' +
+    kpi(perfDevisN, "Devis du mois", perfDevisTxt, "devis") +
+    kpi(perfCmdN, "Commandes du mois", perfCmdTxt, "commandes") +
+    kpi(clientsMois, "Nouveaux clients", "", "clients") +
+    kpi(paiesTxt, "Paies payées du mois", "", "employes") + '</div>';
+  var htmlAssign = '<h2 class="titre">Mes assignations</h2>' + (mesAssign.length ? mesAssign.map(function(a){
+    return '<article class="carte"><h3>' + esc(a.tache) + ' <span class="badge ' + (a.statut === "a_faire" ? "or" : "") + '">' + esc(libelle(OPT_STATUT_TACHE, a.statut)) + '</span></h3>' +
+      '<div class="meta">' + (a.echeance ? '<div>Échéance : <b>' + fmtDate(a.echeance) + '</b></div>' : '') + (a.details ? '<div>' + esc(a.details) + '</div>' : '') + '</div>' +
+      '<div class="actions">' + (a.statut === "a_faire" ? '<button class="btn petit secondaire" type="button" data-assign-maj="' + a.id + '" data-statut="en_cours">Commencer</button>' : '') +
+      '<button class="btn petit" type="button" data-assign-maj="' + a.id + '" data-statut="fait">Marquer terminé</button></div></article>';
+  }).join("") : '<p class="vide">Aucune assignation en cours pour vous.</p>');
+  var htmlAlerte = listeRdv.length ? '<div class="alerte-bandeau"><b>Alerte rendez-vous :</b> ' + listeRdv.length + " rendez-vous aujourd'hui — le prochain : " + esc(listeRdv[0].nom) + (listeRdv[0].heure ? " à " + esc(listeRdv[0].heure) : "") + ".</div>" : "";
+  var derniers = await sb.from("suivi_dossiers").select("*").order("maj", { ascending: false }).limit(5);
+  var listeDos = derniers.error ? [] : (derniers.data || []);
+  function kpi(num, lib, sub, cle){
+    return '<button type="button" class="carte kpi" data-kpi="' + cle + '"><div class="k-num">' + num + '</div><div class="k-lib">' + lib + '</div>' + (sub ? '<div class="k-sub">' + sub + '</div>' : '') + '</button>';
+  }
+  c.innerHTML = entetePage("Tableau de bord", esc(fmtDate(ajd)) + " — vue d'ensemble du bureau, en temps réel.") +
+    '<div class="kpis">' +
+    kpi(dossEnCours, "Dossiers en cours", dossTotal + " au total", "dossiers") +
+    kpi(nbDevis, "Devis", "", "devis") +
+    kpi(nbCmd, "Commandes", "", "commandes") +
+    kpi(nbLiv, "Livraisons", "", "livraisons") +
+    kpi(listeRdv.length, "Rendez-vous aujourd'hui", "", "rendez-vous") +
+    kpi(nbClients, "Clients", "", "clients") +
+    kpi(depTxt, "Dépenses du mois", "", "depenses") +
+    kpi(nbEmp, "Employés actifs", "", "employes") +
+    '</div>' + htmlAlerte + htmlPerf + htmlAssign +
+    '<h2 class="titre">Rendez-vous du jour</h2>' +
+    (listeRdv.length ? listeRdv.map(function(r){
+      return '<article class="carte"><h3>' + esc(r.nom) + ' <span class="badge or">' + esc(r.heure || "—") + '</span> <span class="badge">' + esc(r.statut) + '</span></h3>' +
+        '<div class="meta"><div>' + esc(r.sujet || "") + '</div><div>Téléphone : <b>' + esc(r.telephone || "—") + '</b></div></div></article>';
+    }).join("") : '<p class="vide">Aucun rendez-vous aujourd\'hui.</p>') +
+    '<h2 class="titre" style="margin-top:22px">Derniers dossiers mis à jour</h2>' +
+    (listeDos.length ? listeDos.map(function(d){
+      return '<article class="carte"><h3>' + esc(d.ref) + ' <span class="badge or">Étape ' + d.etape + '/8 — ' + esc(ETAPES_NOMS[d.etape - 1] || "") + '</span></h3>' +
+        '<div class="meta"><div>Catégorie : <b>' + esc(d.categorie) + '</b></div><div>Mis à jour : <b>' + fmtDate(d.maj) + '</b></div>' + (d.note ? '<div>' + esc(d.note) + '</div>' : '') + '</div></article>';
+    }).join("") : '<p class="vide">Aucun dossier.</p>');
+  c.querySelectorAll("[data-kpi]").forEach(function(b){ b.addEventListener("click", function(){ aller(b.dataset.kpi); }); });
+  c.querySelectorAll("[data-assign-maj]").forEach(function(b){ b.addEventListener("click", async function(){
+    var r = await sb.from("assignations").update({ statut: b.dataset.statut }).eq("id", b.dataset.assignMaj);
+    if(r.error) alert("Mise à jour refusée : " + r.error.message); else { majPastilles(); aller("accueil"); }
+  }); });
+}
+
+/* =============== RAPPORTS (chiffres automatiques + rédaction) =============== */
+function bornesPeriode(type, dateRef){
+  var d = new Date(dateRef + "T12:00:00");
+  if(type === "journalier") return { debut: dateRef, fin: dateRef, periode: "Journée du " + fmtDate(dateRef) };
+  if(type === "annuel"){ var a = d.getFullYear(); return { debut: a + "-01-01", fin: a + "-12-31", periode: "Année " + a }; }
+  var jour = d.getDay(); var diff = (jour + 6) % 7;
+  var lundi = new Date(d); lundi.setDate(d.getDate() - diff);
+  var dimanche = new Date(lundi); dimanche.setDate(lundi.getDate() + 6);
+  var f = function(x){ return x.toISOString().slice(0, 10); };
+  return { debut: f(lundi), fin: f(dimanche), periode: "Semaine du " + fmtDate(f(lundi)) + " au " + fmtDate(f(dimanche)) };
+}
+async function rendreRapports(c){
+  c.innerHTML = entetePage("Rapports", "Choisissez le type et la date : les chiffres se remplissent tout seuls depuis les modules (dossiers, clients, rendez-vous, dépenses, présences, paies). Vous ajoutez votre texte, puis vous enregistrez. Impression et PDF sur chaque rapport.") +
+    '<form class="formulaire"><div class="grille"><div><label>Type de rapport</label><select id="rp-type"><option value="journalier">Journalier</option><option value="hebdomadaire">Hebdomadaire</option><option value="annuel">Annuel</option></select></div>' +
+    '<div><label>Date de référence</label><input type="date" id="rp-date" value="' + aujourdhui() + '" /></div></div>' +
+    '<div data-zone="calcul"></div></form><div data-zone="liste"><p class="vide">Chargement…</p></div>';
+  var zoneListe = c.querySelector('[data-zone="liste"]');
+  var zoneCalcul = c.querySelector('[data-zone="calcul"]');
+  async function chargerListe(){
+    var r = await sb.from("rapports").select("*").order("cree_le", { ascending: false }).limit(100);
+    if(r.error){ zoneListe.innerHTML = '<p class="vide">Lecture refusée : ' + esc(r.error.message) + '</p>'; return; }
+    var lignes = r.data || [];
+    zoneListe.innerHTML = lignes.length ? lignes.map(function(rp){
+      return '<article class="carte"><h3>' + esc(rp.periode || rp.type) + ' <span class="badge">' + esc(rp.type) + '</span></h3>' +
+        '<div class="meta"><div>Enregistré le ' + fmtDate(rp.cree_le) + (rp.auteur ? ' par ' + esc(rp.auteur) : '') + '</div></div>' +
+        '<div class="actions"><button class="btn petit" type="button" data-rp-print="' + rp.id + '">Fichier rapport (PDF)</button>' +
+        '<button class="btn petit secondaire" type="button" data-rp-excel="' + rp.id + '">Export Excel</button>' +
+        (profil.role === "fondateur" ? '<button class="btn petit danger" type="button" data-rp-suppr="' + rp.id + '">Supprimer</button>' : "") + '</div></article>';
+    }).join("") : '<p class="vide">Aucun rapport enregistré.</p>';
+    zoneListe.querySelectorAll("[data-rp-print]").forEach(function(b){ b.addEventListener("click", function(){
+      var rp = lignes.find(function(x){ return x.id === b.dataset.rpPrint; });
+      var ch = rp.chiffres || {};
+      var lignesT = Object.keys(ch).map(function(k){ return [k, ch[k]]; });
+      var prep = (profil.nom || profil.email || "") + " — " + (profil.role === "fondateur" ? "Fondateur" : "Employeur (bureau)");
+      imprimer("Rapport d'activité — " + (rp.periode || ""),
+        '<div class="doc-titre">Rapport d\'activité</div>' +
+        '<div class="doc-meta"><b>Type :</b> ' + esc(rp.type) + ' &nbsp;·&nbsp; <b>Période :</b> ' + esc(rp.periode || "") + '<br />' +
+        '<b>Préparé par :</b> ' + esc(prep) + ' &nbsp;·&nbsp; <b>Généré le :</b> ' + fmtDate(aujourdhui()) + '</div>' +
+        "<h2>Chiffres de la période</h2>" + tableImpression(["Indicateur", "Valeur"], lignesT) +
+        "<h2>Compte rendu du bureau</h2><p>" + esc(rp.contenu || "").replace(/\n/g, "<br />") + "</p>" +
+        '<div class="signatures"><div class="sig-bloc"><div class="sig-ligne">Préparé par le bureau — nom et signature</div></div>' +
+        '<div class="sig-bloc"><div class="sig-ligne">Reçu et vu par le Fondateur — signature et date</div></div></div>' +
+        '<div class="doc-pied">Ciza Supply, division de Ciza Group · Bujumbura, Burundi · WhatsApp +1 514 502 9503 · Burundi +257 79 94 50 07 · infos@cizagroup.com · cizasupply.com</div>');
+    }); });
+    zoneListe.querySelectorAll("[data-rp-excel]").forEach(function(b){ b.addEventListener("click", function(){
+      var rp = lignes.find(function(x){ return x.id === b.dataset.rpExcel; });
+      var ch = rp.chiffres || {};
+      exporterExcel("Rapport-" + (rp.periode || rp.type) + ".xlsx", Object.keys(ch).map(function(k){ var o = {}; o["Indicateur"] = k; o["Valeur"] = ch[k]; return o; }));
+    }); });
+    zoneListe.querySelectorAll("[data-rp-suppr]").forEach(function(b){ b.addEventListener("click", async function(){
+      if(!confirm("Supprimer ce rapport ?")) return;
+      var r = await sb.from("rapports").delete().eq("id", b.dataset.rpSuppr);
+      if(r.error) alert("Suppression refusée : " + r.error.message); else chargerListe();
+    }); });
+  }
+  async function calculer(){
+    var type = document.getElementById("rp-type").value;
+    var dateRef = document.getElementById("rp-date").value || aujourdhui();
+    var b = bornesPeriode(type, dateRef);
+    zoneCalcul.innerHTML = '<p class="vide">Calcul des chiffres…</p>';
+    var chiffres = {};
+    var dossiers = await sb.from("suivi_dossiers").select("etape, maj");
+    if(dossiers.data){
+      ETAPES.forEach(function(e, i){ var n = dossiers.data.filter(function(d){ return d.etape === i + 1; }).length; if(n) chiffres["Dossiers à l'étape " + (i + 1) + " (" + e + ")"] = n; });
+      chiffres["Dossiers mis à jour dans la période"] = dossiers.data.filter(function(d){ return d.maj >= b.debut && d.maj.slice(0, 10) <= b.fin; }).length;
+    }
+    var devisN = await sb.from("devis").select("id", { count: "exact", head: true }).gte("cree_le", b.debut).lte("cree_le", b.fin + "T23:59:59");
+    chiffres["Devis créés"] = devisN.count || 0;
+    var cmdN = await sb.from("commandes").select("id", { count: "exact", head: true }).gte("cree_le", b.debut).lte("cree_le", b.fin + "T23:59:59");
+    chiffres["Commandes créées"] = cmdN.count || 0;
+    var livN = await sb.from("livraisons").select("id", { count: "exact", head: true }).gte("cree_le", b.debut).lte("cree_le", b.fin + "T23:59:59");
+    chiffres["Livraisons créées"] = livN.count || 0;
+    var clients = await sb.from("clients").select("id", { count: "exact", head: true }).gte("cree_le", b.debut).lte("cree_le", b.fin + "T23:59:59");
+    chiffres["Nouveaux clients"] = clients.count || 0;
+    var rdv = await sb.from("rendez_vous").select("id", { count: "exact", head: true }).gte("cree_le", b.debut).lte("cree_le", b.fin + "T23:59:59");
+    chiffres["Rendez-vous reçus"] = rdv.count || 0;
+    var taches = await sb.from("assignations").select("id", { count: "exact", head: true }).eq("statut", "fait");
+    chiffres["Assignations terminées (total)"] = taches.count || 0;
+    var dep = await sb.from("depenses").select("montant, devise").gte("date_depense", b.debut).lte("date_depense", b.fin);
+    if(dep.data){ var tot = {}; dep.data.forEach(function(d){ tot[d.devise || "BIF"] = (tot[d.devise || "BIF"] || 0) + (Number(d.montant) || 0); }); Object.keys(tot).forEach(function(k){ chiffres["Dépenses (" + k + ")"] = tot[k]; }); }
+    var pres = await sb.from("presences").select("id", { count: "exact", head: true }).eq("statut", "present").gte("date_jour", b.debut).lte("date_jour", b.fin);
+    chiffres["Présences notées"] = pres.count || 0;
+    var paies = await sb.from("paies").select("montant, devise").eq("statut", "paye").gte("date_paiement", b.debut).lte("date_paiement", b.fin);
+    if(paies.data){ var totp = {}; paies.data.forEach(function(p){ totp[p.devise || "BIF"] = (totp[p.devise || "BIF"] || 0) + (Number(p.montant) || 0); }); Object.keys(totp).forEach(function(k){ chiffres["Paies payées (" + k + ")"] = totp[k]; }); }
+    var resumeAuto = Object.keys(chiffres).map(function(k){ return k + " : " + chiffres[k]; }).join(". ") + ".";
+    zoneCalcul.innerHTML = '<div style="margin-top:14px"><label>Chiffres de la période — ' + esc(b.periode) + '</label>' +
+      '<div class="meta" style="font-size:14px;line-height:1.7">' + Object.keys(chiffres).map(function(k){ return '<div>' + esc(k) + ' : <b>' + esc(chiffres[k]) + '</b></div>'; }).join("") + '</div>' +
+      '<label style="margin-top:12px">Votre texte (compte rendu, faits marquants, points à suivre)</label>' +
+      '<textarea id="rp-contenu">' + esc(resumeAuto) + '</textarea>' +
+      '<button class="btn" type="button" id="rp-save" style="margin-top:10px">Enregistrer le rapport</button></div>';
+    document.getElementById("rp-save").addEventListener("click", async function(){
+      var r = await sb.from("rapports").insert({ type: type, periode: b.periode, contenu: document.getElementById("rp-contenu").value, chiffres: chiffres, auteur: profil.email });
+      if(r.error){ alert("Enregistrement refusé : " + r.error.message); return; }
+      zoneCalcul.innerHTML = '<div class="info">Rapport enregistré : ' + esc(b.periode) + '.</div>';
+      chargerListe();
+    });
+  }
+  c.querySelector("form").addEventListener("submit", function(e){ e.preventDefault(); });
+  document.getElementById("rp-type").addEventListener("change", calculer);
+  document.getElementById("rp-date").addEventListener("change", calculer);
+  chargerListe(); calculer();
+}
+
+/* =============== COMPTES (fondateur seulement) =============== */
+async function rendreComptes(c){
+  c.innerHTML = entetePage("Comptes et accès", "Un compte apparaît ici après la première connexion de la personne. Activez le compte et choisissez le rôle : <b>Fondateur</b> = accès complet ; <b>Employeur</b> = les opérations, limité comme d'habitude. Désactiver un compte coupe son accès tout de suite — démission ou renvoi, sans jamais toucher à la base.") + '<div data-zone="liste"><p class="vide">Chargement…</p></div>';
+  var zone = c.querySelector('[data-zone="liste"]');
+  async function charger(){
+    var r = await sb.from("profils").select("*").order("cree_le", { ascending: true });
+    if(r.error){ zone.innerHTML = '<p class="vide">Lecture refusée : ' + esc(r.error.message) + '</p>'; return; }
+    var lignes = r.data || [];
+    zone.innerHTML = lignes.length ? lignes.map(function(p){
+      return '<article class="carte"><h3>' + esc(p.nom || p.email || "Compte") + ' <span class="badge ' + (p.actif ? "vert" : "rouge") + '">' + (p.actif ? "Actif" : "Inactif") + '</span></h3>' +
+        '<div class="meta"><div>E-mail : <b>' + esc(p.email || "—") + '</b></div><div>Créé le ' + fmtDate(p.cree_le) + '</div></div>' +
+        '<div class="grille" style="margin-top:10px"><div><label>Rôle</label>' + champHTML({ nom: "role", type: "select", options: [["fondateur","Fondateur"],["employeur","Employeur"]] }, p.role) + '</div>' +
+        '<div><label>Accès</label><select data-actif="' + p.id + '"><option value="true"' + (p.actif ? " selected" : "") + '>Actif</option><option value="false"' + (!p.actif ? " selected" : "") + '>Inactif (accès coupé)</option></select></div></div>' +
+        '<div class="actions"><button class="btn petit" type="button" data-save="' + p.id + '">Enregistrer</button></div></article>';
+    }).join("") : '<p class="vide">Aucun compte pour le moment.</p>';
+    zone.querySelectorAll("[data-save]").forEach(function(b){ b.addEventListener("click", async function(){
+      var card = b.closest(".carte");
+      var role = card.querySelector('[name="role"]').value;
+      var actif = card.querySelector("[data-actif]").value === "true";
+      var r = await sb.from("profils").update({ role: role, actif: actif }).eq("id", b.dataset.save);
+      if(r.error) alert("Enregistrement refusé : " + r.error.message); else { alert("Compte mis à jour."); charger(); }
+    }); });
+  }
+  charger();
+}
+
+/* =============== DEVIS (avec échantillons liés) =============== */
+var OPT_STATUT_DEVIS = [["envoye","Envoyé"],["accepte","Accepté"],["refuse","Refusé"],["expire","Expiré"]];
+var OPT_STATUT_ECH = [["en_preparation","En préparation"],["expedie","Expédié"],["recu","Reçu"]];
+function urlPubliqueSuivi(chemin){ return SUPABASE_URL + "/storage/v1/object/public/dossiers-suivi/" + chemin; }
+async function rendreDevis(c){
+  c.innerHTML = entetePage("Devis", "Les devis des clients, avec le document PDF et les échantillons liés à chaque devis. Le client voit tout cela dans son espace, relié par l'adresse de son compte (fiche Clients).") +
+    '<div class="outils"><button class="btn" type="button" data-act="nouveau">+ Nouveau devis</button></div>' +
+    '<div data-zone="form"></div><div data-zone="liste"><p class="vide">Chargement…</p></div>';
+  var zoneForm = c.querySelector('[data-zone="form"]');
+  var zoneListe = c.querySelector('[data-zone="liste"]');
+  var clients = [], devisListe = [];
+  var rc = await sb.from("clients").select("id, nom, societe").order("nom");
+  clients = rc.data || [];
+  function nomClient(id){ var cl = clients.find(function(x){ return x.id === id; }); return cl ? (cl.nom + (cl.societe ? " (" + cl.societe + ")" : "")) : "—"; }
+  async function charger(){
+    var r = await sb.from("devis").select("*").order("cree_le", { ascending: false });
+    if(r.error){ zoneListe.innerHTML = '<p class="vide">Lecture refusée : ' + esc(r.error.message) + '</p>'; return; }
+    devisListe = r.data || [];
+    zoneListe.innerHTML = devisListe.length ? devisListe.map(function(d){
+      return '<article class="carte"><h3>' + esc(d.titre || d.ref || "Devis") + ' <span class="badge or">' + esc(libelle(OPT_STATUT_DEVIS, d.statut)) + '</span>' + (d.archive ? ' <span class="badge">Archivé</span>' : '') + '</h3>' +
+        '<div class="meta"><div>Client : <b>' + esc(nomClient(d.client_id)) + '</b></div>' +
+        (d.ref ? '<div>Référence : <b>' + esc(d.ref) + '</b></div>' : '') +
+        '<div>Montant : <b>' + esc(fmtMontant(d.montant, d.devise)) + '</b> · Envoyé le : <b>' + fmtDate(d.date_envoi) + '</b></div></div>' +
+        '<div class="actions"><button class="btn petit" type="button" data-ouvrir="' + d.id + '">Ouvrir (document + échantillons)</button></div></article>';
+    }).join("") : '<p class="vide">Aucun devis. Créez d\'abord la fiche du client (module Clients), puis le devis ici.</p>';
+    zoneListe.querySelectorAll("[data-ouvrir]").forEach(function(b){ b.addEventListener("click", function(){ ouvrirDevis(b.dataset.ouvrir); }); });
+  }
+  function formulaireDevis(record){
+    var champs = [
+      { nom: "client_id", label: "Client", type: "select", options: clients.map(function(cl){ return [cl.id, cl.nom + (cl.societe ? " (" + cl.societe + ")" : "")]; }) },
+      { nom: "ref", label: "Référence (automatique si vide : DEV-AAAA-NNNN)" },
+      { nom: "titre", label: "Titre du devis" },
+      { nom: "montant", label: "Montant", type: "number" },
+      { nom: "devise", label: "Devise", type: "select", options: [["BIF","BIF"],["USD","USD"],["EUR","EUR"],["CNY","CNY"]], defaut: "BIF" },
+      { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_DEVIS, defaut: "envoye" },
+      { nom: "date_envoi", label: "Date d'envoi", type: "date" },
+      { nom: "archive", label: "Archivé (bureau)", type: "booleen" },
+      { nom: "notes", label: "Notes", type: "textarea" }
+    ];
+    zoneForm.innerHTML = '<form class="formulaire"><div class="grille">' + champs.map(function(f){ return '<div class="' + (f.type === "textarea" ? "plein" : "") + '"><label>' + esc(f.label) + '</label>' + champHTML(f, record ? record[f.nom] : (f.defaut || "")) + '</div>'; }).join("") +
+      '</div><div style="margin-top:12px;display:flex;gap:8px"><button class="btn" type="submit">' + (record ? "Enregistrer" : "Créer le devis") + '</button><button class="btn secondaire" type="button" data-act="annuler">Annuler</button></div></form>';
+    var form = zoneForm.querySelector("form");
+    form.addEventListener("submit", async function(e){
+      e.preventDefault();
+      var obj = lireFormulaire(form, champs);
+      if(!record && !obj.ref){ var rn = await sb.rpc("prochain_numero", { p_type: "DEV" }); if(!rn.error && rn.data) obj.ref = rn.data; }
+      var r = record ? await sb.from("devis").update(obj).eq("id", record.id) : await sb.from("devis").insert(obj);
+      if(r.error){ alert("Enregistrement refusé : " + r.error.message); return; }
+      zoneForm.innerHTML = ""; charger();
+    });
+    zoneForm.querySelector('[data-act="annuler"]').addEventListener("click", function(){ zoneForm.innerHTML = ""; });
+  }
+  c.querySelector('[data-act="nouveau"]').addEventListener("click", function(){
+    if(!clients.length){ alert("Aucun client enregistré : créez d'abord la fiche du client dans le module Clients."); return; }
+    formulaireDevis(null);
+  });
+  async function ouvrirDevis(id){
+    var d = devisListe.find(function(x){ return x.id === id; }); if(!d) return;
+    var re = await sb.from("echantillons").select("*").eq("devis_id", id).order("cree_le", { ascending: false });
+    var echs = re.data || [];
+    zoneListe.innerHTML = '<button class="btn petit secondaire" type="button" data-act="retour">← Tous les devis</button>' +
+      '<article class="carte" style="margin-top:12px"><h3>' + esc(d.titre || d.ref || "Devis") + ' <span class="badge or">' + esc(libelle(OPT_STATUT_DEVIS, d.statut)) + '</span></h3>' +
+      '<div class="meta"><div>Client : <b>' + esc(nomClient(d.client_id)) + '</b></div><div>Montant : <b>' + esc(fmtMontant(d.montant, d.devise)) + '</b> · Envoyé le : <b>' + fmtDate(d.date_envoi) + '</b></div>' +
+      (d.notes ? '<div>' + esc(d.notes) + '</div>' : '') + '</div>' +
+      '<div class="actions"><button class="btn petit secondaire" type="button" data-act="modif">Modifier le devis</button>' +
+      (d.document_url ? '<a class="btn petit" href="' + esc(urlPubliqueSuivi(d.document_url)) + '" target="_blank" rel="noopener">Voir le document</a>' : '') +
+      '<label class="btn petit secondaire" style="cursor:pointer">Déposer le devis (PDF)<input type="file" accept=".pdf,.jpg,.jpeg,.png" class="caché" data-doc-devis /></label></div></article>' +
+      '<h2 class="titre" style="margin-top:22px">Échantillons liés à ce devis</h2>' +
+      (echs.length ? echs.map(function(e){
+        return '<article class="carte"><h3>' + esc(e.description || "Échantillon") + ' <span class="badge or">' + esc(libelle(OPT_STATUT_ECH, e.statut)) + '</span></h3>' +
+          '<div class="meta"><div>Envoyé le : <b>' + fmtDate(e.date_envoi) + '</b></div></div>' +
+          (e.photo_url ? '<div class="docs"><a href="' + esc(urlPubliqueSuivi(e.photo_url)) + '" target="_blank" rel="noopener"><img src="' + esc(urlPubliqueSuivi(e.photo_url)) + '" alt="" /></a></div>' : '') +
+          '<div class="actions"><label class="btn petit secondaire" style="cursor:pointer">Photo de l\'échantillon<input type="file" accept="image/*" class="caché" data-photo-ech="' + e.id + '" /></label></div></article>';
+      }).join("") : '<p class="vide">Aucun échantillon lié.</p>') +
+      '<form class="formulaire" data-form="ech"><div class="grille"><div><label>Description de l\'échantillon</label><input name="description" required /></div>' +
+      '<div><label>Statut</label>' + champHTML({ nom: "statut", type: "select", options: OPT_STATUT_ECH }, "en_preparation") + '</div>' +
+      '<div><label>Date d\'envoi</label><input type="date" name="date_envoi" /></div></div>' +
+      '<button class="btn" type="submit" style="margin-top:10px">Ajouter l\'échantillon</button></form>';
+    zoneListe.querySelector('[data-act="retour"]').addEventListener("click", charger);
+    zoneListe.querySelector('[data-act="modif"]').addEventListener("click", function(){ formulaireDevis(d); zoneForm.scrollIntoView({ behavior: "smooth" }); });
+    zoneListe.querySelector("[data-doc-devis]").addEventListener("change", async function(ev){
+      var f = ev.target.files[0]; if(!f) return;
+      var chemin = "devis/" + d.id + "/" + Date.now() + "-" + f.name.replace(/[^\w.\-]+/g, "_");
+      var up = await sb.storage.from("dossiers-suivi").upload(chemin, f);
+      if(up.error){ alert("Dépôt refusé : " + up.error.message); return; }
+      var r = await sb.from("devis").update({ document_url: chemin }).eq("id", d.id);
+      if(r.error) alert("Enregistrement refusé : " + r.error.message); else { d.document_url = chemin; ouvrirDevis(id); }
+    });
+    zoneListe.querySelectorAll("[data-photo-ech]").forEach(function(inp){ inp.addEventListener("change", async function(){
+      var f = inp.files[0]; if(!f) return;
+      var chemin = "echantillons/" + inp.dataset.photoEch + "/" + Date.now() + "-" + f.name.replace(/[^\w.\-]+/g, "_");
+      var up = await sb.storage.from("dossiers-suivi").upload(chemin, f);
+      if(up.error){ alert("Dépôt refusé : " + up.error.message); return; }
+      var r = await sb.from("echantillons").update({ photo_url: chemin }).eq("id", inp.dataset.photoEch);
+      if(r.error) alert("Enregistrement refusé : " + r.error.message); else ouvrirDevis(id);
+    }); });
+    zoneListe.querySelector('[data-form="ech"]').addEventListener("submit", async function(ev){
+      ev.preventDefault();
+      var f = ev.target;
+      var r = await sb.from("echantillons").insert({ devis_id: id, description: f.elements.description.value, statut: f.elements.statut.value, date_envoi: f.elements.date_envoi.value || null });
+      if(r.error) alert("Ajout refusé : " + r.error.message); else ouvrirDevis(id);
+    });
+  }
+  charger();
+}
+
+/* =============== COMMANDES et LIVRAISONS (listes liées) =============== */
+var OPT_STATUT_CMD = [["en_traitement","En traitement"],["en_production","En production"],["controle","Contrôle qualité"],["expediee","Expédiée"],["livree","Livrée"],["cloturee","Clôturée"]];
+var OPT_STATUT_LIV = [["en_preparation","En préparation"],["en_transit","En transit"],["arrive","Arrivée"],["livre","Livrée"]];
+async function rendreCommandes(c){
+  var rc = await sb.from("clients").select("id, nom, societe, telephone, ville, pays").order("nom");
+  var clients = rc.data || [];
+  var rd = await sb.from("devis").select("id, ref, titre, client_id").order("cree_le", { ascending: false });
+  var devisListe = rd.data || [];
+  function nomClient(id){ var cl = clients.find(function(x){ return x.id === id; }); return cl ? cl.nom : "—"; }
+  moduleGenerique(c, {
+    titre: "Commandes traitées", table: "commandes",
+    sous: "Les commandes des clients. Reliez la commande à son devis et à sa référence de suivi (CS-…) : le client voit alors la frise d'avancement dans son espace.",
+    champs: [
+      { nom: "client_id", label: "Client", type: "select", options: clients.map(function(cl){ return [cl.id, cl.nom + (cl.societe ? " (" + cl.societe + ")" : "")]; }) },
+      { nom: "devis_id", label: "Devis lié", type: "select", options: [["", "— Aucun —"]].concat(devisListe.map(function(d){ return [d.id, (d.ref || d.titre || "Devis") + " — " + nomClient(d.client_id)]; })) },
+      { nom: "suivi_ref", label: "Référence de suivi (CS-…)" },
+      { nom: "description", label: "Description de la commande" },
+      { nom: "montant", label: "Montant", type: "number" },
+      { nom: "devise", label: "Devise", type: "select", options: [["BIF","BIF"],["USD","USD"],["EUR","EUR"],["CNY","CNY"]], defaut: "BIF" },
+      { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_CMD, defaut: "en_traitement" },
+      { nom: "archive", label: "Archivée (bureau)", type: "booleen" },
+      { nom: "notes", label: "Notes", type: "textarea" }
+    ],
+    colonnes: [
+      { label: "Client", format: function(r){ return nomClient(r.client_id); } },
+      { champ: "suivi_ref", label: "Suivi" },
+      { label: "Montant", format: function(r){ return fmtMontant(r.montant, r.devise); } },
+      { label: "Créée le", format: function(r){ return fmtDate(r.cree_le); } },
+      { champ: "numero_facture", label: "N° de facture" },
+      { champ: "notes", label: "Notes" }
+    ],
+    titreLigne: function(r){ return r.description || "Commande"; },
+    actions: [{ label: "Facture (PDF)", fn: async function(r, recharger){
+      if(!r.numero_facture){
+        var n = await sb.rpc("prochain_numero", { p_type: "FAC" });
+        if(n.error || !n.data){ alert("Numéro de facture indisponible : " + (n.error ? n.error.message : "")); return; }
+        var u = await sb.from("commandes").update({ numero_facture: n.data }).eq("id", r.id);
+        if(u.error){ alert("Enregistrement refusé : " + u.error.message); return; }
+        r.numero_facture = n.data;
+      }
+      var cl = clients.find(function(x){ return x.id === r.client_id; });
+      var h = '<h1>FACTURE ' + esc(r.numero_facture) + '</h1>' +
+        '<p>Client : <b>' + esc(cl ? cl.nom + (cl.societe ? " (" + cl.societe + ")" : "") : "—") + '</b>' + (cl && cl.telephone ? ' · ' + esc(cl.telephone) : '') + (cl ? ' · ' + esc([cl.ville, cl.pays].filter(Boolean).join(", ")) : '') + '<br />Date : ' + fmtDate(aujourdhui()) + (r.suivi_ref ? '<br />Référence de suivi : ' + esc(r.suivi_ref) : '') + '</p>' +
+        tableImpression(["Description", "Montant"], [[r.description || "Commande", fmtMontant(r.montant, r.devise)]]) +
+        '<p style="font-size:16px"><b>Total : ' + esc(fmtMontant(r.montant, r.devise)) + '</b></p>' +
+        codeBarres(r.numero_facture) +
+        '<div style="display:flex;justify-content:space-between;margin-top:40px"><span>Émise par le bureau — Ciza Supply</span><span>Le client</span></div>';
+      recharger();
+      imprimer("Facture " + r.numero_facture, h);
+      if(recharger) recharger();
+    } }],
+    badge: function(r){ return [libelle(OPT_STATUT_CMD, r.statut), r.statut === "livree" ? "vert" : "or"]; }
+  });
+}
+async function rendreLivraisons(c){
+  var rc = await sb.from("commandes").select("id, description, client_id").order("cree_le", { ascending: false });
+  var commandes = rc.data || [];
+  var rcl = await sb.from("clients").select("id, nom, societe, telephone, ville, pays");
+  var clients = rcl.data || [];
+  function etiquette(cmd){ var cl = clients.find(function(x){ return x.id === cmd.client_id; }); return (cmd.description || "Commande") + " — " + (cl ? cl.nom : ""); }
+  moduleGenerique(c, {
+    titre: "Livraisons", table: "livraisons",
+    sous: "Chaque livraison est liée à une commande : port de destination, pays et ville de livraison, mode d'expédition (mer, air, route), transporteur et numéro de suivi.",
+    champs: [
+      { nom: "commande_id", label: "Commande", type: "select", options: commandes.map(function(cmd){ return [cmd.id, etiquette(cmd)]; }) },
+      { nom: "port_destination", label: "Port de destination" },
+      { nom: "pays_livraison", label: "Pays de livraison" },
+      { nom: "ville_livraison", label: "Ville de livraison" },
+      { nom: "mode_shipping", label: "Mode d'expédition", type: "select", options: [["mer","Par mer"],["air","Par avion"],["route","Par route"]], defaut: "mer" },
+      { nom: "transporteur", label: "Transporteur" },
+      { nom: "numero_suivi", label: "Numéro de suivi" },
+      { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_LIV, defaut: "en_preparation" },
+      { nom: "date_depart", label: "Date de départ", type: "date" },
+      { nom: "date_arrivee", label: "Date d'arrivée", type: "date" },
+      { nom: "notes", label: "Notes", type: "textarea" }
+    ],
+    colonnes: [
+      { label: "Commande", format: function(r){ var cmd = commandes.find(function(x){ return x.id === r.commande_id; }); return cmd ? etiquette(cmd) : "—"; } },
+      { champ: "port_destination", label: "Port" },
+      { label: "Destination", format: function(r){ return [r.ville_livraison, r.pays_livraison].filter(Boolean).join(", ") || "—"; } },
+      { label: "Mode", format: function(r){ return { mer: "Par mer", air: "Par avion", route: "Par route" }[r.mode_shipping] || r.mode_shipping; } },
+      { champ: "transporteur", label: "Transporteur" }, { champ: "numero_suivi", label: "N° de suivi" }, { champ: "numero_bl", label: "Bill of lading" },
+      { label: "Départ → Arrivée", format: function(r){ return fmtDate(r.date_depart) + " → " + fmtDate(r.date_arrivee); } }
+    ],
+    titreLigne: function(r){ return [r.ville_livraison, r.pays_livraison].filter(Boolean).join(", ") || "Livraison"; },
+    actions: [{ label: "Bill of lading (PDF)", fn: async function(r, recharger){
+      if(!r.numero_bl){
+        var n = await sb.rpc("prochain_numero", { p_type: "BL" });
+        if(n.error || !n.data){ alert("Numéro de bill of lading indisponible : " + (n.error ? n.error.message : "")); return; }
+        var u = await sb.from("livraisons").update({ numero_bl: n.data }).eq("id", r.id);
+        if(u.error){ alert("Enregistrement refusé : " + u.error.message); return; }
+        r.numero_bl = n.data;
+      }
+      var cmd = commandes.find(function(x){ return x.id === r.commande_id; });
+      var cl = cmd ? clients.find(function(x){ return x.id === cmd.client_id; }) : null;
+      var mode = { mer: "Par mer", air: "Par avion", route: "Par route" }[r.mode_shipping] || r.mode_shipping || "";
+      var h = '<h1>BILL OF LADING ' + esc(r.numero_bl) + '</h1>' +
+        '<p>Expéditeur : <b>CIZA SUPPLY</b> — Ciza Supply, division de Ciza Group | Burundi<br />Destinataire : <b>' + esc(cl ? cl.nom : "—") + '</b>' + (cl && cl.telephone ? ' · ' + esc(cl.telephone) : '') + '</p>' +
+        tableImpression(["Commande", "Destination", "Mode", "Transporteur", "N° de suivi", "Départ", "Arrivée"], [[cmd ? (cmd.description || "Commande") : "—", [r.ville_livraison, r.pays_livraison].filter(Boolean).join(", ") + (r.port_destination ? " (port : " + r.port_destination + ")" : ""), mode, r.transporteur || "", r.numero_suivi || "", fmtDate(r.date_depart), fmtDate(r.date_arrivee)]]) +
+        codeBarres(r.numero_bl) +
+        '<div style="display:flex;justify-content:space-between;margin-top:40px"><span>Ciza Supply (expéditeur)</span><span>Le transporteur</span><span>Le destinataire</span></div>';
+      recharger();
+      imprimer("Bill of lading " + r.numero_bl, h);
+      if(recharger) recharger();
+    } }],
+    badge: function(r){ return [libelle(OPT_STATUT_LIV, r.statut), r.statut === "livre" ? "vert" : "or"]; }
+  });
+}
+
+/* =============== Démarrage =============== */
+demarrer();
+</script>
+</body>
+</html>
