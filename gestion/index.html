@@ -174,7 +174,7 @@
     #zone-impression .sig-ligne{border-top:1.5px solid #0A1E3C;margin-top:44px;padding-top:5px;font-size:12px;color:#333}
     #zone-impression .doc-pied{margin-top:26px;border-top:1px solid #bbb;padding-top:6px;font-size:11px;color:#666}
   }
-.tel-flex{display:flex;gap:6px}.tel-flex .prefixe{max-width:96px;text-align:center;font-weight:700}.barre-filtres{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}.barre-filtres input,.barre-filtres select{flex:1;min-width:150px}</style>
+.tel-flex{display:flex;gap:6px}.tel-flex .prefixe{max-width:96px;text-align:center;font-weight:700}.barre-filtres{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}.barre-filtres input,.barre-filtres select{flex:1;min-width:150px}.cal-entete{display:flex;align-items:center;gap:10px;margin:4px 0 10px;flex-wrap:wrap}.cal-entete b{font-size:16px;color:#0A1E3C;text-transform:capitalize}.cal-grille{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:16px}.cal-j{text-align:center;font-size:11px;font-weight:700;color:#5b6b84;padding:2px 0}.cal-vide{min-height:40px}.cal-jour{position:relative;min-height:40px;border:1px solid var(--border);background:#fff;border-radius:9px;font-weight:600;color:#0A1E3C;cursor:pointer;padding:4px}.cal-jour.auj{border-color:#D4AF37;box-shadow:inset 0 0 0 1px #D4AF37}.cal-jour.sel{background:#0A1E3C;color:#fff}.cal-n{position:absolute;top:3px;right:3px;background:#F2B840;color:#0A1E3C;font-size:10px;font-weight:800;border-radius:99px;padding:1px 5px}</style>
 </head>
 <body>
 
@@ -264,6 +264,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
 <script>
 "use strict";
 /* =============== Configuration (clé anon PUBLIQUE, lecture/écriture
@@ -301,6 +302,16 @@ function exporterExcel(nomFichier, lignes){
   var wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Liste");
   XLSX.writeFile(wb, nomFichier);
+}
+function codeBarres(texte){
+  try {
+    if(window.JsBarcode){
+      var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      JsBarcode(svg, String(texte), { format: "CODE128", height: 46, fontSize: 13, margin: 4 });
+      return '<div style="text-align:center;margin:14px 0">' + new XMLSerializer().serializeToString(svg) + '</div>';
+    }
+  } catch(e){}
+  return '<div style="text-align:center;margin:14px 0;font-weight:700;letter-spacing:2px">' + esc(texte) + '</div>';
 }
 function imprimer(titre, html){
   var z = document.getElementById("zone-impression");
@@ -622,14 +633,16 @@ function ouvrirCamera(cfg, row, rappel){
   });
 }
 function moduleGenerique(conteneur, cfg){
-  var etat = { lignes: [], edition: null, filtre: "" };
+  var etat = { lignes: [], edition: null, filtre: "", recherche: "", filtreDate: "", moisCal: "" };
   conteneur.innerHTML = entetePage(cfg.titre, cfg.sous ? esc(cfg.sous) : '') +
     '<div class="outils">' +
       '<button class="btn" type="button" data-act="nouveau">+ Nouveau</button>' +
       '<button class="btn secondaire" type="button" data-act="excel">Export Excel</button>' +
       '<button class="btn secondaire" type="button" data-act="pdf">Imprimer / PDF</button>' +
+      '<input type="search" data-zone="recherche" placeholder="Rechercher…" style="flex:1;min-width:140px" />' +
     '</div>' +
-    (cfg.filtres ? '<div class="filtres">' + cfg.filtres.map(function(f){ return '<button type="button" data-filtre="' + esc(f[0]) + '"' + (f[0] === "" ? ' class="actif"' : "") + '>' + esc(f[1]) + '</button>'; }).join("") + '</div>' : '') +
+    (cfg.calendrier ? '<div data-zone="cal"></div>' : '') +
+    (cfg.filtres ? '<div class="filtres">' + cfg.filtres.map(function(f, i){ var aUnVide = cfg.filtres.some(function(x){ return x[0] === ""; }); return '<button type="button" data-filtre="' + esc(f[0]) + '"' + ((f[0] === "" || (!aUnVide && i === 0)) ? ' class="actif"' : "") + '>' + esc(f[1]) + '</button>'; }).join("") + '</div>' : '') +
     '<div data-zone="resume"></div><div data-zone="form"></div><div data-zone="liste"><p class="vide">Chargement…</p></div>';
 
   var zoneForm = conteneur.querySelector('[data-zone="form"]');
@@ -639,6 +652,11 @@ function moduleGenerique(conteneur, cfg){
   function lignesVisibles(){
     return etat.lignes.filter(function(r){
       if(cfg.filtreFn && !cfg.filtreFn(r, etat.filtre)) return false;
+      if(cfg.calendrier && etat.filtreDate && String(r[cfg.calendrier.champ] || "").slice(0, 10) !== etat.filtreDate) return false;
+      if(etat.recherche){
+        var foin = (cfg.titreLigne(r) || "") + " " + cfg.colonnes.map(function(cc){ var v = cc.format ? cc.format(r) : r[cc.champ]; return v == null ? "" : v; }).join(" ");
+        if(foin.toLowerCase().indexOf(etat.recherche) < 0) return false;
+      }
       return true;
     });
   }
@@ -667,7 +685,9 @@ function moduleGenerique(conteneur, cfg){
       }
       return '<article class="carte"><h3>' + esc(cfg.titreLigne(r)) + ' ' + badge + '</h3><div class="meta">' + meta + '</div>' +
         '<div class="actions"><button class="btn petit secondaire" type="button" data-modif="' + r.id + '">Modifier</button>' + doc +
-        (profil.role === "fondateur" ? '<button class="btn petit danger" type="button" data-suppr="' + r.id + '">Supprimer</button>' : "") + '</div>' + photo + '</article>';
+        (profil.role === "fondateur" ? '<button class="btn petit danger" type="button" data-suppr="' + r.id + '">Supprimer</button>' : "") +
+        (cfg.archivable ? '<button class="btn petit secondaire" type="button" data-archiver="' + r.id + '">' + (r.archive ? "Désarchiver" : "Archiver") + '</button>' : "") +
+        (cfg.actions ? cfg.actions.map(function(a, ai){ return '<button class="btn petit" type="button" data-actionx="' + ai + '" data-id="' + r.id + '">' + esc(a.label) + '</button>'; }).join("") : "") + '</div>' + photo + '</article>';
     }).join("");
     zoneListe.querySelectorAll("[data-modif]").forEach(function(b){ b.addEventListener("click", function(){ ouvrirForm(etat.lignes.find(function(x){ return x.id === b.dataset.modif; })); }); });
     zoneListe.querySelectorAll("[data-suppr]").forEach(function(b){ b.addEventListener("click", async function(){
@@ -675,6 +695,16 @@ function moduleGenerique(conteneur, cfg){
       var r = await sb.from(cfg.table).delete().eq("id", b.dataset.suppr);
       if(r.error) alert("Suppression refusée : " + r.error.message); else charger();
     }); });
+    if(cfg.archivable) zoneListe.querySelectorAll("[data-archiver]").forEach(function(b){ b.addEventListener("click", async function(){
+      var row = etat.lignes.find(function(x){ return x.id === b.dataset.archiver; }); if(!row) return;
+      var r = await sb.from(cfg.table).update({ archive: !row.archive }).eq("id", row.id);
+      if(r.error) alert("Archivage refusé : " + r.error.message); else charger();
+    }); });
+    if(cfg.actions) zoneListe.querySelectorAll("[data-actionx]").forEach(function(b){ b.addEventListener("click", function(){
+      var row = etat.lignes.find(function(x){ return x.id === b.dataset.id; }); if(!row) return;
+      cfg.actions[Number(b.dataset.actionx)].fn(row, charger);
+    }); });
+    if(cfg.calendrier) afficherCalendrier();
     if(cfg.document){
       zoneListe.querySelectorAll("[data-doc-voir]").forEach(function(b){ b.addEventListener("click", async function(){
         var row = etat.lignes.find(function(x){ return x.id === b.dataset.docVoir; });
@@ -713,6 +743,31 @@ function moduleGenerique(conteneur, cfg){
       }); });
     }
   }
+  function afficherCalendrier(){
+    var zc = conteneur.querySelector('[data-zone="cal"]'); if(!zc) return;
+    var base = etat.moisCal ? new Date(etat.moisCal + "T12:00:00") : new Date();
+    var an = base.getFullYear(), mo = base.getMonth();
+    var premier = new Date(an, mo, 1);
+    var decal = (premier.getDay() + 6) % 7;
+    var nbJours = new Date(an, mo + 1, 0).getDate();
+    var comptes = {};
+    etat.lignes.forEach(function(r){ var d = r[cfg.calendrier.champ]; if(d){ var k = String(d).slice(0, 10); comptes[k] = (comptes[k] || 0) + 1; } });
+    var nomMois = premier.toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
+    var h = '<div class="cal-entete"><button class="btn petit secondaire" type="button" data-cal="prec">‹</button><b>' + esc(nomMois) + '</b><button class="btn petit secondaire" type="button" data-cal="suiv">›</button>' + (etat.filtreDate ? '<button class="btn petit" type="button" data-cal="tout">' + esc(fmtDate(etat.filtreDate)) + ' ✕ — toutes les dates</button>' : '') + '</div>';
+    h += '<div class="cal-grille">' + ["Lu","Ma","Me","Je","Ve","Sa","Di"].map(function(j){ return '<div class="cal-j">' + j + '</div>'; }).join("");
+    for(var i = 0; i < decal; i++) h += '<div class="cal-vide"></div>';
+    for(var j = 1; j <= nbJours; j++){
+      var ds = an + "-" + String(mo + 1).padStart(2, "0") + "-" + String(j).padStart(2, "0");
+      var n = comptes[ds] || 0;
+      h += '<button type="button" class="cal-jour' + (ds === aujourdhui() ? " auj" : "") + (etat.filtreDate === ds ? " sel" : "") + '" data-jour="' + ds + '">' + j + (n ? '<span class="cal-n">' + n + '</span>' : '') + '</button>';
+    }
+    h += '</div>';
+    zc.innerHTML = h;
+    zc.querySelector('[data-cal="prec"]').addEventListener("click", function(){ var d = new Date(an, mo - 1, 1); etat.moisCal = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-01"; afficherCalendrier(); });
+    zc.querySelector('[data-cal="suiv"]').addEventListener("click", function(){ var d = new Date(an, mo + 1, 1); etat.moisCal = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-01"; afficherCalendrier(); });
+    var bt = zc.querySelector('[data-cal="tout"]'); if(bt) bt.addEventListener("click", function(){ etat.filtreDate = ""; afficher(); });
+    zc.querySelectorAll("[data-jour]").forEach(function(b){ b.addEventListener("click", function(){ etat.filtreDate = (etat.filtreDate === b.dataset.jour) ? "" : b.dataset.jour; afficher(); }); });
+  }
   function ouvrirForm(record){
     etat.edition = record || null;
     zoneForm.innerHTML = '<form class="formulaire"><div class="grille">' +
@@ -743,6 +798,8 @@ function moduleGenerique(conteneur, cfg){
     afficher();
   }
   conteneur.querySelector('[data-act="nouveau"]').addEventListener("click", function(){ ouvrirForm(null); });
+  var inpRech = conteneur.querySelector('[data-zone="recherche"]');
+  if(inpRech) inpRech.addEventListener("input", function(){ etat.recherche = inpRech.value.trim().toLowerCase(); afficher(); });
   conteneur.querySelector('[data-act="excel"]').addEventListener("click", function(){
     var lignes = lignesVisibles().map(function(r){
       var o = {};
@@ -766,7 +823,9 @@ function moduleGenerique(conteneur, cfg){
 /* =============== Configurations des modules simples =============== */
 var OPT_STATUT_RDV = [["nouvelle","Nouvelle"],["confirme","Confirmé"],["reporte","Reporté"],["annule","Annulé"],["fait","Fait"]];
 var CFG_RDV = {
-  titre: "Rendez-vous", table: "rendez_vous",
+  titre: "Rendez-vous", table: "rendez_vous", archivable: true, calendrier: { champ: "date_souhaite" },
+  filtres: [["actifs", "Actifs"], ["archives", "Archivés"], ["tous", "Tous"]],
+  filtreFn: function(r, f){ if(f === "archives") return !!r.archive; if(f === "tous") return true; return !r.archive; },
   sous: "Les demandes envoyées depuis le formulaire du site arrivent ici (source : site). Vous pouvez aussi créer un rendez-vous vous-même.",
   champs: [
     { nom: "nom", label: "Nom", requis: true },
@@ -776,6 +835,7 @@ var CFG_RDV = {
     { nom: "date_souhaite", label: "Date souhaitée", type: "date" },
     { nom: "heure", label: "Heure" },
     { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_RDV, defaut: "nouvelle" },
+    { nom: "archive", label: "Archivé", type: "booleen" },
     { nom: "notes", label: "Notes", type: "textarea" }
   ],
   colonnes: [
@@ -1474,7 +1534,7 @@ async function rendreDevis(c){
   function formulaireDevis(record){
     var champs = [
       { nom: "client_id", label: "Client", type: "select", options: clients.map(function(cl){ return [cl.id, cl.nom + (cl.societe ? " (" + cl.societe + ")" : "")]; }) },
-      { nom: "ref", label: "Référence (ex. CS-20261118-0001)" },
+      { nom: "ref", label: "Référence (automatique si vide : DEV-AAAA-NNNN)" },
       { nom: "titre", label: "Titre du devis" },
       { nom: "montant", label: "Montant", type: "number" },
       { nom: "devise", label: "Devise", type: "select", options: [["BIF","BIF"],["USD","USD"],["EUR","EUR"],["CNY","CNY"]], defaut: "BIF" },
@@ -1489,6 +1549,7 @@ async function rendreDevis(c){
     form.addEventListener("submit", async function(e){
       e.preventDefault();
       var obj = lireFormulaire(form, champs);
+      if(!record && !obj.ref){ var rn = await sb.rpc("prochain_numero", { p_type: "DEV" }); if(!rn.error && rn.data) obj.ref = rn.data; }
       var r = record ? await sb.from("devis").update(obj).eq("id", record.id) : await sb.from("devis").insert(obj);
       if(r.error){ alert("Enregistrement refusé : " + r.error.message); return; }
       zoneForm.innerHTML = ""; charger();
@@ -1553,7 +1614,7 @@ async function rendreDevis(c){
 var OPT_STATUT_CMD = [["en_traitement","En traitement"],["en_production","En production"],["controle","Contrôle qualité"],["expediee","Expédiée"],["livree","Livrée"],["cloturee","Clôturée"]];
 var OPT_STATUT_LIV = [["en_preparation","En préparation"],["en_transit","En transit"],["arrive","Arrivée"],["livre","Livrée"]];
 async function rendreCommandes(c){
-  var rc = await sb.from("clients").select("id, nom, societe").order("nom");
+  var rc = await sb.from("clients").select("id, nom, societe, telephone, ville, pays").order("nom");
   var clients = rc.data || [];
   var rd = await sb.from("devis").select("id, ref, titre, client_id").order("cree_le", { ascending: false });
   var devisListe = rd.data || [];
@@ -1577,16 +1638,35 @@ async function rendreCommandes(c){
       { champ: "suivi_ref", label: "Suivi" },
       { label: "Montant", format: function(r){ return fmtMontant(r.montant, r.devise); } },
       { label: "Créée le", format: function(r){ return fmtDate(r.cree_le); } },
+      { champ: "numero_facture", label: "N° de facture" },
       { champ: "notes", label: "Notes" }
     ],
     titreLigne: function(r){ return r.description || "Commande"; },
+    actions: [{ label: "Facture (PDF)", fn: async function(r, recharger){
+      if(!r.numero_facture){
+        var n = await sb.rpc("prochain_numero", { p_type: "FAC" });
+        if(n.error || !n.data){ alert("Numéro de facture indisponible : " + (n.error ? n.error.message : "")); return; }
+        var u = await sb.from("commandes").update({ numero_facture: n.data }).eq("id", r.id);
+        if(u.error){ alert("Enregistrement refusé : " + u.error.message); return; }
+        r.numero_facture = n.data;
+      }
+      var cl = clients.find(function(x){ return x.id === r.client_id; });
+      var h = '<h1>FACTURE ' + esc(r.numero_facture) + '</h1>' +
+        '<p>Client : <b>' + esc(cl ? cl.nom + (cl.societe ? " (" + cl.societe + ")" : "") : "—") + '</b>' + (cl && cl.telephone ? ' · ' + esc(cl.telephone) : '') + (cl ? ' · ' + esc([cl.ville, cl.pays].filter(Boolean).join(", ")) : '') + '<br />Date : ' + fmtDate(aujourdhui()) + (r.suivi_ref ? '<br />Référence de suivi : ' + esc(r.suivi_ref) : '') + '</p>' +
+        tableImpression(["Description", "Montant"], [[r.description || "Commande", fmtMontant(r.montant, r.devise)]]) +
+        '<p style="font-size:16px"><b>Total : ' + esc(fmtMontant(r.montant, r.devise)) + '</b></p>' +
+        codeBarres(r.numero_facture) +
+        '<div style="display:flex;justify-content:space-between;margin-top:40px"><span>Émise par le bureau — Ciza Supply</span><span>Le client</span></div>';
+      imprimer("Facture " + r.numero_facture, h);
+      if(recharger) recharger();
+    } }],
     badge: function(r){ return [libelle(OPT_STATUT_CMD, r.statut), r.statut === "livree" ? "vert" : "or"]; }
   });
 }
 async function rendreLivraisons(c){
   var rc = await sb.from("commandes").select("id, description, client_id").order("cree_le", { ascending: false });
   var commandes = rc.data || [];
-  var rcl = await sb.from("clients").select("id, nom");
+  var rcl = await sb.from("clients").select("id, nom, societe, telephone, ville, pays");
   var clients = rcl.data || [];
   function etiquette(cmd){ var cl = clients.find(function(x){ return x.id === cmd.client_id; }); return (cmd.description || "Commande") + " — " + (cl ? cl.nom : ""); }
   moduleGenerique(c, {
@@ -1610,10 +1690,29 @@ async function rendreLivraisons(c){
       { champ: "port_destination", label: "Port" },
       { label: "Destination", format: function(r){ return [r.ville_livraison, r.pays_livraison].filter(Boolean).join(", ") || "—"; } },
       { label: "Mode", format: function(r){ return { mer: "Par mer", air: "Par avion", route: "Par route" }[r.mode_shipping] || r.mode_shipping; } },
-      { champ: "transporteur", label: "Transporteur" }, { champ: "numero_suivi", label: "N° de suivi" },
+      { champ: "transporteur", label: "Transporteur" }, { champ: "numero_suivi", label: "N° de suivi" }, { champ: "numero_bl", label: "Bill of lading" },
       { label: "Départ → Arrivée", format: function(r){ return fmtDate(r.date_depart) + " → " + fmtDate(r.date_arrivee); } }
     ],
     titreLigne: function(r){ return [r.ville_livraison, r.pays_livraison].filter(Boolean).join(", ") || "Livraison"; },
+    actions: [{ label: "Bill of lading (PDF)", fn: async function(r, recharger){
+      if(!r.numero_bl){
+        var n = await sb.rpc("prochain_numero", { p_type: "BL" });
+        if(n.error || !n.data){ alert("Numéro de bill of lading indisponible : " + (n.error ? n.error.message : "")); return; }
+        var u = await sb.from("livraisons").update({ numero_bl: n.data }).eq("id", r.id);
+        if(u.error){ alert("Enregistrement refusé : " + u.error.message); return; }
+        r.numero_bl = n.data;
+      }
+      var cmd = commandes.find(function(x){ return x.id === r.commande_id; });
+      var cl = cmd ? clients.find(function(x){ return x.id === cmd.client_id; }) : null;
+      var mode = { mer: "Par mer", air: "Par avion", route: "Par route" }[r.mode_shipping] || r.mode_shipping || "";
+      var h = '<h1>BILL OF LADING ' + esc(r.numero_bl) + '</h1>' +
+        '<p>Expéditeur : <b>CIZA SUPPLY</b> — Ciza Supply, division de Ciza Group | Burundi<br />Destinataire : <b>' + esc(cl ? cl.nom : "—") + '</b>' + (cl && cl.telephone ? ' · ' + esc(cl.telephone) : '') + '</p>' +
+        tableImpression(["Commande", "Destination", "Mode", "Transporteur", "N° de suivi", "Départ", "Arrivée"], [[cmd ? (cmd.description || "Commande") : "—", [r.ville_livraison, r.pays_livraison].filter(Boolean).join(", ") + (r.port_destination ? " (port : " + r.port_destination + ")" : ""), mode, r.transporteur || "", r.numero_suivi || "", fmtDate(r.date_depart), fmtDate(r.date_arrivee)]]) +
+        codeBarres(r.numero_bl) +
+        '<div style="display:flex;justify-content:space-between;margin-top:40px"><span>Ciza Supply (expéditeur)</span><span>Le transporteur</span><span>Le destinataire</span></div>';
+      imprimer("Bill of lading " + r.numero_bl, h);
+      if(recharger) recharger();
+    } }],
     badge: function(r){ return [libelle(OPT_STATUT_LIV, r.statut), r.statut === "livre" ? "vert" : "or"]; }
   });
 }
