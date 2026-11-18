@@ -940,4 +940,14 @@
       <image:title>Foreuse de puits sur remorque</image:title>
     </image:image>
   </url>
+  <url>
+    <loc>https://cizasupply.com/guide-choisir-tracteur/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/guide-choisir-tracteur/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/guide-choisir-tracteur/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/guide-choisir-tracteur/" />
+    <image:image>
+      <image:loc>https://cizasupply.com/assets/0d3364b5c749f246.jpg</image:loc>
+      <image:title>Tracteur agricole avec cabine</image:title>
+    </image:image>
+  </url>
 </urlset>
