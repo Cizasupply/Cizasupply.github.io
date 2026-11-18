@@ -1947,7 +1947,7 @@ gtag('config', 'G-JFP2NNX9DX');
      ou si elle ne répond pas. Faire avancer un dossier = modifier
      sa ligne dans le tableau de bord Supabase du fondateur
      (Table Editor) — aucun redéploiement du site. */
-  var SUIVI_BASE = { url: "", anon: "" };
+  var SUIVI_BASE = { url: "https://mbbcfxsegmelnfhfzyst.supabase.co", anon: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1iYmNmeHNlZ21lbG5maGZ6eXN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ5ODk0MjEsImV4cCI6MjExMDU2NTQyMX0.IraVe4WprHVpUgfmCASsiktb3ungbCjx7-Z61Yt0yxo" };
   function depuisBase(ref){
     return fetch(SUIVI_BASE.url + "/rest/v1/suivi_dossiers?select=ref,categorie,etape,maj,note,exemple&ref=eq." + encodeURIComponent(ref),
       { headers: { "apikey": SUIVI_BASE.anon, "Authorization": "Bearer " + SUIVI_BASE.anon } })
