@@ -219,6 +219,9 @@ async function demarrer(){
 /* =============== Navigation =============== */
 var MODULES = [
   { cle: "dossiers",     titre: "Dossiers",     rendre: rendreDossiers },
+  { cle: "devis",        titre: "Devis",        rendre: rendreDevis },
+  { cle: "commandes",    titre: "Commandes",    rendre: rendreCommandes },
+  { cle: "livraisons",   titre: "Livraisons",   rendre: rendreLivraisons },
   { cle: "rendezvous",   titre: "Rendez-vous",  rendre: function(c){ moduleGenerique(c, CFG_RDV); } },
   { cle: "clients",      titre: "Clients",      rendre: function(c){ moduleGenerique(c, CFG_CLIENTS); } },
   { cle: "partenaires",  titre: "Partenaires",  rendre: function(c){ moduleGenerique(c, CFG_PARTENAIRES); } },
@@ -261,6 +264,7 @@ function libelle(options, valeur){
 }
 function champHTML(f, val){
   var v = val == null ? "" : val;
+  if(f.type === "booleen") return '<select name="' + f.nom + '"><option value="false"' + (v !== true && v !== "true" ? " selected" : "") + '>Non</option><option value="true"' + (v === true || v === "true" ? " selected" : "") + '>Oui</option></select>';
   if(f.type === "select") return '<select name="' + f.nom + '">' + f.options.map(function(o){ return '<option value="' + esc(o[0]) + '"' + (String(v) === String(o[0]) ? " selected" : "") + '>' + esc(o[1]) + '</option>'; }).join("") + '</select>';
   if(f.type === "textarea") return '<textarea name="' + f.nom + '">' + esc(v) + '</textarea>';
   if(f.type === "date") return '<input type="date" name="' + f.nom + '" value="' + esc(v ? String(v).slice(0, 10) : "") + '" />';
@@ -273,6 +277,7 @@ function lireFormulaire(form, champs){
     var el = form.elements[f.nom]; if(!el) return;
     var v = el.value;
     if(f.type === "number") obj[f.nom] = v === "" ? null : parseFloat(v);
+    else if(f.type === "booleen") obj[f.nom] = v === "true";
     else obj[f.nom] = v === "" ? null : v;
   });
   return obj;
@@ -423,11 +428,13 @@ var CFG_CLIENTS = {
   champs: [
     { nom: "nom", label: "Nom", requis: true }, { nom: "societe", label: "Société" },
     { nom: "telephone", label: "Téléphone" }, { nom: "email", label: "E-mail" },
+    { nom: "email_compte", label: "E-mail du compte client (connexion à son espace)" },
     { nom: "pays", label: "Pays" }, { nom: "ville", label: "Ville" },
     { nom: "source", label: "Source (WhatsApp, bureau, site…)" }, { nom: "notes", label: "Notes", type: "textarea" }
   ],
   colonnes: [
     { champ: "societe", label: "Société" }, { champ: "telephone", label: "Téléphone" }, { champ: "email", label: "E-mail" },
+    { champ: "email_compte", label: "Compte client" },
     { label: "Lieu", format: function(r){ return [r.ville, r.pays].filter(Boolean).join(", ") || "—"; } },
     { champ: "source", label: "Source" }, { champ: "notes", label: "Notes" },
     { label: "Enregistré le", format: function(r){ return fmtDate(r.cree_le); } }
@@ -942,6 +949,180 @@ async function rendreComptes(c){
     }); });
   }
   charger();
+}
+
+/* =============== DEVIS (avec échantillons liés) =============== */
+var OPT_STATUT_DEVIS = [["envoye","Envoyé"],["accepte","Accepté"],["refuse","Refusé"],["expire","Expiré"]];
+var OPT_STATUT_ECH = [["en_preparation","En préparation"],["expedie","Expédié"],["recu","Reçu"]];
+function urlPubliqueSuivi(chemin){ return SUPABASE_URL + "/storage/v1/object/public/dossiers-suivi/" + chemin; }
+async function rendreDevis(c){
+  c.innerHTML = '<h2 class="titre">Devis</h2><p class="sous">Les devis des clients, avec le document PDF et les échantillons liés à chaque devis. Le client voit tout cela dans son espace, relié par l\'adresse de son compte (fiche Clients).</p>' +
+    '<div class="outils"><button class="btn" type="button" data-act="nouveau">+ Nouveau devis</button></div>' +
+    '<div data-zone="form"></div><div data-zone="liste"><p class="vide">Chargement…</p></div>';
+  var zoneForm = c.querySelector('[data-zone="form"]');
+  var zoneListe = c.querySelector('[data-zone="liste"]');
+  var clients = [], devisListe = [];
+  var rc = await sb.from("clients").select("id, nom, societe").order("nom");
+  clients = rc.data || [];
+  function nomClient(id){ var cl = clients.find(function(x){ return x.id === id; }); return cl ? (cl.nom + (cl.societe ? " (" + cl.societe + ")" : "")) : "—"; }
+  async function charger(){
+    var r = await sb.from("devis").select("*").order("cree_le", { ascending: false });
+    if(r.error){ zoneListe.innerHTML = '<p class="vide">Lecture refusée : ' + esc(r.error.message) + '</p>'; return; }
+    devisListe = r.data || [];
+    zoneListe.innerHTML = devisListe.length ? devisListe.map(function(d){
+      return '<article class="carte"><h3>' + esc(d.titre || d.ref || "Devis") + ' <span class="badge or">' + esc(libelle(OPT_STATUT_DEVIS, d.statut)) + '</span>' + (d.archive ? ' <span class="badge">Archivé</span>' : '') + '</h3>' +
+        '<div class="meta"><div>Client : <b>' + esc(nomClient(d.client_id)) + '</b></div>' +
+        (d.ref ? '<div>Référence : <b>' + esc(d.ref) + '</b></div>' : '') +
+        '<div>Montant : <b>' + esc(fmtMontant(d.montant, d.devise)) + '</b> · Envoyé le : <b>' + fmtDate(d.date_envoi) + '</b></div></div>' +
+        '<div class="actions"><button class="btn petit" type="button" data-ouvrir="' + d.id + '">Ouvrir (document + échantillons)</button></div></article>';
+    }).join("") : '<p class="vide">Aucun devis. Créez d\'abord la fiche du client (module Clients), puis le devis ici.</p>';
+    zoneListe.querySelectorAll("[data-ouvrir]").forEach(function(b){ b.addEventListener("click", function(){ ouvrirDevis(b.dataset.ouvrir); }); });
+  }
+  function formulaireDevis(record){
+    var champs = [
+      { nom: "client_id", label: "Client", type: "select", options: clients.map(function(cl){ return [cl.id, cl.nom + (cl.societe ? " (" + cl.societe + ")" : "")]; }) },
+      { nom: "ref", label: "Référence (ex. CS-20261118-0001)" },
+      { nom: "titre", label: "Titre du devis" },
+      { nom: "montant", label: "Montant", type: "number" },
+      { nom: "devise", label: "Devise", type: "select", options: [["BIF","BIF"],["USD","USD"],["EUR","EUR"],["CNY","CNY"]], defaut: "BIF" },
+      { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_DEVIS, defaut: "envoye" },
+      { nom: "date_envoi", label: "Date d'envoi", type: "date" },
+      { nom: "archive", label: "Archivé (bureau)", type: "booleen" },
+      { nom: "notes", label: "Notes", type: "textarea" }
+    ];
+    zoneForm.innerHTML = '<form class="formulaire"><div class="grille">' + champs.map(function(f){ return '<div class="' + (f.type === "textarea" ? "plein" : "") + '"><label>' + esc(f.label) + '</label>' + champHTML(f, record ? record[f.nom] : (f.defaut || "")) + '</div>'; }).join("") +
+      '</div><div style="margin-top:12px;display:flex;gap:8px"><button class="btn" type="submit">' + (record ? "Enregistrer" : "Créer le devis") + '</button><button class="btn secondaire" type="button" data-act="annuler">Annuler</button></div></form>';
+    var form = zoneForm.querySelector("form");
+    form.addEventListener("submit", async function(e){
+      e.preventDefault();
+      var obj = lireFormulaire(form, champs);
+      var r = record ? await sb.from("devis").update(obj).eq("id", record.id) : await sb.from("devis").insert(obj);
+      if(r.error){ alert("Enregistrement refusé : " + r.error.message); return; }
+      zoneForm.innerHTML = ""; charger();
+    });
+    zoneForm.querySelector('[data-act="annuler"]').addEventListener("click", function(){ zoneForm.innerHTML = ""; });
+  }
+  c.querySelector('[data-act="nouveau"]').addEventListener("click", function(){
+    if(!clients.length){ alert("Aucun client enregistré : créez d'abord la fiche du client dans le module Clients."); return; }
+    formulaireDevis(null);
+  });
+  async function ouvrirDevis(id){
+    var d = devisListe.find(function(x){ return x.id === id; }); if(!d) return;
+    var re = await sb.from("echantillons").select("*").eq("devis_id", id).order("cree_le", { ascending: false });
+    var echs = re.data || [];
+    zoneListe.innerHTML = '<button class="btn petit secondaire" type="button" data-act="retour">← Tous les devis</button>' +
+      '<article class="carte" style="margin-top:12px"><h3>' + esc(d.titre || d.ref || "Devis") + ' <span class="badge or">' + esc(libelle(OPT_STATUT_DEVIS, d.statut)) + '</span></h3>' +
+      '<div class="meta"><div>Client : <b>' + esc(nomClient(d.client_id)) + '</b></div><div>Montant : <b>' + esc(fmtMontant(d.montant, d.devise)) + '</b> · Envoyé le : <b>' + fmtDate(d.date_envoi) + '</b></div>' +
+      (d.notes ? '<div>' + esc(d.notes) + '</div>' : '') + '</div>' +
+      '<div class="actions"><button class="btn petit secondaire" type="button" data-act="modif">Modifier le devis</button>' +
+      (d.document_url ? '<a class="btn petit" href="' + esc(urlPubliqueSuivi(d.document_url)) + '" target="_blank" rel="noopener">Voir le document</a>' : '') +
+      '<label class="btn petit secondaire" style="cursor:pointer">Déposer le devis (PDF)<input type="file" accept=".pdf,.jpg,.jpeg,.png" class="caché" data-doc-devis /></label></div></article>' +
+      '<h2 class="titre" style="margin-top:22px">Échantillons liés à ce devis</h2>' +
+      (echs.length ? echs.map(function(e){
+        return '<article class="carte"><h3>' + esc(e.description || "Échantillon") + ' <span class="badge or">' + esc(libelle(OPT_STATUT_ECH, e.statut)) + '</span></h3>' +
+          '<div class="meta"><div>Envoyé le : <b>' + fmtDate(e.date_envoi) + '</b></div></div>' +
+          (e.photo_url ? '<div class="docs"><a href="' + esc(urlPubliqueSuivi(e.photo_url)) + '" target="_blank" rel="noopener"><img src="' + esc(urlPubliqueSuivi(e.photo_url)) + '" alt="" /></a></div>' : '') +
+          '<div class="actions"><label class="btn petit secondaire" style="cursor:pointer">Photo de l\'échantillon<input type="file" accept="image/*" class="caché" data-photo-ech="' + e.id + '" /></label></div></article>';
+      }).join("") : '<p class="vide">Aucun échantillon lié.</p>') +
+      '<form class="formulaire" data-form="ech"><div class="grille"><div><label>Description de l\'échantillon</label><input name="description" required /></div>' +
+      '<div><label>Statut</label>' + champHTML({ nom: "statut", type: "select", options: OPT_STATUT_ECH }, "en_preparation") + '</div>' +
+      '<div><label>Date d\'envoi</label><input type="date" name="date_envoi" /></div></div>' +
+      '<button class="btn" type="submit" style="margin-top:10px">Ajouter l\'échantillon</button></form>';
+    zoneListe.querySelector('[data-act="retour"]').addEventListener("click", charger);
+    zoneListe.querySelector('[data-act="modif"]').addEventListener("click", function(){ formulaireDevis(d); zoneForm.scrollIntoView({ behavior: "smooth" }); });
+    zoneListe.querySelector("[data-doc-devis]").addEventListener("change", async function(ev){
+      var f = ev.target.files[0]; if(!f) return;
+      var chemin = "devis/" + d.id + "/" + Date.now() + "-" + f.name.replace(/[^\w.\-]+/g, "_");
+      var up = await sb.storage.from("dossiers-suivi").upload(chemin, f);
+      if(up.error){ alert("Dépôt refusé : " + up.error.message); return; }
+      var r = await sb.from("devis").update({ document_url: chemin }).eq("id", d.id);
+      if(r.error) alert("Enregistrement refusé : " + r.error.message); else { d.document_url = chemin; ouvrirDevis(id); }
+    });
+    zoneListe.querySelectorAll("[data-photo-ech]").forEach(function(inp){ inp.addEventListener("change", async function(){
+      var f = inp.files[0]; if(!f) return;
+      var chemin = "echantillons/" + inp.dataset.photoEch + "/" + Date.now() + "-" + f.name.replace(/[^\w.\-]+/g, "_");
+      var up = await sb.storage.from("dossiers-suivi").upload(chemin, f);
+      if(up.error){ alert("Dépôt refusé : " + up.error.message); return; }
+      var r = await sb.from("echantillons").update({ photo_url: chemin }).eq("id", inp.dataset.photoEch);
+      if(r.error) alert("Enregistrement refusé : " + r.error.message); else ouvrirDevis(id);
+    }); });
+    zoneListe.querySelector('[data-form="ech"]').addEventListener("submit", async function(ev){
+      ev.preventDefault();
+      var f = ev.target;
+      var r = await sb.from("echantillons").insert({ devis_id: id, description: f.elements.description.value, statut: f.elements.statut.value, date_envoi: f.elements.date_envoi.value || null });
+      if(r.error) alert("Ajout refusé : " + r.error.message); else ouvrirDevis(id);
+    });
+  }
+  charger();
+}
+
+/* =============== COMMANDES et LIVRAISONS (listes liées) =============== */
+var OPT_STATUT_CMD = [["en_traitement","En traitement"],["en_production","En production"],["controle","Contrôle qualité"],["expediee","Expédiée"],["livree","Livrée"],["cloturee","Clôturée"]];
+var OPT_STATUT_LIV = [["en_preparation","En préparation"],["en_transit","En transit"],["arrive","Arrivée"],["livre","Livrée"]];
+async function rendreCommandes(c){
+  var rc = await sb.from("clients").select("id, nom, societe").order("nom");
+  var clients = rc.data || [];
+  var rd = await sb.from("devis").select("id, ref, titre, client_id").order("cree_le", { ascending: false });
+  var devisListe = rd.data || [];
+  function nomClient(id){ var cl = clients.find(function(x){ return x.id === id; }); return cl ? cl.nom : "—"; }
+  moduleGenerique(c, {
+    titre: "Commandes traitées", table: "commandes",
+    sous: "Les commandes des clients. Reliez la commande à son devis et à sa référence de suivi (CS-…) : le client voit alors la frise d'avancement dans son espace.",
+    champs: [
+      { nom: "client_id", label: "Client", type: "select", options: clients.map(function(cl){ return [cl.id, cl.nom + (cl.societe ? " (" + cl.societe + ")" : "")]; }) },
+      { nom: "devis_id", label: "Devis lié", type: "select", options: [["", "— Aucun —"]].concat(devisListe.map(function(d){ return [d.id, (d.ref || d.titre || "Devis") + " — " + nomClient(d.client_id)]; })) },
+      { nom: "suivi_ref", label: "Référence de suivi (CS-…)" },
+      { nom: "description", label: "Description de la commande" },
+      { nom: "montant", label: "Montant", type: "number" },
+      { nom: "devise", label: "Devise", type: "select", options: [["BIF","BIF"],["USD","USD"],["EUR","EUR"],["CNY","CNY"]], defaut: "BIF" },
+      { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_CMD, defaut: "en_traitement" },
+      { nom: "archive", label: "Archivée (bureau)", type: "booleen" },
+      { nom: "notes", label: "Notes", type: "textarea" }
+    ],
+    colonnes: [
+      { label: "Client", format: function(r){ return nomClient(r.client_id); } },
+      { champ: "suivi_ref", label: "Suivi" },
+      { label: "Montant", format: function(r){ return fmtMontant(r.montant, r.devise); } },
+      { label: "Créée le", format: function(r){ return fmtDate(r.cree_le); } },
+      { champ: "notes", label: "Notes" }
+    ],
+    titreLigne: function(r){ return r.description || "Commande"; },
+    badge: function(r){ return [libelle(OPT_STATUT_CMD, r.statut), r.statut === "livree" ? "vert" : "or"]; }
+  });
+}
+async function rendreLivraisons(c){
+  var rc = await sb.from("commandes").select("id, description, client_id").order("cree_le", { ascending: false });
+  var commandes = rc.data || [];
+  var rcl = await sb.from("clients").select("id, nom");
+  var clients = rcl.data || [];
+  function etiquette(cmd){ var cl = clients.find(function(x){ return x.id === cmd.client_id; }); return (cmd.description || "Commande") + " — " + (cl ? cl.nom : ""); }
+  moduleGenerique(c, {
+    titre: "Livraisons", table: "livraisons",
+    sous: "Chaque livraison est liée à une commande : port de destination, pays et ville de livraison, mode d'expédition (mer, air, route), transporteur et numéro de suivi.",
+    champs: [
+      { nom: "commande_id", label: "Commande", type: "select", options: commandes.map(function(cmd){ return [cmd.id, etiquette(cmd)]; }) },
+      { nom: "port_destination", label: "Port de destination" },
+      { nom: "pays_livraison", label: "Pays de livraison" },
+      { nom: "ville_livraison", label: "Ville de livraison" },
+      { nom: "mode_shipping", label: "Mode d'expédition", type: "select", options: [["mer","Par mer"],["air","Par avion"],["route","Par route"]], defaut: "mer" },
+      { nom: "transporteur", label: "Transporteur" },
+      { nom: "numero_suivi", label: "Numéro de suivi" },
+      { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_LIV, defaut: "en_preparation" },
+      { nom: "date_depart", label: "Date de départ", type: "date" },
+      { nom: "date_arrivee", label: "Date d'arrivée", type: "date" },
+      { nom: "notes", label: "Notes", type: "textarea" }
+    ],
+    colonnes: [
+      { label: "Commande", format: function(r){ var cmd = commandes.find(function(x){ return x.id === r.commande_id; }); return cmd ? etiquette(cmd) : "—"; } },
+      { champ: "port_destination", label: "Port" },
+      { label: "Destination", format: function(r){ return [r.ville_livraison, r.pays_livraison].filter(Boolean).join(", ") || "—"; } },
+      { label: "Mode", format: function(r){ return { mer: "Par mer", air: "Par avion", route: "Par route" }[r.mode_shipping] || r.mode_shipping; } },
+      { champ: "transporteur", label: "Transporteur" }, { champ: "numero_suivi", label: "N° de suivi" },
+      { label: "Départ → Arrivée", format: function(r){ return fmtDate(r.date_depart) + " → " + fmtDate(r.date_arrivee); } }
+    ],
+    titreLigne: function(r){ return [r.ville_livraison, r.pays_livraison].filter(Boolean).join(", ") || "Livraison"; },
+    badge: function(r){ return [libelle(OPT_STATUT_LIV, r.statut), r.statut === "livre" ? "vert" : "or"]; }
+  });
 }
 
 /* =============== Démarrage =============== */

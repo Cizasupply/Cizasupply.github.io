@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Espace client — CIZA SUPPLY</title>
+<style>
+  :root{--navy:#0A1E3C;--navy2:#07101F;--gold:#D4AF37;--gold2:#F2B840;--bg:#f2f4f8;--border:#e2e7f0;--muted:#5a6a86;--ok:#1d7a3a;--bad:#b3261e}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:#14213a}
+  button{font:inherit;cursor:pointer}
+  input,select{font:inherit;padding:10px 12px;border:1.5px solid var(--border);border-radius:10px;background:#fff;width:100%}
+  label{font-size:13px;font-weight:700;color:var(--navy);display:block;margin:0 0 5px}
+  .caché{display:none !important}
+  .login-wrap{min-height:100dvh;display:grid;place-items:center;padding:20px;background:linear-gradient(160deg,var(--navy2),var(--navy))}
+  .login-card{background:#fff;border-radius:20px;padding:28px 24px;max-width:420px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+  .login-card h1{font-size:21px;margin:0 0 4px;color:var(--navy)}
+  .login-card .sig{color:var(--gold);font-weight:800;letter-spacing:.14em;font-size:12px;margin:0 0 14px}
+  .login-card p{color:var(--muted);font-size:14px;line-height:1.55}
+  .champ{margin-bottom:12px}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:11px;padding:11px 18px;font-weight:800;font-size:14.5px;background:var(--gold);color:#07101F;text-decoration:none}
+  .btn.secondaire{background:#eef1f6;color:var(--navy)}
+  .btn.petit{padding:7px 12px;font-size:13px;border-radius:9px}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .lien{background:none;border:0;color:var(--navy);text-decoration:underline;font-weight:700;padding:0}
+  .erreur{background:#fbe9e7;border:1px solid #f0c6c2;color:var(--bad);border-radius:10px;padding:10px 12px;font-size:14px;margin:10px 0}
+  .info{background:#fdf3d7;border:1px solid var(--gold);border-radius:10px;padding:10px 12px;font-size:14px;margin:10px 0;line-height:1.5}
+  .barre{background:linear-gradient(120deg,var(--navy2),var(--navy));color:#fff;padding:12px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:20}
+  .barre .marque{font-weight:900;letter-spacing:.06em}
+  .barre .marque span{color:var(--gold2)}
+  .barre .qui{margin-left:auto;font-size:12.5px;color:#c8d3e6}
+  .barre button{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
+  nav.onglets{display:flex;gap:8px;overflow-x:auto;padding:10px 12px;background:#fff;border-bottom:1px solid var(--border);position:sticky;top:53px;z-index:19}
+  nav.onglets button{white-space:nowrap;border:1.5px solid var(--border);background:#fff;border-radius:999px;padding:8px 14px;font-weight:700;font-size:13.5px;color:var(--navy)}
+  nav.onglets button.actif{background:var(--navy);color:#fff;border-color:var(--navy)}
+  main{max-width:900px;margin:0 auto;padding:18px 14px 60px}
+  h2.titre{font-size:20px;color:var(--navy);margin:2px 0 4px}
+  .sous{color:var(--muted);font-size:14px;margin:0 0 14px;line-height:1.5}
+  .filtres{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px}
+  @media(min-width:640px){.filtres{grid-template-columns:1fr 220px}}
+  .carte{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 4px 14px rgba(7,16,31,.05)}
+  .carte h3{margin:0 0 4px;font-size:16px;color:var(--navy)}
+  .carte .meta{font-size:13.5px;color:var(--muted);line-height:1.65}
+  .carte .meta b{color:#14213a}
+  .carte .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .badge{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:800;background:#eef1f6;color:var(--navy)}
+  .badge.or{background:#fdf3d7;color:#7a5b00}
+  .badge.vert{background:#e2f2e6;color:var(--ok)}
+  .badge.rouge{background:#fbe9e7;color:var(--bad)}
+  .photos{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .photos figure{margin:0;text-align:center}
+  .photos img{width:84px;height:84px;object-fit:cover;border-radius:10px;border:1px solid var(--border)}
+  .photos figcaption{font-size:11px;color:var(--muted);max-width:84px}
+  .frise{display:flex;gap:3px;margin:10px 0 4px}
+  .frise i{flex:1;height:7px;border-radius:99px;background:#e2e7f0}
+  .frise i.fait{background:var(--gold)}
+  .vide{color:var(--muted);font-size:14.5px;padding:18px 4px}
+</style>
+</head>
+<body>
+
+<div id="vue-login" class="login-wrap">
+  <div class="login-card">
+    <p class="sig">CIZA SUPPLY</p>
+    <h1>Votre espace client</h1>
+    <p>Vos devis, vos échantillons, vos commandes et vos livraisons — au même endroit. Connectez-vous avec l'adresse que le bureau a reliée à votre dossier.</p>
+    <div id="login-erreur" class="erreur caché"></div>
+    <form id="form-login">
+      <div class="champ"><label for="li-email">E-mail</label><input id="li-email" type="email" required autocomplete="username" /></div>
+      <div class="champ"><label for="li-mdp">Mot de passe</label><input id="li-mdp" type="password" required autocomplete="current-password" /></div>
+      <button class="btn" type="submit" id="btn-login" style="width:100%;justify-content:center">Se connecter</button>
+    </form>
+    <p style="margin:14px 0 0">Pas encore de compte ? <button class="lien" id="lien-inscription" type="button">Créer un compte</button></p>
+    <form id="form-inscription" class="caché">
+      <div class="champ"><label for="in-email">E-mail</label><input id="in-email" type="email" required autocomplete="username" /></div>
+      <div class="champ"><label for="in-mdp">Mot de passe</label><input id="in-mdp" type="password" required autocomplete="new-password" /></div>
+      <button class="btn" type="submit" style="width:100%;justify-content:center">Créer le compte</button>
+      <div class="info">Utilisez <b>la même adresse e-mail</b> que celle donnée au bureau : c'est elle qui relie votre compte à vos devis et commandes.</div>
+    </form>
+    <p style="margin:16px 0 0"><a href="/suivi-dossier/">Suivre un dossier sans compte (par référence) →</a></p>
+  </div>
+</div>
+
+<div id="vue-nolie" class="login-wrap caché">
+  <div class="login-card">
+    <p class="sig">CIZA SUPPLY</p>
+    <h1>Compte pas encore relié</h1>
+    <p>Votre compte existe, mais le bureau ne l'a pas encore relié à un dossier client. Écrivez-nous sur WhatsApp avec l'adresse de ce compte : la liaison prend une minute, puis vos devis et commandes apparaîtront ici.</p>
+    <p><a class="btn" href="https://wa.me/15145029503" target="_blank" rel="noopener">WhatsApp +1 514 502 9503</a></p>
+    <button class="btn secondaire" id="btn-deco-nolie" type="button">Se déconnecter</button>
+  </div>
+</div>
+
+<div id="vue-app" class="caché">
+  <div class="barre">
+    <div class="marque">CIZA <span>SUPPLY</span> · Mon espace</div>
+    <div class="qui" id="qui-nom"></div>
+    <button class="btn petit" id="btn-deco" type="button">Sortir</button>
+  </div>
+  <nav class="onglets" id="nav-onglets"></nav>
+  <main>
+    <div class="filtres">
+      <input type="search" id="filtre-texte" placeholder="Rechercher (référence, produit, destination…)" />
+      <select id="filtre-statut"><option value="">Tous les statuts</option></select>
+    </div>
+    <div id="contenu"></div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+"use strict";
+var SUPABASE_URL = "https://mbbcfxsegmelnfhfzyst.supabase.co";
+var SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1iYmNmeHNlZ21lbG5maGZ6eXN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ5ODk0MjEsImV4cCI6MjExMDU2NTQyMX0.IraVe4WprHVpUgfmCASsiktb3ungbCjx7-Z61Yt0yxo";
+var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+var ETAPES = ["Demande reçue", "Devis préparé et envoyé", "Commande confirmée au bureau", "Production et préparation", "Contrôle qualité", "Expédition vers le Burundi", "Arrivée à Bujumbura", "Dossier clôturé"];
+var ST_DEVIS = { envoye: ["Envoyé", "or"], accepte: ["Accepté", "vert"], refuse: ["Refusé", "rouge"], expire: ["Expiré", ""] };
+var ST_CMD = { en_traitement: ["En traitement", "or"], en_production: ["En production", "or"], controle: ["Contrôle qualité", "or"], expediee: ["Expédiée", "vert"], livree: ["Livrée", "vert"], cloturee: ["Clôturée", ""] };
+var ST_LIV = { en_preparation: ["En préparation", "or"], en_transit: ["En transit", "or"], arrive: ["Arrivée", "vert"], livre: ["Livrée", "vert"] };
+var ST_ECH = { en_preparation: "En préparation", expedie: "Expédié", recu: "Reçu" };
+var MODES = { mer: "Par mer", air: "Par avion", route: "Par route" };
+var donnees = { client: null, devis: [], echantillons: [], commandes: [], livraisons: [], suivis: {} };
+var onglet = "devis";
+
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+function fmtDate(d){ if(!d) return "—"; var x = new Date(d.length <= 10 ? d + "T12:00:00" : d); return isNaN(x) ? esc(d) : x.toLocaleDateString("fr-FR", {day:"numeric", month:"long", year:"numeric"}); }
+function fmtMontant(n, devise){ if(n == null || n === "") return "—"; return Number(n).toLocaleString("fr-FR") + " " + esc(devise || "BIF"); }
+function urlPublique(chemin){ return chemin ? SUPABASE_URL + "/storage/v1/object/public/dossiers-suivi/" + chemin : null; }
+function montrer(id){ ["vue-login", "vue-nolie", "vue-app"].forEach(function(v){ document.getElementById(v).classList.toggle("caché", v !== id); }); }
+function erreurLogin(msg){ var e = document.getElementById("login-erreur"); e.textContent = msg; e.classList.toggle("caché", !msg); }
+function badge(map, statut){ var b = map[statut] || [statut || "—", ""]; return '<span class="badge ' + b[1] + '">' + esc(b[0]) + '</span>'; }
+
+document.getElementById("lien-inscription").addEventListener("click", function(){ document.getElementById("form-inscription").classList.toggle("caché"); });
+document.getElementById("form-login").addEventListener("submit", async function(e){
+  e.preventDefault();
+  var b = document.getElementById("btn-login"); b.disabled = true;
+  var r = await sb.auth.signInWithPassword({ email: document.getElementById("li-email").value.trim(), password: document.getElementById("li-mdp").value });
+  b.disabled = false;
+  if(r.error){ erreurLogin("Connexion refusée : " + r.error.message); return; }
+  demarrer();
+});
+document.getElementById("form-inscription").addEventListener("submit", async function(e){
+  e.preventDefault();
+  var r = await sb.auth.signUp({ email: document.getElementById("in-email").value.trim(), password: document.getElementById("in-mdp").value });
+  if(r.error){ erreurLogin("Création refusée : " + r.error.message); return; }
+  alert("Compte créé. Si un e-mail de confirmation arrive, cliquez son lien, puis connectez-vous. Pensez à dire au bureau l'adresse utilisée pour qu'il relie votre dossier.");
+});
+async function deconnexion(){ await sb.auth.signOut(); montrer("vue-login"); }
+document.getElementById("btn-deco").addEventListener("click", deconnexion);
+document.getElementById("btn-deco-nolie").addEventListener("click", deconnexion);
+
+async function demarrer(){
+  var s = await sb.auth.getSession();
+  if(!s.data.session){ montrer("vue-login"); return; }
+  var rc = await sb.from("clients").select("*").limit(1);
+  if(rc.error || !rc.data || !rc.data.length){ montrer("vue-nolie"); return; }
+  donnees.client = rc.data[0];
+  document.getElementById("qui-nom").textContent = donnees.client.nom || "";
+  await chargerDonnees();
+  construireOnglets();
+  montrer("vue-app");
+  afficher();
+}
+async function chargerDonnees(){
+  var cid = donnees.client.id;
+  var rd = await sb.from("devis").select("*").eq("client_id", cid).order("cree_le", { ascending: false });
+  donnees.devis = rd.data || [];
+  var idsDevis = donnees.devis.map(function(d){ return d.id; });
+  donnees.echantillons = [];
+  if(idsDevis.length){
+    var re = await sb.from("echantillons").select("*").in("devis_id", idsDevis).order("cree_le", { ascending: false });
+    donnees.echantillons = re.data || [];
+  }
+  var rc2 = await sb.from("commandes").select("*").eq("client_id", cid).order("cree_le", { ascending: false });
+  donnees.commandes = rc2.data || [];
+  var idsCmd = donnees.commandes.map(function(x){ return x.id; });
+  donnees.livraisons = [];
+  if(idsCmd.length){
+    var rl = await sb.from("livraisons").select("*").in("commande_id", idsCmd).order("cree_le", { ascending: false });
+    donnees.livraisons = rl.data || [];
+  }
+  donnees.suivis = {};
+  var refs = donnees.commandes.map(function(x){ return x.suivi_ref; }).filter(Boolean);
+  if(refs.length){
+    var rs = await sb.from("suivi_dossiers").select("*").in("ref", refs);
+    (rs.data || []).forEach(function(d){ donnees.suivis[d.ref] = d; });
+  }
+}
+
+var ONGLETS = [
+  { cle: "devis", titre: "Mes devis" },
+  { cle: "commandes", titre: "Mes commandes" },
+  { cle: "livraisons", titre: "Mes livraisons" },
+  { cle: "archives", titre: "Archives" }
+];
+function construireOnglets(){
+  var nav = document.getElementById("nav-onglets");
+  nav.innerHTML = "";
+  ONGLETS.forEach(function(o){
+    var b = document.createElement("button");
+    b.type = "button"; b.textContent = o.titre; b.dataset.cle = o.cle;
+    if(o.cle === onglet) b.classList.add("actif");
+    b.addEventListener("click", function(){ onglet = o.cle; construireOnglets(); majFiltreStatut(); afficher(); });
+    nav.appendChild(b);
+  });
+}
+function majFiltreStatut(){
+  var sel = document.getElementById("filtre-statut");
+  var map = onglet === "devis" ? ST_DEVIS : (onglet === "commandes" ? ST_CMD : (onglet === "livraisons" ? ST_LIV : {}));
+  sel.innerHTML = '<option value="">Tous les statuts</option>' + Object.keys(map).map(function(k){ return '<option value="' + k + '">' + esc(map[k][0]) + '</option>'; }).join("");
+}
+document.getElementById("filtre-texte").addEventListener("input", afficher);
+document.getElementById("filtre-statut").addEventListener("change", afficher);
+function texteFiltre(){ return document.getElementById("filtre-texte").value.trim().toLowerCase(); }
+function passeFiltre(texte){
+  var q = texteFiltre();
+  var st = document.getElementById("filtre-statut").value;
+  return { texte: !q || (texte || "").toLowerCase().indexOf(q) >= 0, statut: st };
+}
+function echDe(devisId){ return donnees.echantillons.filter(function(e){ return e.devis_id === devisId; }); }
+function livDe(cmdId){ return donnees.livraisons.filter(function(l){ return l.commande_id === cmdId; }); }
+
+function carteDevis(d, archivable){
+  var echs = echDe(d.id);
+  var h = '<article class="carte"><h3>' + esc(d.titre || d.ref || "Devis") + ' ' + badge(ST_DEVIS, d.statut) + (d.archive ? ' <span class="badge">Archivé</span>' : '') + '</h3>' +
+    '<div class="meta">' +
+    (d.ref ? '<div>Référence : <b>' + esc(d.ref) + '</b></div>' : '') +
+    '<div>Montant : <b>' + esc(fmtMontant(d.montant, d.devise)) + '</b></div>' +
+    '<div>Envoyé le : <b>' + fmtDate(d.date_envoi) + '</b></div>' +
+    (d.notes ? '<div>' + esc(d.notes) + '</div>' : '') + '</div>' +
+    '<div class="actions">' +
+    (d.document_url ? '<a class="btn petit" href="' + esc(urlPublique(d.document_url)) + '" target="_blank" rel="noopener">Ouvrir le devis (PDF)</a>' : '') +
+    (archivable ? '<button class="btn petit secondaire" type="button" data-arch-devis="' + d.id + '">' + (d.archive_client ? "Désarchiver" : "Archiver") + '</button>' : '') +
+    '</div>';
+  if(echs.length){
+    h += '<div style="margin-top:12px"><label>Échantillons liés à ce devis</label><div class="photos">' +
+      echs.map(function(e){
+        return '<figure>' + (e.photo_url ? '<a href="' + esc(urlPublique(e.photo_url)) + '" target="_blank" rel="noopener"><img src="' + esc(urlPublique(e.photo_url)) + '" alt="" /></a>' : '') +
+          '<figcaption>' + esc(e.description || "") + '<br />' + esc(ST_ECH[e.statut] || e.statut) + (e.date_envoi ? '<br />' + fmtDate(e.date_envoi) : '') + '</figcaption></figure>';
+      }).join("") + '</div></div>';
+  }
+  return h + '</article>';
+}
+function carteCommande(cmd, archivable){
+  var sv = cmd.suivi_ref ? donnees.suivis[cmd.suivi_ref] : null;
+  var livs = livDe(cmd.id);
+  var h = '<article class="carte"><h3>' + esc(cmd.description || "Commande") + ' ' + badge(ST_CMD, cmd.statut) + (cmd.archive ? ' <span class="badge">Archivée</span>' : '') + '</h3>' +
+    '<div class="meta"><div>Montant : <b>' + esc(fmtMontant(cmd.montant, cmd.devise)) + '</b></div>' +
+    '<div>Commande du : <b>' + fmtDate(cmd.cree_le) + '</b></div>' +
+    (cmd.notes ? '<div>' + esc(cmd.notes) + '</div>' : '') + '</div>';
+  if(sv){
+    h += '<div class="frise">' + ETAPES.map(function(_, i){ return '<i class="' + (i < sv.etape ? "fait" : "") + '"></i>'; }).join("") + '</div>' +
+      '<div class="meta">Suivi ' + esc(sv.ref) + ' — étape ' + sv.etape + '/8 : <b>' + esc(ETAPES[sv.etape - 1] || "") + '</b>' + (sv.note ? '<br />' + esc(sv.note) : '') + '</div>';
+  }
+  if(livs.length){
+    h += livs.map(function(l){ return '<div class="meta" style="margin-top:8px">Livraison : <b>' + esc([l.ville_livraison, l.pays_livraison].filter(Boolean).join(", ") || "—") + '</b>' + (l.port_destination ? ' · Port : <b>' + esc(l.port_destination) + '</b>' : '') + ' · ' + esc(MODES[l.mode_shipping] || "") + ' — ' + esc((ST_LIV[l.statut] || [])[0] || l.statut) + '</div>'; }).join("");
+  }
+  if(archivable) h += '<div class="actions"><button class="btn petit secondaire" type="button" data-arch-cmd="' + cmd.id + '">' + (cmd.archive_client ? "Désarchiver" : "Archiver") + '</button></div>';
+  return h + '</article>';
+}
+function carteLivraison(l){
+  var cmd = donnees.commandes.find(function(x){ return x.id === l.commande_id; });
+  return '<article class="carte"><h3>' + esc([l.ville_livraison, l.pays_livraison].filter(Boolean).join(", ") || "Livraison") + ' ' + badge(ST_LIV, l.statut) + '</h3>' +
+    '<div class="meta">' +
+    (l.port_destination ? '<div>Port de destination : <b>' + esc(l.port_destination) + '</b></div>' : '') +
+    '<div>Mode d\'expédition : <b>' + esc(MODES[l.mode_shipping] || l.mode_shipping) + '</b></div>' +
+    (l.transporteur ? '<div>Transporteur : <b>' + esc(l.transporteur) + '</b></div>' : '') +
+    (l.numero_suivi ? '<div>Numéro de suivi : <b>' + esc(l.numero_suivi) + '</b></div>' : '') +
+    '<div>Départ : <b>' + fmtDate(l.date_depart) + '</b> · Arrivée : <b>' + fmtDate(l.date_arrivee) + '</b></div>' +
+    (cmd ? '<div>Commande : ' + esc(cmd.description || "") + '</div>' : '') +
+    (l.notes ? '<div>' + esc(l.notes) + '</div>' : '') + '</div></article>';
+}
+function brancherArchives(conteneur){
+  conteneur.querySelectorAll("[data-arch-devis]").forEach(function(b){ b.addEventListener("click", async function(){
+    var d = donnees.devis.find(function(x){ return x.id === b.dataset.archDevis; });
+    var r = await sb.rpc("archiver_devis", { p_id: d.id, p_archive: !d.archive_client });
+    if(r.error) alert("Action refusée : " + r.error.message); else { await chargerDonnees(); afficher(); }
+  }); });
+  conteneur.querySelectorAll("[data-arch-cmd]").forEach(function(b){ b.addEventListener("click", async function(){
+    var cmd = donnees.commandes.find(function(x){ return x.id === b.dataset.archCmd; });
+    var r = await sb.rpc("archiver_commande", { p_id: cmd.id, p_archive: !cmd.archive_client });
+    if(r.error) alert("Action refusée : " + r.error.message); else { await chargerDonnees(); afficher(); }
+  }); });
+}
+function afficher(){
+  var c = document.getElementById("contenu");
+  var f = passeFiltre("");
+  var html = "";
+  if(onglet === "devis"){
+    var liste = donnees.devis.filter(function(d){ return !d.archive && !d.archive_client; })
+      .filter(function(d){ return (!f.statut || d.statut === f.statut) && passeFiltre([d.ref, d.titre, d.notes].join(" ")).texte; });
+    html = '<h2 class="titre">Mes devis</h2><p class="sous">Vos devis et les échantillons liés à chacun. Le document complet s\'ouvre en PDF.</p>' +
+      (liste.length ? liste.map(function(d){ return carteDevis(d, true); }).join("") : '<p class="vide">Aucun devis pour le moment.</p>');
+  } else if(onglet === "commandes"){
+    var liste2 = donnees.commandes.filter(function(x){ return !x.archive && !x.archive_client; })
+      .filter(function(x){ return (!f.statut || x.statut === f.statut) && passeFiltre([x.description, x.suivi_ref, x.notes].join(" ")).texte; });
+    html = '<h2 class="titre">Mes commandes</h2><p class="sous">Vos commandes traitées et leur avancement.</p>' +
+      (liste2.length ? liste2.map(function(x){ return carteCommande(x, true); }).join("") : '<p class="vide">Aucune commande pour le moment.</p>');
+  } else if(onglet === "livraisons"){
+    var liste3 = donnees.livraisons.filter(function(l){ return (!f.statut || l.statut === f.statut) && passeFiltre([l.port_destination, l.pays_livraison, l.ville_livraison, l.transporteur, l.numero_suivi].join(" ")).texte; });
+    html = '<h2 class="titre">Mes livraisons</h2><p class="sous">Destination, mode d\'expédition et état de chaque livraison.</p>' +
+      (liste3.length ? liste3.map(carteLivraison).join("") : '<p class="vide">Aucune livraison pour le moment.</p>');
+  } else {
+    var devisA = donnees.devis.filter(function(d){ return d.archive || d.archive_client; });
+    var cmdA = donnees.commandes.filter(function(x){ return x.archive || x.archive_client; });
+    html = '<h2 class="titre">Archives</h2><p class="sous">Vos devis et commandes rangés. Vous pouvez désarchiver ce que vous aviez rangé vous-même.</p>' +
+      (devisA.length || cmdA.length
+        ? devisA.map(function(d){ return carteDevis(d, !d.archive); }).join("") + cmdA.map(function(x){ return carteCommande(x, !x.archive); }).join("")
+        : '<p class="vide">Aucun élément archivé.</p>');
+  }
+  c.innerHTML = html;
+  brancherArchives(c);
+}
+majFiltreStatut();
+demarrer();
+</script>
+</body>
+</html>
