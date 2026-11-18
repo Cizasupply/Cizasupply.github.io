@@ -90,6 +90,7 @@
     <h1>Espace de travail</h1>
     <p>Réservé au bureau. Connectez-vous avec votre compte de travail.</p>
     <div id="login-erreur" class="erreur caché"></div>
+    <p id="login-statut" class="info caché" style="text-align:center;margin:8px 0 0"></p>
     <div id="login-info" class="info caché"></div>
     <form id="form-login">
       <div class="champ"><label for="li-email">E-mail</label><input id="li-email" type="email" required autocomplete="username" /></div>
@@ -174,6 +175,9 @@ function fmtMontant(n, devise){ if(n == null || n === "") return "—"; return N
 function aujourdhui(){ return new Date().toISOString().slice(0, 10); }
 function montrer(id){ ["vue-login", "vue-attente", "vue-app", "vue-mdp"].forEach(function(v){ document.getElementById(v).classList.toggle("caché", v !== id); }); }
 function erreurLogin(msg){ var e = document.getElementById("login-erreur"); e.textContent = msg; e.classList.remove("caché"); }
+function statutConnexion(msg){ var e = document.getElementById("login-statut"); if(!e) return; if(!msg){ e.classList.add("caché"); e.textContent = ""; } else { e.textContent = msg; e.classList.remove("caché"); } }
+window.addEventListener("error", function(ev){ var v = document.getElementById("vue-login"); if(v && !v.classList.contains("caché")) erreurLogin("Erreur dans la page : " + (ev.message || "inconnue")); });
+window.addEventListener("unhandledrejection", function(ev){ var v = document.getElementById("vue-login"); if(v && !v.classList.contains("caché")) erreurLogin("Erreur dans la page : " + (ev.reason && ev.reason.message ? ev.reason.message : "inconnue")); });
 
 function exporterExcel(nomFichier, lignes){
   if(!window.XLSX){ alert("L'export Excel n'est pas chargé. Vérifiez la connexion internet."); return; }
@@ -201,6 +205,7 @@ document.getElementById("lien-inscription").addEventListener("click", function()
 document.getElementById("form-login").addEventListener("submit", async function(e){
   e.preventDefault();
   var b = document.getElementById("btn-login"); b.disabled = true;
+  statutConnexion("Connexion au serveur…");
   var r;
   try {
     r = await Promise.race([
@@ -209,12 +214,14 @@ document.getElementById("form-login").addEventListener("submit", async function(
     ]);
   } catch(ex) {
     b.disabled = false;
+    statutConnexion("");
     erreurLogin("Le serveur met trop longtemps à répondre. Touchez à nouveau « Se connecter ».");
     return;
   }
   b.disabled = false;
-  if(r.error){ erreurLogin("Connexion refusée : " + r.error.message); return; }
-  demarrer();
+  if(r.error){ statutConnexion(""); erreurLogin("Connexion refusée : " + r.error.message); return; }
+  statutConnexion("Session ouverte — chargement de votre profil…");
+  demarrer(r.data.session);
 });
 document.getElementById("form-inscription").addEventListener("submit", async function(e){
   e.preventDefault();
@@ -275,8 +282,8 @@ async function chargerProfil(user){
   var ins = await sb.from("profils").insert({ id: user.id, email: user.email }).select().single();
   return ins.data || { id: user.id, email: user.email, role: "employeur", actif: false };
 }
-async function demarrer(){
-  var s = await sb.auth.getSession();
+async function demarrer(sessionConnue){
+  var s = sessionConnue ? { data: { session: sessionConnue } } : await sb.auth.getSession();
   if(!s.data.session){ sessionStorage.removeItem("recup"); montrer("vue-login"); return; }
   if(modeRecuperation || sessionStorage.getItem("recup") === "1"){ montrer("vue-mdp"); return; }
   try {
@@ -286,9 +293,11 @@ async function demarrer(){
     ]);
   } catch(ex) {
     montrer("vue-login");
+    statutConnexion("");
     erreurLogin("Connecté, mais la page n'a pas pu charger votre profil. Touchez à nouveau « Se connecter ».");
     return;
   }
+  statutConnexion("");
   if(!profil || !profil.actif){ montrer("vue-attente"); return; }
   document.getElementById("qui-email").textContent = profil.email || "";
   document.getElementById("qui-role").textContent = profil.role === "fondateur" ? "Fondateur" : "Employeur";
