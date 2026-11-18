@@ -1947,17 +1947,36 @@ gtag('config', 'G-JFP2NNX9DX');
     box.innerHTML = h;
     rafraichit();
   }
-  function cherche(ref){
-    ref = (ref || "").trim().toUpperCase();
-    if(!ref) return;
-    fetch("suivi.json", {cache: "no-store"})
+  /* Couche données du suivi : BASE Supabase « Ciza Supply » d'abord
+     (clé anon PUBLIQUE, lecture seule imposée par les règles de la
+     base) ; repli sur suivi.json tant que la base n'est pas branchée
+     ou si elle ne répond pas. Faire avancer un dossier = modifier
+     sa ligne dans le tableau de bord Supabase du fondateur
+     (Table Editor) — aucun redéploiement du site. */
+  var SUIVI_BASE = { url: "", anon: "" };
+  function depuisBase(ref){
+    return fetch(SUIVI_BASE.url + "/rest/v1/suivi_dossiers?select=ref,categorie,etape,maj,note,exemple&ref=eq." + encodeURIComponent(ref),
+      { headers: { "apikey": SUIVI_BASE.anon, "Authorization": "Bearer " + SUIVI_BASE.anon } })
+      .then(function(r){ return r.json(); })
+      .then(function(rows){ return (rows && rows.length) ? rows[0] : null; });
+  }
+  function depuisFichier(ref){
+    return fetch("suivi.json", { cache: "no-store" })
       .then(function(r){ return r.json(); })
       .then(function(data){
         var trouve = null;
         (data.dossiers || []).forEach(function(d){ if(d.ref === ref) trouve = d; });
-        if(trouve) affiche(trouve); else afficheIntrouvable(ref);
-      })
-      .catch(function(){ afficheIntrouvable(ref); });
+        return trouve;
+      });
+  }
+  function cherche(ref){
+    ref = (ref || "").trim().toUpperCase();
+    if(!ref) return;
+    var p = SUIVI_BASE.url
+      ? depuisBase(ref).catch(function(){ return depuisFichier(ref); })
+      : depuisFichier(ref);
+    p.then(function(d){ if(d) affiche(d); else afficheIntrouvable(ref); })
+     .catch(function(){ afficheIntrouvable(ref); });
   }
   form.addEventListener("submit", function(e){ e.preventDefault(); cherche(input.value); });
   if(demoBtn) demoBtn.addEventListener("click", function(){ input.value = "CS-DEMO"; cherche("CS-DEMO"); });
