@@ -2312,6 +2312,12 @@ async function rendreComptes(c){
 var OPT_STATUT_DEVIS = [["envoye","Envoyé"],["accepte","Accepté"],["refuse","Refusé"],["expire","Expiré"]];
 var OPT_STATUT_ECH = [["en_preparation","En préparation"],["expedie","Expédié"],["recu","Reçu"]];
 function urlPubliqueSuivi(chemin){ return SUPABASE_URL + "/storage/v1/object/public/dossiers-suivi/" + chemin; }
+function mediaEchHtml(chemin){
+  if(!chemin) return "";
+  var u = esc(urlPubliqueSuivi(chemin));
+  if(/\.(mp4|mov|webm|m4v)$/i.test(chemin)) return '<div class="docs"><video controls preload="metadata" src="' + u + '" style="max-width:100%;border-radius:12px"></video></div>';
+  return '<div class="docs"><a href="' + u + '" target="_blank" rel="noopener"><img src="' + u + '" alt="" /></a></div>';
+}
 async function rendreDevis(c){
   c.innerHTML = entetePage("Devis", "Les devis des clients, avec le document PDF et les échantillons liés à chaque devis. Le client voit tout cela dans son espace, relié par l'adresse de son compte (fiche Clients).") +
     '<div class="outils"><button class="btn" type="button" data-act="nouveau">+ Nouveau devis</button></div>' +
@@ -2379,8 +2385,8 @@ async function rendreDevis(c){
       (echs.length ? echs.map(function(e){
         return '<article class="carte"><h3>' + esc(e.description || "Échantillon") + ' <span class="badge or">' + esc(libelle(OPT_STATUT_ECH, e.statut)) + '</span></h3>' +
           '<div class="meta"><div>Envoyé le : <b>' + fmtDate(e.date_envoi) + '</b></div></div>' +
-          (e.photo_url ? '<div class="docs"><a href="' + esc(urlPubliqueSuivi(e.photo_url)) + '" target="_blank" rel="noopener"><img src="' + esc(urlPubliqueSuivi(e.photo_url)) + '" alt="" /></a></div>' : '') +
-          '<div class="actions"><label class="btn petit secondaire" style="cursor:pointer">Photo de l\'échantillon<input type="file" accept="image/*" class="caché" data-photo-ech="' + e.id + '" /></label></div></article>';
+          mediaEchHtml(e.photo_url) +
+          '<div class="actions"><label class="btn petit secondaire" style="cursor:pointer">Photo ou vidéo de l\'échantillon<input type="file" accept="image/*,video/*" class="caché" data-photo-ech="' + e.id + '" /></label></div></article>';
       }).join("") : '<p class="vide">Aucun échantillon lié.</p>') +
       '<form class="formulaire" data-form="ech"><div class="grille"><div><label>Description de l\'échantillon</label><input name="description" required /></div>' +
       '<div><label>Statut</label>' + champHTML({ nom: "statut", type: "select", options: OPT_STATUT_ECH }, "en_preparation") + '</div>' +

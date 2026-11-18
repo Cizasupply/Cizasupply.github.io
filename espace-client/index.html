@@ -70,6 +70,9 @@
   .page-head p{margin:0;color:#c8d3e6;font-size:13.5px;line-height:1.55}
   nav.onglets button.actif{background:linear-gradient(120deg,var(--navy2),var(--navy));border-color:var(--navy)}
 .msg-fil{display:flex;flex-direction:column;gap:8px;margin:10px 0}.msg{max-width:84%;padding:9px 12px;border-radius:14px;background:#fff;border:1px solid var(--border);font-size:14px}.msg.moi{align-self:flex-end;background:#0A1E3C;color:#fff;border-color:#0A1E3C}.msg .qui{font-size:11px;opacity:.72;margin-bottom:3px}.filtres-msg{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.filtres-msg button{border:1.5px solid var(--border);background:#fff;border-radius:999px;padding:8px 14px;font-weight:700;font-size:13.5px;color:var(--navy);cursor:pointer}.filtres-msg button.actif{background:var(--navy);color:#fff;border-color:var(--navy)}.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:12px 0}.k-num{font-size:24px;font-weight:900;color:var(--navy)}.k-lib{font-weight:700;font-size:13.5px}.k-sub{color:var(--muted);font-size:12.5px}.acc-bandeau{background:linear-gradient(120deg,var(--navy2),var(--navy));color:#fff;border-radius:16px;padding:18px;display:flex;gap:16px;align-items:center;border-bottom:3px solid var(--gold);margin-bottom:6px}.acc-photo{width:78px;height:78px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);flex:none}.acc-init{width:78px;height:78px;border-radius:50%;background:rgba(255,255,255,.12);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:var(--gold2);flex:none}.acc-bandeau h2{margin:0 0 4px;font-size:21px}.acc-bandeau .sous2{color:#c8d3e6;font-size:13px}.raccourcis{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}nav.onglets button.actif{background:linear-gradient(120deg,var(--navy2),var(--navy));color:#fff;border-color:var(--navy);box-shadow:inset 0 -3px 0 var(--gold)}.barre-bas-client{position:fixed;left:0;right:0;bottom:0;z-index:40;background:linear-gradient(120deg,var(--navy2),var(--navy));border-top:2px solid var(--gold);display:none;padding:6px 4px calc(6px + env(safe-area-inset-bottom));box-shadow:0 -6px 20px rgba(7,16,31,.3)}.barre-bas-client button{flex:1;background:none;border:0;color:#c8d3e6;font-size:11px;font-weight:700;padding:9px 2px;border-radius:10px}.barre-bas-client button.actif{color:#F2B840;background:rgba(212,175,55,.16)}@media (max-width:900px){.barre-bas-client{display:flex}main{padding-bottom:96px}}#zone-impression{display:none}@media print{body>*{display:none !important}#zone-impression{display:block !important;color:#000}#zone-impression .carte-cli{width:85.6mm;height:54mm;border:1.5px solid #0A1E3C;border-radius:4mm;overflow:hidden;font-family:system-ui,sans-serif;background:#fff}#zone-impression .cc-haut{display:flex;justify-content:space-between;align-items:center;padding:2.6mm 4mm;border-bottom:2.5px solid #D4AF37}#zone-impression .cc-logo{height:8.5mm}#zone-impression .cc-type{font-size:8.5px;letter-spacing:.22em;color:#7a5b00;font-weight:800}#zone-impression .cc-corps{display:flex;gap:4mm;padding:3mm 4mm 2mm}#zone-impression .cc-photo{width:20mm;height:24mm;object-fit:cover;border-radius:2mm;border:1.5px solid #D4AF37}#zone-impression .cc-initiales{width:20mm;height:24mm;border-radius:2mm;background:#eef1f6;color:#0A1E3C;font-weight:900;font-size:17px;display:flex;align-items:center;justify-content:center;border:1.5px solid #D4AF37}#zone-impression .cc-nom{font-size:15px;font-weight:900;color:#0A1E3C;line-height:1.15}#zone-impression .cc-num{font-size:12.5px;font-weight:900;color:#7a5b00;letter-spacing:.14em;margin:1mm 0 2mm}#zone-impression .cc-ligne{font-size:9.5px;color:#333;line-height:1.55}#zone-impression .cc-ligne span{color:#777;font-weight:700;display:inline-block;min-width:17mm}#zone-impression .cc-qr{width:21mm;height:21mm;flex:none;align-self:center;border:1px solid #D4AF37;border-radius:2mm;padding:1mm;background:#fff}#zone-impression .cc-qr svg{width:100%;height:100%;display:block}#zone-impression .cc-pied{background:#0A1E3C;color:#F2B840;font-size:7.8px;font-weight:700;padding:1.8mm 4mm;letter-spacing:.02em}}.page-head{display:flex;gap:14px;align-items:center}.ph-logo{height:46px;width:auto;flex:none}.marque-img{height:28px;width:auto;vertical-align:middle}.login-logo{height:50px;width:auto;display:block;margin:0 auto 10px}
+.ech-grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.ech-img{width:100%;max-height:330px;object-fit:cover;border-radius:12px;border:1px solid var(--border)}
+.ech-video{width:100%;max-height:330px;border-radius:12px;background:#000}
 nav.onglets{display:none}
 #lat-client{display:none}
 @media (min-width:901px){
@@ -186,6 +189,7 @@ var ST_DEVIS = { envoye: ["Envoyé", "or"], accepte: ["Accepté", "vert"], refus
 var ST_CMD = { en_traitement: ["En traitement", "or"], en_production: ["En production", "or"], controle: ["Contrôle qualité", "or"], expediee: ["Expédiée", "vert"], livree: ["Livrée", "vert"], cloturee: ["Clôturée", ""] };
 var ST_LIV = { en_preparation: ["En préparation", "or"], en_transit: ["En transit", "or"], arrive: ["Arrivée", "vert"], livre: ["Livrée", "vert"] };
 var ST_ECH = { en_preparation: "En préparation", expedie: "Expédié", recu: "Reçu" };
+var ST_ECH_F = { en_preparation: ["En préparation", "or"], expedie: ["Expédié", "or"], recu: ["Reçu", "vert"] };
 var MODES = { mer: "Par mer", air: "Par avion", route: "Par route" };
 var donnees = { client: null, devis: [], echantillons: [], commandes: [], livraisons: [], suivis: {} };
 var onglet = "accueil";
@@ -319,6 +323,7 @@ async function chargerDonnees(){
 var ONGLETS = [
   { cle: "accueil", titre: "Accueil" },
   { cle: "devis", titre: "Mes devis" },
+  { cle: "echantillons", titre: "Échantillons" },
   { cle: "commandes", titre: "Mes commandes" },
   { cle: "livraisons", titre: "Mes livraisons" },
   { cle: "messages", titre: "Messages" },
@@ -348,7 +353,7 @@ function construireOnglets(){
   var bas = document.getElementById("nav-bas");
   if(bas){
     bas.innerHTML = "";
-    var courts = { accueil: "Accueil", devis: "Devis", commandes: "Commandes", livraisons: "Livraisons", messages: "Messages", archives: "Archives" };
+    var courts = { accueil: "Accueil", devis: "Devis", echantillons: "Échant.", commandes: "Commandes", livraisons: "Livraisons", messages: "Messages", archives: "Archives" };
     ONGLETS.forEach(function(o){
       var b2 = document.createElement("button");
       b2.type = "button"; b2.textContent = courts[o.cle] || o.titre;
@@ -360,7 +365,7 @@ function construireOnglets(){
 }
 function majFiltreStatut(){
   var sel = document.getElementById("filtre-statut");
-  var map = onglet === "devis" ? ST_DEVIS : (onglet === "commandes" ? ST_CMD : (onglet === "livraisons" ? ST_LIV : {}));
+  var map = onglet === "devis" ? ST_DEVIS : (onglet === "echantillons" ? ST_ECH_F : (onglet === "commandes" ? ST_CMD : (onglet === "livraisons" ? ST_LIV : {})));
   sel.innerHTML = '<option value="">Tous les statuts</option>' + Object.keys(map).map(function(k){ return '<option value="' + k + '">' + esc(map[k][0]) + '</option>'; }).join("");
 }
 document.getElementById("filtre-texte").addEventListener("input", afficher);
@@ -372,6 +377,13 @@ function passeFiltre(texte){
   return { texte: !q || (texte || "").toLowerCase().indexOf(q) >= 0, statut: st };
 }
 function echDe(devisId){ return donnees.echantillons.filter(function(e){ return e.devis_id === devisId; }); }
+function estVideo(chemin){ return /\.(mp4|mov|webm|m4v)$/i.test(chemin || ""); }
+function mediaEch(e, grand){
+  if(!e.photo_url) return "";
+  var u = esc(urlPublique(e.photo_url));
+  if(estVideo(e.photo_url)) return '<video controls preload="metadata" src="' + u + '"' + (grand ? ' class="ech-video"' : ' style="width:84px;height:84px;object-fit:cover;border-radius:10px;border:1px solid var(--border)"') + '></video>';
+  return '<a href="' + u + '" target="_blank" rel="noopener"><img src="' + u + '" alt=""' + (grand ? ' class="ech-img"' : '') + ' /></a>';
+}
 function livDe(cmdId){ return donnees.livraisons.filter(function(l){ return l.commande_id === cmdId; }); }
 
 function carteDevis(d, archivable){
@@ -389,7 +401,7 @@ function carteDevis(d, archivable){
   if(echs.length){
     h += '<div style="margin-top:12px"><label>Échantillons liés à ce devis</label><div class="photos">' +
       echs.map(function(e){
-        return '<figure>' + (e.photo_url ? '<a href="' + esc(urlPublique(e.photo_url)) + '" target="_blank" rel="noopener"><img src="' + esc(urlPublique(e.photo_url)) + '" alt="" /></a>' : '') +
+        return '<figure>' + mediaEch(e) +
           '<figcaption>' + esc(e.description || "") + '<br />' + esc(ST_ECH[e.statut] || e.statut) + (e.date_envoi ? '<br />' + fmtDate(e.date_envoi) : '') + '</figcaption></figure>';
       }).join("") + '</div></div>';
   }
@@ -529,11 +541,13 @@ async function rendreAccueilClient(z){
       '<div class="carte"><div class="k-num">' + donnees.commandes.length + '</div><div class="k-lib">Mes commandes</div><div class="k-sub">' + enCours + ' en cours · ' + esc(totaux(donnees.commandes)) + '</div></div>' +
       '<div class="carte"><div class="k-num">' + donnees.livraisons.length + '</div><div class="k-lib">Mes livraisons</div><div class="k-sub">Historique complet dans l\'onglet Livraisons</div></div>' +
       '<div class="carte"><div class="k-num">' + nonLus + '</div><div class="k-lib">Messages non lus</div><div class="k-sub">Direction et dossier</div></div>' +
+      '<div class="carte"><div class="k-num">' + donnees.echantillons.length + '</div><div class="k-lib">Mes échantillons</div><div class="k-sub">Photos et vidéos dans l\'onglet Échantillons</div></div>' +
     '</div>' +
     (suivisHtml ? '<h2 class="titre">Suivi en cours</h2>' + suivisHtml : '<p class="vide">Bienvenue dans votre espace. Dès que le bureau préparera un devis ou une commande pour vous, tout apparaîtra ici, avec le suivi étape par étape.</p>') +
     '<h2 class="titre">Accès rapides</h2><div class="raccourcis">' +
       '<button class="btn" type="button" data-go="devis">Mes devis</button>' +
       '<button class="btn" type="button" data-go="commandes">Mes commandes</button>' +
+      '<button class="btn" type="button" data-go="echantillons">Mes échantillons</button>' +
       '<button class="btn" type="button" data-go="messages">Écrire au bureau</button>' +
       '<button class="btn secondaire" type="button" data-carte="1">Ma carte client</button>' +
       '<a class="btn secondaire" href="https://wa.me/25779945007" target="_blank" rel="noopener">WhatsApp du bureau</a>' +
@@ -567,6 +581,16 @@ function afficher(){
       .filter(function(d){ return (!f.statut || d.statut === f.statut) && passeFiltre([d.ref, d.titre, d.notes].join(" ")).texte; });
     html = '<h2 class="titre">Mes devis</h2><p class="sous">Vos devis et les échantillons liés à chacun. Le document complet s\'ouvre en PDF.</p>' +
       (liste.length ? liste.map(function(d){ return carteDevis(d, true); }).join("") : '<p class="vide">Aucun devis pour le moment.</p>');
+  } else if(onglet === "echantillons"){
+    var devisParId = {}; donnees.devis.forEach(function(d){ devisParId[d.id] = d; });
+    var listeE = donnees.echantillons.filter(function(e){ return (!f.statut || e.statut === f.statut) && passeFiltre([e.description, ST_ECH[e.statut] || ""].join(" ")).texte; });
+    html = '<h2 class="titre">Mes échantillons</h2><p class="sous">Les photos et les vidéos de vos échantillons, déposées par le bureau.</p>' +
+      (listeE.length ? '<div class="ech-grille">' + listeE.map(function(e){
+        var d = devisParId[e.devis_id];
+        return '<article class="carte"><h3>' + esc(e.description || "Échantillon") + ' <span class="badge or">' + esc(ST_ECH[e.statut] || e.statut) + '</span></h3>' +
+          '<div class="meta">' + (d ? '<div>Devis : <b>' + esc(d.ref || d.titre || "") + '</b></div>' : '') + (e.date_envoi ? '<div>Envoyé le : <b>' + fmtDate(e.date_envoi) + '</b></div>' : '') + '</div>' +
+          (e.photo_url ? '<div style="margin-top:10px">' + mediaEch(e, true) + '</div>' : '<p class="sous">Le bureau n\'a pas encore déposé d\'image ni de vidéo pour cet échantillon.</p>') + '</article>';
+      }).join("") + '</div>' : '<p class="vide">Aucun échantillon pour le moment. Quand le bureau préparera un échantillon pour vous, ses photos et ses vidéos apparaîtront ici.</p>');
   } else if(onglet === "commandes"){
     var liste2 = donnees.commandes.filter(function(x){ return !x.archive && !x.archive_client; })
       .filter(function(x){ return (!f.statut || x.statut === f.statut) && passeFiltre([x.description, x.suivi_ref, x.notes].join(" ")).texte; });
