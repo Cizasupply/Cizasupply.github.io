@@ -122,6 +122,12 @@
   .formulaire{border-radius:20px;box-shadow:0 14px 34px rgba(7,16,31,.08)}
   input,select,textarea{border-radius:12px}
   .login-card{border-radius:22px;box-shadow:0 24px 60px rgba(7,16,31,.16)}
+  .kpis{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+  @media(min-width:1024px){.kpis{grid-template-columns:repeat(4,1fr)}}
+  .kpi{cursor:pointer;text-align:left;width:100%;font:inherit}
+  .kpi .k-num{font-size:30px;font-weight:900;color:var(--navy);line-height:1.05}
+  .kpi .k-lib{font-size:12.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
+  .kpi .k-sub{font-size:12.5px;color:var(--muted);margin-top:2px}
   /* ---------- Impression ---------- */
   #zone-impression{display:none}
   @media print{
@@ -261,7 +267,7 @@ var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, { auth: { flo
 
 var ETAPES = ["Demande reçue", "Devis préparé et envoyé", "Commande confirmée au bureau", "Production et préparation", "Contrôle qualité", "Expédition vers le Burundi", "Arrivée à Bujumbura", "Dossier clôturé"];
 var profil = null;      // {id, email, nom, role, actif}
-var moduleActif = "dossiers";
+var moduleActif = "accueil";
 
 /* =============== Utilitaires =============== */
 function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
@@ -412,6 +418,7 @@ async function demarrer(sessionConnue){
 
 /* =============== Navigation =============== */
 var MODULES = [
+  { cle: "accueil",      titre: "Accueil",      rendre: function(c){ return rendreAccueil(c); } },
   { cle: "dossiers",     titre: "Dossiers",     rendre: function(c){ return rendreDossiers(c); } },
   { cle: "devis",        titre: "Devis",        rendre: function(c){ return rendreDevis(c); } },
   { cle: "commandes",    titre: "Commandes",    rendre: function(c){ return rendreCommandes(c); } },
@@ -1040,6 +1047,62 @@ async function rendreEmployes(c){
     });
   }
   charger();
+}
+
+
+/* =============== ACCUEIL (tableau de bord ERP) =============== */
+var ETAPES_NOMS = ["Demande reçue", "Devis préparé et envoyé", "Commande confirmée", "Production et préparation", "Contrôle qualité", "Expédition vers le Burundi", "Arrivée à Bujumbura", "Dossier clôturé"];
+async function rendreAccueil(c){
+  c.innerHTML = '<h2 class="titre">Tableau de bord</h2><p class="sous">' + esc(fmtDate(aujourdhui())) + ' — vue d\'ensemble du bureau, en temps réel.</p><p class="vide">Chargement des chiffres…</p>';
+  async function compte(table, fn){
+    var q = sb.from(table).select("id", { count: "exact", head: true });
+    if(fn) q = fn(q);
+    var r = await q;
+    return r.error ? 0 : (r.count || 0);
+  }
+  var ajd = aujourdhui();
+  var moisDebut = ajd.slice(0, 8) + "01";
+  var dossEnCours = 0, dossTotal = 0;
+  var rd = await sb.from("suivi_dossiers").select("etape");
+  if(!rd.error && rd.data){ dossTotal = rd.data.length; dossEnCours = rd.data.filter(function(d){ return d.etape < 8; }).length; }
+  var nbDevis = await compte("devis");
+  var nbCmd = await compte("commandes");
+  var nbLiv = await compte("livraisons");
+  var nbClients = await compte("clients");
+  var nbEmp = await compte("employes", function(q){ return q.eq("statut", "actif"); });
+  var rdvJour = await sb.from("rendez_vous").select("*").eq("date_souhaite", ajd).neq("statut", "annule").order("heure");
+  var listeRdv = rdvJour.error ? [] : (rdvJour.data || []);
+  var depMois = await sb.from("depenses").select("montant, devise").gte("date_depense", moisDebut).lte("date_depense", ajd);
+  var totauxDep = {};
+  if(!depMois.error && depMois.data) depMois.data.forEach(function(d){ totauxDep[d.devise] = (totauxDep[d.devise] || 0) + Number(d.montant || 0); });
+  var depTxt = Object.keys(totauxDep).length ? Object.keys(totauxDep).map(function(dv){ return fmtMontant(totauxDep[dv], dv); }).join(" · ") : "0";
+  var derniers = await sb.from("suivi_dossiers").select("*").order("maj", { ascending: false }).limit(5);
+  var listeDos = derniers.error ? [] : (derniers.data || []);
+  function kpi(num, lib, sub, cle){
+    return '<button type="button" class="carte kpi" data-kpi="' + cle + '"><div class="k-num">' + num + '</div><div class="k-lib">' + lib + '</div>' + (sub ? '<div class="k-sub">' + sub + '</div>' : '') + '</button>';
+  }
+  c.innerHTML = '<h2 class="titre">Tableau de bord</h2><p class="sous">' + esc(fmtDate(ajd)) + ' — vue d\'ensemble du bureau, en temps réel.</p>' +
+    '<div class="kpis">' +
+    kpi(dossEnCours, "Dossiers en cours", dossTotal + " au total", "dossiers") +
+    kpi(nbDevis, "Devis", "", "devis") +
+    kpi(nbCmd, "Commandes", "", "commandes") +
+    kpi(nbLiv, "Livraisons", "", "livraisons") +
+    kpi(listeRdv.length, "Rendez-vous aujourd'hui", "", "rendez-vous") +
+    kpi(nbClients, "Clients", "", "clients") +
+    kpi(depTxt, "Dépenses du mois", "", "depenses") +
+    kpi(nbEmp, "Employés actifs", "", "employes") +
+    '</div>' +
+    '<h2 class="titre">Rendez-vous du jour</h2>' +
+    (listeRdv.length ? listeRdv.map(function(r){
+      return '<article class="carte"><h3>' + esc(r.nom) + ' <span class="badge or">' + esc(r.heure || "—") + '</span> <span class="badge">' + esc(r.statut) + '</span></h3>' +
+        '<div class="meta"><div>' + esc(r.sujet || "") + '</div><div>Téléphone : <b>' + esc(r.telephone || "—") + '</b></div></div></article>';
+    }).join("") : '<p class="vide">Aucun rendez-vous aujourd\'hui.</p>') +
+    '<h2 class="titre" style="margin-top:22px">Derniers dossiers mis à jour</h2>' +
+    (listeDos.length ? listeDos.map(function(d){
+      return '<article class="carte"><h3>' + esc(d.ref) + ' <span class="badge or">Étape ' + d.etape + '/8 — ' + esc(ETAPES_NOMS[d.etape - 1] || "") + '</span></h3>' +
+        '<div class="meta"><div>Catégorie : <b>' + esc(d.categorie) + '</b></div><div>Mis à jour : <b>' + fmtDate(d.maj) + '</b></div>' + (d.note ? '<div>' + esc(d.note) + '</div>' : '') + '</div></article>';
+    }).join("") : '<p class="vide">Aucun dossier.</p>');
+  c.querySelectorAll("[data-kpi]").forEach(function(b){ b.addEventListener("click", function(){ aller(b.dataset.kpi); }); });
 }
 
 /* =============== RAPPORTS (chiffres automatiques + rédaction) =============== */
