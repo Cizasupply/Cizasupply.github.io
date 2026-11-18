@@ -73,6 +73,22 @@
 .ech-grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
 .ech-img{width:100%;max-height:330px;object-fit:cover;border-radius:12px;border:1px solid var(--border)}
 .ech-video{width:100%;max-height:330px;border-radius:12px;background:#000}
+.carte-ecran{max-width:440px;background:#fff;border:1.5px solid var(--navy);border-radius:16px;overflow:hidden;box-shadow:0 14px 34px rgba(7,16,31,.16)}
+.ce-haut{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:2.5px solid var(--gold)}
+.ce-logo{height:34px}
+.ce-type{font-size:11px;letter-spacing:.22em;color:#7a5b00;font-weight:800}
+.ce-corps{display:flex;gap:14px;padding:14px 16px 10px}
+.ce-photo{width:76px;height:92px;object-fit:cover;border-radius:8px;border:1.5px solid var(--gold)}
+.ce-initiales{width:76px;height:92px;border-radius:8px;background:#eef1f6;color:var(--navy);font-weight:900;font-size:26px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--gold);flex:none}
+.ce-nom{font-size:19px;font-weight:900;color:var(--navy);line-height:1.15}
+.ce-num{font-size:15px;font-weight:900;color:#7a5b00;letter-spacing:.14em;margin:2px 0 6px}
+.ce-ligne{font-size:12.5px;color:#333;line-height:1.6}
+.ce-ligne span{color:#777;font-weight:700;display:inline-block;min-width:74px}
+.ce-qr{width:84px;height:84px;flex:none;align-self:center;border:1px solid var(--gold);border-radius:8px;padding:4px;background:#fff}
+.ce-qr svg{width:100%;height:100%;display:block}
+.ce-pied{background:var(--navy);color:var(--gold2);font-size:10.5px;font-weight:700;padding:8px 16px;letter-spacing:.02em}
+.barre-bas-client{overflow-x:auto;scrollbar-width:none}
+.barre-bas-client button{flex:0 0 auto;padding:9px 11px}
 nav.onglets{display:none}
 #lat-client{display:none}
 @media (min-width:901px){
@@ -185,13 +201,13 @@ var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, { auth: { flo
   }
 })();
 var ETAPES = ["Demande reçue", "Devis préparé et envoyé", "Commande confirmée au bureau", "Production et préparation", "Contrôle qualité", "Expédition vers le Burundi", "Arrivée à Bujumbura", "Dossier clôturé"];
-var ST_DEVIS = { envoye: ["Envoyé", "or"], accepte: ["Accepté", "vert"], refuse: ["Refusé", "rouge"], expire: ["Expiré", ""] };
+var ST_DEVIS = { demande: ["Demande envoyée", "or"], envoye: ["Envoyé", "or"], accepte: ["Accepté", "vert"], refuse: ["Refusé", "rouge"], expire: ["Expiré", ""] };
 var ST_CMD = { en_traitement: ["En traitement", "or"], en_production: ["En production", "or"], controle: ["Contrôle qualité", "or"], expediee: ["Expédiée", "vert"], livree: ["Livrée", "vert"], cloturee: ["Clôturée", ""] };
 var ST_LIV = { en_preparation: ["En préparation", "or"], en_transit: ["En transit", "or"], arrive: ["Arrivée", "vert"], livre: ["Livrée", "vert"] };
 var ST_ECH = { en_preparation: "En préparation", expedie: "Expédié", recu: "Reçu" };
 var ST_ECH_F = { en_preparation: ["En préparation", "or"], expedie: ["Expédié", "or"], recu: ["Reçu", "vert"] };
 var MODES = { mer: "Par mer", air: "Par avion", route: "Par route" };
-var donnees = { client: null, devis: [], echantillons: [], commandes: [], livraisons: [], suivis: {} };
+var donnees = { client: null, devis: [], echantillons: [], commandes: [], livraisons: [], suivis: {}, rdv: [] };
 var onglet = "accueil";
 
 function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
@@ -312,6 +328,8 @@ async function chargerDonnees(){
     var rl = await sb.from("livraisons").select("*").in("commande_id", idsCmd).order("cree_le", { ascending: false });
     donnees.livraisons = rl.data || [];
   }
+  var rrdv = await sb.from("rendez_vous").select("*").eq("client_id", cid).order("date_souhaite", { ascending: false });
+  donnees.rdv = rrdv.error ? [] : (rrdv.data || []);
   donnees.suivis = {};
   var refs = donnees.commandes.map(function(x){ return x.suivi_ref; }).filter(Boolean);
   if(refs.length){
@@ -327,6 +345,8 @@ var ONGLETS = [
   { cle: "commandes", titre: "Mes commandes" },
   { cle: "livraisons", titre: "Mes livraisons" },
   { cle: "messages", titre: "Messages" },
+  { cle: "demandes", titre: "Demandes" },
+  { cle: "carte", titre: "Ma carte client" },
   { cle: "archives", titre: "Archives" }
 ];
 function construireOnglets(){
@@ -353,7 +373,7 @@ function construireOnglets(){
   var bas = document.getElementById("nav-bas");
   if(bas){
     bas.innerHTML = "";
-    var courts = { accueil: "Accueil", devis: "Devis", echantillons: "Échant.", commandes: "Commandes", livraisons: "Livraisons", messages: "Messages", archives: "Archives" };
+    var courts = { accueil: "Accueil", devis: "Devis", echantillons: "Échant.", commandes: "Commandes", livraisons: "Livraisons", messages: "Messages", demandes: "Demandes", carte: "Carte", archives: "Archives" };
     ONGLETS.forEach(function(o){
       var b2 = document.createElement("button");
       b2.type = "button"; b2.textContent = courts[o.cle] || o.titre;
@@ -549,6 +569,7 @@ async function rendreAccueilClient(z){
       '<button class="btn" type="button" data-go="commandes">Mes commandes</button>' +
       '<button class="btn" type="button" data-go="echantillons">Mes échantillons</button>' +
       '<button class="btn" type="button" data-go="messages">Écrire au bureau</button>' +
+      '<button class="btn" type="button" data-go="demandes">Demander un devis / rendez-vous</button>' +
       '<button class="btn secondaire" type="button" data-carte="1">Ma carte client</button>' +
       '<a class="btn secondaire" href="https://wa.me/25779945007" target="_blank" rel="noopener">WhatsApp du bureau</a>' +
     '</div>' +
@@ -565,6 +586,51 @@ async function rendreAccueilClient(z){
     '</div></article>';
   z.querySelectorAll("[data-go]").forEach(function(b){ b.addEventListener("click", function(){ onglet = b.dataset.go; construireOnglets(); majFiltreStatut(); afficher(); }); });
   var bc = z.querySelector('[data-carte]'); if(bc) bc.addEventListener("click", genererCarteClientEspace);
+}
+
+
+var ST_RDV_C = { nouvelle: "Nouvelle", confirme: "Confirmé", reporte: "Reporté", annule: "Annulé", fait: "Fait" };
+function rendreDemandes(z){
+  var cl = donnees.client;
+  var mesDem = donnees.devis.filter(function(d){ return d.statut === "demande"; });
+  z.innerHTML =
+    '<h2 class="titre">Demander un devis</h2><p class="sous">Dites-nous ce que vous cherchez : le bureau prépare votre devis, que vous retrouverez dans « Mes devis ».</p>' +
+    '<form class="formulaire" data-form="dem-devis"><div class="grille">' +
+    '<div><label>Produit recherché</label><input name="titre" required placeholder="Ex. : tracteur 75 HP, panneaux solaires…" /></div>' +
+    '<div><label>Quantité</label><input name="quantite" placeholder="Ex. : 1, 20 pièces…" /></div></div>' +
+    '<div style="margin-top:10px"><label>Détails (marque, modèle, neuf ou occasion, délai…)</label><textarea name="details" placeholder="Tout ce qui aide le bureau à chiffrer juste…"></textarea></div>' +
+    '<button class="btn" type="submit" style="margin-top:10px">Envoyer la demande de devis</button></form>' +
+    (mesDem.length ? '<h2 class="titre" style="margin-top:24px">Mes demandes de devis</h2>' + mesDem.map(function(d){
+      return '<article class="carte"><h3>' + esc(d.titre || "Demande") + ' <span class="badge or">En préparation par le bureau</span></h3><div class="meta">' + (d.ref ? '<div>Référence : <b>' + esc(d.ref) + '</b></div>' : '') + '<div>Demandé le : <b>' + fmtDate(d.cree_le) + '</b></div>' + (d.notes ? '<div>' + esc(d.notes) + '</div>' : '') + '</div></article>';
+    }).join("") : '') +
+    '<h2 class="titre" style="margin-top:26px">Demander un rendez-vous</h2><p class="sous">Au bureau, par téléphone ou en visio : choisissez le jour, le bureau confirme.</p>' +
+    '<form class="formulaire" data-form="dem-rdv"><div class="grille">' +
+    '<div><label>Date souhaitée</label><input type="date" name="date_souhaite" required /></div>' +
+    '<div><label>Heure souhaitée</label><input type="time" name="heure" /></div>' +
+    '<div><label>Type de rendez-vous</label><select name="sujet"><option>Visite au bureau</option><option>Appel téléphonique</option><option>Visioconférence</option><option>Autre</option></select></div></div>' +
+    '<div style="margin-top:10px"><label>Précisions</label><textarea name="notes" placeholder="Le sujet du rendez-vous…"></textarea></div>' +
+    '<button class="btn" type="submit" style="margin-top:10px">Envoyer la demande de rendez-vous</button></form>' +
+    (donnees.rdv.length ? '<h2 class="titre" style="margin-top:24px">Mes rendez-vous</h2>' + donnees.rdv.map(function(r){
+      return '<article class="carte"><h3>' + esc(r.sujet || "Rendez-vous") + ' <span class="badge or">' + esc(ST_RDV_C[r.statut] || r.statut) + '</span></h3><div class="meta"><div>Le : <b>' + fmtDate(r.date_souhaite) + (r.heure ? ' à ' + esc(r.heure) : '') + '</b></div>' + (r.notes ? '<div>' + esc(r.notes) + '</div>' : '') + '</div></article>';
+    }).join("") : '');
+  z.querySelector('[data-form="dem-devis"]').addEventListener("submit", async function(ev){
+    ev.preventDefault();
+    var f = ev.target;
+    var notes = [f.elements.quantite.value ? "Quantité : " + f.elements.quantite.value : "", f.elements.details.value || ""].filter(Boolean).join(" — ");
+    var ref = null;
+    var rn = await sb.rpc("prochain_numero", { p_type: "DEV" });
+    if(!rn.error && rn.data) ref = rn.data;
+    var r = await sb.from("devis").insert({ client_id: cl.id, titre: f.elements.titre.value, ref: ref, statut: "demande", notes: notes || null });
+    if(r.error){ alert("Envoi refusé : " + r.error.message); return; }
+    await chargerDonnees(); afficher();
+  });
+  z.querySelector('[data-form="dem-rdv"]').addEventListener("submit", async function(ev){
+    ev.preventDefault();
+    var f = ev.target;
+    var r = await sb.from("rendez_vous").insert({ client_id: cl.id, nom: cl.nom, telephone: cl.telephone || null, email: cl.email || null, sujet: f.elements.sujet.value, date_souhaite: f.elements.date_souhaite.value, heure: f.elements.heure.value || null, notes: f.elements.notes.value || null, source: "espace-client", statut: "nouvelle" });
+    if(r.error){ alert("Envoi refusé : " + r.error.message); return; }
+    await chargerDonnees(); afficher();
+  });
 }
 
 function afficher(){
@@ -600,6 +666,25 @@ function afficher(){
     var liste3 = donnees.livraisons.filter(function(l){ return (!f.statut || l.statut === f.statut) && passeFiltre([l.port_destination, l.pays_livraison, l.ville_livraison, l.transporteur, l.numero_suivi].join(" ")).texte; });
     html = '<h2 class="titre">Mes livraisons</h2><p class="sous">Destination, mode d\'expédition et état de chaque livraison.</p>' +
       (liste3.length ? liste3.map(carteLivraison).join("") : '<p class="vide">Aucune livraison pour le moment.</p>');
+  } else if(onglet === "demandes"){
+    c.innerHTML = '<div data-zone="dem"><p class="vide">Chargement…</p></div>';
+    rendreDemandes(c.querySelector('[data-zone="dem"]'));
+    return;
+  } else if(onglet === "carte"){
+    var cl2 = donnees.client;
+    var init2 = String(cl2.nom || "C").split(/\s+/).map(function(m){ return m.charAt(0); }).slice(0, 2).join("").toUpperCase();
+    c.innerHTML = '<h2 class="titre">Ma carte client</h2><p class="sous">Présentez cette carte au bureau : le code QR donne votre numéro client permanent.</p>' +
+      '<div class="carte-ecran"><div class="ce-haut"><img class="ce-logo" src="/assets/logo-supply-documents.png" alt="CIZA SUPPLY" /><span class="ce-type">CARTE CLIENT</span></div>' +
+      '<div class="ce-corps">' + (donnees.photoUrl ? '<img class="ce-photo" src="' + esc(donnees.photoUrl) + '" alt="" />' : '<div class="ce-initiales">' + esc(init2) + '</div>') +
+      '<div style="flex:1"><div class="ce-nom">' + esc(cl2.nom) + '</div><div class="ce-num">' + esc(cl2.numero || "") + '</div>' +
+      '<div class="ce-ligne"><span>Téléphone</span>' + esc(cl2.telephone || "—") + '</div>' +
+      '<div class="ce-ligne"><span>Lieu</span>' + esc([cl2.ville, cl2.pays].filter(Boolean).join(", ") || "—") + '</div>' +
+      '<div class="ce-ligne"><span>Client depuis</span>' + fmtDate(cl2.cree_le) + '</div></div>' +
+      '<div class="ce-qr">' + codeQR(cl2.numero || cl2.nom) + '</div></div>' +
+      '<div class="ce-pied">CIZA SUPPLY · division de Ciza Group — Bujumbura · +257 79 94 50 07 · WhatsApp +1 514 502 9503 · cizasupply.com</div></div>' +
+      '<div class="actions" style="margin-top:14px"><button class="btn" type="button" data-carte-print>Imprimer / PDF</button></div>';
+    c.querySelector("[data-carte-print]").addEventListener("click", genererCarteClientEspace);
+    return;
   } else if(onglet === "messages"){
     c.innerHTML = '<h2 class="titre">Messages</h2><div data-zone="msg"><p class="vide">Chargement…</p></div>';
     rendreMessagesClient(c.querySelector('[data-zone="msg"]'));

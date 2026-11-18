@@ -912,7 +912,7 @@ var CFG_RDV = {
     { champ: "telephone", label: "Téléphone" }, { champ: "email", label: "E-mail" },
     { champ: "sujet", label: "Sujet" },
     { label: "Quand", format: function(r){ return (r.date_souhaite ? fmtDate(r.date_souhaite) : "—") + (r.heure ? " · " + r.heure : ""); } },
-    { label: "Source", format: function(r){ return r.source === "site" ? "Formulaire du site" : "Bureau"; } },
+    { label: "Source", format: function(r){ return r.source === "site" ? "Formulaire du site" : (r.source === "espace-client" ? "Espace client" : "Bureau"); } },
     { champ: "notes", label: "Notes" }
   ],
   titreLigne: function(r){ return r.nom; },
@@ -2309,7 +2309,7 @@ async function rendreComptes(c){
 }
 
 /* =============== DEVIS (avec échantillons liés) =============== */
-var OPT_STATUT_DEVIS = [["envoye","Envoyé"],["accepte","Accepté"],["refuse","Refusé"],["expire","Expiré"]];
+var OPT_STATUT_DEVIS = [["demande","Demande du client"],["envoye","Envoyé"],["accepte","Accepté"],["refuse","Refusé"],["expire","Expiré"]];
 var OPT_STATUT_ECH = [["en_preparation","En préparation"],["expedie","Expédié"],["recu","Reçu"]];
 function urlPubliqueSuivi(chemin){ return SUPABASE_URL + "/storage/v1/object/public/dossiers-suivi/" + chemin; }
 function mediaEchHtml(chemin){
