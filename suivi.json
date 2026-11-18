@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "dossiers": [
+    {
+      "ref": "CS-DEMO",
+      "categorie": "Machines et équipements agricoles",
+      "etape": 5,
+      "maj": "2026-11-18",
+      "note": "Contrôle qualité en cours à l'entrepôt — photos et vidéos partagées avec le client.",
+      "exemple": true
+    }
+  ]
+}
