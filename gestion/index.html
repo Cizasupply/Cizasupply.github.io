@@ -1368,13 +1368,14 @@ function rendrePresences(c){
 async function genererCarteEmploye(e){
   var u = e.photo_url ? await urlSigneePrivee(e.photo_url) : null;
   var initiales = (e.nom || "?").split(" ").map(function(m){ return m.charAt(0); }).slice(0, 2).join("").toUpperCase();
-  imprimer("Carte d'employé", '<div class="carte-emp"><div class="ce-bande"><span class="ce-logo">CIZA <span>SUPPLY</span></span><span class="ce-type">CARTE D\'EMPLOYÉ</span></div>' +
-    '<div class="ce-corps">' + (u ? '<img class="ce-photo" src="' + esc(u) + '" alt="" />' : '<div class="ce-initiales">' + esc(initiales) + '</div>') +
-    '<div><div class="ce-nom">' + esc(e.nom) + '</div><div class="ce-poste">' + esc(e.poste || "Employé") + '</div>' +
-    '<div class="ce-ligne"><span>Numéro</span><b>' + esc(e.numero || "—") + '</b></div>' +
-    '<div class="ce-ligne"><span>Téléphone</span>' + esc(e.telephone || "—") + '</div>' +
-    '<div class="ce-ligne"><span>Embauche</span>' + fmtDate(e.date_embauche) + '</div></div></div>' +
-    '<div class="ce-pied">Ciza Supply, division de Ciza Group · Bujumbura, Burundi · +257 79 94 50 07 · cizasupply.com</div></div>');
+  imprimer("Carte d'employé", '<div class="carte-cli"><div class="cc-haut"><img class="cc-logo" src="/assets/logo-supply-documents.png" alt="CIZA SUPPLY" /><span class="cc-type">CARTE D\'EMPLOYÉ</span></div>' +
+    '<div class="cc-corps">' + (u ? '<img class="cc-photo" src="' + esc(u) + '" alt="" />' : '<div class="cc-initiales">' + esc(initiales) + '</div>') +
+    '<div style="flex:1"><div class="cc-nom">' + esc(e.nom) + '</div><div class="cc-num">' + esc(e.numero || "") + '</div>' +
+    '<div class="cc-ligne"><span>Poste</span>' + esc(e.poste || "—") + '</div>' +
+    '<div class="cc-ligne"><span>Téléphone</span>' + esc(e.telephone || "—") + '</div>' +
+    '<div class="cc-ligne"><span>Embauche</span>' + fmtDate(e.date_embauche) + '</div></div>' +
+    '<div class="cc-qr">' + codeQR(e.numero || e.nom) + '</div></div>' +
+    '<div class="cc-pied">CIZA SUPPLY · division de Ciza Group — Bujumbura · +257 79 94 50 07 · WhatsApp +1 514 502 9503 · cizasupply.com</div></div>');
 }
 var OPT_STATUT_EMP = [["actif","Actif"],["demission","Démission"],["renvoye","Renvoyé"],["fin_contrat","Fin de contrat"]];
 var OPT_STATUT_CONTRAT_EMP = [["envoye","Envoyé"],["signe","Signé"],["depose","Déposé"],["valide","Validé"]];
@@ -1499,22 +1500,27 @@ function ouvrirSignature(e, retour){
 
 async function rendreEmployes(c){
   c.innerHTML = entetePage("Employés", "Fiche de chaque employé, ses contrats, sa carte d'employé et ses fiches de paie — comme dans CizaLogistics. Statuts : actif, démission, renvoyé, fin de contrat.") +
-    '<div class="outils"><button class="btn" type="button" data-act="nouveau">+ Nouvel employé</button></div>' +
+    '<div class="outils"><button class="btn" type="button" data-act="nouveau">+ Nouvel employé</button><input type="search" data-recherche placeholder="Rechercher (nom, n°, poste) — ou scanner la carte" style="flex:1;min-width:200px" /></div>' +
     '<div data-zone="form"></div><div data-zone="liste"><p class="vide">Chargement…</p></div>';
   var zoneForm = c.querySelector('[data-zone="form"]');
   var zoneListe = c.querySelector('[data-zone="liste"]');
   var employes = [];
+  var filtre = "";
   async function charger(){
     var r = await sb.from("employes").select("*").order("cree_le", { ascending: false });
     if(r.error){ zoneListe.innerHTML = '<p class="vide">Lecture refusée : ' + esc(r.error.message) + '</p>'; return; }
     employes = r.data || [];
-    zoneListe.innerHTML = employes.length ? employes.map(function(e){
+    peindre();
+  }
+  function peindre(){
+    var liste = employes.filter(function(e){ if(!filtre) return true; var t = (e.nom + " " + (e.numero || "") + " " + (e.poste || "")).toLowerCase(); return t.indexOf(filtre) > -1; });
+    zoneListe.innerHTML = liste.length ? liste.map(function(e){
       return '<article class="carte"><h3>' + esc(e.nom) + ' <span class="badge">' + esc(e.numero || "") + '</span> <span class="badge ' + (e.statut === "actif" ? "vert" : "rouge") + '">' + esc(libelle(OPT_STATUT_EMP, e.statut)) + '</span></h3>' +
         '<div class="meta"><div>Poste : <b>' + esc(e.poste || "—") + '</b></div><div>Téléphone : <b>' + esc(e.telephone || "—") + '</b></div><div>Salaire : <b>' + esc(fmtMontant(e.salaire, e.devise)) + '</b></div><div>Dossier d\'embauche : ' + (dossierEmbauche(e).ok ? '<span class="badge vert">Complet et signé</span>' : '<span class="badge or">À compléter</span>') + '</div></div>' +
         '<div class="actions"><button class="btn petit" type="button" data-ouvrir="' + e.id + '">Ouvrir la fiche</button>' +
         '<button class="btn petit secondaire" type="button" data-fiche-liste="' + e.id + '">Fiche d\'enregistrement</button>' +
         '<button class="btn petit secondaire" type="button" data-carte-liste="' + e.id + '">Carte d\'employé</button></div></article>';
-    }).join("") : '<p class="vide">Aucun employé enregistré.</p>';
+    }).join("") : '<p class="vide">Aucun employé trouvé.</p>';
     zoneListe.querySelectorAll("[data-ouvrir]").forEach(function(b){ b.addEventListener("click", function(){ ouvrirEmploye(b.dataset.ouvrir); }); });
     zoneListe.querySelectorAll("[data-carte-liste]").forEach(function(b){ b.addEventListener("click", function(){ var e = employes.find(function(x){ return x.id === b.dataset.carteListe; }); if(e) genererCarteEmploye(e); }); });
     zoneListe.querySelectorAll("[data-fiche-liste]").forEach(function(b){ b.addEventListener("click", function(){ var e = employes.find(function(x){ return x.id === b.dataset.ficheListe; }); if(e) genererFicheEnregistrement(e); }); });
@@ -1568,6 +1574,8 @@ async function rendreEmployes(c){
     zoneForm.querySelector('[data-act="annuler"]').addEventListener("click", function(){ zoneForm.innerHTML = ""; });
   }
   c.querySelector('[data-act="nouveau"]').addEventListener("click", function(){ formulaireEmploye(null); });
+  var inpRech = c.querySelector("[data-recherche]");
+  if(inpRech) inpRech.addEventListener("input", function(){ filtre = inpRech.value.trim().toLowerCase(); peindre(); });
 
   async function ouvrirEmploye(id){
     var e = employes.find(function(x){ return x.id === id; }); if(!e) return;
