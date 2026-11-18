@@ -69,7 +69,7 @@
   .page-head h2{font-size:23px;margin:4px 0 4px;color:#fff}
   .page-head p{margin:0;color:#c8d3e6;font-size:13.5px;line-height:1.55}
   nav.onglets button.actif{background:linear-gradient(120deg,var(--navy2),var(--navy));border-color:var(--navy)}
-</style>
+.msg-fil{display:flex;flex-direction:column;gap:8px;margin:10px 0}.msg{max-width:84%;padding:9px 12px;border-radius:14px;background:#fff;border:1px solid var(--border);font-size:14px}.msg.moi{align-self:flex-end;background:#0A1E3C;color:#fff;border-color:#0A1E3C}.msg .qui{font-size:11px;opacity:.72;margin-bottom:3px}.filtres-msg{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.filtres-msg button{border:1.5px solid var(--border);background:#fff;border-radius:999px;padding:8px 14px;font-weight:700;font-size:13.5px;color:var(--navy);cursor:pointer}.filtres-msg button.actif{background:var(--navy);color:#fff;border-color:var(--navy)}</style>
 </head>
 <body>
 
@@ -283,6 +283,7 @@ var ONGLETS = [
   { cle: "devis", titre: "Mes devis" },
   { cle: "commandes", titre: "Mes commandes" },
   { cle: "livraisons", titre: "Mes livraisons" },
+  { cle: "messages", titre: "Messages" },
   { cle: "archives", titre: "Archives" }
 ];
 function construireOnglets(){
@@ -374,6 +375,39 @@ function brancherArchives(conteneur){
     if(r.error) alert("Action refusée : " + r.error.message); else { await chargerDonnees(); afficher(); }
   }); });
 }
+
+async function rendreMessagesClient(z){
+  if(!z) return;
+  var u = await sb.auth.getUser();
+  var monId = u.data && u.data.user ? u.data.user.id : null;
+  var canal = "direction";
+  var msgs = [];
+  async function charger(){ var r = await sb.from("messages").select("*").eq("client_id", donnees.client.id).order("cree_le", { ascending: true }); msgs = r.data || []; }
+  await charger();
+  function afficherFil(){
+    var liste = msgs.filter(function(m){ return m.canal === canal; });
+    var ids = liste.filter(function(m){ return !m.lu && m.expediteur_type === "bureau"; }).map(function(m){ return m.id; });
+    if(ids.length) sb.from("messages").update({ lu: true }).in("id", ids).then(function(){});
+    z.innerHTML = '<div class="filtres-msg"><button type="button" data-canal="direction"' + (canal === "direction" ? ' class="actif"' : "") + '>Direction (Fondateur)</button><button type="button" data-canal="dossier"' + (canal === "dossier" ? ' class="actif"' : "") + '>Mon dossier (bureau)</button></div>' +
+      '<p class="sous">' + (canal === "direction" ? "Conversation privée entre vous et le Fondateur de Ciza Group : le bureau ne la voit pas." : "Conversation avec l'employé du bureau qui suit votre dossier. Le Fondateur peut aussi la voir.") + '</p>' +
+      (canal === "dossier" && !donnees.client.assigne_a ? '<p class="vide">Aucun employé n\'est encore assigné à votre dossier : ce canal s\'ouvrira dès que le bureau aura assigné votre dossier. En attendant, écrivez à la Direction.</p>' : "") +
+      '<div class="msg-fil">' + (liste.length ? liste.map(function(m){
+        var moi = m.expediteur_type === "client";
+        return '<div class="msg' + (moi ? " moi" : "") + '"><div class="qui">' + (moi ? "Vous" : (canal === "direction" ? "Le Fondateur" : "Le bureau")) + ' · ' + fmtDate(m.cree_le) + '</div>' + esc(m.corps) + '</div>';
+      }).join("") : '<p class="vide">Aucun message pour le moment.</p>') + '</div>' +
+      '<form class="formulaire" data-form="msg"><div><label>Votre message</label><textarea name="corps" required placeholder="Écrivez ici…"></textarea></div><button class="btn" type="submit" style="margin-top:8px">Envoyer</button></form>';
+    z.querySelectorAll("[data-canal]").forEach(function(b){ b.addEventListener("click", function(){ canal = b.dataset.canal; afficherFil(); }); });
+    z.querySelector('[data-form="msg"]').addEventListener("submit", async function(ev){
+      ev.preventDefault();
+      var corps = ev.target.elements.corps.value.trim(); if(!corps) return;
+      var r = await sb.from("messages").insert({ type: "client", client_id: donnees.client.id, canal: canal, expediteur_type: "client", expediteur_id: monId, corps: corps });
+      if(r.error){ alert("Envoi refusé : " + r.error.message); return; }
+      await charger(); afficherFil();
+    });
+  }
+  afficherFil();
+}
+
 function afficher(){
   var c = document.getElementById("contenu");
   var f = passeFiltre("");
@@ -392,6 +426,10 @@ function afficher(){
     var liste3 = donnees.livraisons.filter(function(l){ return (!f.statut || l.statut === f.statut) && passeFiltre([l.port_destination, l.pays_livraison, l.ville_livraison, l.transporteur, l.numero_suivi].join(" ")).texte; });
     html = '<h2 class="titre">Mes livraisons</h2><p class="sous">Destination, mode d\'expédition et état de chaque livraison.</p>' +
       (liste3.length ? liste3.map(carteLivraison).join("") : '<p class="vide">Aucune livraison pour le moment.</p>');
+  } else if(onglet === "messages"){
+    c.innerHTML = '<h2 class="titre">Messages</h2><div data-zone="msg"><p class="vide">Chargement…</p></div>';
+    rendreMessagesClient(c.querySelector('[data-zone="msg"]'));
+    return;
   } else {
     var devisA = donnees.devis.filter(function(d){ return d.archive || d.archive_client; });
     var cmdA = donnees.commandes.filter(function(x){ return x.archive || x.archive_client; });

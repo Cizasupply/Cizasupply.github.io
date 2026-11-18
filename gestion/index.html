@@ -174,7 +174,7 @@
     #zone-impression .sig-ligne{border-top:1.5px solid #0A1E3C;margin-top:44px;padding-top:5px;font-size:12px;color:#333}
     #zone-impression .doc-pied{margin-top:26px;border-top:1px solid #bbb;padding-top:6px;font-size:11px;color:#666}
   }
-.tel-flex{display:flex;gap:6px}.tel-flex .prefixe{max-width:96px;text-align:center;font-weight:700}.barre-filtres{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}.barre-filtres input,.barre-filtres select{flex:1;min-width:150px}.cal-entete{display:flex;align-items:center;gap:10px;margin:4px 0 10px;flex-wrap:wrap}.cal-entete b{font-size:16px;color:#0A1E3C;text-transform:capitalize}.cal-grille{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:16px}.cal-j{text-align:center;font-size:11px;font-weight:700;color:#5b6b84;padding:2px 0}.cal-vide{min-height:40px}.cal-jour{position:relative;min-height:40px;border:1px solid var(--border);background:#fff;border-radius:9px;font-weight:600;color:#0A1E3C;cursor:pointer;padding:4px}.cal-jour.auj{border-color:#D4AF37;box-shadow:inset 0 0 0 1px #D4AF37}.cal-jour.sel{background:#0A1E3C;color:#fff}.cal-n{position:absolute;top:3px;right:3px;background:#F2B840;color:#0A1E3C;font-size:10px;font-weight:800;border-radius:99px;padding:1px 5px}</style>
+.tel-flex{display:flex;gap:6px}.tel-flex .prefixe{max-width:96px;text-align:center;font-weight:700}.barre-filtres{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}.barre-filtres input,.barre-filtres select{flex:1;min-width:150px}.cal-entete{display:flex;align-items:center;gap:10px;margin:4px 0 10px;flex-wrap:wrap}.cal-entete b{font-size:16px;color:#0A1E3C;text-transform:capitalize}.cal-grille{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:16px}.cal-j{text-align:center;font-size:11px;font-weight:700;color:#5b6b84;padding:2px 0}.cal-vide{min-height:40px}.cal-jour{position:relative;min-height:40px;border:1px solid var(--border);background:#fff;border-radius:9px;font-weight:600;color:#0A1E3C;cursor:pointer;padding:4px}.cal-jour.auj{border-color:#D4AF37;box-shadow:inset 0 0 0 1px #D4AF37}.cal-jour.sel{background:#0A1E3C;color:#fff}.cal-n{position:absolute;top:3px;right:3px;background:#F2B840;color:#0A1E3C;font-size:10px;font-weight:800;border-radius:99px;padding:1px 5px}.msg-fil{display:flex;flex-direction:column;gap:8px;margin:10px 0}.msg{max-width:84%;padding:9px 12px;border-radius:14px;background:#fff;border:1px solid var(--border);font-size:14px}.msg.moi{align-self:flex-end;background:#0A1E3C;color:#fff;border-color:#0A1E3C}.msg .qui{font-size:11px;opacity:.72;margin-bottom:3px}.conv{display:block;width:100%;text-align:left;cursor:pointer;margin-bottom:10px}.conv .apercu{color:#5b6b84;font-size:13px;margin-top:3px}</style>
 </head>
 <body>
 
@@ -315,7 +315,7 @@ function codeBarres(texte){
 }
 function imprimer(titre, html){
   var z = document.getElementById("zone-impression");
-  z.innerHTML = '<div class="entete"><div style="font-weight:900;font-size:20px;color:#0A1E3C">CIZA SUPPLY</div>' +
+  z.innerHTML = '<div class="entete"><img src="/assets/logo-supply-documents.png" alt="CIZA SUPPLY" style="height:58px;max-width:82%;display:block;margin-bottom:4px" />' +
     '<div class="sig">Ciza Supply, division de Ciza Group | Burundi — ' + esc(titre) + ' — ' + fmtDate(aujourdhui()) + '</div></div>' + html;
   window.print();
 }
@@ -450,10 +450,11 @@ var MODULES = [
   { cle: "commandes",    titre: "Commandes",    rendre: function(c){ return rendreCommandes(c); } },
   { cle: "livraisons",   titre: "Livraisons",   rendre: function(c){ return rendreLivraisons(c); } },
   { cle: "rendezvous",   titre: "Rendez-vous",  rendre: function(c){ moduleGenerique(c, CFG_RDV); } },
-  { cle: "clients",      titre: "Clients",      rendre: function(c){ moduleGenerique(c, CFG_CLIENTS); } },
+  { cle: "clients",      titre: "Clients",      rendre: function(c){ return rendreClients(c); } },
   { cle: "partenaires",  titre: "Partenaires",  rendre: function(c){ moduleGenerique(c, CFG_PARTENAIRES); } },
   { cle: "terrain",      titre: "Terrain",      rendre: function(c){ moduleGenerique(c, CFG_TERRAIN); } },
   { cle: "assignations", titre: "Assignations", rendre: function(c){ moduleGenerique(c, CFG_ASSIGNATIONS); } },
+  { cle: "messages",     titre: "Messages",     rendre: function(c){ return rendreMessages(c); } },
   { cle: "contrats",     titre: "Contrats influenceurs", rendre: function(c){ moduleGenerique(c, CFG_CONTRATS); } },
   { cle: "depenses",     titre: "Dépenses",     rendre: function(c){ return rendreDepenses(c); } },
   { cle: "presences",    titre: "Présences",    rendre: function(c){ return rendrePresences(c); } },
@@ -495,6 +496,9 @@ async function majPastilles(){
   var r2 = await sb.from("assignations").select("*").in("statut", ["a_faire", "en_cours"]);
   var n2 = (!r2.error && r2.data) ? r2.data.filter(function(a){ return estPourMoi(a, nom); }).length : 0;
   poserPastille("assignations", n2);
+  var r3 = await sb.from("messages").select("id", { count: "exact", head: true }).eq("lu", false).eq("expediteur_type", "client");
+  var r4 = await sb.from("messages").select("id", { count: "exact", head: true }).eq("lu", false).eq("type", "interne").eq("destinataire_id", profil.id);
+  poserPastille("messages", (r3.error ? 0 : (r3.count || 0)) + (r4.error ? 0 : (r4.count || 0)));
 }
 async function verifierNouvelleAssignation(ligne){
   var nom = await resoudreMonNom();
@@ -603,6 +607,24 @@ function lireFormulaire(form, champs){
   return obj;
 }
 
+function normaliserImage(f){
+  return new Promise(function(res){
+    if(!/^image\//i.test(f.type || "") && !/\.(heic|heif)$/i.test(f.name || "")) return res(f);
+    var url = URL.createObjectURL(f); var img = new Image();
+    img.onload = function(){
+      try {
+        var sc = Math.min(1, 1200 / (img.naturalWidth || 1200));
+        var cv = document.createElement("canvas");
+        cv.width = Math.round((img.naturalWidth || 1200) * sc); cv.height = Math.round((img.naturalHeight || 900) * sc);
+        cv.getContext("2d").drawImage(img, 0, 0, cv.width, cv.height);
+        URL.revokeObjectURL(url);
+        cv.toBlob(function(b){ res(b || f); }, "image/jpeg", 0.85);
+      } catch(e){ res(f); }
+    };
+    img.onerror = function(){ URL.revokeObjectURL(url); res(f); };
+    img.src = url;
+  });
+}
 function ouvrirCamera(cfg, row, rappel){
   if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){ alert("La caméra n'est pas disponible sur cet appareil. Utilisez « Téléverser une photo »."); return; }
   var overlay = document.createElement("div");
@@ -730,8 +752,9 @@ function moduleGenerique(conteneur, cfg){
       zoneListe.querySelectorAll("[data-photo-depot]").forEach(function(inp){ inp.addEventListener("change", async function(){
         var f = inp.files[0]; if(!f) return;
         var row = etat.lignes.find(function(x){ return x.id === inp.dataset.photoDepot; });
-        var chemin = cfg.photo.dossier + "/" + row.id + "/" + Date.now() + "-" + f.name.replace(/[^\w.\-]+/g, "_");
-        var up = await sb.storage.from(cfg.photo.bucket).upload(chemin, f, { upsert: true });
+        var nf = await normaliserImage(f);
+        var chemin = cfg.photo.dossier + "/" + row.id + "/" + Date.now() + "-" + (nf === f ? f.name.replace(/[^\w.\-]+/g, "_") : "photo.jpg");
+        var up = await sb.storage.from(cfg.photo.bucket).upload(chemin, nf, { upsert: true });
         if(up.error){ alert("Dépôt refusé : " + up.error.message); return; }
         var maj = {}; maj[cfg.photo.champ] = chemin;
         var r = await sb.from(cfg.table).update(maj).eq("id", row.id);
@@ -978,6 +1001,148 @@ function rendreDepenses(c){ moduleGenerique(c, CFG_DEPENSES); }
 <script>
 "use strict";
 /* =============== DOSSIERS (suivi clients + documents) =============== */
+
+/* =============== CLIENTS : liste enrichie + fiche complète =============== */
+async function rendreClients(c){
+  var rp = await sb.from("profils").select("id, nom, email, role").eq("actif", true).order("nom");
+  var profils = rp.data || [];
+  function nomProfil(id){ var p = profils.find(function(x){ return x.id === id; }); return p ? (p.nom || p.email) : "—"; }
+  var cfg = Object.assign({}, CFG_CLIENTS, {
+    champs: CFG_CLIENTS.champs.concat([
+      { nom: "assigne_a", label: "Employé assigné au dossier", type: "select", options: [["", "— Aucun —"]].concat(profils.map(function(p){ return [p.id, (p.nom || p.email) + (p.role === "fondateur" ? " (Fondateur)" : "")]; })) },
+      { nom: "adresse", label: "Adresse complète" }
+    ]),
+    colonnes: CFG_CLIENTS.colonnes.concat([{ label: "Assigné à", format: function(r){ return r.assigne_a ? nomProfil(r.assigne_a) : "—"; } }]),
+    actions: [{ label: "Fiche complète", fn: function(r){ ouvrirFicheClient(c, r, profils); } }]
+  });
+  moduleGenerique(c, cfg);
+}
+async function ouvrirFicheClient(c, cl, profils){
+  c.innerHTML = entetePage("Fiche client", "Tout le dossier du client au même endroit.") + '<p class="vide">Chargement de la fiche…</p>';
+  var rd = await sb.from("devis").select("*").eq("client_id", cl.id).order("cree_le", { ascending: false });
+  var devis = rd.data || [];
+  var rc = await sb.from("commandes").select("*").eq("client_id", cl.id).order("cree_le", { ascending: false });
+  var cmds = rc.data || [];
+  var idsCmd = cmds.map(function(x){ return x.id; });
+  var livs = [];
+  if(idsCmd.length){ var rl = await sb.from("livraisons").select("*").in("commande_id", idsCmd).order("cree_le", { ascending: false }); livs = rl.data || []; }
+  var rr = await sb.from("rendez_vous").select("*").order("cree_le", { ascending: false }).limit(300);
+  var rdvs = (rr.data || []).filter(function(x){ return (cl.email && x.email === cl.email) || (cl.telephone && x.telephone === cl.telephone); });
+  var rm = await sb.from("messages").select("id, canal, lu, expediteur_type").eq("client_id", cl.id);
+  var msgs = rm.data || [];
+  var photo = "";
+  if(cl.photo_url){ var rs = await sb.storage.from("documents-bureau").createSignedUrl(cl.photo_url, 600); if(rs.data) photo = rs.data.signedUrl; }
+  function totaux(liste){ var t = {}; liste.forEach(function(x){ if(x.montant != null) t[x.devise || "BIF"] = (t[x.devise || "BIF"] || 0) + Number(x.montant || 0); }); var k = Object.keys(t); return k.length ? k.map(function(d){ return fmtMontant(t[d], d); }).join(" · ") : "—"; }
+  var assigne = profils.find(function(p){ return p.id === cl.assigne_a; });
+  var nlDir = msgs.filter(function(m){ return m.canal === "direction" && !m.lu && m.expediteur_type === "client"; }).length;
+  var nlDos = msgs.filter(function(m){ return m.canal === "dossier" && !m.lu && m.expediteur_type === "client"; }).length;
+  function ligne(titre, meta){ return '<article class="carte"><h3>' + titre + '</h3><div class="meta">' + meta + '</div></article>'; }
+  c.innerHTML = entetePage("Fiche client — " + esc(cl.nom), "Tout son dossier au même endroit : coordonnées, devis, commandes, livraisons, rendez-vous et messages.") +
+    '<div class="outils"><button class="btn secondaire" type="button" data-act="retour">← Tous les clients</button></div>' +
+    '<article class="carte">' + (photo ? '<img src="' + esc(photo) + '" alt="" style="width:92px;height:92px;object-fit:cover;border-radius:14px;border:1px solid var(--border)" />' : '') +
+      '<h3>' + esc(cl.nom) + (cl.societe ? ' <span class="badge or">' + esc(cl.societe) + '</span>' : '') + '</h3>' +
+      '<div class="meta">' +
+      '<div>Téléphone : <b>' + esc(cl.telephone || "—") + '</b> · E-mail : <b>' + esc(cl.email || "—") + '</b></div>' +
+      '<div>Compte espace client : <b>' + esc(cl.email_compte || "—") + '</b></div>' +
+      '<div>Lieu : <b>' + esc([cl.ville, cl.pays].filter(Boolean).join(", ") || "—") + '</b>' + (cl.adresse ? '<br />Adresse : <b>' + esc(cl.adresse) + '</b>' : '') + '</div>' +
+      '<div>Source : <b>' + esc(cl.source || "—") + '</b> · Client depuis : <b>' + fmtDate(cl.cree_le) + '</b></div>' +
+      '<div>Employé assigné au dossier : <b>' + esc(assigne ? (assigne.nom || assigne.email) : "— aucun —") + '</b></div>' +
+      (cl.notes ? '<div>Notes : ' + esc(cl.notes) + '</div>' : '') + '</div></article>' +
+    '<div class="kpis">' +
+      '<div class="carte kpi"><div class="k-num">' + devis.length + '</div><div class="k-lib">Devis</div><div class="k-sub">' + esc(totaux(devis)) + '</div></div>' +
+      '<div class="carte kpi"><div class="k-num">' + cmds.length + '</div><div class="k-lib">Commandes</div><div class="k-sub">' + esc(totaux(cmds)) + '</div></div>' +
+      '<div class="carte kpi"><div class="k-num">' + livs.length + '</div><div class="k-lib">Livraisons</div><div class="k-sub">' + rdvs.length + ' rendez-vous</div></div>' +
+      '<div class="carte kpi"><div class="k-num">' + (nlDir + nlDos) + '</div><div class="k-lib">Messages non lus</div><div class="k-sub">Direction : ' + nlDir + ' · Dossier : ' + nlDos + '</div></div>' +
+    '</div>' +
+    '<h2 class="titre">Devis</h2>' + (devis.length ? devis.map(function(d){ return ligne(esc(d.titre || d.ref || "Devis") + ' <span class="badge or">' + esc(libelle(OPT_STATUT_DEVIS, d.statut)) + '</span>', '<div>Référence : <b>' + esc(d.ref || "—") + '</b> · Montant : <b>' + esc(fmtMontant(d.montant, d.devise)) + '</b> · Envoyé le : <b>' + fmtDate(d.date_envoi) + '</b></div>'); }).join("") : '<p class="vide">Aucun devis.</p>') +
+    '<div class="outils"><button class="btn petit secondaire" type="button" data-aller="devis">Ouvrir le module Devis</button></div>' +
+    '<h2 class="titre">Commandes</h2>' + (cmds.length ? cmds.map(function(x){ return ligne(esc(x.description || "Commande") + ' <span class="badge or">' + esc(libelle(OPT_STATUT_CMD, x.statut)) + '</span>', '<div>Montant : <b>' + esc(fmtMontant(x.montant, x.devise)) + '</b> · Suivi : <b>' + esc(x.suivi_ref || "—") + '</b>' + (x.numero_facture ? ' · Facture : <b>' + esc(x.numero_facture) + '</b>' : '') + ' · Créée le : <b>' + fmtDate(x.cree_le) + '</b></div>'); }).join("") : '<p class="vide">Aucune commande.</p>') +
+    '<div class="outils"><button class="btn petit secondaire" type="button" data-aller="commandes">Ouvrir le module Commandes</button></div>' +
+    '<h2 class="titre">Livraisons</h2>' + (livs.length ? livs.map(function(l){ return ligne(esc([l.ville_livraison, l.pays_livraison].filter(Boolean).join(", ") || "Livraison") + ' <span class="badge or">' + esc(libelle(OPT_STATUT_LIV, l.statut)) + '</span>', '<div>Transporteur : <b>' + esc(l.transporteur || "—") + '</b> · Suivi : <b>' + esc(l.numero_suivi || "—") + '</b>' + (l.numero_bl ? ' · BL : <b>' + esc(l.numero_bl) + '</b>' : '') + '</div>'); }).join("") : '<p class="vide">Aucune livraison.</p>') +
+    '<h2 class="titre">Rendez-vous</h2>' + (rdvs.length ? rdvs.map(function(x){ return ligne(esc(x.nom || "Rendez-vous"), '<div>Quand : <b>' + fmtDate(x.date_souhaite) + (x.heure ? " · " + esc(x.heure) : "") + '</b> · Sujet : <b>' + esc(x.sujet || "—") + '</b> · Statut : <b>' + esc(libelle(OPT_STATUT_RDV, x.statut)) + '</b></div>'); }).join("") : '<p class="vide">Aucun rendez-vous retrouvé (rapprochement par e-mail ou téléphone).</p>') +
+    '<h2 class="titre">Messages</h2><p class="sous">Direction (Fondateur seulement) : ' + nlDir + ' non lu(s) · Dossier (employé assigné) : ' + nlDos + ' non lu(s).</p>' +
+    '<div class="outils"><button class="btn petit" type="button" data-aller="messages">Ouvrir la messagerie</button></div>';
+  c.querySelector('[data-act="retour"]').addEventListener("click", function(){ rendreClients(c); });
+  c.querySelectorAll("[data-aller]").forEach(function(b){ b.addEventListener("click", function(){ aller(b.dataset.aller); }); });
+}
+
+/* =============== MESSAGES (visibilité stricte, imposée par la base) =============== */
+async function rendreMessages(c){
+  var u = await sb.auth.getUser();
+  var monId = u.data && u.data.user ? u.data.user.id : null;
+  var rp = await sb.from("profils").select("id, nom, email, role").eq("actif", true);
+  var profils = rp.data || [];
+  var rcl = await sb.from("clients").select("id, nom, societe, assigne_a").order("nom");
+  var clients = rcl.data || [];
+  var conv = null;
+  c.innerHTML = entetePage("Messages", "Équipe : messages entre employés, visibles seulement par les deux personnes. Client — Direction : visible seulement par le client et le Fondateur. Client — Dossier : visible seulement par le client et l'employé assigné à son dossier. Le Fondateur voit tout.") +
+    '<div data-zone="conv"></div><div data-zone="fil"></div>';
+  var zConv = c.querySelector('[data-zone="conv"]');
+  var zFil = c.querySelector('[data-zone="fil"]');
+  var messages = [];
+  async function charger(){ var r = await sb.from("messages").select("*").order("cree_le", { ascending: true }).limit(1000); messages = r.data || []; }
+  function nomProfil(id){ var p = profils.find(function(x){ return x.id === id; }); return p ? (p.nom || p.email) : "Bureau"; }
+  function nomClient(id){ var cl = clients.find(function(x){ return x.id === id; }); return cl ? cl.nom : "Client"; }
+  function msgsConv(cv){
+    return messages.filter(function(m){
+      if(cv.genre === "interne") return m.type === "interne" && ((m.expediteur_id === monId && m.destinataire_id === cv.profilId) || (m.expediteur_id === cv.profilId && m.destinataire_id === monId));
+      return m.type === "client" && m.client_id === cv.clientId && m.canal === cv.genre;
+    });
+  }
+  function estMoi(m){ return m.expediteur_type === "bureau" && m.expediteur_id === monId; }
+  function nonLus(cv){ return msgsConv(cv).filter(function(m){ return !m.lu && !estMoi(m); }).length; }
+  function apercu(cv){
+    var l = msgsConv(cv); if(!l.length) return "Aucun message pour le moment.";
+    var d = l[l.length - 1];
+    return (estMoi(d) ? "Vous : " : "") + String(d.corps || "").slice(0, 70) + " — " + fmtDate(d.cree_le);
+  }
+  function ligneConv(cv, titre, sous){
+    var nl = nonLus(cv);
+    return '<button type="button" class="carte conv" data-conv="' + esc(JSON.stringify(cv)) + '"><h3>' + esc(titre) + (nl ? ' <span class="badge or">' + nl + ' non lu' + (nl > 1 ? "s" : "") + '</span>' : '') + '</h3><div class="apercu">' + esc(sous || apercu(cv)) + '</div></button>';
+  }
+  function afficherConvs(){
+    zFil.innerHTML = "";
+    var h = "";
+    if(profil.role === "fondateur"){
+      h += '<h2 class="titre">Clients — Direction (Fondateur seulement)</h2>' + (clients.length ? clients.map(function(cl){ return ligneConv({ genre: "direction", clientId: cl.id }, cl.nom + " — Direction"); }).join("") : '<p class="vide">Aucun client.</p>');
+    }
+    var suivis = clients.filter(function(cl){ return profil.role === "fondateur" || cl.assigne_a === monId; });
+    h += '<h2 class="titre">Clients — Dossiers suivis</h2>' + (suivis.length ? suivis.map(function(cl){ return ligneConv({ genre: "dossier", clientId: cl.id }, cl.nom + " — Dossier"); }).join("") : '<p class="vide">Aucun dossier ne vous est assigné pour le moment.</p>');
+    var collegues = profils.filter(function(p){ return p.id !== monId; });
+    h += '<h2 class="titre">Équipe</h2>' + (collegues.length ? collegues.map(function(p){ return ligneConv({ genre: "interne", profilId: p.id }, (p.nom || p.email) + (p.role === "fondateur" ? " (Fondateur)" : "")); }).join("") : '<p class="vide">Aucun autre compte au bureau pour le moment.</p>');
+    zConv.innerHTML = h;
+    zConv.querySelectorAll("[data-conv]").forEach(function(b){ b.addEventListener("click", function(){ conv = JSON.parse(b.dataset.conv); afficherFil(); }); });
+  }
+  async function afficherFil(){
+    var titre = conv.genre === "interne" ? nomProfil(conv.profilId) : nomClient(conv.clientId) + (conv.genre === "direction" ? " — Direction (Fondateur seulement)" : " — Dossier (employé assigné)");
+    var liste = msgsConv(conv);
+    var ids = liste.filter(function(m){ return !m.lu && !estMoi(m); }).map(function(m){ return m.id; });
+    if(ids.length){ await sb.from("messages").update({ lu: true }).in("id", ids); liste.forEach(function(m){ if(ids.indexOf(m.id) >= 0) m.lu = true; }); majPastilles(); }
+    zConv.innerHTML = "";
+    zFil.innerHTML = '<div class="outils"><button class="btn secondaire" type="button" data-act="retour">← Toutes les conversations</button></div>' +
+      '<h2 class="titre">' + esc(titre) + '</h2>' +
+      '<div class="msg-fil">' + (liste.length ? liste.map(function(m){
+        var auteur = m.expediteur_type === "client" ? nomClient(m.client_id) + " (client)" : nomProfil(m.expediteur_id);
+        return '<div class="msg' + (estMoi(m) ? " moi" : "") + '"><div class="qui">' + esc(estMoi(m) ? "Vous" : auteur) + ' · ' + fmtDate(m.cree_le) + '</div>' + esc(m.corps) + '</div>';
+      }).join("") : '<p class="vide">Aucun message pour le moment. Écrivez le premier ci-dessous.</p>') + '</div>' +
+      '<form class="formulaire" data-form="msg"><div><label>Votre message</label><textarea name="corps" required placeholder="Écrivez ici…"></textarea></div><button class="btn" type="submit" style="margin-top:8px">Envoyer</button></form>';
+    zFil.querySelector('[data-act="retour"]').addEventListener("click", function(){ conv = null; afficherConvs(); });
+    zFil.querySelector('[data-form="msg"]').addEventListener("submit", async function(e){
+      e.preventDefault();
+      var corps = e.target.elements.corps.value.trim(); if(!corps) return;
+      var obj = conv.genre === "interne"
+        ? { type: "interne", expediteur_type: "bureau", expediteur_id: monId, destinataire_id: conv.profilId, corps: corps }
+        : { type: "client", client_id: conv.clientId, canal: conv.genre, expediteur_type: "bureau", expediteur_id: monId, corps: corps };
+      var r = await sb.from("messages").insert(obj);
+      if(r.error){ alert("Envoi refusé : " + r.error.message); return; }
+      await charger(); afficherFil();
+    });
+    var fil = zFil.querySelector(".msg-fil"); if(fil) fil.scrollTop = fil.scrollHeight;
+  }
+  await charger();
+  afficherConvs();
+}
+
 async function rendreDossiers(c){
   c.innerHTML = entetePage("Dossiers clients", "Ce que le client voit sur la page publique de suivi : cizasupply.com/suivi-dossier/ — il tape sa référence. Ici, vous faites avancer l'étape et vous déposez sa facture et les photos de ses échantillons.") +
     '<div class="outils"><button class="btn" type="button" data-act="nouveau">+ Nouveau dossier</button></div>' +
