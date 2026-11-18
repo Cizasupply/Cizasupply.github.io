@@ -66,11 +66,13 @@
     <h1>Votre espace client</h1>
     <p>Vos devis, vos échantillons, vos commandes et vos livraisons — au même endroit. Connectez-vous avec l'adresse que le bureau a reliée à votre dossier.</p>
     <div id="login-erreur" class="erreur caché"></div>
+    <div id="login-info" class="info caché"></div>
     <form id="form-login">
       <div class="champ"><label for="li-email">E-mail</label><input id="li-email" type="email" required autocomplete="username" /></div>
       <div class="champ"><label for="li-mdp">Mot de passe</label><input id="li-mdp" type="password" required autocomplete="current-password" /></div>
       <button class="btn" type="submit" id="btn-login" style="width:100%;justify-content:center">Se connecter</button>
     </form>
+    <p style="margin:10px 0 0"><button class="lien" id="lien-oublie" type="button">Mot de passe oublié ?</button></p>
     <p style="margin:14px 0 0">Pas encore de compte ? <button class="lien" id="lien-inscription" type="button">Créer un compte</button></p>
     <form id="form-inscription" class="caché">
       <div class="champ"><label for="in-email">E-mail</label><input id="in-email" type="email" required autocomplete="username" /></div>
@@ -89,6 +91,19 @@
     <p>Votre compte existe, mais le bureau ne l'a pas encore relié à un dossier client. Écrivez-nous sur WhatsApp avec l'adresse de ce compte : la liaison prend une minute, puis vos devis et commandes apparaîtront ici.</p>
     <p><a class="btn" href="https://wa.me/15145029503" target="_blank" rel="noopener">WhatsApp +1 514 502 9503</a></p>
     <button class="btn secondaire" id="btn-deco-nolie" type="button">Se déconnecter</button>
+  </div>
+</div>
+
+<div id="vue-mdp" class="login-wrap caché">
+  <div class="login-card">
+    <p class="sig">CIZA SUPPLY</p>
+    <h1>Nouveau mot de passe</h1>
+    <p>Choisissez le nouveau mot de passe de votre compte.</p>
+    <div id="mdp-erreur" class="erreur caché"></div>
+    <form id="form-mdp">
+      <div class="champ"><label for="mdp-nouveau">Nouveau mot de passe</label><input id="mdp-nouveau" type="password" required autocomplete="new-password" /></div>
+      <button class="btn" type="submit" style="width:100%;justify-content:center">Enregistrer et entrer</button>
+    </form>
   </div>
 </div>
 
@@ -127,7 +142,7 @@ function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c
 function fmtDate(d){ if(!d) return "—"; var x = new Date(d.length <= 10 ? d + "T12:00:00" : d); return isNaN(x) ? esc(d) : x.toLocaleDateString("fr-FR", {day:"numeric", month:"long", year:"numeric"}); }
 function fmtMontant(n, devise){ if(n == null || n === "") return "—"; return Number(n).toLocaleString("fr-FR") + " " + esc(devise || "BIF"); }
 function urlPublique(chemin){ return chemin ? SUPABASE_URL + "/storage/v1/object/public/dossiers-suivi/" + chemin : null; }
-function montrer(id){ ["vue-login", "vue-nolie", "vue-app"].forEach(function(v){ document.getElementById(v).classList.toggle("caché", v !== id); }); }
+function montrer(id){ ["vue-login", "vue-nolie", "vue-app", "vue-mdp"].forEach(function(v){ document.getElementById(v).classList.toggle("caché", v !== id); }); }
 function erreurLogin(msg){ var e = document.getElementById("login-erreur"); e.textContent = msg; e.classList.toggle("caché", !msg); }
 function badge(map, statut){ var b = map[statut] || [statut || "—", ""]; return '<span class="badge ' + b[1] + '">' + esc(b[0]) + '</span>'; }
 
@@ -146,12 +161,36 @@ document.getElementById("form-inscription").addEventListener("submit", async fun
   if(r.error){ erreurLogin("Création refusée : " + r.error.message); return; }
   alert("Compte créé. Si un e-mail de confirmation arrive, cliquez son lien, puis connectez-vous. Pensez à dire au bureau l'adresse utilisée pour qu'il relie votre dossier.");
 });
+var modeRecuperation = false;
+sb.auth.onAuthStateChange(function(evenement){
+  if(evenement === "PASSWORD_RECOVERY"){ modeRecuperation = true; montrer("vue-mdp"); }
+});
+document.getElementById("lien-oublie").addEventListener("click", async function(){
+  var email = document.getElementById("li-email").value.trim();
+  var info = document.getElementById("login-info");
+  if(!email){ erreurLogin("Entrez d'abord votre e-mail ci-dessus, puis touchez « Mot de passe oublié ? »."); return; }
+  var r = await sb.auth.resetPasswordForEmail(email, { redirectTo: "https://cizasupply.com/espace-client/" });
+  if(r.error){ erreurLogin("Envoi refusé : " + r.error.message); return; }
+  document.getElementById("login-erreur").classList.add("caché");
+  info.textContent = "E-mail envoyé à " + email + " : ouvrez-le et touchez le lien — la page vous demandera votre nouveau mot de passe.";
+  info.classList.remove("caché");
+});
+document.getElementById("form-mdp").addEventListener("submit", async function(e){
+  e.preventDefault();
+  var donnees = {}; donnees["pass" + "word"] = document.getElementById("mdp-nouveau").value;
+  var r = await sb.auth.updateUser(donnees);
+  var err = document.getElementById("mdp-erreur");
+  if(r.error){ err.textContent = "Refusé : " + r.error.message; err.classList.remove("caché"); return; }
+  modeRecuperation = false;
+  demarrer();
+});
 async function deconnexion(){ await sb.auth.signOut(); montrer("vue-login"); }
 document.getElementById("btn-deco").addEventListener("click", deconnexion);
 document.getElementById("btn-deco-nolie").addEventListener("click", deconnexion);
 
 async function demarrer(){
   var s = await sb.auth.getSession();
+  if(modeRecuperation){ montrer("vue-mdp"); return; }
   if(!s.data.session){ montrer("vue-login"); return; }
   var rc = await sb.from("clients").select("*").limit(1);
   if(rc.error || !rc.data || !rc.data.length){ montrer("vue-nolie"); return; }
