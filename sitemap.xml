@@ -884,6 +884,35 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://cizasupply.com/machines-agricoles</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/machines-agricoles" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/machines-agricoles" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/machines-agricoles" />
+    <image:image>
+      <image:loc>https://cizasupply.com/assets/f2fd3322313c7196.jpg</image:loc>
+      <image:title>Articles de cuisine et de maison</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://cizasupply.com/assets/fd4e66595e085168.jpg</image:loc>
+      <image:title>Literie et linge de maison</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://cizasupply.com/assets/b823a55b0232a72a.jpg</image:loc>
+      <image:title>Jouets et articles enfants</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://cizasupply.com/assets/cf6d26947322f15c.jpg</image:loc>
+      <image:title>Papeterie, bureau et entretien</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://cizasupply.com/assets/71dbaedac22965c5.jpg</image:loc>
+      <image:title>Entretien de la maison — carte catalogue maison et divers</image:title>
+    </image:image>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://cizasupply.com/finition-confort</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/finition-confort" />
     <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/finition-confort" />

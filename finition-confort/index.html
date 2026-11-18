@@ -221,7 +221,8 @@ gtag('config', 'G-JFP2NNX9DX');
     { "@type": "ListItem", "position": 6, "item": { "@type": "WebPage", "url": "https://cizasupply.com/usines-transformation", "name": "Usines de transformation agroalimentaire — lignes jus, huiles, embouteillage", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } },
     { "@type": "ListItem", "position": 7, "item": { "@type": "WebPage", "url": "https://cizasupply.com/pieces-automobiles", "name": "Pièces automobiles au Burundi — freinage, filtres, suspension", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } },
     { "@type": "ListItem", "position": 8, "item": { "@type": "WebPage", "url": "https://cizasupply.com/moto", "name": "Motos au Burundi — 100 à 250 cm³, tricycles cargo, pièces détachées", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } },
-    { "@type": "ListItem", "position": 9, "item": { "@type": "WebPage", "url": "https://cizasupply.com/maison-divers", "name": "Maison & divers au Burundi — cuisine, literie, jouets, papeterie", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } }
+    { "@type": "ListItem", "position": 9, "item": { "@type": "WebPage", "url": "https://cizasupply.com/maison-divers", "name": "Maison & divers au Burundi — cuisine, literie, jouets, papeterie", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } },
+    { "@type": "ListItem", "position": 10, "item": { "@type": "WebPage", "url": "https://cizasupply.com/machines-agricoles", "name": "Machines et équipements agricoles au Burundi — tracteurs, mini-excavatrices, foreuses, pompes", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } }
   ]
 }
 </script>
@@ -237,7 +238,7 @@ gtag('config', 'G-JFP2NNX9DX');
 (function(){
   try {
     var p = new URLSearchParams(window.location.search).get("page");
-    var ok = ["quincaillerie","energie-solaire","telephones-accessoires","beaute-mode","equipement-industriel","usines-transformation","pieces-automobiles","moto","maison-divers"];
+    var ok = ["quincaillerie","energie-solaire","telephones-accessoires","beaute-mode","equipement-industriel","usines-transformation","pieces-automobiles","moto","maison-divers","machines-agricoles"];
     var seg = window.location.pathname.split("/").filter(Boolean).pop() || "";
     if((p && ok.indexOf(p) > -1) || ok.indexOf(seg) > -1){
       try { history.scrollRestoration = "manual"; } catch(e){}
@@ -1373,6 +1374,8 @@ gtag('config', 'G-JFP2NNX9DX');
   .cats .gal-ui,.cats .gal-zoom{display:none}
   .cats .gal-track{overflow:hidden}
   .cats .gal-track>*{display:none}
+  .cat-video{display:block;width:100%;margin-top:14px;border-radius:16px;background:#0a1e3c}
+  .cats .cat-video{display:none}
   .cats .gal-track>img:first-of-type{display:block}
   .fin-card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);overflow:hidden;text-decoration:none;color:var(--ink)}
   .fin-card-img{display:block;height:200px;overflow:hidden}
@@ -1996,6 +1999,36 @@ gtag('config', 'G-JFP2NNX9DX');
         </div>
       </article>
 
+
+      <article class="cat">
+        <div class="gal" data-gal>
+          <div class="gal-track">
+            <img src="assets/0d3364b5c749f246.jpg" alt="Tracteur agricole Lovol 75 HP avec cabine" data-alt-en="Lovol 75 HP farm tractor with cab" />
+            <img src="assets/caa90f5922a2cb88.jpg" alt="Mini-excavatrice XCMG XE35U" data-alt-en="XCMG XE35U mini excavator" loading="lazy" />
+            <img src="assets/91294e20482be12c.jpg" alt="Foreuse de puits sur remorque — forage en roche dure" data-alt-en="Trailer-mounted water well drilling rig — hard rock drilling" loading="lazy" />
+            <img src="assets/44542da50d358cf2.jpg" alt="Pompe à eau diesel pour irrigation" data-alt-en="Diesel water pump for irrigation" loading="lazy" />
+            <img src="assets/dd2f45e83084130e.jpg" alt="Pompe solaire immergée avec contrôleur" data-alt-en="Solar submersible pump with controller" loading="lazy" />
+            <img src="assets/ccda7742dfe835ad.jpg" alt="Panneau solaire 550 W" data-alt-en="550 W solar panel" loading="lazy" />
+            <img src="assets/94c4e58d4642c895.jpg" alt="Irrigation goutte-à-goutte en plein champ" data-alt-en="Drip irrigation in the field" loading="lazy" />
+          </div>
+          <div class="gal-ui"><span class="gal-count">1 / 7</span><button type="button" class="gal-btn" data-gal-prev aria-label="Précédent">‹</button><button type="button" class="gal-btn" data-gal-next aria-label="Suivant">›</button></div>
+        </div>
+        <video class="cat-video" src="assets/e94ed9786830ca21.mp4" poster="assets/0d3364b5c749f246.jpg" autoplay muted loop playsinline aria-label="Vidéo : machines et équipements agricoles sourcés par CIZA SUPPLY" data-alt-en="Video: agricultural machinery and equipment sourced by CIZA SUPPLY"></video>
+        <div class="cat-body">
+          <span class="cat-num"><span data-i18n="cat.num">Catégorie</span> 10</span>
+          <h3 data-i18n="c10.title">Machines et équipements agricoles</h3>
+          <p data-i18n="c10.p">Tracteurs, mini-excavatrices, foreuses de puits, pompes diesel et solaires, panneaux solaires et irrigation : les machines de votre projet agricole, sélectionnées auprès des usines, inspectées avant expédition et livrées au Burundi.</p>
+          <ul class="stars">
+            <li class="stars-lab" data-i18n="ph.lab">Produits phares</li>
+            <li data-i18n="ph10a">Tracteurs agricoles — pièces de rechange et accessoires</li>
+            <li data-i18n="ph10b">Foreuses de puits — roche dure, 200 m et plus</li>
+            <li data-i18n="ph10c">Pompes et irrigation — diesel, solaire, goutte-à-goutte</li>
+          </ul>
+          <a class="devis wa" data-wa="agricole" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20la%20cat%C3%A9gorie%20Machines%20et%20%C3%A9quipements%20agricoles." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
+          <a class="page-link" href="?page=machines-agricoles"><span data-i18n="ui.page">Page dédiée</span> <span class="arr">→</span></a>
+        </div>
+      </article>
+
       <a class="fin-card" href="/finition-confort/">
         <span class="fin-card-img"><img src="assets/f5612caa31d1076e.jpg" alt="Colonne de douche noire avec pommeau pluie et douchette" data-alt-en="Black shower column with rain head and hand shower" loading="lazy" /></span>
         <span class="fin-card-body"><span class="fin-card-name" data-i18n="fin.h2">Finition &amp; confort</span><span class="fin-card-link"><span data-i18n="ui.page">Page dédiée</span> <span class="arr">→</span></span></span>
@@ -2535,6 +2568,7 @@ gtag('config', 'G-JFP2NNX9DX');
               <option data-i18n="c7.title">Pièces automobiles</option>
               <option data-i18n="c8.title">Motos</option>
               <option data-i18n="c9.title">Maison &amp; divers</option>
+              <option data-i18n="c10.title">Machines et équipements agricoles</option>
               <option data-i18n="qf.catAd">Publicité — afficher mes produits sur ce site</option>
               <option data-i18n="qf.catOther">Autre / produit précis à sourcer</option>
             </select>
@@ -3530,6 +3564,11 @@ gtag('config', 'G-JFP2NNX9DX');
       "ph9a": "Ustensiles de cuisine inox — sets complets",
       "ph9b": "Literie et linge de maison — foyers et hôtels",
       "ph9c": "Jouets et articles enfants — assortiments pour magasins",
+      "c10.title": "Machines et équipements agricoles",
+      "c10.p": "Tracteurs, mini-excavatrices, foreuses de puits, pompes diesel et solaires, panneaux solaires et irrigation : les machines de votre projet agricole, sélectionnées auprès des usines, inspectées avant expédition et livrées au Burundi.",
+      "ph10a": "Tracteurs agricoles — pièces de rechange et accessoires",
+      "ph10b": "Foreuses de puits — roche dure, 200 m et plus",
+      "ph10c": "Pompes et irrigation — diesel, solaire, goutte-à-goutte",
       "pf.kicker": "Preuve de confiance",
       "pf.h2": "Une entreprise réelle, des chiffres réels.",
       "pf.sub": "Tout ce qui suit peut se vérifier : l'enregistrement de l'entreprise, l'adresse du bureau, la méthode de contrôle des marchandises.",
@@ -3949,6 +3988,11 @@ gtag('config', 'G-JFP2NNX9DX');
       "ph9a": "Stainless kitchen utensils — complete sets",
       "ph9b": "Bedding and household linen — homes and hotels",
       "ph9c": "Toys and children's articles — shop assortments",
+      "c10.title": "Agricultural machinery & equipment",
+      "c10.p": "Tractors, mini excavators, well drilling rigs, diesel and solar pumps, solar panels and irrigation: the machines for your farming project, selected at the factories, inspected before shipping and delivered to Burundi.",
+      "ph10a": "Farm tractors — spare parts and accessories",
+      "ph10b": "Well drilling rigs — hard rock, 200 m and deeper",
+      "ph10c": "Pumps and irrigation — diesel, solar, drip",
       "pf.kicker": "Proof of trust",
       "pf.h2": "A real company, real figures.",
       "pf.sub": "Everything below can be checked: the company registration, the office address, the way goods are inspected.",
@@ -4569,13 +4613,14 @@ gtag('config', 'G-JFP2NNX9DX');
 (function(){
   "use strict";
 
-  /* ============ Pages catégories — 9 pages séparées ============
-     Chacune des 9 catégories est une page séparée, avec sa propre
+  /* ============ Pages catégories — 10 pages séparées ============
+     Chacune des 10 catégories est une page séparée, avec sa propre
      adresse, qui s'affiche quand on la visite directement :
        ?page=quincaillerie        ?page=energie-solaire
        ?page=telephones-accessoires   ?page=beaute-mode
        ?page=equipement-industriel    ?page=usines-transformation
        ?page=pieces-automobiles   ?page=moto   ?page=maison-divers
+       ?page=machines-agricoles
      (en production : cizasupply.com/<slug>, l'adresse canonique
      déclarée à Google — canonical, Open Graph, sitemap.)
      Chaque page garde le catalogue complet de sa catégorie : la
@@ -4660,7 +4705,15 @@ gtag('config', 'G-JFP2NNX9DX');
       seoDFr:"Maison et divers au Burundi : ustensiles de cuisine inox, literie et linge de maison, jouets, papeterie et bureau, articles du quotidien — pour magasins et hôtels. Devis sur demande.",
       seoDEn:"Home and more in Burundi: stainless kitchen utensils, bedding and household linen, toys, stationery and office supplies, everyday items — for shops and hotels. Quotes on request.",
       introFr:"Le quotidien des foyers et des magasins : cuisine, literie, jouets, papeterie et entretien, en assortiments prêts à mettre en rayon.",
-      introEn:"Everyday goods for homes and shops: kitchen, bedding, toys, stationery and cleaning, in shelf-ready assortments." }
+      introEn:"Everyday goods for homes and shops: kitchen, bedding, toys, stationery and cleaning, in shelf-ready assortments." },
+    { slug:"machines-agricoles", num:"10",
+      nameFr:"Machines et équipements agricoles", nameEn:"Agricultural machinery & equipment",
+      seoTFr:"Machines agricoles au Burundi — tracteurs, excavatrices, foreuses, pompes | CIZA SUPPLY",
+      seoTEn:"Agricultural Machinery in Burundi — tractors, excavators, drilling rigs, pumps | CIZA SUPPLY",
+      seoDFr:"Machines et équipements agricoles au Burundi : tracteurs, mini-excavatrices, foreuses de puits, pompes diesel et solaires, panneaux solaires et irrigation. Devis sur demande, bureau à Bujumbura.",
+      seoDEn:"Agricultural machinery and equipment in Burundi: tractors, mini excavators, water well drilling rigs, diesel and solar pumps, solar panels and irrigation. Quotes on request, Bujumbura office.",
+      introFr:"Les machines qui font avancer un projet agricole : tracteurs, mini-excavatrices, foreuses de puits capables de percer la roche dure, pompes diesel et solaires, panneaux et irrigation. Chaque machine est spécifiée avec vous, inspectée avant le paiement final et expédiée jusqu'au Burundi.",
+      introEn:"The machines that move a farming project forward: tractors, mini excavators, water well drilling rigs able to drill through hard rock, diesel and solar pumps, panels and irrigation. Every machine is specified with you, inspected before the final payment and shipped to Burundi." }
   ];
   /* Catalogue produits par catégorie — transcription du catalogue produits
      CIZA SUPPLY (document de travail) : noms de produits et caractéristiques
@@ -4738,6 +4791,14 @@ gtag('config', 'G-JFP2NNX9DX');
       {hFr:"Jouets et enfants", hEn:"Toys and children", fr:"Jouets (voitures, poupées, jeux de construction), vélos enfants, trottinettes, articles scolaires de base.", en:"Toys (cars, dolls, construction sets), children's bicycles, scooters, basic school supplies."},
       {hFr:"Papeterie et bureau", hEn:"Stationery and office", fr:"Cahiers, stylos, classeurs, agrafeuses, calculatrices, tableaux blancs.", en:"Notebooks, pens, binders, staplers, calculators, whiteboards."},
       {hFr:"Entretien et divers", hEn:"Cleaning and miscellaneous", fr:"Balais et serpillières, seaux et bassines, cordes et ficelles, piles et batteries, lampes torches, bougies, allumettes et briquets, parapluies, nattes.", en:"Brooms and mops, buckets and basins, ropes and string, cells and batteries, torches, candles, matches and lighters, umbrellas, mats."}
+    ],
+    "machines-agricoles": [
+      {hFr:"Tracteurs et motoculture", hEn:"Tractors and farm machinery", fr:"Tracteurs agricoles (50 à 120 CV, 2 et 4 roues motrices), motoculteurs, charrues, herses, semoirs, remorques agricoles, pièces de rechange et accessoires.", en:"Farm tractors (50 to 120 HP, 2WD and 4WD), power tillers, ploughs, harrows, seeders, farm trailers, spare parts and accessories."},
+      {hFr:"Mini-excavatrices et terrassement", hEn:"Mini excavators and earthmoving", fr:"Mini-excavatrices (1,5 à 4 tonnes), chargeuses compactes, godets et accessoires de terrassement, pièces de rechange.", en:"Mini excavators (1.5 to 4 tons), compact loaders, buckets and earthmoving attachments, spare parts."},
+      {hFr:"Foreuses de puits", hEn:"Water well drilling rigs", fr:"Foreuses portables sur remorque pour puits d'eau (200 m et plus), forage en roche dure au marteau fond de trou, compresseurs d'air, tiges et trépans, pompes à boue.", en:"Portable trailer-mounted water well drilling rigs (200 m and deeper), hard rock drilling with down-the-hole hammer, air compressors, drill rods and bits, mud pumps."},
+      {hFr:"Pompes à eau", hEn:"Water pumps", fr:"Pompes diesel de surface (irrigation et transfert), pompes solaires immergées et de surface, motopompes, tuyaux et raccords.", en:"Diesel surface pumps (irrigation and transfer), solar submersible and surface pumps, motor pumps, hoses and fittings."},
+      {hFr:"Énergie solaire", hEn:"Solar energy", fr:"Panneaux solaires (fortes puissances pour pompage et irrigation), contrôleurs de pompage, structures de montage, câbles solaires.", en:"Solar panels (high wattage for pumping and irrigation), pump controllers, mounting structures, solar cables."},
+      {hFr:"Irrigation", hEn:"Irrigation", fr:"Goutte-à-goutte (rouleaux et kits), tuyaux HDPE et layflat, arroseurs et asperseurs, raccords et vannes, kits d'irrigation par hectare.", en:"Drip irrigation (rolls and kits), HDPE and layflat hoses, sprinklers, fittings and valves, per-hectare irrigation kits."}
     ]
   };
   /* Visuels premium des cartes catalogue : pour chaque groupe de produits,
@@ -4869,6 +4930,14 @@ gtag('config', 'G-JFP2NNX9DX');
       {img:"assets/b823a55b0232a72a.jpg", ic:"blocks"},
       {img:"assets/cf6d26947322f15c.jpg", ic:"file"},
       {img:"assets/71dbaedac22965c5.jpg", ic:"spray"}
+    ],
+    "machines-agricoles": [
+      {img:"assets/0d3364b5c749f246.jpg", ic:"truck"},
+      {img:"assets/caa90f5922a2cb88.jpg", ic:"gear"},
+      {img:"assets/91294e20482be12c.jpg", ic:"wrench"},
+      {img:"assets/44542da50d358cf2.jpg", ic:"droplet"},
+      {img:"assets/ccda7742dfe835ad.jpg", ic:"sun"},
+      {img:"assets/94c4e58d4642c895.jpg", ic:"spray"}
     ]
   };
   /* Découpe la liste de produits d'un groupe en pastilles individuelles,
