@@ -128,7 +128,13 @@
 "use strict";
 var SUPABASE_URL = "https://mbbcfxsegmelnfhfzyst.supabase.co";
 var SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1iYmNmeHNlZ21lbG5maGZ6eXN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ5ODk0MjEsImV4cCI6MjExMDU2NTQyMX0.IraVe4WprHVpUgfmCASsiktb3ungbCjx7-Z61Yt0yxo";
-var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, { auth: { flowType: "implicit" } });
+(function(){
+  if(location.hash && location.hash.indexOf("error_description") > -1){
+    var m = /error_description=([^&]+)/.exec(location.hash);
+    if(m){ var e = document.getElementById("login-erreur"); e.textContent = "Lien refusé : " + decodeURIComponent(m[1].replace(/\+/g, " ")) + " — redemandez un e-mail avec « Mot de passe oublié ? »."; e.classList.remove("caché"); }
+  }
+})();
 var ETAPES = ["Demande reçue", "Devis préparé et envoyé", "Commande confirmée au bureau", "Production et préparation", "Contrôle qualité", "Expédition vers le Burundi", "Arrivée à Bujumbura", "Dossier clôturé"];
 var ST_DEVIS = { envoye: ["Envoyé", "or"], accepte: ["Accepté", "vert"], refuse: ["Refusé", "rouge"], expire: ["Expiré", ""] };
 var ST_CMD = { en_traitement: ["En traitement", "or"], en_production: ["En production", "or"], controle: ["Contrôle qualité", "or"], expediee: ["Expédiée", "vert"], livree: ["Livrée", "vert"], cloturee: ["Clôturée", ""] };

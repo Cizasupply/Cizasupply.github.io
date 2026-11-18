@@ -153,7 +153,15 @@
    encadrées par les règles de la base — jamais la clé de service) == */
 var SUPABASE_URL = "https://mbbcfxsegmelnfhfzyst.supabase.co";
 var SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1iYmNmeHNlZ21lbG5maGZ6eXN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ5ODk0MjEsImV4cCI6MjExMDU2NTQyMX0.IraVe4WprHVpUgfmCASsiktb3ungbCjx7-Z61Yt0yxo";
-var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, { auth: { flowType: "implicit" } });
+/* Erreur portée par le lien d'e-mail (lien déjà utilisé, expiré…) :
+   l'afficher au lieu de laisser l'écran muet. */
+(function(){
+  if(location.hash && location.hash.indexOf("error_description") > -1){
+    var m = /error_description=([^&]+)/.exec(location.hash);
+    if(m){ var e = document.getElementById("login-erreur"); e.textContent = "Lien refusé : " + decodeURIComponent(m[1].replace(/\+/g, " ")) + " — redemandez un e-mail avec « Mot de passe oublié ? »."; e.classList.remove("caché"); }
+  }
+})();
 
 var ETAPES = ["Demande reçue", "Devis préparé et envoyé", "Commande confirmée au bureau", "Production et préparation", "Contrôle qualité", "Expédition vers le Burundi", "Arrivée à Bujumbura", "Dossier clôturé"];
 var profil = null;      // {id, email, nom, role, actif}
