@@ -634,7 +634,7 @@ function ouvrirCamera(cfg, row, rappel){
   var video = overlay.querySelector("video");
   var flux = null;
   function fermer(){ if(flux) flux.getTracks().forEach(function(t){ t.stop(); }); overlay.remove(); }
-  navigator.mediaDevices.getUserMedia({ video: true }).then(function(s){ flux = s; video.srcObject = s; }).catch(function(){ fermer(); alert("Caméra refusée ou absente sur cet appareil. Utilisez « Téléverser une photo »."); });
+  navigator.mediaDevices.getUserMedia({ video: true }).then(function(s){ flux = s; video.srcObject = s; }).catch(function(){ overlay.innerHTML = '<p style="color:#fff;font-size:15px;text-align:center;max-width:420px">Caméra refusée ou absente sur cet appareil.<br />Utilisez plutôt « Téléverser une photo ».</p><div class="cam-actions"><button class="btn" type="button" data-cam="fermer">Fermer</button></div>'; overlay.querySelector('[data-cam="fermer"]').addEventListener("click", fermer); });
   overlay.querySelector('[data-cam="annuler"]').addEventListener("click", fermer);
   overlay.querySelector('[data-cam="capturer"]').addEventListener("click", function(){
     if(!video.videoWidth){ alert("La caméra démarre encore — réessayez dans une seconde."); return; }
@@ -1822,6 +1822,7 @@ async function rendreCommandes(c){
         '<p style="font-size:16px"><b>Total : ' + esc(fmtMontant(r.montant, r.devise)) + '</b></p>' +
         codeBarres(r.numero_facture) +
         '<div style="display:flex;justify-content:space-between;margin-top:40px"><span>Émise par le bureau — Ciza Supply</span><span>Le client</span></div>';
+      recharger();
       imprimer("Facture " + r.numero_facture, h);
       if(recharger) recharger();
     } }],
@@ -1875,6 +1876,7 @@ async function rendreLivraisons(c){
         tableImpression(["Commande", "Destination", "Mode", "Transporteur", "N° de suivi", "Départ", "Arrivée"], [[cmd ? (cmd.description || "Commande") : "—", [r.ville_livraison, r.pays_livraison].filter(Boolean).join(", ") + (r.port_destination ? " (port : " + r.port_destination + ")" : ""), mode, r.transporteur || "", r.numero_suivi || "", fmtDate(r.date_depart), fmtDate(r.date_arrivee)]]) +
         codeBarres(r.numero_bl) +
         '<div style="display:flex;justify-content:space-between;margin-top:40px"><span>Ciza Supply (expéditeur)</span><span>Le transporteur</span><span>Le destinataire</span></div>';
+      recharger();
       imprimer("Bill of lading " + r.numero_bl, h);
       if(recharger) recharger();
     } }],
