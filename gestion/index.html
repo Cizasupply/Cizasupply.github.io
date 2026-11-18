@@ -910,22 +910,31 @@ var CFG_CLIENTS = {
   titreLigne: function(r){ return r.nom; },
   photo: { champ: "photo_url", bucket: "documents-bureau", dossier: "clients" }
 };
-var OPT_STATUT_PART = [["en_discussion","En discussion"],["actif","Actif"],["inactif","Inactif"]];
+var OPT_STATUT_PART = [["en_attente","En attente de réponse"],["en_discussion","En discussion"],["acceptee","Acceptée"],["refusee","Refusée"],["actif","Partenariat actif"],["inactif","Inactif"]];
+var OPT_SENS_PART = [["sortante","Ciza Supply demande"],["entrante","Le fabricant demande"]];
 var CFG_PARTENAIRES = {
-  titre: "Partenaires", table: "partenaires", sous: "Partenaires et fournisseurs : registre et statut.",
+  titre: "Partenaires", table: "partenaires", sous: "Demandes de partenariat suivies dans les deux sens : celles que Ciza Supply envoie aux fabricants, et celles que les fabricants envoient à Ciza Supply. Le contrat se dépose sur chaque fiche.",
   champs: [
-    { nom: "entreprise", label: "Entreprise", requis: true }, { nom: "contact", label: "Personne de contact" },
+    { nom: "entreprise", label: "Entreprise", requis: true },
+    { nom: "sens", label: "Sens de la demande", type: "select", options: OPT_SENS_PART, defaut: "sortante" },
+    { nom: "date_demande", label: "Date de la demande", type: "date" },
+    { nom: "contact", label: "Personne de contact" },
     { nom: "telephone", label: "Téléphone", type: "tel" }, { nom: "email", label: "E-mail" }, { nom: "pays", label: "Pays", type: "pays" },
     { nom: "produits", label: "Produits / services", type: "textarea" },
-    { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_PART, defaut: "en_discussion" },
+    { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_PART, defaut: "en_attente" },
     { nom: "notes", label: "Notes", type: "textarea" }
   ],
   colonnes: [
+    { label: "Sens", format: function(r){ return r.sens === "entrante" ? "Le fabricant demande" : "Ciza Supply demande"; } },
+    { label: "Demande le", format: function(r){ return r.date_demande ? fmtDate(r.date_demande) : "—"; } },
     { champ: "contact", label: "Contact" }, { champ: "telephone", label: "Téléphone" }, { champ: "email", label: "E-mail" },
     { champ: "pays", label: "Pays" }, { champ: "produits", label: "Produits" }, { champ: "notes", label: "Notes" }
   ],
   titreLigne: function(r){ return r.entreprise; },
-  badge: function(r){ return [libelle(OPT_STATUT_PART, r.statut), r.statut === "actif" ? "vert" : ""]; }
+  badge: function(r){ return [libelle(OPT_STATUT_PART, r.statut), (r.statut === "actif" || r.statut === "acceptee") ? "vert" : (r.statut === "refusee" ? "rouge" : "or")]; },
+  document: { bucket: "documents-bureau", champ: "contrat_url", dossier: "partenaires" },
+  filtres: [["", "Toutes"], ["sortante", "Demandées par Ciza Supply"], ["entrante", "Demandées par les fabricants"]],
+  filtreFn: function(r, f){ return !f || (r.sens || "sortante") === f; }
 };
 var OPT_STATUT_TERRAIN = [["prepare","Préparé"],["fait","Fait"],["reporte","Reporté"],["annule","Annulé"]];
 var CFG_TERRAIN = {
@@ -1506,6 +1515,7 @@ async function rendreEmployes(c){
   var zoneListe = c.querySelector('[data-zone="liste"]');
   var employes = [];
   var filtre = "";
+  var filtreStatut = "";
   async function charger(){
     var r = await sb.from("employes").select("*").order("cree_le", { ascending: false });
     if(r.error){ zoneListe.innerHTML = '<p class="vide">Lecture refusée : ' + esc(r.error.message) + '</p>'; return; }
@@ -1513,17 +1523,27 @@ async function rendreEmployes(c){
     peindre();
   }
   function peindre(){
-    var liste = employes.filter(function(e){ if(!filtre) return true; var t = (e.nom + " " + (e.numero || "") + " " + (e.poste || "")).toLowerCase(); return t.indexOf(filtre) > -1; });
+    var liste = employes.filter(function(e){
+      if(filtreStatut === "actif" && e.statut !== "actif") return false;
+      if(filtreStatut === "sortis" && e.statut === "actif") return false;
+      if(filtreStatut === "complet" && !dossierEmbauche(e).ok) return false;
+      if(filtreStatut === "acompleter" && dossierEmbauche(e).ok) return false;
+      if(!filtre) return true;
+      var t = (e.nom + " " + (e.numero || "") + " " + (e.poste || "")).toLowerCase();
+      return t.indexOf(filtre) > -1;
+    });
     zoneListe.innerHTML = liste.length ? liste.map(function(e){
       return '<article class="carte"><h3>' + esc(e.nom) + ' <span class="badge">' + esc(e.numero || "") + '</span> <span class="badge ' + (e.statut === "actif" ? "vert" : "rouge") + '">' + esc(libelle(OPT_STATUT_EMP, e.statut)) + '</span></h3>' +
         '<div class="meta"><div>Poste : <b>' + esc(e.poste || "—") + '</b></div><div>Téléphone : <b>' + esc(e.telephone || "—") + '</b></div><div>Salaire : <b>' + esc(fmtMontant(e.salaire, e.devise)) + '</b></div><div>Dossier d\'embauche : ' + (dossierEmbauche(e).ok ? '<span class="badge vert">Complet et signé</span>' : '<span class="badge or">À compléter</span>') + '</div></div>' +
         '<div class="actions"><button class="btn petit" type="button" data-ouvrir="' + e.id + '">Ouvrir la fiche</button>' +
         '<button class="btn petit secondaire" type="button" data-fiche-liste="' + e.id + '">Fiche d\'enregistrement</button>' +
+        '<button class="btn petit secondaire" type="button" data-modif-liste="' + e.id + '">Modifier</button>' +
         '<button class="btn petit secondaire" type="button" data-carte-liste="' + e.id + '">Carte d\'employé</button></div></article>';
     }).join("") : '<p class="vide">Aucun employé trouvé.</p>';
     zoneListe.querySelectorAll("[data-ouvrir]").forEach(function(b){ b.addEventListener("click", function(){ ouvrirEmploye(b.dataset.ouvrir); }); });
     zoneListe.querySelectorAll("[data-carte-liste]").forEach(function(b){ b.addEventListener("click", function(){ var e = employes.find(function(x){ return x.id === b.dataset.carteListe; }); if(e) genererCarteEmploye(e); }); });
     zoneListe.querySelectorAll("[data-fiche-liste]").forEach(function(b){ b.addEventListener("click", function(){ var e = employes.find(function(x){ return x.id === b.dataset.ficheListe; }); if(e) genererFicheEnregistrement(e); }); });
+    zoneListe.querySelectorAll("[data-modif-liste]").forEach(function(b){ b.addEventListener("click", function(){ var e = employes.find(function(x){ return x.id === b.dataset.modifListe; }); if(e){ formulaireEmploye(e); zoneForm.scrollIntoView({ behavior: "smooth" }); } }); });
   }
   function formulaireEmploye(record){
     var champs = [
@@ -1574,6 +1594,12 @@ async function rendreEmployes(c){
     zoneForm.querySelector('[data-act="annuler"]').addEventListener("click", function(){ zoneForm.innerHTML = ""; });
   }
   c.querySelector('[data-act="nouveau"]').addEventListener("click", function(){ formulaireEmploye(null); });
+  var zoneFiltres = document.createElement("div");
+  zoneFiltres.className = "filtres";
+  zoneFiltres.style.margin = "0 0 12px";
+  zoneFiltres.innerHTML = '<button type="button" data-femp="" class="actif">Tous</button><button type="button" data-femp="actif">Actifs</button><button type="button" data-femp="complet">Dossier d\'embauche complet</button><button type="button" data-femp="acompleter">À compléter</button><button type="button" data-femp="sortis">Sortis</button>';
+  zoneListe.parentNode.insertBefore(zoneFiltres, zoneListe);
+  zoneFiltres.querySelectorAll("[data-femp]").forEach(function(b){ b.addEventListener("click", function(){ filtreStatut = b.dataset.femp; zoneFiltres.querySelectorAll("[data-femp]").forEach(function(x){ x.classList.toggle("actif", x === b); }); peindre(); }); });
   var inpRech = c.querySelector("[data-recherche]");
   if(inpRech) inpRech.addEventListener("input", function(){ filtre = inpRech.value.trim().toLowerCase(); peindre(); });
 
@@ -1581,6 +1607,8 @@ async function rendreEmployes(c){
     var e = employes.find(function(x){ return x.id === id; }); if(!e) return;
     var rc = await sb.from("contrats_employes").select("*").eq("employe_id", id).order("cree_le", { ascending: false });
     var rp = await sb.from("paies").select("*").eq("employe_id", id).order("cree_le", { ascending: false });
+    var rd2 = await sb.from("employes_documents").select("*").eq("employe_id", id).order("cree_le", { ascending: false });
+    var docsEmp = rd2.data || [];
     var contrats = rc.data || [], paies = rp.data || [];
     var photoUrl = e.photo_url ? await urlSigneePrivee(e.photo_url) : null;
     zoneListe.innerHTML = '<button class="btn petit secondaire" type="button" data-act="retour">← Tous les employés</button>' +
@@ -1598,6 +1626,13 @@ async function rendreEmployes(c){
       '<button class="btn petit secondaire" type="button" data-act="signer">' + (e.signature_url ? "Refaire la signature à l\'écran" : "Faire signer à l\'écran") + '</button>' +
       '<label class="btn petit secondaire" style="cursor:pointer">Photo de l\'employé<input type="file" accept="image/*" class="caché" data-photo /></label>' +
       '<button class="btn petit" type="button" data-act="carte">Carte d\'employé (imprimer)</button></div></article>' +
+      '<h2 class="titre" style="margin-top:22px">Documents de l\'employé</h2>' +
+      (docsEmp.length ? docsEmp.map(function(d){
+        return '<article class="carte"><h3>' + esc(d.nom || "Document") + '</h3><div class="meta"><div>Déposé le : <b>' + fmtDate(d.cree_le) + '</b></div></div>' +
+          '<div class="actions"><button class="btn petit secondaire" type="button" data-doc-voir="' + d.id + '">Voir le document</button>' +
+          (profil.role === "fondateur" ? '<button class="btn petit secondaire" type="button" data-doc-suppr="' + d.id + '">Supprimer</button>' : '') + '</div></article>';
+      }).join("") : '<p class="vide">Aucun document déposé.</p>') +
+      '<label class="btn secondaire" style="cursor:pointer">+ Déposer un document (contrat, pièce, certificat…)<input type="file" class="caché" data-doc-depot /></label>' +
       '<h2 class="titre" style="margin-top:22px">Contrats</h2>' +
       (contrats.length ? contrats.map(function(ct){
         return '<article class="carte"><h3>' + esc(ct.type || "Contrat") + ' <span class="badge or">' + esc(libelle(OPT_STATUT_CONTRAT_EMP, ct.statut)) + '</span></h3>' +
@@ -1634,6 +1669,25 @@ async function rendreEmployes(c){
       var u = await urlSigneePrivee(ct.document_url);
       if(u) window.open(u, "_blank"); else alert("Document introuvable.");
     }); });
+    zoneListe.querySelectorAll("[data-doc-voir]").forEach(function(b){ b.addEventListener("click", async function(){
+      var d = docsEmp.find(function(x){ return x.id === b.dataset.docVoir; });
+      var u = d ? await urlSigneePrivee(d.chemin) : null;
+      if(u) window.open(u, "_blank"); else alert("Document introuvable.");
+    }); });
+    zoneListe.querySelectorAll("[data-doc-suppr]").forEach(function(b){ b.addEventListener("click", async function(){
+      if(!confirm("Supprimer ce document ?")) return;
+      var r = await sb.from("employes_documents").delete().eq("id", b.dataset.docSuppr);
+      if(r.error) alert("Suppression refusée : " + r.error.message); else ouvrirEmploye(id);
+    }); });
+    var inpDoc = zoneListe.querySelector("[data-doc-depot]");
+    if(inpDoc) inpDoc.addEventListener("change", async function(){
+      var f = inpDoc.files[0]; if(!f) return;
+      var chemin = "employes-documents/" + id + "/" + Date.now() + "-" + f.name.replace(/[^\w.\-]+/g, "_");
+      var up = await sb.storage.from("documents-bureau").upload(chemin, f);
+      if(up.error){ alert("Dépôt refusé : " + up.error.message); return; }
+      var r = await sb.from("employes_documents").insert({ employe_id: id, nom: f.name, chemin: chemin });
+      if(r.error) alert("Enregistrement refusé : " + r.error.message); else ouvrirEmploye(id);
+    });
     zoneListe.querySelectorAll("[data-ct-depot]").forEach(function(inp){ inp.addEventListener("change", async function(){
       var f = inp.files[0]; if(!f) return;
       var chemin = "contrats-employes/" + inp.dataset.ctDepot + "/" + Date.now() + "-" + f.name.replace(/[^\w.\-]+/g, "_");
