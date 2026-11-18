@@ -5213,13 +5213,14 @@ gtag('config', 'G-JFP2NNX9DX');
       })
       .catch(function(){ resultEl.textContent = failMsg + "\n" + text; });
   }
-  function wireMini(formId, resultId, prefix, subject, build){
+  function wireMini(formId, resultId, prefix, subject, build, apres){
     var f=document.getElementById(formId); if(!f) return;
     f.addEventListener("submit", function(e){
       e.preventDefault();
       var out=document.getElementById(resultId);
       var data=build();
       if(!data){ out.classList.add("show"); out.textContent = L()==="en" ? "Please fill in the required fields." : "Merci de remplir les champs obligatoires."; return; }
+      if(apres) apres();
       var r=ref(prefix);
       var text=data+"\nRéférence / Reference : "+r;
       sendForm(subject+" — "+r, text, out,
@@ -5232,10 +5233,23 @@ gtag('config', 'G-JFP2NNX9DX');
     if(!val("cb-name")||!val("cb-phone")) return null;
     return "DEMANDE DE RAPPEL / CALLBACK\nNom / Name : "+val("cb-name")+"\nTéléphone / Phone : "+val("cb-phone")+"\nMoment / Preferred time : "+val("cb-when");
   });
+  /* Le rendez-vous part AUSSI dans la base de l'espace de travail
+     (table rendez_vous, source « site ») — l'e-mail Web3Forms reste
+     envoyé comme avant. Échec silencieux : le client ne voit jamais
+     d'erreur pour cette copie. */
+  function envoieRdvBase(){
+    try{
+      var ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1iYmNmeHNlZ21lbG5maGZ6eXN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ5ODk0MjEsImV4cCI6MjExMDU2NTQyMX0.IraVe4WprHVpUgfmCASsiktb3ungbCjx7-Z61Yt0yxo";
+      fetch("https://mbbcfxsegmelnfhfzyst.supabase.co/rest/v1/rendez_vous", {method:"POST",
+        headers:{"apikey":ANON,"Authorization":"Bearer "+ANON,"Content-Type":"application/json","Prefer":"return=minimal"},
+        body: JSON.stringify({nom: val("rv-name"), telephone: val("rv-phone")||null, sujet: val("rv-why")||null, date_souhaite: val("rv-date")||null, heure: val("rv-time")||null, statut:"nouvelle", source:"site"})
+      }).catch(function(){});
+    }catch(e){}
+  }
   wireMini("rv-form","rv-result","RV", L()==="en"?"Office appointment — CIZA SUPPLY":"Rendez-vous bureau — CIZA SUPPLY", function(){
     if(!val("rv-name")||!val("rv-phone")||!val("rv-date")||!val("rv-time")) return null;
     return "RENDEZ-VOUS BUREAU BUJUMBURA / OFFICE APPOINTMENT\nNom / Name : "+val("rv-name")+"\nTéléphone / Phone : "+val("rv-phone")+"\nDate : "+val("rv-date")+"\nHeure / Time : "+val("rv-time")+"\nMotif / Reason : "+val("rv-why");
-  });
+  }, envoieRdvBase);
   wireMini("ql-form","ql-result","QL", L()==="en"?"Quote list — CIZA SUPPLY":"Liste de devis — CIZA SUPPLY", function(){
     if(!list.length||!val("ql-name")||!val("ql-contact")) return null;
     return "LISTE DE DEVIS / QUOTE LIST\nNom / Name : "+val("ql-name")+"\nContact : "+val("ql-contact")+"\nProduits / Products :\n- "+list.join("\n- ")+"\nMessage : "+val("ql-msg");

@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Gestion — CIZA SUPPLY</title>
+<style>
+  :root{--navy:#0A1E3C;--navy2:#07101F;--gold:#D4AF37;--gold2:#F2B840;--bg:#f2f4f8;--surface:#fff;--border:#e2e7f0;--muted:#5a6a86;--ok:#1d7a3a;--warn:#9a6a00;--bad:#b3261e}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:#14213a}
+  button{font:inherit;cursor:pointer}
+  input,select,textarea{font:inherit;padding:10px 12px;border:1.5px solid var(--border);border-radius:10px;background:#fff;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  label{font-size:13px;font-weight:700;color:var(--navy);display:block;margin:0 0 5px}
+  .caché{display:none !important}
+  /* ---------- Connexion ---------- */
+  .login-wrap{min-height:100dvh;display:grid;place-items:center;padding:20px;background:linear-gradient(160deg,var(--navy2),var(--navy))}
+  .login-card{background:#fff;border-radius:20px;padding:28px 24px;max-width:400px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+  .login-card h1{font-size:21px;margin:0 0 4px;color:var(--navy)}
+  .login-card .sig{color:var(--gold);font-weight:800;letter-spacing:.14em;font-size:12px;margin:0 0 14px}
+  .login-card p{color:var(--muted);font-size:14px;line-height:1.55}
+  .login-card .champ{margin-bottom:12px}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:11px;padding:11px 18px;font-weight:800;font-size:14.5px;background:var(--gold);color:#07101F}
+  .btn.secondaire{background:#eef1f6;color:var(--navy)}
+  .btn.danger{background:#fbe9e7;color:var(--bad)}
+  .btn.petit{padding:7px 12px;font-size:13px;border-radius:9px}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .lien{background:none;border:0;color:var(--navy);text-decoration:underline;font-weight:700;padding:0}
+  .erreur{background:#fbe9e7;border:1px solid #f0c6c2;color:var(--bad);border-radius:10px;padding:10px 12px;font-size:14px;margin:10px 0}
+  .info{background:#fdf3d7;border:1px solid var(--gold);border-radius:10px;padding:10px 12px;font-size:14px;margin:10px 0;line-height:1.5}
+  /* ---------- Coquille ---------- */
+  .barre{background:linear-gradient(120deg,var(--navy2),var(--navy));color:#fff;padding:12px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:20}
+  .barre .marque{font-weight:900;letter-spacing:.06em}
+  .barre .marque span{color:var(--gold2)}
+  .barre .qui{margin-left:auto;font-size:12.5px;color:#c8d3e6;text-align:right}
+  .barre .role{display:inline-block;background:var(--gold);color:#07101F;font-weight:800;border-radius:999px;padding:1px 8px;font-size:11px;margin-left:6px}
+  .barre button{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
+  nav.modules{display:flex;gap:8px;overflow-x:auto;padding:10px 12px;background:#fff;border-bottom:1px solid var(--border);position:sticky;top:53px;z-index:19}
+  nav.modules button{white-space:nowrap;border:1.5px solid var(--border);background:#fff;border-radius:999px;padding:8px 14px;font-weight:700;font-size:13.5px;color:var(--navy)}
+  nav.modules button.actif{background:var(--navy);color:#fff;border-color:var(--navy)}
+  main{max-width:1060px;margin:0 auto;padding:18px 14px 60px}
+  h2.titre{font-size:20px;color:var(--navy);margin:2px 0 4px}
+  .sous{color:var(--muted);font-size:14px;margin:0 0 14px;line-height:1.5}
+  .outils{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+  .carte{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 4px 14px rgba(7,16,31,.05)}
+  .carte h3{margin:0 0 4px;font-size:16px;color:var(--navy)}
+  .carte .meta{font-size:13px;color:var(--muted);line-height:1.6}
+  .carte .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .badge{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:800;background:#eef1f6;color:var(--navy)}
+  .badge.or{background:#fdf3d7;color:#7a5b00}
+  .badge.vert{background:#e2f2e6;color:var(--ok)}
+  .badge.rouge{background:#fbe9e7;color:var(--bad)}
+  .formulaire{background:#fff;border:1.5px solid var(--gold);border-radius:16px;padding:16px;margin-bottom:14px}
+  .grille{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:720px){.grille{grid-template-columns:1fr 1fr}.grille .plein{grid-column:1/-1}}
+  .filtres{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .filtres button{border:1.5px solid var(--border);background:#fff;border-radius:999px;padding:7px 13px;font-weight:700;font-size:13px}
+  .filtres button.actif{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .total{font-weight:900;color:var(--navy);font-size:15px;margin:6px 0 12px}
+  .docs{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .docs a{font-size:13px;font-weight:700}
+  .docs img{width:74px;height:74px;object-fit:cover;border-radius:10px;border:1px solid var(--border)}
+  table.fiche{border-collapse:collapse;width:100%;font-size:12.5px;background:#fff}
+  table.fiche th,table.fiche td{border:1px solid #c9d2e2;padding:4px 5px;text-align:center}
+  table.fiche th{background:var(--navy);color:#fff}
+  table.fiche td.nom,table.fiche th.nom{text-align:left;font-weight:700}
+  .vide{color:var(--muted);font-size:14.5px;padding:18px 4px}
+  /* ---------- Impression ---------- */
+  #zone-impression{display:none}
+  @media print{
+    body>*{display:none !important}
+    #zone-impression{display:block !important;color:#000}
+    #zone-impression h1{font-size:19px;margin:0 0 2px}
+    #zone-impression h2{font-size:15px;margin:16px 0 6px}
+    #zone-impression table{border-collapse:collapse;width:100%;font-size:12.5px}
+    #zone-impression th,#zone-impression td{border:1px solid #999;padding:5px 7px;text-align:left}
+    #zone-impression .entete{border-bottom:3px solid #D4AF37;padding-bottom:8px;margin-bottom:14px}
+    #zone-impression .sig{color:#555;font-size:12px}
+    #zone-impression .carte-emp{border:2px solid #0A1E3C;border-radius:12px;padding:16px;max-width:340px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= CONNEXION ================= -->
+<div id="vue-login" class="login-wrap">
+  <div class="login-card">
+    <p class="sig">CIZA SUPPLY</p>
+    <h1>Espace de travail</h1>
+    <p>Réservé au bureau. Connectez-vous avec votre compte de travail.</p>
+    <div id="login-erreur" class="erreur caché"></div>
+    <form id="form-login">
+      <div class="champ"><label for="li-email">E-mail</label><input id="li-email" type="email" required autocomplete="username" /></div>
+      <div class="champ"><label for="li-mdp">Mot de passe</label><input id="li-mdp" type="password" required autocomplete="current-password" /></div>
+      <button class="btn" type="submit" id="btn-login" style="width:100%;justify-content:center">Se connecter</button>
+    </form>
+    <p style="margin:14px 0 0">Pas encore de compte ? <button class="lien" id="lien-inscription" type="button">Créer un compte</button></p>
+    <form id="form-inscription" class="caché">
+      <div class="champ"><label for="in-nom">Votre nom</label><input id="in-nom" type="text" required /></div>
+      <div class="champ"><label for="in-email">E-mail</label><input id="in-email" type="email" required autocomplete="username" /></div>
+      <div class="champ"><label for="in-mdp">Mot de passe</label><input id="in-mdp" type="password" required autocomplete="new-password" /></div>
+      <button class="btn" type="submit" style="width:100%;justify-content:center">Créer le compte</button>
+      <div class="info">Le compte démarre <b>inactif</b> : le fondateur l'active et lui donne son rôle. C'est ce qui permet de couper un accès tout de suite, sans toucher à la base.</div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= ATTENTE D'ACTIVATION ================= -->
+<div id="vue-attente" class="login-wrap caché">
+  <div class="login-card">
+    <p class="sig">CIZA SUPPLY</p>
+    <h1>Compte en attente</h1>
+    <p>Votre compte est créé mais pas encore activé. Le fondateur doit l'activer et lui donner son rôle dans l'écran Comptes de l'espace de travail.</p>
+    <button class="btn secondaire" id="btn-deco-attente" type="button">Se déconnecter</button>
+  </div>
+</div>
+
+<!-- ================= APPLICATION ================= -->
+<div id="vue-app" class="caché">
+  <div class="barre">
+    <div class="marque">CIZA <span>SUPPLY</span> · Bureau</div>
+    <div class="qui"><span id="qui-email"></span><span class="role" id="qui-role"></span></div>
+    <button class="btn petit" id="btn-deco" type="button">Sortir</button>
+  </div>
+  <nav class="modules" id="nav-modules"></nav>
+  <main id="contenu"></main>
+</div>
+
+<div id="zone-impression"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script>
+"use strict";
+/* =============== Configuration (clé anon PUBLIQUE, lecture/écriture
+   encadrées par les règles de la base — jamais la clé de service) == */
+var SUPABASE_URL = "https://mbbcfxsegmelnfhfzyst.supabase.co";
+var SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1iYmNmeHNlZ21lbG5maGZ6eXN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ5ODk0MjEsImV4cCI6MjExMDU2NTQyMX0.IraVe4WprHVpUgfmCASsiktb3ungbCjx7-Z61Yt0yxo";
+var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+var ETAPES = ["Demande reçue", "Devis préparé et envoyé", "Commande confirmée au bureau", "Production et préparation", "Contrôle qualité", "Expédition vers le Burundi", "Arrivée à Bujumbura", "Dossier clôturé"];
+var profil = null;      // {id, email, nom, role, actif}
+var moduleActif = "dossiers";
+
+/* =============== Utilitaires =============== */
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+function fmtDate(d){ if(!d) return "—"; var x = new Date(d.length <= 10 ? d + "T12:00:00" : d); return isNaN(x) ? esc(d) : x.toLocaleDateString("fr-FR", {day:"numeric", month:"long", year:"numeric"}); }
+function fmtMontant(n, devise){ if(n == null || n === "") return "—"; return Number(n).toLocaleString("fr-FR") + " " + esc(devise || "BIF"); }
+function aujourdhui(){ return new Date().toISOString().slice(0, 10); }
+function montrer(id){ ["vue-login", "vue-attente", "vue-app"].forEach(function(v){ document.getElementById(v).classList.toggle("caché", v !== id); }); }
+function erreurLogin(msg){ var e = document.getElementById("login-erreur"); e.textContent = msg; e.classList.remove("caché"); }
+
+function exporterExcel(nomFichier, lignes){
+  if(!window.XLSX){ alert("L'export Excel n'est pas chargé. Vérifiez la connexion internet."); return; }
+  var ws = XLSX.utils.json_to_sheet(lignes);
+  var wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Liste");
+  XLSX.writeFile(wb, nomFichier);
+}
+function imprimer(titre, html){
+  var z = document.getElementById("zone-impression");
+  z.innerHTML = '<div class="entete"><div style="font-weight:900;font-size:20px;color:#0A1E3C">CIZA SUPPLY</div>' +
+    '<div class="sig">Ciza Supply, division de Ciza Group | Burundi — ' + esc(titre) + ' — ' + fmtDate(aujourdhui()) + '</div></div>' + html;
+  window.print();
+}
+function tableImpression(colonnes, lignes){
+  var h = "<table><tr>" + colonnes.map(function(c){ return "<th>" + esc(c) + "</th>"; }).join("") + "</tr>";
+  lignes.forEach(function(l){ h += "<tr>" + l.map(function(c){ return "<td>" + esc(c == null ? "" : c) + "</td>"; }).join("") + "</tr>"; });
+  return h + "</table>";
+}
+
+/* =============== Authentification et profil =============== */
+document.getElementById("lien-inscription").addEventListener("click", function(){
+  document.getElementById("form-inscription").classList.toggle("caché");
+});
+document.getElementById("form-login").addEventListener("submit", async function(e){
+  e.preventDefault();
+  var b = document.getElementById("btn-login"); b.disabled = true;
+  var r = await sb.auth.signInWithPassword({ email: document.getElementById("li-email").value.trim(), password: document.getElementById("li-mdp").value });
+  b.disabled = false;
+  if(r.error){ erreurLogin("Connexion refusée : " + r.error.message); return; }
+  demarrer();
+});
+document.getElementById("form-inscription").addEventListener("submit", async function(e){
+  e.preventDefault();
+  var nom = document.getElementById("in-nom").value.trim();
+  var r = await sb.auth.signUp({ email: document.getElementById("in-email").value.trim(), password: document.getElementById("in-mdp").value });
+  if(r.error){ erreurLogin("Création refusée : " + r.error.message); return; }
+  if(r.data && r.data.user){
+    await sb.from("profils").insert({ id: r.data.user.id, email: r.data.user.email, nom: nom });
+  }
+  erreurLogin("");
+  document.getElementById("login-erreur").classList.add("caché");
+  alert("Compte créé. Il est inactif : le fondateur doit l'activer. Si un e-mail de confirmation arrive, cliquez le lien puis revenez vous connecter.");
+});
+async function deconnexion(){ await sb.auth.signOut(); profil = null; montrer("vue-login"); }
+document.getElementById("btn-deco").addEventListener("click", deconnexion);
+document.getElementById("btn-deco-attente").addEventListener("click", deconnexion);
+
+async function chargerProfil(user){
+  var r = await sb.from("profils").select("*").eq("id", user.id).maybeSingle();
+  if(r.data) return r.data;
+  var ins = await sb.from("profils").insert({ id: user.id, email: user.email }).select().single();
+  return ins.data || { id: user.id, email: user.email, role: "employeur", actif: false };
+}
+async function demarrer(){
+  var s = await sb.auth.getSession();
+  if(!s.data.session){ montrer("vue-login"); return; }
+  profil = await chargerProfil(s.data.session.user);
+  if(!profil || !profil.actif){ montrer("vue-attente"); return; }
+  document.getElementById("qui-email").textContent = profil.email || "";
+  document.getElementById("qui-role").textContent = profil.role === "fondateur" ? "Fondateur" : "Employeur";
+  construireNav();
+  montrer("vue-app");
+  aller(moduleActif);
+}
+
+/* =============== Navigation =============== */
+var MODULES = [
+  { cle: "dossiers",     titre: "Dossiers",     rendre: rendreDossiers },
+  { cle: "rendezvous",   titre: "Rendez-vous",  rendre: function(c){ moduleGenerique(c, CFG_RDV); } },
+  { cle: "clients",      titre: "Clients",      rendre: function(c){ moduleGenerique(c, CFG_CLIENTS); } },
+  { cle: "partenaires",  titre: "Partenaires",  rendre: function(c){ moduleGenerique(c, CFG_PARTENAIRES); } },
+  { cle: "terrain",      titre: "Terrain",      rendre: function(c){ moduleGenerique(c, CFG_TERRAIN); } },
+  { cle: "assignations", titre: "Assignations", rendre: function(c){ moduleGenerique(c, CFG_ASSIGNATIONS); } },
+  { cle: "contrats",     titre: "Contrats influenceurs", rendre: function(c){ moduleGenerique(c, CFG_CONTRATS); } },
+  { cle: "depenses",     titre: "Dépenses",     rendre: rendreDepenses },
+  { cle: "presences",    titre: "Présences",    rendre: rendrePresences },
+  { cle: "employes",     titre: "Employés",     rendre: rendreEmployes },
+  { cle: "rapports",     titre: "Rapports",     rendre: rendreRapports },
+  { cle: "comptes",      titre: "Comptes",      rendre: rendreComptes, fondateur: true }
+];
+function construireNav(){
+  var nav = document.getElementById("nav-modules");
+  nav.innerHTML = "";
+  MODULES.forEach(function(m){
+    if(m.fondateur && profil.role !== "fondateur") return;
+    var b = document.createElement("button");
+    b.type = "button"; b.textContent = m.titre; b.dataset.cle = m.cle;
+    if(m.cle === moduleActif) b.classList.add("actif");
+    b.addEventListener("click", function(){ aller(m.cle); });
+    nav.appendChild(b);
+  });
+}
+function aller(cle){
+  moduleActif = cle;
+  document.querySelectorAll("#nav-modules button").forEach(function(b){ b.classList.toggle("actif", b.dataset.cle === cle); });
+  var m = MODULES.find(function(x){ return x.cle === cle; });
+  var c = document.getElementById("contenu");
+  c.innerHTML = "";
+  if(m) m.rendre(c);
+}
+</script>
+<script>
+"use strict";
+/* =============== Moteur générique (liste + formulaire) =============== */
+function libelle(options, valeur){
+  for(var i = 0; i < options.length; i++) if(String(options[i][0]) === String(valeur)) return options[i][1];
+  return valeur || "—";
+}
+function champHTML(f, val){
+  var v = val == null ? "" : val;
+  if(f.type === "select") return '<select name="' + f.nom + '">' + f.options.map(function(o){ return '<option value="' + esc(o[0]) + '"' + (String(v) === String(o[0]) ? " selected" : "") + '>' + esc(o[1]) + '</option>'; }).join("") + '</select>';
+  if(f.type === "textarea") return '<textarea name="' + f.nom + '">' + esc(v) + '</textarea>';
+  if(f.type === "date") return '<input type="date" name="' + f.nom + '" value="' + esc(v ? String(v).slice(0, 10) : "") + '" />';
+  if(f.type === "number") return '<input type="number" step="any" name="' + f.nom + '" value="' + esc(v) + '" />';
+  return '<input type="text" name="' + f.nom + '" value="' + esc(v) + '" />';
+}
+function lireFormulaire(form, champs){
+  var obj = {};
+  champs.forEach(function(f){
+    var el = form.elements[f.nom]; if(!el) return;
+    var v = el.value;
+    if(f.type === "number") obj[f.nom] = v === "" ? null : parseFloat(v);
+    else obj[f.nom] = v === "" ? null : v;
+  });
+  return obj;
+}
+
+function moduleGenerique(conteneur, cfg){
+  var etat = { lignes: [], edition: null, filtre: "" };
+  conteneur.innerHTML = '<h2 class="titre">' + esc(cfg.titre) + '</h2>' +
+    (cfg.sous ? '<p class="sous">' + esc(cfg.sous) + '</p>' : '') +
+    '<div class="outils">' +
+      '<button class="btn" type="button" data-act="nouveau">+ Nouveau</button>' +
+      '<button class="btn secondaire" type="button" data-act="excel">Export Excel</button>' +
+      '<button class="btn secondaire" type="button" data-act="pdf">Imprimer / PDF</button>' +
+    '</div>' +
+    (cfg.filtres ? '<div class="filtres">' + cfg.filtres.map(function(f){ return '<button type="button" data-filtre="' + esc(f[0]) + '"' + (f[0] === "" ? ' class="actif"' : "") + '>' + esc(f[1]) + '</button>'; }).join("") + '</div>' : '') +
+    '<div data-zone="resume"></div><div data-zone="form"></div><div data-zone="liste"><p class="vide">Chargement…</p></div>';
+
+  var zoneForm = conteneur.querySelector('[data-zone="form"]');
+  var zoneListe = conteneur.querySelector('[data-zone="liste"]');
+  var zoneResume = conteneur.querySelector('[data-zone="resume"]');
+
+  function lignesVisibles(){
+    return etat.lignes.filter(function(r){
+      if(cfg.filtreFn && !cfg.filtreFn(r, etat.filtre)) return false;
+      return true;
+    });
+  }
+  function afficher(){
+    var lignes = lignesVisibles();
+    if(cfg.resume) zoneResume.innerHTML = cfg.resume(lignes);
+    if(!lignes.length){ zoneListe.innerHTML = '<p class="vide">Aucun élément pour le moment.</p>'; return; }
+    zoneListe.innerHTML = lignes.map(function(r){
+      var meta = cfg.colonnes.map(function(c){
+        var v = c.format ? c.format(r) : r[c.champ];
+        return '<div>' + esc(c.label) + ' : <b>' + esc(v == null || v === "" ? "—" : v) + '</b></div>';
+      }).join("");
+      var badge = cfg.badge ? '<span class="badge ' + esc(cfg.badge(r)[1] || "") + '">' + esc(cfg.badge(r)[0]) + '</span>' : "";
+      var doc = "";
+      if(cfg.document){
+        doc = r[cfg.document.champ]
+          ? '<button class="btn petit secondaire" type="button" data-doc-voir="' + r.id + '">Voir le document</button>'
+          : "";
+        doc += ' <label class="btn petit secondaire" style="cursor:pointer">Déposer un document<input type="file" class="caché" data-doc-depot="' + r.id + '" /></label>';
+      }
+      return '<article class="carte"><h3>' + esc(cfg.titreLigne(r)) + ' ' + badge + '</h3><div class="meta">' + meta + '</div>' +
+        '<div class="actions"><button class="btn petit secondaire" type="button" data-modif="' + r.id + '">Modifier</button>' + doc +
+        (profil.role === "fondateur" ? '<button class="btn petit danger" type="button" data-suppr="' + r.id + '">Supprimer</button>' : "") + '</div></article>';
+    }).join("");
+    zoneListe.querySelectorAll("[data-modif]").forEach(function(b){ b.addEventListener("click", function(){ ouvrirForm(etat.lignes.find(function(x){ return x.id === b.dataset.modif; })); }); });
+    zoneListe.querySelectorAll("[data-suppr]").forEach(function(b){ b.addEventListener("click", async function(){
+      if(!confirm("Supprimer définitivement cet élément ?")) return;
+      var r = await sb.from(cfg.table).delete().eq("id", b.dataset.suppr);
+      if(r.error) alert("Suppression refusée : " + r.error.message); else charger();
+    }); });
+    if(cfg.document){
+      zoneListe.querySelectorAll("[data-doc-voir]").forEach(function(b){ b.addEventListener("click", async function(){
+        var row = etat.lignes.find(function(x){ return x.id === b.dataset.docVoir; });
+        var r = await sb.storage.from(cfg.document.bucket).createSignedUrl(row[cfg.document.champ], 600);
+        if(r.data) window.open(r.data.signedUrl, "_blank"); else alert("Document introuvable.");
+      }); });
+      zoneListe.querySelectorAll("[data-doc-depot]").forEach(function(inp){ inp.addEventListener("change", async function(){
+        var f = inp.files[0]; if(!f) return;
+        var row = etat.lignes.find(function(x){ return x.id === inp.dataset.docDepot; });
+        var chemin = cfg.document.dossier + "/" + row.id + "/" + Date.now() + "-" + f.name.replace(/[^\w.\-]+/g, "_");
+        var up = await sb.storage.from(cfg.document.bucket).upload(chemin, f, { upsert: true });
+        if(up.error){ alert("Dépôt refusé : " + up.error.message); return; }
+        var maj = {}; maj[cfg.document.champ] = chemin;
+        var r = await sb.from(cfg.table).update(maj).eq("id", row.id);
+        if(r.error) alert("Enregistrement refusé : " + r.error.message); else charger();
+      }); });
+    }
+  }
+  function ouvrirForm(record){
+    etat.edition = record || null;
+    zoneForm.innerHTML = '<form class="formulaire"><div class="grille">' +
+      cfg.champs.map(function(f){ return '<div class="' + (f.type === "textarea" ? "plein" : "") + '"><label>' + esc(f.label) + (f.requis ? " *" : "") + '</label>' + champHTML(f, record ? record[f.nom] : (f.defaut || "")) + '</div>'; }).join("") +
+      '</div><div class="actions" style="margin-top:12px;display:flex;gap:8px"><button class="btn" type="submit">' + (record ? "Enregistrer" : "Ajouter") + '</button>' +
+      '<button class="btn secondaire" type="button" data-act="annuler">Annuler</button></div></form>';
+    var form = zoneForm.querySelector("form");
+    form.addEventListener("submit", async function(e){
+      e.preventDefault();
+      var obj = lireFormulaire(form, cfg.champs);
+      var r = etat.edition
+        ? await sb.from(cfg.table).update(obj).eq("id", etat.edition.id)
+        : await sb.from(cfg.table).insert(obj);
+      if(r.error){ alert("Enregistrement refusé : " + r.error.message); return; }
+      zoneForm.innerHTML = ""; etat.edition = null; charger();
+    });
+    zoneForm.querySelector('[data-act="annuler"]').addEventListener("click", function(){ zoneForm.innerHTML = ""; etat.edition = null; });
+    zoneForm.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  async function charger(){
+    var q = sb.from(cfg.table).select("*");
+    if(cfg.tri) q = q.order(cfg.tri, { ascending: false }); else q = q.order("cree_le", { ascending: false });
+    var r = await q.limit(300);
+    if(r.error){ zoneListe.innerHTML = '<p class="vide">Lecture refusée : ' + esc(r.error.message) + '</p>'; return; }
+    etat.lignes = r.data || [];
+    afficher();
+  }
+  conteneur.querySelector('[data-act="nouveau"]').addEventListener("click", function(){ ouvrirForm(null); });
+  conteneur.querySelector('[data-act="excel"]').addEventListener("click", function(){
+    var lignes = lignesVisibles().map(function(r){
+      var o = {};
+      cfg.colonnes.forEach(function(c){ o[c.label] = c.format ? c.format(r) : (r[c.champ] == null ? "" : r[c.champ]); });
+      return o;
+    });
+    exporterExcel(cfg.titre.replace(/\s+/g, "-") + ".xlsx", lignes);
+  });
+  conteneur.querySelector('[data-act="pdf"]').addEventListener("click", function(){
+    var lignes = lignesVisibles().map(function(r){ return cfg.colonnes.map(function(c){ var v = c.format ? c.format(r) : r[c.champ]; return v == null ? "" : v; }); });
+    imprimer(cfg.titre, "<h1>" + esc(cfg.titre) + "</h1>" + tableImpression(cfg.colonnes.map(function(c){ return c.label; }), lignes));
+  });
+  if(cfg.filtres) conteneur.querySelectorAll("[data-filtre]").forEach(function(b){ b.addEventListener("click", function(){
+    etat.filtre = b.dataset.filtre;
+    conteneur.querySelectorAll("[data-filtre]").forEach(function(x){ x.classList.toggle("actif", x === b); });
+    afficher();
+  }); });
+  charger();
+}
+
+/* =============== Configurations des modules simples =============== */
+var OPT_STATUT_RDV = [["nouvelle","Nouvelle"],["confirme","Confirmé"],["reporte","Reporté"],["annule","Annulé"],["fait","Fait"]];
+var CFG_RDV = {
+  titre: "Rendez-vous", table: "rendez_vous",
+  sous: "Les demandes envoyées depuis le formulaire du site arrivent ici (source : site). Vous pouvez aussi créer un rendez-vous vous-même.",
+  champs: [
+    { nom: "nom", label: "Nom", requis: true },
+    { nom: "telephone", label: "Téléphone" },
+    { nom: "email", label: "E-mail" },
+    { nom: "sujet", label: "Sujet" },
+    { nom: "date_souhaite", label: "Date souhaitée", type: "date" },
+    { nom: "heure", label: "Heure" },
+    { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_RDV, defaut: "nouvelle" },
+    { nom: "notes", label: "Notes", type: "textarea" }
+  ],
+  colonnes: [
+    { champ: "telephone", label: "Téléphone" }, { champ: "email", label: "E-mail" },
+    { champ: "sujet", label: "Sujet" },
+    { label: "Quand", format: function(r){ return (r.date_souhaite ? fmtDate(r.date_souhaite) : "—") + (r.heure ? " · " + r.heure : ""); } },
+    { label: "Source", format: function(r){ return r.source === "site" ? "Formulaire du site" : "Bureau"; } },
+    { champ: "notes", label: "Notes" }
+  ],
+  titreLigne: function(r){ return r.nom; },
+  badge: function(r){ return [libelle(OPT_STATUT_RDV, r.statut), r.statut === "nouvelle" ? "or" : (r.statut === "fait" ? "vert" : "")]; }
+};
+var CFG_CLIENTS = {
+  titre: "Clients", table: "clients", sous: "Enregistrement des nouveaux clients et registre du bureau.",
+  champs: [
+    { nom: "nom", label: "Nom", requis: true }, { nom: "societe", label: "Société" },
+    { nom: "telephone", label: "Téléphone" }, { nom: "email", label: "E-mail" },
+    { nom: "pays", label: "Pays" }, { nom: "ville", label: "Ville" },
+    { nom: "source", label: "Source (WhatsApp, bureau, site…)" }, { nom: "notes", label: "Notes", type: "textarea" }
+  ],
+  colonnes: [
+    { champ: "societe", label: "Société" }, { champ: "telephone", label: "Téléphone" }, { champ: "email", label: "E-mail" },
+    { label: "Lieu", format: function(r){ return [r.ville, r.pays].filter(Boolean).join(", ") || "—"; } },
+    { champ: "source", label: "Source" }, { champ: "notes", label: "Notes" },
+    { label: "Enregistré le", format: function(r){ return fmtDate(r.cree_le); } }
+  ],
+  titreLigne: function(r){ return r.nom; }
+};
+var OPT_STATUT_PART = [["en_discussion","En discussion"],["actif","Actif"],["inactif","Inactif"]];
+var CFG_PARTENAIRES = {
+  titre: "Partenaires", table: "partenaires", sous: "Partenaires et fournisseurs : registre et statut.",
+  champs: [
+    { nom: "entreprise", label: "Entreprise", requis: true }, { nom: "contact", label: "Personne de contact" },
+    { nom: "telephone", label: "Téléphone" }, { nom: "email", label: "E-mail" }, { nom: "pays", label: "Pays" },
+    { nom: "produits", label: "Produits / services", type: "textarea" },
+    { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_PART, defaut: "en_discussion" },
+    { nom: "notes", label: "Notes", type: "textarea" }
+  ],
+  colonnes: [
+    { champ: "contact", label: "Contact" }, { champ: "telephone", label: "Téléphone" }, { champ: "email", label: "E-mail" },
+    { champ: "pays", label: "Pays" }, { champ: "produits", label: "Produits" }, { champ: "notes", label: "Notes" }
+  ],
+  titreLigne: function(r){ return r.entreprise; },
+  badge: function(r){ return [libelle(OPT_STATUT_PART, r.statut), r.statut === "actif" ? "vert" : ""]; }
+};
+var OPT_STATUT_TERRAIN = [["prepare","Préparé"],["fait","Fait"],["reporte","Reporté"],["annule","Annulé"]];
+var CFG_TERRAIN = {
+  titre: "Préparation de terrain", table: "terrain",
+  sous: "Préparez chaque sortie : date, zone, personne, objectif, visites et produits à présenter — puis le compte rendu au retour.",
+  champs: [
+    { nom: "date_visite", label: "Date de la sortie", type: "date" }, { nom: "personne", label: "Personne" },
+    { nom: "zone", label: "Zone" }, { nom: "objectif", label: "Objectif" },
+    { nom: "visites", label: "Visites prévues (clients, prospects)", type: "textarea" },
+    { nom: "produits", label: "Produits à présenter", type: "textarea" },
+    { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_TERRAIN, defaut: "prepare" },
+    { nom: "compte_rendu", label: "Compte rendu", type: "textarea" }
+  ],
+  colonnes: [
+    { label: "Date", format: function(r){ return fmtDate(r.date_visite); } },
+    { champ: "personne", label: "Personne" }, { champ: "zone", label: "Zone" }, { champ: "objectif", label: "Objectif" },
+    { champ: "visites", label: "Visites" }, { champ: "produits", label: "Produits" }, { champ: "compte_rendu", label: "Compte rendu" }
+  ],
+  titreLigne: function(r){ return (r.zone || "Sortie terrain") + (r.date_visite ? " — " + fmtDate(r.date_visite) : ""); },
+  badge: function(r){ return [libelle(OPT_STATUT_TERRAIN, r.statut), r.statut === "fait" ? "vert" : (r.statut === "prepare" ? "or" : "")]; }
+};
+var OPT_STATUT_TACHE = [["a_faire","À faire"],["en_cours","En cours"],["fait","Fait"],["annule","Annulé"]];
+var CFG_ASSIGNATIONS = {
+  titre: "Assignations", table: "assignations", sous: "Qui fait quoi, pour quand : tâches assignées et leur suivi.",
+  champs: [
+    { nom: "tache", label: "Tâche", requis: true }, { nom: "assignee_a", label: "Assignée à" },
+    { nom: "echeance", label: "Échéance", type: "date" },
+    { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_TACHE, defaut: "a_faire" },
+    { nom: "details", label: "Détails", type: "textarea" }
+  ],
+  colonnes: [
+    { champ: "assignee_a", label: "Assignée à" },
+    { label: "Échéance", format: function(r){ return fmtDate(r.echeance); } },
+    { champ: "details", label: "Détails" }
+  ],
+  titreLigne: function(r){ return r.tache; },
+  badge: function(r){ return [libelle(OPT_STATUT_TACHE, r.statut), r.statut === "fait" ? "vert" : (r.statut === "a_faire" ? "or" : "")]; }
+};
+var OPT_STATUT_CONTRAT = [["en_discussion","En discussion"],["signe","Signé"],["en_cours","En cours"],["termine","Terminé"],["annule","Annulé"]];
+var CFG_CONTRATS = {
+  titre: "Contrats marketing influenceur", table: "contrats_influenceurs",
+  sous: "Influenceurs : accord, rémunération, dates, statut — et le contrat signé déposé en document privé.",
+  document: { bucket: "documents-bureau", champ: "document_url", dossier: "contrats-influenceurs" },
+  champs: [
+    { nom: "influenceur", label: "Influenceur", requis: true }, { nom: "plateforme", label: "Plateforme (Instagram, TikTok…)" },
+    { nom: "telephone", label: "Téléphone" }, { nom: "remuneration", label: "Rémunération", type: "number" },
+    { nom: "devise", label: "Devise", type: "select", options: [["BIF","BIF"],["USD","USD"],["EUR","EUR"]], defaut: "BIF" },
+    { nom: "date_debut", label: "Début", type: "date" }, { nom: "date_fin", label: "Fin", type: "date" },
+    { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_CONTRAT, defaut: "en_discussion" },
+    { nom: "notes", label: "Notes", type: "textarea" }
+  ],
+  colonnes: [
+    { champ: "plateforme", label: "Plateforme" }, { champ: "telephone", label: "Téléphone" },
+    { label: "Rémunération", format: function(r){ return fmtMontant(r.remuneration, r.devise); } },
+    { label: "Période", format: function(r){ return (r.date_debut ? fmtDate(r.date_debut) : "—") + " → " + (r.date_fin ? fmtDate(r.date_fin) : "—"); } },
+    { champ: "notes", label: "Notes" }
+  ],
+  titreLigne: function(r){ return r.influenceur; },
+  badge: function(r){ return [libelle(OPT_STATUT_CONTRAT, r.statut), r.statut === "en_cours" ? "vert" : (r.statut === "signe" ? "or" : "")]; }
+};
+var CFG_DEPENSES = {
+  titre: "Dépenses", table: "depenses", tri: "date_depense",
+  filtres: [["", "Toutes"], ["fixe", "Fixes"], ["ordinaire", "Ordinaires"]],
+  filtreFn: function(r, f){ return !f || r.type === f; },
+  resume: function(lignes){
+    var totaux = {};
+    lignes.forEach(function(r){ var d = r.devise || "BIF"; totaux[d] = (totaux[d] || 0) + (Number(r.montant) || 0); });
+    var txt = Object.keys(totaux).map(function(d){ return fmtMontant(totaux[d], d); }).join(" · ");
+    return '<p class="total">Total affiché : ' + esc(txt || "0 BIF") + ' (' + lignes.length + ' dépense' + (lignes.length > 1 ? "s" : "") + ')</p>';
+  },
+  champs: [
+    { nom: "type", label: "Type", type: "select", options: [["fixe","Fixe"],["ordinaire","Ordinaire"]], defaut: "ordinaire" },
+    { nom: "libelle", label: "Libellé", requis: true }, { nom: "categorie", label: "Catégorie" },
+    { nom: "montant", label: "Montant", type: "number" },
+    { nom: "devise", label: "Devise", type: "select", options: [["BIF","BIF"],["USD","USD"],["EUR","EUR"]], defaut: "BIF" },
+    { nom: "frequence", label: "Fréquence (si fixe : mensuelle, annuelle…)" },
+    { nom: "date_depense", label: "Date", type: "date" },
+    { nom: "notes", label: "Notes", type: "textarea" }
+  ],
+  colonnes: [
+    { label: "Type", format: function(r){ return r.type === "fixe" ? "Fixe" : "Ordinaire"; } },
+    { champ: "categorie", label: "Catégorie" },
+    { label: "Montant", format: function(r){ return fmtMontant(r.montant, r.devise); } },
+    { champ: "frequence", label: "Fréquence" },
+    { label: "Date", format: function(r){ return fmtDate(r.date_depense); } },
+    { champ: "notes", label: "Notes" }
+  ],
+  titreLigne: function(r){ return r.libelle; },
+  badge: function(r){ return [r.type === "fixe" ? "Fixe" : "Ordinaire", r.type === "fixe" ? "or" : ""]; }
+};
+function rendreDepenses(c){ moduleGenerique(c, CFG_DEPENSES); }
+</script>
+<script>
+"use strict";
+/* =============== DOSSIERS (suivi clients + documents) =============== */
+async function rendreDossiers(c){
+  c.innerHTML = '<h2 class="titre">Dossiers clients</h2>' +
+    '<p class="sous">Ce que le client voit sur la page publique de suivi : ' + SUPABASE_URL.replace("https://mbbcfxsegmelnfhfzyst.supabase.co", "cizasupply.com") + '/suivi-dossier/ — il tape sa référence. Ici, vous faites avancer l\'étape et vous déposez sa facture et les photos de ses échantillons.</p>' +
+    '<div class="outils"><button class="btn" type="button" data-act="nouveau">+ Nouveau dossier</button></div>' +
+    '<div data-zone="form"></div><div data-zone="liste"><p class="vide">Chargement…</p></div>';
+  var zoneForm = c.querySelector('[data-zone="form"]');
+  var zoneListe = c.querySelector('[data-zone="liste"]');
+  var dossiers = [], documents = [];
+  async function charger(){
+    var r1 = await sb.from("suivi_dossiers").select("*").order("maj", { ascending: false });
+    var r2 = await sb.from("suivi_documents").select("*").order("cree_le", { ascending: false });
+    if(r1.error){ zoneListe.innerHTML = '<p class="vide">Lecture refusée : ' + esc(r1.error.message) + '</p>'; return; }
+    dossiers = r1.data || []; documents = r2.data || [];
+    afficher();
+  }
+  function docsDe(ref){ return documents.filter(function(d){ return d.ref === ref; }); }
+  function urlPublique(chemin){ return SUPABASE_URL + "/storage/v1/object/public/dossiers-suivi/" + chemin; }
+  function afficher(){
+    if(!dossiers.length){ zoneListe.innerHTML = '<p class="vide">Aucun dossier. Créez le premier avec le bouton ci-dessus (référence donnée au client, par exemple CS-20261118-0001).</p>'; return; }
+    zoneListe.innerHTML = dossiers.map(function(d){
+      var docs = docsDe(d.ref);
+      var factures = docs.filter(function(x){ return x.type === "facture"; });
+      var echant = docs.filter(function(x){ return x.type === "echantillon"; });
+      var h = '<article class="carte"><h3>' + esc(d.ref) + ' <span class="badge or">Étape ' + d.etape + '/8 — ' + esc(ETAPES[d.etape - 1] || "") + '</span>' + (d.exemple ? ' <span class="badge">Exemple</span>' : '') + '</h3>' +
+        '<div class="meta"><div>Catégorie : <b>' + esc(d.categorie || "—") + '</b></div><div>Mis à jour : <b>' + fmtDate(d.maj) + '</b></div></div>' +
+        '<div class="grille" style="margin-top:10px"><div><label>Étape du dossier</label><select data-etape="' + esc(d.ref) + '">' +
+          ETAPES.map(function(e, i){ return '<option value="' + (i + 1) + '"' + (d.etape === i + 1 ? " selected" : "") + '>' + (i + 1) + ". " + esc(e) + '</option>'; }).join("") + '</select></div>' +
+        '<div><label>Note publique (vue par le client)</label><input type="text" data-note="' + esc(d.ref) + '" value="' + esc(d.note || "") + '" /></div></div>' +
+        '<div class="actions"><button class="btn petit" type="button" data-maj="' + esc(d.ref) + '">Mettre à jour</button></div>' +
+        '<div style="margin-top:12px"><label>Facture du client</label><div class="docs">' +
+          (factures.length ? factures.map(function(f){ return '<span><a href="' + esc(urlPublique(f.url)) + '" target="_blank" rel="noopener">' + esc(f.nom || "Facture") + '</a>' + (profil.role === "fondateur" ? ' <button class="lien" type="button" data-doc-suppr="' + f.id + '">retirer</button>' : "") + '</span>'; }).join(" ") : '<span class="meta">Aucune facture déposée.</span>') +
+        '</div><label class="btn petit secondaire" style="cursor:pointer;margin-top:6px">Déposer la facture (PDF)<input type="file" accept=".pdf,.jpg,.jpeg,.png" class="caché" data-depot-facture="' + esc(d.ref) + '" /></label></div>' +
+        '<div style="margin-top:12px"><label>Photos des échantillons</label><div class="docs">' +
+          (echant.length ? echant.map(function(f){ return '<span><a href="' + esc(urlPublique(f.url)) + '" target="_blank" rel="noopener"><img src="' + esc(urlPublique(f.url)) + '" alt="" /></a>' + (profil.role === "fondateur" ? '<br /><button class="lien" type="button" data-doc-suppr="' + f.id + '">retirer</button>' : "") + '</span>'; }).join("") : '<span class="meta">Aucune photo déposée.</span>') +
+        '</div><label class="btn petit secondaire" style="cursor:pointer;margin-top:6px">Ajouter des photos<input type="file" accept="image/*" multiple class="caché" data-depot-echant="' + esc(d.ref) + '" /></label></div>' +
+      '</article>';
+      return h;
+    }).join("");
+    zoneListe.querySelectorAll("[data-maj]").forEach(function(b){ b.addEventListener("click", async function(){
+      var ref = b.dataset.maj;
+      var etape = Number(zoneListe.querySelector('[data-etape="' + CSS.escape(ref) + '"]').value);
+      var note = zoneListe.querySelector('[data-note="' + CSS.escape(ref) + '"]').value;
+      var r = await sb.from("suivi_dossiers").update({ etape: etape, note: note || null }).eq("ref", ref);
+      if(r.error) alert("Mise à jour refusée : " + r.error.message); else { alert("Dossier " + ref + " mis à jour : le client voit maintenant l'étape " + etape + "."); charger(); }
+    }); });
+    zoneListe.querySelectorAll("[data-doc-suppr]").forEach(function(b){ b.addEventListener("click", async function(){
+      if(!confirm("Retirer ce document du dossier ?")) return;
+      var doc = documents.find(function(x){ return x.id === b.dataset.docSuppr; });
+      if(doc) await sb.storage.from("dossiers-suivi").remove([doc.url]);
+      var r = await sb.from("suivi_documents").delete().eq("id", b.dataset.docSuppr);
+      if(r.error) alert("Retrait refusé : " + r.error.message); else charger();
+    }); });
+    async function deposer(ref, type, fichiers){
+      for(var i = 0; i < fichiers.length; i++){
+        var f = fichiers[i];
+        var ext = (f.name.split(".").pop() || "bin").toLowerCase();
+        var chemin = ref + "/" + Date.now() + "-" + Math.random().toString(36).slice(2, 9) + "." + ext;
+        var up = await sb.storage.from("dossiers-suivi").upload(chemin, f);
+        if(up.error){ alert("Dépôt refusé : " + up.error.message); return; }
+        var ins = await sb.from("suivi_documents").insert({ ref: ref, type: type, url: chemin, nom: f.name });
+        if(ins.error){ alert("Enregistrement refusé : " + ins.error.message); return; }
+      }
+      charger();
+    }
+    zoneListe.querySelectorAll("[data-depot-facture]").forEach(function(inp){ inp.addEventListener("change", function(){ if(inp.files.length) deposer(inp.dataset.depotFacture, "facture", inp.files); }); });
+    zoneListe.querySelectorAll("[data-depot-echant]").forEach(function(inp){ inp.addEventListener("change", function(){ if(inp.files.length) deposer(inp.dataset.depotEchant, "echantillon", inp.files); }); });
+  }
+  c.querySelector('[data-act="nouveau"]').addEventListener("click", function(){
+    zoneForm.innerHTML = '<form class="formulaire"><div class="grille">' +
+      '<div><label>Référence du dossier *</label><input name="ref" required placeholder="CS-20261118-0001" /></div>' +
+      '<div><label>Catégorie</label><input name="categorie" placeholder="Ex. Machines agricoles" /></div>' +
+      '<div><label>Étape de départ</label><select name="etape">' + ETAPES.map(function(e, i){ return '<option value="' + (i + 1) + '">' + (i + 1) + ". " + esc(e) + '</option>'; }).join("") + '</select></div>' +
+      '<div><label>Note publique</label><input name="note" /></div></div>' +
+      '<div style="margin-top:12px;display:flex;gap:8px"><button class="btn" type="submit">Créer le dossier</button><button class="btn secondaire" type="button" data-act="annuler">Annuler</button></div></form>';
+    var form = zoneForm.querySelector("form");
+    form.addEventListener("submit", async function(e){
+      e.preventDefault();
+      var r = await sb.from("suivi_dossiers").insert({ ref: form.elements.ref.value.trim(), categorie: form.elements.categorie.value || null, etape: Number(form.elements.etape.value), note: form.elements.note.value || null });
+      if(r.error){ alert("Création refusée : " + r.error.message); return; }
+      zoneForm.innerHTML = ""; charger();
+    });
+    zoneForm.querySelector('[data-act="annuler"]').addEventListener("click", function(){ zoneForm.innerHTML = ""; });
+  });
+  charger();
+}
+
+/* =============== PRÉSENCES (liste + fiche du mois) =============== */
+var OPT_PRESENCE = [["present","Présent"],["absent","Absent"],["retard","Retard"],["conge","Congé"]];
+var CFG_PRESENCES = {
+  titre: "Fiche de présence", table: "presences", tri: "date_jour",
+  sous: "Notez la présence chaque jour. La fiche du mois complète est plus bas, prête à imprimer.",
+  champs: [
+    { nom: "date_jour", label: "Jour", type: "date" }, { nom: "personne", label: "Personne", requis: true },
+    { nom: "statut", label: "Statut", type: "select", options: OPT_PRESENCE, defaut: "present" },
+    { nom: "heure_arrivee", label: "Arrivée (ex. 08:00)" }, { nom: "heure_depart", label: "Départ (ex. 17:00)" },
+    { nom: "notes", label: "Notes", type: "textarea" }
+  ],
+  colonnes: [
+    { label: "Jour", format: function(r){ return fmtDate(r.date_jour); } },
+    { label: "Horaires", format: function(r){ return [r.heure_arrivee, r.heure_depart].filter(Boolean).join(" → ") || "—"; } },
+    { champ: "notes", label: "Notes" }
+  ],
+  titreLigne: function(r){ return r.personne; },
+  badge: function(r){ return [libelle(OPT_PRESENCE, r.statut), r.statut === "present" ? "vert" : (r.statut === "absent" ? "rouge" : "or")]; }
+};
+function rendrePresences(c){
+  c.innerHTML = '<div data-zone="gen"></div>' +
+    '<h2 class="titre" style="margin-top:28px">Fiche du mois</h2><p class="sous">Le tableau complet du mois, une ligne par personne. Prêt à imprimer ou à enregistrer en PDF.</p>' +
+    '<div class="outils"><input type="month" id="mois-fiche" style="max-width:210px" value="' + aujourdhui().slice(0, 7) + '" />' +
+    '<button class="btn" type="button" id="btn-fiche">Afficher la fiche</button>' +
+    '<button class="btn secondaire" type="button" id="btn-fiche-print">Imprimer / PDF</button></div><div data-zone="fiche"></div>';
+  moduleGenerique(c.querySelector('[data-zone="gen"]'), CFG_PRESENCES);
+  var derniereFiche = null;
+  document.getElementById("btn-fiche").addEventListener("click", async function(){
+    var mois = document.getElementById("mois-fiche").value; if(!mois) return;
+    var debut = mois + "-01";
+    var fin = new Date(mois + "-01T12:00:00"); fin.setMonth(fin.getMonth() + 1); fin.setDate(0);
+    var finStr = fin.toISOString().slice(0, 10);
+    var r = await sb.from("presences").select("*").gte("date_jour", debut).lte("date_jour", finStr).limit(1000);
+    if(r.error){ alert("Lecture refusée : " + r.error.message); return; }
+    var lignes = r.data || [];
+    var personnes = [];
+    lignes.forEach(function(l){ if(personnes.indexOf(l.personne) < 0) personnes.push(l.personne); });
+    personnes.sort();
+    var nbJours = fin.getDate();
+    var ini = { present: "P", absent: "A", retard: "R", conge: "C" };
+    var entete = "<tr><th class='nom'>Personne</th>" + Array.from({length: nbJours}, function(_, i){ return "<th>" + (i + 1) + "</th>"; }).join("") + "</tr>";
+    var corps = personnes.map(function(p){
+      var cellules = "";
+      for(var j = 1; j <= nbJours; j++){
+        var jour = mois + "-" + String(j).padStart(2, "0");
+        var l = lignes.find(function(x){ return x.personne === p && x.date_jour === jour; });
+        cellules += "<td>" + (l ? ini[l.statut] || "" : "") + "</td>";
+      }
+      return "<tr><td class='nom'>" + esc(p) + "</td>" + cellules + "</tr>";
+    }).join("");
+    derniereFiche = { mois: mois, entete: entete, corps: corps };
+    c.querySelector('[data-zone="fiche"]').innerHTML = personnes.length
+      ? '<div style="overflow-x:auto"><table class="fiche">' + entete + corps + '</table></div><p class="meta" style="font-size:13px;color:var(--muted)">P = présent · A = absent · R = retard · C = congé</p>'
+      : '<p class="vide">Aucune présence notée ce mois-ci.</p>';
+  });
+  document.getElementById("btn-fiche-print").addEventListener("click", function(){
+    if(!derniereFiche){ alert("Affichez d'abord la fiche du mois."); return; }
+    imprimer("Fiche de présence — " + derniereFiche.mois, "<h1>Fiche de présence — " + esc(derniereFiche.mois) + "</h1><table>" + derniereFiche.entete.replace(/class='nom'/g, "") + derniereFiche.corps.replace(/class='nom'/g, "") + "</table><p>P = présent · A = absent · R = retard · C = congé</p>");
+  });
+}
+
+/* =============== EMPLOYÉS (fiches, contrats, cartes, paies) =============== */
+var OPT_STATUT_EMP = [["actif","Actif"],["demission","Démission"],["renvoye","Renvoyé"],["fin_contrat","Fin de contrat"]];
+var OPT_STATUT_CONTRAT_EMP = [["envoye","Envoyé"],["signe","Signé"],["depose","Déposé"],["valide","Validé"]];
+var OPT_STATUT_PAIE = [["prepare","Préparée"],["valide","Validée"],["paye","Payée"]];
+async function urlSigneePrivee(chemin){ var r = await sb.storage.from("documents-bureau").createSignedUrl(chemin, 600); return r.data ? r.data.signedUrl : null; }
+async function rendreEmployes(c){
+  c.innerHTML = '<h2 class="titre">Employés</h2><p class="sous">Fiche de chaque employé, ses contrats, sa carte d\'employé et ses fiches de paie — comme dans CizaLogistics. Statuts : actif, démission, renvoyé, fin de contrat.</p>' +
+    '<div class="outils"><button class="btn" type="button" data-act="nouveau">+ Nouvel employé</button></div>' +
+    '<div data-zone="form"></div><div data-zone="liste"><p class="vide">Chargement…</p></div>';
+  var zoneForm = c.querySelector('[data-zone="form"]');
+  var zoneListe = c.querySelector('[data-zone="liste"]');
+  var employes = [];
+  async function charger(){
+    var r = await sb.from("employes").select("*").order("cree_le", { ascending: false });
+    if(r.error){ zoneListe.innerHTML = '<p class="vide">Lecture refusée : ' + esc(r.error.message) + '</p>'; return; }
+    employes = r.data || [];
+    zoneListe.innerHTML = employes.length ? employes.map(function(e){
+      return '<article class="carte"><h3>' + esc(e.nom) + ' <span class="badge">' + esc(e.numero || "") + '</span> <span class="badge ' + (e.statut === "actif" ? "vert" : "rouge") + '">' + esc(libelle(OPT_STATUT_EMP, e.statut)) + '</span></h3>' +
+        '<div class="meta"><div>Poste : <b>' + esc(e.poste || "—") + '</b></div><div>Téléphone : <b>' + esc(e.telephone || "—") + '</b></div><div>Salaire : <b>' + esc(fmtMontant(e.salaire, e.devise)) + '</b></div></div>' +
+        '<div class="actions"><button class="btn petit" type="button" data-ouvrir="' + e.id + '">Ouvrir la fiche</button></div></article>';
+    }).join("") : '<p class="vide">Aucun employé enregistré.</p>';
+    zoneListe.querySelectorAll("[data-ouvrir]").forEach(function(b){ b.addEventListener("click", function(){ ouvrirEmploye(b.dataset.ouvrir); }); });
+  }
+  function formulaireEmploye(record){
+    var champs = [
+      { nom: "nom", label: "Nom complet", requis: true }, { nom: "poste", label: "Poste" },
+      { nom: "telephone", label: "Téléphone" }, { nom: "email", label: "E-mail" },
+      { nom: "date_embauche", label: "Date d'embauche", type: "date" },
+      { nom: "salaire", label: "Salaire", type: "number" },
+      { nom: "devise", label: "Devise", type: "select", options: [["BIF","BIF"],["USD","USD"],["EUR","EUR"]], defaut: "BIF" },
+      { nom: "statut", label: "Statut", type: "select", options: OPT_STATUT_EMP, defaut: "actif" },
+      { nom: "notes", label: "Notes", type: "textarea" }
+    ];
+    zoneForm.innerHTML = '<form class="formulaire"><div class="grille">' + champs.map(function(f){ return '<div class="' + (f.type === "textarea" ? "plein" : "") + '"><label>' + esc(f.label) + '</label>' + champHTML(f, record ? record[f.nom] : (f.defaut || "")) + '</div>'; }).join("") +
+      '</div><div style="margin-top:12px;display:flex;gap:8px"><button class="btn" type="submit">' + (record ? "Enregistrer" : "Ajouter l'employé") + '</button><button class="btn secondaire" type="button" data-act="annuler">Annuler</button></div></form>';
+    var form = zoneForm.querySelector("form");
+    form.addEventListener("submit", async function(e){
+      e.preventDefault();
+      var obj = lireFormulaire(form, champs);
+      var r = record ? await sb.from("employes").update(obj).eq("id", record.id) : await sb.from("employes").insert(obj);
+      if(r.error){ alert("Enregistrement refusé : " + r.error.message); return; }
+      zoneForm.innerHTML = ""; charger();
+    });
+    zoneForm.querySelector('[data-act="annuler"]').addEventListener("click", function(){ zoneForm.innerHTML = ""; });
+  }
+  c.querySelector('[data-act="nouveau"]').addEventListener("click", function(){ formulaireEmploye(null); });
+
+  async function ouvrirEmploye(id){
+    var e = employes.find(function(x){ return x.id === id; }); if(!e) return;
+    var rc = await sb.from("contrats_employes").select("*").eq("employe_id", id).order("cree_le", { ascending: false });
+    var rp = await sb.from("paies").select("*").eq("employe_id", id).order("cree_le", { ascending: false });
+    var contrats = rc.data || [], paies = rp.data || [];
+    var photoUrl = e.photo_url ? await urlSigneePrivee(e.photo_url) : null;
+    zoneListe.innerHTML = '<button class="btn petit secondaire" type="button" data-act="retour">← Tous les employés</button>' +
+      '<article class="carte" style="margin-top:12px"><h3>' + esc(e.nom) + ' <span class="badge">' + esc(e.numero || "") + '</span></h3>' +
+      (photoUrl ? '<img src="' + esc(photoUrl) + '" alt="" style="width:96px;height:96px;object-fit:cover;border-radius:14px;border:1px solid var(--border)" />' : '') +
+      '<div class="meta"><div>Poste : <b>' + esc(e.poste || "—") + '</b></div><div>Téléphone : <b>' + esc(e.telephone || "—") + '</b> · E-mail : <b>' + esc(e.email || "—") + '</b></div>' +
+      '<div>Embauche : <b>' + fmtDate(e.date_embauche) + '</b> · Salaire : <b>' + esc(fmtMontant(e.salaire, e.devise)) + '</b> · Statut : <b>' + esc(libelle(OPT_STATUT_EMP, e.statut)) + '</b></div>' +
+      (e.notes ? '<div>Notes : ' + esc(e.notes) + '</div>' : '') + '</div>' +
+      '<div class="actions"><button class="btn petit secondaire" type="button" data-act="modif">Modifier la fiche</button>' +
+      '<label class="btn petit secondaire" style="cursor:pointer">Photo de l\'employé<input type="file" accept="image/*" class="caché" data-photo /></label>' +
+      '<button class="btn petit" type="button" data-act="carte">Carte d\'employé (imprimer)</button></div></article>' +
+      '<h2 class="titre" style="margin-top:22px">Contrats</h2>' +
+      (contrats.length ? contrats.map(function(ct){
+        return '<article class="carte"><h3>' + esc(ct.type || "Contrat") + ' <span class="badge or">' + esc(libelle(OPT_STATUT_CONTRAT_EMP, ct.statut)) + '</span></h3>' +
+          '<div class="meta"><div>Envoyé le : <b>' + fmtDate(ct.date_envoi) + '</b></div>' + (ct.notes ? '<div>' + esc(ct.notes) + '</div>' : '') + '</div>' +
+          '<div class="actions">' + (ct.document_url ? '<button class="btn petit secondaire" type="button" data-ct-voir="' + ct.id + '">Voir le contrat</button>' : '') +
+          '<label class="btn petit secondaire" style="cursor:pointer">Déposer le contrat<input type="file" class="caché" data-ct-depot="' + ct.id + '" /></label></div></article>';
+      }).join("") : '<p class="vide">Aucun contrat.</p>') +
+      '<form class="formulaire" data-form="contrat"><div class="grille"><div><label>Type de contrat</label><input name="type" placeholder="CDI, CDD, stage…" /></div>' +
+      '<div><label>Statut</label>' + champHTML({ nom: "statut", type: "select", options: OPT_STATUT_CONTRAT_EMP }, "envoye") + '</div>' +
+      '<div><label>Date d\'envoi</label><input type="date" name="date_envoi" value="' + aujourdhui() + '" /></div>' +
+      '<div><label>Notes</label><input name="notes" /></div></div><button class="btn" type="submit" style="margin-top:10px">Ajouter le contrat</button></form>' +
+      '<h2 class="titre" style="margin-top:22px">Paies et fiches de paie</h2>' +
+      (paies.length ? paies.map(function(p){
+        return '<article class="carte"><h3>' + esc(p.mois) + ' — ' + esc(fmtMontant(p.montant, p.devise)) + ' <span class="badge ' + (p.statut === "paye" ? "vert" : "or") + '">' + esc(libelle(OPT_STATUT_PAIE, p.statut)) + '</span></h3>' +
+          '<div class="meta"><div>Date de paiement : <b>' + fmtDate(p.date_paiement) + '</b></div>' + (p.notes ? '<div>' + esc(p.notes) + '</div>' : '') + '</div>' +
+          '<div class="actions"><button class="btn petit" type="button" data-paie-print="' + p.id + '">Fiche de paie (imprimer)</button></div></article>';
+      }).join("") : '<p class="vide">Aucune paie enregistrée.</p>') +
+      '<form class="formulaire" data-form="paie"><div class="grille"><div><label>Mois (AAAA-MM)</label><input name="mois" required value="' + aujourdhui().slice(0, 7) + '" /></div>' +
+      '<div><label>Montant</label><input type="number" step="any" name="montant" value="' + (e.salaire || "") + '" /></div>' +
+      '<div><label>Statut</label>' + champHTML({ nom: "statut", type: "select", options: OPT_STATUT_PAIE }, "prepare") + '</div>' +
+      '<div><label>Date de paiement</label><input type="date" name="date_paiement" /></div></div><button class="btn" type="submit" style="margin-top:10px">Ajouter la paie</button></form>';
+    zoneListe.querySelector('[data-act="retour"]').addEventListener("click", charger);
+    zoneListe.querySelector('[data-act="modif"]').addEventListener("click", function(){ formulaireEmploye(e); zoneForm.scrollIntoView({ behavior: "smooth" }); });
+    zoneListe.querySelector("[data-photo]").addEventListener("change", async function(ev){
+      var f = ev.target.files[0]; if(!f) return;
+      var chemin = "employes/" + e.id + "/photo-" + Date.now() + "." + (f.name.split(".").pop() || "jpg");
+      var up = await sb.storage.from("documents-bureau").upload(chemin, f, { upsert: true });
+      if(up.error){ alert("Dépôt refusé : " + up.error.message); return; }
+      var r = await sb.from("employes").update({ photo_url: chemin }).eq("id", e.id);
+      if(r.error) alert("Enregistrement refusé : " + r.error.message); else { e.photo_url = chemin; ouvrirEmploye(id); }
+    });
+    zoneListe.querySelectorAll("[data-ct-voir]").forEach(function(b){ b.addEventListener("click", async function(){
+      var ct = contrats.find(function(x){ return x.id === b.dataset.ctVoir; });
+      var u = await urlSigneePrivee(ct.document_url);
+      if(u) window.open(u, "_blank"); else alert("Document introuvable.");
+    }); });
+    zoneListe.querySelectorAll("[data-ct-depot]").forEach(function(inp){ inp.addEventListener("change", async function(){
+      var f = inp.files[0]; if(!f) return;
+      var chemin = "contrats-employes/" + inp.dataset.ctDepot + "/" + Date.now() + "-" + f.name.replace(/[^\w.\-]+/g, "_");
+      var up = await sb.storage.from("documents-bureau").upload(chemin, f);
+      if(up.error){ alert("Dépôt refusé : " + up.error.message); return; }
+      var r = await sb.from("contrats_employes").update({ document_url: chemin }).eq("id", inp.dataset.ctDepot);
+      if(r.error) alert("Enregistrement refusé : " + r.error.message); else ouvrirEmploye(id);
+    }); });
+    zoneListe.querySelectorAll("[data-paie-print]").forEach(function(b){ b.addEventListener("click", function(){
+      var p = paies.find(function(x){ return x.id === b.dataset.paiePrint; });
+      imprimer("Fiche de paie", "<h1>Fiche de paie — " + esc(p.mois) + "</h1>" + tableImpression(["Élément", "Détail"], [
+        ["Employé", e.nom], ["Numéro", e.numero || ""], ["Poste", e.poste || ""], ["Mois", p.mois],
+        ["Montant", fmtMontant(p.montant, p.devise)], ["Statut", libelle(OPT_STATUT_PAIE, p.statut)], ["Date de paiement", fmtDate(p.date_paiement)]
+      ]) + '<p style="margin-top:18px">Ciza Supply, division de Ciza Group | Burundi</p>');
+    }); });
+    zoneListe.querySelector('[data-act="carte"]').addEventListener("click", async function(){
+      var u = e.photo_url ? await urlSigneePrivee(e.photo_url) : null;
+      imprimer("Carte d'employé", '<div class="carte-emp"><div style="font-weight:900;color:#0A1E3C;font-size:17px">CIZA SUPPLY</div>' +
+        '<div style="font-size:11px;color:#555">Ciza Supply, division de Ciza Group | Burundi</div>' +
+        (u ? '<img src="' + esc(u) + '" style="width:90px;height:90px;object-fit:cover;border-radius:10px;margin:10px 0" />' : "") +
+        '<div style="font-size:16px;font-weight:800">' + esc(e.nom) + '</div><div>' + esc(e.poste || "") + '</div>' +
+        '<div style="margin-top:6px;font-weight:700">' + esc(e.numero || "") + '</div>' +
+        '<div style="font-size:12px;color:#555">Embauche : ' + fmtDate(e.date_embauche) + '</div></div>');
+    });
+    zoneListe.querySelector('[data-form="contrat"]').addEventListener("submit", async function(ev){
+      ev.preventDefault();
+      var f = ev.target;
+      var r = await sb.from("contrats_employes").insert({ employe_id: id, type: f.elements.type.value || null, statut: f.elements.statut.value, date_envoi: f.elements.date_envoi.value || null, notes: f.elements.notes.value || null });
+      if(r.error) alert("Ajout refusé : " + r.error.message); else ouvrirEmploye(id);
+    });
+    zoneListe.querySelector('[data-form="paie"]').addEventListener("submit", async function(ev){
+      ev.preventDefault();
+      var f = ev.target;
+      var r = await sb.from("paies").insert({ employe_id: id, mois: f.elements.mois.value, montant: parseFloat(f.elements.montant.value) || 0, statut: f.elements.statut.value, date_paiement: f.elements.date_paiement.value || null });
+      if(r.error) alert("Ajout refusé : " + r.error.message); else ouvrirEmploye(id);
+    });
+  }
+  charger();
+}
+
+/* =============== RAPPORTS (chiffres automatiques + rédaction) =============== */
+function bornesPeriode(type, dateRef){
+  var d = new Date(dateRef + "T12:00:00");
+  if(type === "journalier") return { debut: dateRef, fin: dateRef, periode: "Journée du " + fmtDate(dateRef) };
+  if(type === "annuel"){ var a = d.getFullYear(); return { debut: a + "-01-01", fin: a + "-12-31", periode: "Année " + a }; }
+  var jour = d.getDay(); var diff = (jour + 6) % 7;
+  var lundi = new Date(d); lundi.setDate(d.getDate() - diff);
+  var dimanche = new Date(lundi); dimanche.setDate(lundi.getDate() + 6);
+  var f = function(x){ return x.toISOString().slice(0, 10); };
+  return { debut: f(lundi), fin: f(dimanche), periode: "Semaine du " + fmtDate(f(lundi)) + " au " + fmtDate(f(dimanche)) };
+}
+async function rendreRapports(c){
+  c.innerHTML = '<h2 class="titre">Rapports</h2><p class="sous">Choisissez le type et la date : les chiffres se remplissent tout seuls depuis les modules (dossiers, clients, rendez-vous, dépenses, présences, paies). Vous ajoutez votre texte, puis vous enregistrez. Impression et PDF sur chaque rapport.</p>' +
+    '<form class="formulaire"><div class="grille"><div><label>Type de rapport</label><select id="rp-type"><option value="journalier">Journalier</option><option value="hebdomadaire">Hebdomadaire</option><option value="annuel">Annuel</option></select></div>' +
+    '<div><label>Date de référence</label><input type="date" id="rp-date" value="' + aujourdhui() + '" /></div></div>' +
+    '<div data-zone="calcul"></div></form><div data-zone="liste"><p class="vide">Chargement…</p></div>';
+  var zoneListe = c.querySelector('[data-zone="liste"]');
+  var zoneCalcul = c.querySelector('[data-zone="calcul"]');
+  async function chargerListe(){
+    var r = await sb.from("rapports").select("*").order("cree_le", { ascending: false }).limit(100);
+    if(r.error){ zoneListe.innerHTML = '<p class="vide">Lecture refusée : ' + esc(r.error.message) + '</p>'; return; }
+    var lignes = r.data || [];
+    zoneListe.innerHTML = lignes.length ? lignes.map(function(rp){
+      return '<article class="carte"><h3>' + esc(rp.periode || rp.type) + ' <span class="badge">' + esc(rp.type) + '</span></h3>' +
+        '<div class="meta"><div>Enregistré le ' + fmtDate(rp.cree_le) + (rp.auteur ? ' par ' + esc(rp.auteur) : '') + '</div></div>' +
+        '<div class="actions"><button class="btn petit" type="button" data-rp-print="' + rp.id + '">Imprimer / PDF</button>' +
+        '<button class="btn petit secondaire" type="button" data-rp-excel="' + rp.id + '">Export Excel</button>' +
+        (profil.role === "fondateur" ? '<button class="btn petit danger" type="button" data-rp-suppr="' + rp.id + '">Supprimer</button>' : "") + '</div></article>';
+    }).join("") : '<p class="vide">Aucun rapport enregistré.</p>';
+    zoneListe.querySelectorAll("[data-rp-print]").forEach(function(b){ b.addEventListener("click", function(){
+      var rp = lignes.find(function(x){ return x.id === b.dataset.rpPrint; });
+      var ch = rp.chiffres || {};
+      var lignesT = Object.keys(ch).map(function(k){ return [k, ch[k]]; });
+      imprimer("Rapport — " + (rp.periode || ""), "<h1>Rapport " + esc(rp.type) + " — " + esc(rp.periode || "") + "</h1>" + tableImpression(["Indicateur", "Valeur"], lignesT) + "<h2>Compte rendu</h2><p>" + esc(rp.contenu || "").replace(/\n/g, "<br />") + "</p>");
+    }); });
+    zoneListe.querySelectorAll("[data-rp-excel]").forEach(function(b){ b.addEventListener("click", function(){
+      var rp = lignes.find(function(x){ return x.id === b.dataset.rpExcel; });
+      var ch = rp.chiffres || {};
+      exporterExcel("Rapport-" + (rp.periode || rp.type) + ".xlsx", Object.keys(ch).map(function(k){ var o = {}; o["Indicateur"] = k; o["Valeur"] = ch[k]; return o; }));
+    }); });
+    zoneListe.querySelectorAll("[data-rp-suppr]").forEach(function(b){ b.addEventListener("click", async function(){
+      if(!confirm("Supprimer ce rapport ?")) return;
+      var r = await sb.from("rapports").delete().eq("id", b.dataset.rpSuppr);
+      if(r.error) alert("Suppression refusée : " + r.error.message); else chargerListe();
+    }); });
+  }
+  async function calculer(){
+    var type = document.getElementById("rp-type").value;
+    var dateRef = document.getElementById("rp-date").value || aujourdhui();
+    var b = bornesPeriode(type, dateRef);
+    zoneCalcul.innerHTML = '<p class="vide">Calcul des chiffres…</p>';
+    var chiffres = {};
+    var dossiers = await sb.from("suivi_dossiers").select("etape, maj");
+    if(dossiers.data){
+      ETAPES.forEach(function(e, i){ var n = dossiers.data.filter(function(d){ return d.etape === i + 1; }).length; if(n) chiffres["Dossiers à l'étape " + (i + 1) + " (" + e + ")"] = n; });
+      chiffres["Dossiers mis à jour dans la période"] = dossiers.data.filter(function(d){ return d.maj >= b.debut && d.maj.slice(0, 10) <= b.fin; }).length;
+    }
+    var clients = await sb.from("clients").select("id", { count: "exact", head: true }).gte("cree_le", b.debut).lte("cree_le", b.fin + "T23:59:59");
+    chiffres["Nouveaux clients"] = clients.count || 0;
+    var rdv = await sb.from("rendez_vous").select("id", { count: "exact", head: true }).gte("cree_le", b.debut).lte("cree_le", b.fin + "T23:59:59");
+    chiffres["Rendez-vous reçus"] = rdv.count || 0;
+    var taches = await sb.from("assignations").select("id", { count: "exact", head: true }).eq("statut", "fait");
+    chiffres["Assignations terminées (total)"] = taches.count || 0;
+    var dep = await sb.from("depenses").select("montant, devise").gte("date_depense", b.debut).lte("date_depense", b.fin);
+    if(dep.data){ var tot = {}; dep.data.forEach(function(d){ tot[d.devise || "BIF"] = (tot[d.devise || "BIF"] || 0) + (Number(d.montant) || 0); }); Object.keys(tot).forEach(function(k){ chiffres["Dépenses (" + k + ")"] = tot[k]; }); }
+    var pres = await sb.from("presences").select("id", { count: "exact", head: true }).eq("statut", "present").gte("date_jour", b.debut).lte("date_jour", b.fin);
+    chiffres["Présences notées"] = pres.count || 0;
+    var paies = await sb.from("paies").select("montant, devise").eq("statut", "paye").gte("date_paiement", b.debut).lte("date_paiement", b.fin);
+    if(paies.data){ var totp = {}; paies.data.forEach(function(p){ totp[p.devise || "BIF"] = (totp[p.devise || "BIF"] || 0) + (Number(p.montant) || 0); }); Object.keys(totp).forEach(function(k){ chiffres["Paies payées (" + k + ")"] = totp[k]; }); }
+    var resumeAuto = Object.keys(chiffres).map(function(k){ return k + " : " + chiffres[k]; }).join(". ") + ".";
+    zoneCalcul.innerHTML = '<div style="margin-top:14px"><label>Chiffres de la période — ' + esc(b.periode) + '</label>' +
+      '<div class="meta" style="font-size:14px;line-height:1.7">' + Object.keys(chiffres).map(function(k){ return '<div>' + esc(k) + ' : <b>' + esc(chiffres[k]) + '</b></div>'; }).join("") + '</div>' +
+      '<label style="margin-top:12px">Votre texte (compte rendu, faits marquants, points à suivre)</label>' +
+      '<textarea id="rp-contenu">' + esc(resumeAuto) + '</textarea>' +
+      '<button class="btn" type="button" id="rp-save" style="margin-top:10px">Enregistrer le rapport</button></div>';
+    document.getElementById("rp-save").addEventListener("click", async function(){
+      var r = await sb.from("rapports").insert({ type: type, periode: b.periode, contenu: document.getElementById("rp-contenu").value, chiffres: chiffres, auteur: profil.email });
+      if(r.error){ alert("Enregistrement refusé : " + r.error.message); return; }
+      zoneCalcul.innerHTML = '<div class="info">Rapport enregistré : ' + esc(b.periode) + '.</div>';
+      chargerListe();
+    });
+  }
+  c.querySelector("form").addEventListener("submit", function(e){ e.preventDefault(); });
+  document.getElementById("rp-type").addEventListener("change", calculer);
+  document.getElementById("rp-date").addEventListener("change", calculer);
+  chargerListe(); calculer();
+}
+
+/* =============== COMPTES (fondateur seulement) =============== */
+async function rendreComptes(c){
+  c.innerHTML = '<h2 class="titre">Comptes et accès</h2><p class="sous">Un compte apparaît ici après la première connexion de la personne. Activez le compte et choisissez le rôle : <b>Fondateur</b> = accès complet ; <b>Employeur</b> = les opérations, limité comme d\'habitude. Désactiver un compte coupe son accès tout de suite — démission ou renvoi, sans jamais toucher à la base.</p><div data-zone="liste"><p class="vide">Chargement…</p></div>';
+  var zone = c.querySelector('[data-zone="liste"]');
+  async function charger(){
+    var r = await sb.from("profils").select("*").order("cree_le", { ascending: true });
+    if(r.error){ zone.innerHTML = '<p class="vide">Lecture refusée : ' + esc(r.error.message) + '</p>'; return; }
+    var lignes = r.data || [];
+    zone.innerHTML = lignes.length ? lignes.map(function(p){
+      return '<article class="carte"><h3>' + esc(p.nom || p.email || "Compte") + ' <span class="badge ' + (p.actif ? "vert" : "rouge") + '">' + (p.actif ? "Actif" : "Inactif") + '</span></h3>' +
+        '<div class="meta"><div>E-mail : <b>' + esc(p.email || "—") + '</b></div><div>Créé le ' + fmtDate(p.cree_le) + '</div></div>' +
+        '<div class="grille" style="margin-top:10px"><div><label>Rôle</label>' + champHTML({ nom: "role", type: "select", options: [["fondateur","Fondateur"],["employeur","Employeur"]] }, p.role) + '</div>' +
+        '<div><label>Accès</label><select data-actif="' + p.id + '"><option value="true"' + (p.actif ? " selected" : "") + '>Actif</option><option value="false"' + (!p.actif ? " selected" : "") + '>Inactif (accès coupé)</option></select></div></div>' +
+        '<div class="actions"><button class="btn petit" type="button" data-save="' + p.id + '">Enregistrer</button></div></article>';
+    }).join("") : '<p class="vide">Aucun compte pour le moment.</p>';
+    zone.querySelectorAll("[data-save]").forEach(function(b){ b.addEventListener("click", async function(){
+      var card = b.closest(".carte");
+      var role = card.querySelector('[name="role"]').value;
+      var actif = card.querySelector("[data-actif]").value === "true";
+      var r = await sb.from("profils").update({ role: role, actif: actif }).eq("id", b.dataset.save);
+      if(r.error) alert("Enregistrement refusé : " + r.error.message); else { alert("Compte mis à jour."); charger(); }
+    }); });
+  }
+  charger();
+}
+
+/* =============== Démarrage =============== */
+demarrer();
+</script>
+</body>
+</html>
