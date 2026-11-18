@@ -308,21 +308,21 @@ async function demarrer(sessionConnue){
 
 /* =============== Navigation =============== */
 var MODULES = [
-  { cle: "dossiers",     titre: "Dossiers",     rendre: rendreDossiers },
-  { cle: "devis",        titre: "Devis",        rendre: rendreDevis },
-  { cle: "commandes",    titre: "Commandes",    rendre: rendreCommandes },
-  { cle: "livraisons",   titre: "Livraisons",   rendre: rendreLivraisons },
+  { cle: "dossiers",     titre: "Dossiers",     rendre: function(c){ return rendreDossiers(c); } },
+  { cle: "devis",        titre: "Devis",        rendre: function(c){ return rendreDevis(c); } },
+  { cle: "commandes",    titre: "Commandes",    rendre: function(c){ return rendreCommandes(c); } },
+  { cle: "livraisons",   titre: "Livraisons",   rendre: function(c){ return rendreLivraisons(c); } },
   { cle: "rendezvous",   titre: "Rendez-vous",  rendre: function(c){ moduleGenerique(c, CFG_RDV); } },
   { cle: "clients",      titre: "Clients",      rendre: function(c){ moduleGenerique(c, CFG_CLIENTS); } },
   { cle: "partenaires",  titre: "Partenaires",  rendre: function(c){ moduleGenerique(c, CFG_PARTENAIRES); } },
   { cle: "terrain",      titre: "Terrain",      rendre: function(c){ moduleGenerique(c, CFG_TERRAIN); } },
   { cle: "assignations", titre: "Assignations", rendre: function(c){ moduleGenerique(c, CFG_ASSIGNATIONS); } },
   { cle: "contrats",     titre: "Contrats influenceurs", rendre: function(c){ moduleGenerique(c, CFG_CONTRATS); } },
-  { cle: "depenses",     titre: "Dépenses",     rendre: rendreDepenses },
-  { cle: "presences",    titre: "Présences",    rendre: rendrePresences },
-  { cle: "employes",     titre: "Employés",     rendre: rendreEmployes },
-  { cle: "rapports",     titre: "Rapports",     rendre: rendreRapports },
-  { cle: "comptes",      titre: "Comptes",      rendre: rendreComptes, fondateur: true }
+  { cle: "depenses",     titre: "Dépenses",     rendre: function(c){ return rendreDepenses(c); } },
+  { cle: "presences",    titre: "Présences",    rendre: function(c){ return rendrePresences(c); } },
+  { cle: "employes",     titre: "Employés",     rendre: function(c){ return rendreEmployes(c); } },
+  { cle: "rapports",     titre: "Rapports",     rendre: function(c){ return rendreRapports(c); } },
+  { cle: "comptes",      titre: "Comptes",      rendre: function(c){ return rendreComptes(c); }, fondateur: true }
 ];
 function construireNav(){
   var nav = document.getElementById("nav-modules");
