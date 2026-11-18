@@ -794,6 +794,12 @@ gtag('config', 'G-JFP2NNX9DX');
   .foot-col h3{margin:0 0 12px;color:var(--gold-2);font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
   .foot-col a{display:block;padding:4px 0;font-size:.92rem}
   @media (max-width:860px){.foot-cols{grid-template-columns:1fr 1fr;gap:22px}}
+  .guides-band .guide-card + .guide-card{margin-top:18px}
+  @media (min-width:861px){
+    .guides-band .wrap{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+    .guides-band .sec-head{grid-column:1/-1}
+    .guides-band .guide-card + .guide-card{margin-top:0}
+  }
   .g-back{
     display:inline-flex;align-items:center;gap:8px;padding:9px 18px;
     border:1.5px solid var(--gold);border-radius:999px;background:#fff;
