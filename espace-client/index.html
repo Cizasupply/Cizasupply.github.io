@@ -156,7 +156,17 @@ document.getElementById("lien-inscription").addEventListener("click", function()
 document.getElementById("form-login").addEventListener("submit", async function(e){
   e.preventDefault();
   var b = document.getElementById("btn-login"); b.disabled = true;
-  var r = await sb.auth.signInWithPassword({ email: document.getElementById("li-email").value.trim(), password: document.getElementById("li-mdp").value });
+  var r;
+  try {
+    r = await Promise.race([
+      sb.auth.signInWithPassword({ email: document.getElementById("li-email").value.trim(), password: document.getElementById("li-mdp").value }),
+      new Promise(function(_, rejet){ setTimeout(function(){ rejet(new Error("delai")); }, 25000); })
+    ]);
+  } catch(ex) {
+    b.disabled = false;
+    erreurLogin("Le serveur met trop longtemps à répondre. Touchez à nouveau « Se connecter ».");
+    return;
+  }
   b.disabled = false;
   if(r.error){ erreurLogin("Connexion refusée : " + r.error.message); return; }
   demarrer();
@@ -210,7 +220,17 @@ async function demarrer(){
   var s = await sb.auth.getSession();
   if(!s.data.session){ sessionStorage.removeItem("recup"); montrer("vue-login"); return; }
   if(modeRecuperation || sessionStorage.getItem("recup") === "1"){ montrer("vue-mdp"); return; }
-  var rc = await sb.from("clients").select("*").limit(1);
+  var rc;
+  try {
+    rc = await Promise.race([
+      sb.from("clients").select("*").limit(1),
+      new Promise(function(_, rejet){ setTimeout(function(){ rejet(new Error("delai")); }, 25000); })
+    ]);
+  } catch(ex) {
+    montrer("vue-login");
+    erreurLogin("Connecté, mais la page n'a pas pu charger vos dossiers. Touchez à nouveau « Se connecter ».");
+    return;
+  }
   if(rc.error || !rc.data || !rc.data.length){ montrer("vue-nolie"); return; }
   donnees.client = rc.data[0];
   document.getElementById("qui-nom").textContent = donnees.client.nom || "";
