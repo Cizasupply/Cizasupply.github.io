@@ -153,7 +153,7 @@
    encadrées par les règles de la base — jamais la clé de service) == */
 var SUPABASE_URL = "https://mbbcfxsegmelnfhfzyst.supabase.co";
 var SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1iYmNmeHNlZ21lbG5maGZ6eXN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ5ODk0MjEsImV4cCI6MjExMDU2NTQyMX0.IraVe4WprHVpUgfmCASsiktb3ungbCjx7-Z61Yt0yxo";
-var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, { auth: { flowType: "implicit" } });
+var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, { auth: { flowType: "implicit", lock: function(nom, delai, fn){ return fn(); } } });
 /* Erreur portée par le lien d'e-mail (lien déjà utilisé, expiré…) :
    l'afficher au lieu de laisser l'écran muet. */
 (function(){
@@ -242,7 +242,10 @@ document.getElementById("form-mdp").addEventListener("submit", async function(e)
   btn.disabled = true; btn.textContent = "Enregistrement…";
   try {
     var donnees = {}; donnees["pass" + "word"] = document.getElementById("mdp-nouveau").value;
-    var r = await sb.auth.updateUser(donnees);
+    var r = await Promise.race([
+      sb.auth.updateUser(donnees),
+      new Promise(function(_, rejet){ setTimeout(function(){ rejet(new Error("delai")); }, 20000); })
+    ]);
     if(r.error){ err.textContent = "Refusé : " + r.error.message; err.classList.remove("caché"); btn.disabled = false; btn.textContent = "Enregistrer et entrer"; return; }
   } catch(ex) {
     err.textContent = "Connexion impossible — vérifiez votre réseau, puis retouchez le bouton.";
