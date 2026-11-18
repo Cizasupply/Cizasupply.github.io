@@ -301,11 +301,12 @@ gtag('config', 'G-JFP2NNX9DX');
   /* ---------- Top bar ---------- */
   .topbar{
     position:sticky;top:0;z-index:50;
-    background:rgba(7,26,51,.97);
-    border-bottom:1px solid rgba(212,175,55,.35);
+    background:linear-gradient(180deg,rgba(10,32,64,.98),rgba(7,26,51,.97));
+    border-bottom:2px solid var(--gold);
+    box-shadow:0 6px 24px rgba(3,10,20,.35);
   }
-  .topbar-in{display:flex;align-items:center;gap:18px;padding:10px 0;flex-wrap:wrap}
-  .topbar .logo img{height:60px;width:auto;max-width:100%}
+  .topbar-in{display:flex;align-items:center;gap:18px;padding:12px 0;flex-wrap:wrap}
+  .topbar .logo img{height:78px;width:auto;max-width:100%}
   .topnav{margin-left:auto;display:flex;gap:22px;align-items:center}
   .topnav a{
     color:#e8ecf3;text-decoration:none;font-weight:600;font-size:.95rem;
@@ -339,7 +340,7 @@ gtag('config', 'G-JFP2NNX9DX');
   .lang-btn.is-active{background:var(--gold);color:#241a02}
   @media (max-width:1060px){
     .topnav a:not(.btn){display:none}
-    .topbar .logo img{height:52px}
+    .topbar .logo img{height:66px}
     .topbar-in{gap:10px}
     .lang-btn{padding:6px 9px}
   }
@@ -779,11 +780,38 @@ gtag('config', 'G-JFP2NNX9DX');
   .office .mono{color:var(--gold);font-size:.85rem;letter-spacing:.1em;text-transform:uppercase}
 
   /* ---------- Footer ---------- */
-  footer{background:#051222;color:#8fa0b8;padding:30px 0;font-size:.92rem}
+  footer{background:linear-gradient(180deg,#081c38,#051222);color:#8fa0b8;padding:42px 0 32px;font-size:.92rem;border-top:3px solid var(--gold)}
   .foot-in{display:flex;flex-wrap:wrap;gap:10px 28px;align-items:center;justify-content:space-between}
   footer a{color:#c9d4e4;text-decoration:none;font-weight:600}
   footer a:hover{color:var(--gold-2)}
   footer .brand-line{color:#e8ecf3;font-weight:700}
+
+  /* ---------- Pied de page premium + divers ---------- */
+  .foot-top{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+  .foot-logo img{height:64px;width:auto}
+  .foot-tag{margin:0;color:#c8d2e0;font-size:.96rem;max-width:540px}
+  .foot-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin:26px 0 8px}
+  .foot-col h3{margin:0 0 12px;color:var(--gold-2);font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+  .foot-col a{display:block;padding:4px 0;font-size:.92rem}
+  @media (max-width:860px){.foot-cols{grid-template-columns:1fr 1fr;gap:22px}}
+  .g-back{
+    display:inline-flex;align-items:center;gap:8px;padding:9px 18px;
+    border:1.5px solid var(--gold);border-radius:999px;background:#fff;
+    color:var(--navy-2);font-weight:800;font-size:.92rem;text-decoration:none;
+    margin-bottom:20px;
+  }
+  .g-back:hover{background:var(--gold);color:#241a02}
+  html[data-theme="dark"] .g-back{background:#0d213f;color:#e8ecf3}
+  #to-top{
+    position:fixed;right:16px;bottom:86px;z-index:130;width:46px;height:46px;
+    border-radius:50%;border:2px solid var(--gold-2);background:var(--navy-2);
+    color:var(--gold-2);display:flex;align-items:center;justify-content:center;
+    cursor:pointer;opacity:0;pointer-events:none;transform:translateY(8px);
+    transition:opacity .25s ease,transform .25s ease;
+    box-shadow:0 6px 18px rgba(3,10,20,.35);
+  }
+  #to-top.show{opacity:1;pointer-events:auto;transform:none}
+  @media (min-width:900px){#to-top{bottom:104px;right:26px}}
 
   /* ---------- Brand logo ---------- */
   .topbar .logo{text-decoration:none;flex:0 1 auto;min-width:0}
@@ -796,7 +824,7 @@ gtag('config', 'G-JFP2NNX9DX');
   @media (max-width:640px){
     .topbar-in{gap:6px 8px;padding:8px 0;flex-wrap:wrap}
     .topbar .logo{flex:1 1 auto;order:1}
-    .topbar .logo img{height:42px}
+    .topbar .logo img{height:54px}
     .topnav{display:none}
     .menu-btn{order:2;width:40px;height:40px}
     .topbar .btn-ghost{order:3}
@@ -1158,34 +1186,37 @@ gtag('config', 'G-JFP2NNX9DX');
      point vert signale le direct, le point ambre les taux indicatifs
      de repli. */
   .fx-strip{
-    background:var(--navy-3);color:#d6dde8;
-    border-bottom:1px solid rgba(212,175,55,.30);
+    background:linear-gradient(90deg,#0a2247,var(--navy-3) 55%,#0a2247);color:#d6dde8;
+    border-bottom:1px solid rgba(212,175,55,.5);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 2px 10px rgba(3,10,20,.18);
   }
   .fx-strip-in{
     display:flex;align-items:center;flex-wrap:wrap;
-    gap:5px 12px;padding:7px 0;min-height:38px;
+    gap:6px 14px;padding:9px 0;min-height:42px;
   }
   .fx-status{
     display:inline-flex;align-items:center;gap:7px;flex:none;
     font-family:"IBM Plex Mono",monospace;font-size:.68rem;font-weight:600;
     letter-spacing:.15em;text-transform:uppercase;color:var(--gold-2);
+    background:rgba(212,175,55,.10);border:1px solid rgba(212,175,55,.4);
+    padding:4px 11px;border-radius:999px;
   }
   .fx-dot{
-    width:7px;height:7px;border-radius:50%;flex:none;
+    width:8px;height:8px;border-radius:50%;flex:none;
     background:#e8a33d;box-shadow:0 0 0 3px rgba(232,163,61,.16);
   }
   .fx-dot.is-live{background:#35d07f;box-shadow:0 0 0 3px rgba(53,208,127,.16);animation:fx-pulse 2.4s ease-in-out infinite}
   @keyframes fx-pulse{0%,100%{box-shadow:0 0 0 3px rgba(53,208,127,.16)}50%{box-shadow:0 0 0 5px rgba(53,208,127,.07)}}
   @media (prefers-reduced-motion: reduce){.fx-dot.is-live{animation:none}}
   .fx-base{
-    font-family:"IBM Plex Mono",monospace;font-size:.8rem;font-weight:500;color:#aeb9c9;white-space:nowrap;
+    font-family:"IBM Plex Mono",monospace;font-size:.84rem;font-weight:500;color:#c8d2e0;white-space:nowrap;
   }
   .fx-pair{
-    font-family:"IBM Plex Mono",monospace;font-size:.82rem;font-weight:500;
+    font-family:"IBM Plex Mono",monospace;font-size:.86rem;font-weight:500;
     color:#aeb9c9;white-space:nowrap;
   }
-  .fx-pair b{font-weight:600;color:#fff}
-  .fx-div{width:1px;height:14px;background:rgba(255,255,255,.20);flex:none}
+  .fx-pair b{font-weight:700;color:#fff;letter-spacing:.01em}
+  .fx-div{width:1px;height:16px;background:linear-gradient(180deg,transparent,var(--gold),transparent);flex:none}
   .fx-meta{
     margin-left:auto;font-size:.74rem;font-weight:600;color:#aeb9c9;white-space:nowrap;
   }
@@ -1435,17 +1466,17 @@ gtag('config', 'G-JFP2NNX9DX');
     .guide .g-key{background:rgba(212,175,55,.12)}
   }
   /* Barre de contact fixe (le bouton WhatsApp flottant devient redondant). */
-  .pa-bar{position:fixed;left:0;right:0;bottom:0;z-index:120;background:var(--navy);display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -3px 14px rgba(3,10,20,.35)}
-  .pa-bar a{flex:1;text-align:center;padding:12px 4px;border-radius:8px;font-weight:800;font-size:.95rem;text-decoration:none}
+  .pa-bar{position:fixed;left:0;right:0;bottom:0;z-index:120;background:var(--navy);display:flex;gap:8px;padding:8px 10px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -3px 14px rgba(3,10,20,.35)}
+  .pa-bar a{flex:1;text-align:center;padding:9px 4px;border-radius:8px;font-weight:800;font-size:.88rem;text-decoration:none}
   .pa-bar-wa{background:var(--wa);color:#06281a}
   .pa-bar-dv{background:var(--gold);color:#231a00}
   .pa-bar-ap{background:#fff;color:var(--navy)}
   @media (min-width:900px){
     .pa-bar{left:auto;right:26px;bottom:20px;width:auto;border-radius:14px;padding:10px}
-    .pa-bar a{flex:none;padding:12px 20px}
+    .pa-bar a{flex:none;padding:12px 20px;font-size:.95rem}
   }
   @media (max-width:899px){
-    body{padding-bottom:64px}
+    body{padding-bottom:56px}
   }
   .float-wa{display:none !important}
   @media (prefers-color-scheme: dark){
@@ -1468,6 +1499,7 @@ gtag('config', 'G-JFP2NNX9DX');
       <img src="assets/b80a04e40bcd23d4.png" alt="CIZA SUPPLY — Global Sourcing &amp; Supply, Burundi" />
     </a>
     <nav class="topnav" aria-label="Navigation principale">
+      <a href="#haut" data-i18n="nav.home">Accueil</a>
       <a href="#finition" data-i18n="nav.finition">Finition &amp; confort</a>
       <a href="#categories" data-i18n="nav.categories">Catégories</a>
       <a href="#kit-maison" data-i18n="nav.kit">Kit Maison solaire</a>
@@ -1488,6 +1520,7 @@ gtag('config', 'G-JFP2NNX9DX');
     </button>
   </div>
   <nav class="mnav" id="mnav" aria-label="Menu">
+    <a href="#haut" data-i18n="nav.home">Accueil</a>
     <a href="#finition" data-i18n="nav.finition">Finition &amp; confort</a>
     <a href="#categories" data-i18n="nav.categories">Catégories</a>
     <a href="#kit-maison" data-i18n="nav.kit">Kit Maison solaire</a>
@@ -2144,6 +2177,7 @@ gtag('config', 'G-JFP2NNX9DX');
 
 <section class="guide" id="guide-forage" aria-label="Guide : forer un puits d'eau au Burundi">
   <div class="wrap g-wrap">
+    <a class="g-back" href="/"><span aria-hidden="true">←</span> <span data-i18n="gd.back">Accueil</span></a>
     <p class="kicker" data-i18n="g1.kicker">Guide — Machines agricoles</p>
     <h1 data-i18n="g1.title">Forer un puits d'eau au Burundi : le guide complet</h1>
     <p class="g-intro" data-i18n="g1.intro">Un puits bien foré change la vie d'une ferme, d'une école ou d'un village : de l'eau pour les cultures, pour le bétail et pour les gens, toute l'année. Mais une foreuse est un achat sérieux, et les erreurs se paient cher. Voici ce qu'il faut comprendre avant de commander la vôtre.</p>
@@ -2173,6 +2207,7 @@ gtag('config', 'G-JFP2NNX9DX');
 
 <section class="guide" id="guide-tracteur" aria-label="Guide : choisir un tracteur pour sa ferme au Burundi">
   <div class="wrap g-wrap">
+    <a class="g-back" href="/"><span aria-hidden="true">←</span> <span data-i18n="gd.back">Accueil</span></a>
     <p class="kicker" data-i18n="g2.kicker">Guide — Machines agricoles</p>
     <h1 data-i18n="g2.title">Choisir un tracteur pour sa ferme au Burundi : le guide</h1>
     <p class="g-intro" data-i18n="g2.intro">Le tracteur est souvent le plus gros achat d'une ferme. Trop petit, il force et casse ; trop gros, il mange le budget qui devait payer les semences. Voici comment choisir le tracteur juste pour vos terres, vos pentes et vos travaux.</p>
@@ -2202,6 +2237,7 @@ gtag('config', 'G-JFP2NNX9DX');
 
 <section class="guide" id="guide-pompage" aria-label="Guide : pomper l'eau au solaire">
   <div class="wrap g-wrap">
+    <a class="g-back" href="/"><span aria-hidden="true">←</span> <span data-i18n="gd.back">Accueil</span></a>
     <p class="kicker" data-i18n="g3.kicker">Guide — Énergie solaire</p>
     <h1 data-i18n="g3.title">Pomper l'eau au solaire : le guide pour fermes et villages</h1>
     <p class="g-intro" data-i18n="g3.intro">Une pompe diesel boit du carburant chaque jour et finit par tomber en panne loin de tout atelier. Une pompe solaire, elle, puise l'eau dès que le soleil se lève, sans carburant et presque sans entretien. Voici comment choisir le système juste pour votre puits, votre rivière ou votre réservoir.</p>
@@ -2883,6 +2919,10 @@ gtag('config', 'G-JFP2NNX9DX');
 <!-- ======================= FOOTER ======================= -->
 <footer>
   <div class="wrap">
+    <div class="foot-top">
+      <a class="foot-logo" href="#haut" aria-label="CIZA SUPPLY — accueil"><img src="assets/b80a04e40bcd23d4.png" alt="CIZA SUPPLY — Global Sourcing &amp; Supply, Burundi" loading="lazy" /></a>
+      <p class="foot-tag" data-i18n="foot.tag">Direct usine, contrôlé avant expédition, livré au Burundi.</p>
+    </div>
     <div class="foot-flags">
       <span class="ff-label" data-i18n="flags.label">De la Chine à l'Afrique de l'Est :</span>
       <span class="flag-item"><img src="assets/e21b6e73f253d137.png" alt="Drapeau de la Chine" data-alt-en="Flag of China" width="38" height="26" loading="lazy" /><span data-i18n="flags.cn">Chine</span></span>
@@ -2892,15 +2932,46 @@ gtag('config', 'G-JFP2NNX9DX');
       <span class="flag-item"><img src="assets/60a185fbeeac10fb.png" alt="Drapeau de la Tanzanie" data-alt-en="Flag of Tanzania" width="38" height="26" loading="lazy" /><span data-i18n="flags.tz">Tanzanie</span></span>
       <span class="flag-item"><img src="assets/7687bdcec56bdb01.png" alt="Drapeau de l'Ouganda" data-alt-en="Flag of Uganda" width="38" height="26" loading="lazy" /><span data-i18n="flags.ug">Ouganda</span></span>
     </div>
-    <nav class="foot-links" aria-label="Pages du site">
-      <a href="#apropos" data-i18n="foot.about">À propos</a>
-      <a href="#faq" data-i18n="foot.faq">Questions fréquentes</a>
-      <a href="#confidentialite" data-open-page="pg-privacy" data-i18n="foot.privacy">Politique de confidentialité</a>
-      <a href="#cookies" data-open-page="pg-cookies" data-i18n="foot.cookies">Politique de cookies</a>
-      <a href="#conditions" data-open-page="pg-terms" data-i18n="foot.terms">Conditions d'utilisation</a>
-      <a href="#mentions-legales" data-open-page="pg-legal" data-i18n="foot.legal">Mentions légales</a>
-      <a href="assets/1dda5f9ffde99cf3.bin" data-i18n="foot.sitemap">Plan du site</a>
-    </nav>
+    <div class="foot-cols">
+      <nav class="foot-col" aria-label="Catégories">
+        <h3 data-i18n="nav.categories">Catégories</h3>
+        <a href="/quincaillerie/"><span data-i18n="c1.title">Quincaillerie complète</span></a>
+        <a href="/energie-solaire/"><span data-i18n="c2.title">Énergie renouvelable</span></a>
+        <a href="/telephones-accessoires/"><span data-i18n="c3.title">Téléphones &amp; accessoires</span></a>
+        <a href="/beaute-mode/"><span data-i18n="c4.title">Beauté &amp; mode</span></a>
+        <a href="/equipement-industriel/"><span data-i18n="c5.title">Équipement industriel</span></a>
+        <a href="/usines-transformation/"><span data-i18n="c6.title">Usines de transformation</span></a>
+        <a href="/pieces-automobiles/"><span data-i18n="c7.title">Pièces automobiles</span></a>
+        <a href="/moto/"><span data-i18n="c8.title">Motos</span></a>
+        <a href="/maison-divers/"><span data-i18n="c9.title">Maison &amp; divers</span></a>
+        <a href="/machines-agricoles/"><span data-i18n="c10.title">Machines et équipements agricoles</span></a>
+      </nav>
+      <nav class="foot-col" aria-label="Guides">
+        <h3 data-i18n="gd.kicker">Guides &amp; conseils</h3>
+        <a href="/guide-forage-puits/"><span data-i18n="g1.title">Forer un puits d'eau au Burundi : le guide complet</span></a>
+        <a href="/guide-choisir-tracteur/"><span data-i18n="g2.title">Choisir un tracteur pour sa ferme au Burundi : le guide</span></a>
+        <a href="/guide-pompage-solaire/"><span data-i18n="g3.title">Pomper l'eau au solaire : le guide pour fermes et villages</span></a>
+        <a href="/finition-confort/"><span data-i18n="nav.finition">Finition &amp; confort</span></a>
+      </nav>
+      <nav class="foot-col" aria-label="Pages du site">
+        <h3 data-i18n="foot.pagesH">Pages du site</h3>
+        <a href="#apropos" data-i18n="foot.about">À propos</a>
+        <a href="#faq" data-i18n="foot.faq">Questions fréquentes</a>
+        <a href="#confidentialite" data-open-page="pg-privacy" data-i18n="foot.privacy">Politique de confidentialité</a>
+        <a href="#cookies" data-open-page="pg-cookies" data-i18n="foot.cookies">Politique de cookies</a>
+        <a href="#conditions" data-open-page="pg-terms" data-i18n="foot.terms">Conditions d'utilisation</a>
+        <a href="#mentions-legales" data-open-page="pg-legal" data-i18n="foot.legal">Mentions légales</a>
+        <a href="assets/1dda5f9ffde99cf3.bin" data-i18n="foot.sitemap">Plan du site</a>
+      </nav>
+      <div class="foot-col">
+        <h3 data-i18n="nav.contact">Contact</h3>
+        <a href="https://wa.me/15145029503" target="_blank" rel="noopener">WhatsApp · +1 514 502 9503</a>
+        <a href="tel:+25779945007">Burundi · +257 79 94 50 07</a>
+        <a href="tel:+8618721396720">Chine · +86 187 2139 6720</a>
+        <a href="mailto:infos@cizagroup.com">infos@cizagroup.com</a>
+        <a href="https://cizagroup.com" target="_blank" rel="noopener">cizagroup.com</a>
+      </div>
+    </div>
     <div class="foot-addresses">
       <div class="foot-addr">
         <span class="fa-k" data-i18n="foot.addrBiK">Bureau Burundi — Bujumbura</span>
@@ -3376,6 +3447,7 @@ gtag('config', 'G-JFP2NNX9DX');
 
   var I18N = {
     fr: {
+      "nav.home": "Accueil",
       "nav.finition": "Finition & confort",
       "nav.categories": "Catégories",
       "nav.kit": "Kit Maison solaire",
@@ -3536,6 +3608,8 @@ gtag('config', 'G-JFP2NNX9DX');
       "ct.rdv": "Prendre rendez-vous",
       "foot.addrBiK": "Bureau Burundi — Bujumbura",
       "foot.addrCnK": "Bureau Chine — Shanghai",
+      "foot.tag": "Direct usine, contrôlé avant expédition, livré au Burundi.",
+      "foot.pagesH": "Pages du site",
       "foot.brand": "Ciza Supply, division de Ciza Group | Burundi",
       "foot.mid": "Global Sourcing & Supply — devis sur demande.",
       "nav.about": "À propos",
@@ -3725,6 +3799,7 @@ gtag('config', 'G-JFP2NNX9DX');
       "gd.h2": "Comprendre avant d'acheter",
       "gd.sub": "Des réponses claires aux vraies questions de nos clients, écrites par notre équipe.",
       "gd.tag": "Guide",
+      "gd.back": "Accueil",
       "gd.read": "Lire le guide",
       "g1.kicker": "Guide — Machines agricoles",
       "g1.title": "Forer un puits d'eau au Burundi : le guide complet",
@@ -3862,6 +3937,7 @@ gtag('config', 'G-JFP2NNX9DX');
       "pt.mail": "Envoyer par e-mail"
     },
     en: {
+      "nav.home": "Home",
       "nav.finition": "Finishing & comfort",
       "nav.categories": "Categories",
       "nav.kit": "Solar Home Kit",
@@ -4022,6 +4098,8 @@ gtag('config', 'G-JFP2NNX9DX');
       "ct.rdv": "Book an appointment",
       "foot.addrBiK": "Burundi office — Bujumbura",
       "foot.addrCnK": "China office — Shanghai",
+      "foot.tag": "Factory direct, checked before shipping, delivered to Burundi.",
+      "foot.pagesH": "Site pages",
       "foot.brand": "Ciza Supply, a division of Ciza Group | Burundi",
       "foot.mid": "Global Sourcing & Supply — quotes on request.",
       "nav.about": "About",
@@ -4211,6 +4289,7 @@ gtag('config', 'G-JFP2NNX9DX');
       "gd.h2": "Understand before you buy",
       "gd.sub": "Clear answers to our clients' real questions, written by our team.",
       "gd.tag": "Guide",
+      "gd.back": "Home",
       "gd.read": "Read the guide",
       "g1.kicker": "Guide — Agricultural machinery",
       "g1.title": "Drilling a water well in Burundi: the complete guide",
@@ -5481,5 +5560,19 @@ gtag('config', 'G-JFP2NNX9DX');
 })();
 </script>
 
+
+<button type="button" id="to-top" aria-label="Retour en haut / Back to top">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+<script>
+(function(){
+  var b = document.getElementById("to-top");
+  if(!b){ return; }
+  function maj(){ b.classList.toggle("show", window.scrollY > 600); }
+  window.addEventListener("scroll", maj, {passive:true});
+  maj();
+  b.addEventListener("click", function(){ window.scrollTo({top:0, behavior:"smooth"}); });
+})();
+</script>
 </body>
 </html>
