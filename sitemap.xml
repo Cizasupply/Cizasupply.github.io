@@ -950,4 +950,14 @@
       <image:title>Tracteur agricole avec cabine</image:title>
     </image:image>
   </url>
+  <url>
+    <loc>https://cizasupply.com/guide-pompage-solaire/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/guide-pompage-solaire/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/guide-pompage-solaire/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/guide-pompage-solaire/" />
+    <image:image>
+      <image:loc>https://cizasupply.com/assets/dd2f45e83084130e.jpg</image:loc>
+      <image:title>Pompe solaire immergée</image:title>
+    </image:image>
+  </url>
 </urlset>
