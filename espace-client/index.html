@@ -102,7 +102,7 @@
     <div id="mdp-erreur" class="erreur caché"></div>
     <form id="form-mdp">
       <div class="champ"><label for="mdp-nouveau">Nouveau mot de passe</label><input id="mdp-nouveau" type="password" required autocomplete="new-password" /></div>
-      <button class="btn" type="submit" style="width:100%;justify-content:center">Enregistrer et entrer</button>
+      <button class="btn" type="submit" id="mdp-btn" style="width:100%;justify-content:center">Enregistrer et entrer</button>
     </form>
   </div>
 </div>
@@ -169,7 +169,7 @@ document.getElementById("form-inscription").addEventListener("submit", async fun
 });
 var modeRecuperation = false;
 sb.auth.onAuthStateChange(function(evenement){
-  if(evenement === "PASSWORD_RECOVERY"){ modeRecuperation = true; montrer("vue-mdp"); }
+  if(evenement === "PASSWORD_RECOVERY"){ modeRecuperation = true; sessionStorage.setItem("recup", "1"); montrer("vue-mdp"); }
 });
 document.getElementById("lien-oublie").addEventListener("click", async function(){
   var email = document.getElementById("li-email").value.trim();
@@ -183,10 +183,19 @@ document.getElementById("lien-oublie").addEventListener("click", async function(
 });
 document.getElementById("form-mdp").addEventListener("submit", async function(e){
   e.preventDefault();
-  var donnees = {}; donnees["pass" + "word"] = document.getElementById("mdp-nouveau").value;
-  var r = await sb.auth.updateUser(donnees);
   var err = document.getElementById("mdp-erreur");
-  if(r.error){ err.textContent = "Refusé : " + r.error.message; err.classList.remove("caché"); return; }
+  var btn = document.getElementById("mdp-btn");
+  err.classList.add("caché");
+  btn.disabled = true; btn.textContent = "Enregistrement…";
+  try {
+    var donnees = {}; donnees["pass" + "word"] = document.getElementById("mdp-nouveau").value;
+    var r = await sb.auth.updateUser(donnees);
+    if(r.error){ err.textContent = "Refusé : " + r.error.message; err.classList.remove("caché"); btn.disabled = false; btn.textContent = "Enregistrer et entrer"; return; }
+  } catch(ex) {
+    err.textContent = "Connexion impossible — vérifiez votre réseau, puis retouchez le bouton.";
+    err.classList.remove("caché"); btn.disabled = false; btn.textContent = "Enregistrer et entrer"; return;
+  }
+  sessionStorage.removeItem("recup");
   modeRecuperation = false;
   demarrer();
 });
@@ -196,8 +205,8 @@ document.getElementById("btn-deco-nolie").addEventListener("click", deconnexion)
 
 async function demarrer(){
   var s = await sb.auth.getSession();
-  if(modeRecuperation){ montrer("vue-mdp"); return; }
-  if(!s.data.session){ montrer("vue-login"); return; }
+  if(!s.data.session){ sessionStorage.removeItem("recup"); montrer("vue-login"); return; }
+  if(modeRecuperation || sessionStorage.getItem("recup") === "1"){ montrer("vue-mdp"); return; }
   var rc = await sb.from("clients").select("*").limit(1);
   if(rc.error || !rc.data || !rc.data.length){ montrer("vue-nolie"); return; }
   donnees.client = rc.data[0];
