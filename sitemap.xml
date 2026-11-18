@@ -930,4 +930,14 @@
       <image:title>Finition &amp; confort — Luminaires &amp; éclairage décoratif</image:title>
     </image:image>
   </url>
+  <url>
+    <loc>https://cizasupply.com/guide-forage-puits/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cizasupply.com/guide-forage-puits/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cizasupply.com/guide-forage-puits/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cizasupply.com/guide-forage-puits/" />
+    <image:image>
+      <image:loc>https://cizasupply.com/assets/91294e20482be12c.jpg</image:loc>
+      <image:title>Foreuse de puits sur remorque</image:title>
+    </image:image>
+  </url>
 </urlset>
