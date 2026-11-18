@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Diagnostic connexion</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>body{font-family:monospace;background:#07101F;color:#E8EDF5;padding:16px;font-size:13px;line-height:1.7}pre{white-space:pre-wrap;word-break:break-word}</style>
+</head>
+<body>
+<h1>Diagnostic</h1>
+<pre id="journal">Démarrage…</pre>
+<script>
+var SUPABASE_URL = "https://mbbcfxsegmelnfhfzyst.supabase.co";
+var SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1iYmNmeHNlZ21lbG5maGZ6eXN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ5ODk0MjEsImV4cCI6MjExMDU2NTQyMX0.IraVe4WprHVpUgfmCASsiktb3ungbCjx7-Z61Yt0yxo";
+var j = document.getElementById("journal");
+function log(t){ j.textContent += "\n" + t; }
+function delai(ms){ return new Promise(function(_, rejet){ setTimeout(function(){ rejet(new Error("DELAI " + ms + "ms")); }, ms); }); }
+async function essai(nom, client){
+  log("=== " + nom + " ===");
+  try {
+    var r = await Promise.race([ client.auth.signInWithPassword({ email: "a@a.com", password: "test1234" }), delai(15000) ]);
+    log("signIn erreur: " + (r.error ? r.error.message : "aucune"));
+    log("signIn session: " + (r.data && r.data.session ? "OUI" : "NON"));
+  } catch(e){ log("signIn EXCEPTION: " + e.message); }
+  try {
+    var s = await Promise.race([ client.auth.getSession(), delai(15000) ]);
+    log("getSession: " + (s.data.session ? "OUI (" + s.data.session.user.email + ")" : "NON"));
+  } catch(e){ log("getSession EXCEPTION: " + e.message); }
+  try {
+    var p = await Promise.race([ client.from("profils").select("email,role,actif").limit(1), delai(15000) ]);
+    log("profils: " + (p.error ? "ERREUR " + p.error.message : JSON.stringify(p.data)));
+  } catch(e){ log("profils EXCEPTION: " + e.message); }
+  try { await client.auth.signOut(); log("signOut: fait"); } catch(e){ log("signOut EXCEPTION: " + e.message); }
+}
+(async function(){
+  var clientA = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, { auth: { flowType: "implicit", lock: function(nom, d, fn){ return fn(); } } });
+  await essai("A — config actuelle (implicit + lock libre)", clientA);
+  var clientB = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+  await essai("B — config par défaut", clientB);
+  log("=== TERMINÉ ===");
+})();
+</script>
+</body>
+</html>
