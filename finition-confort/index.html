@@ -133,7 +133,7 @@ gtag('config', 'G-JFP2NNX9DX');
       ],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
-        "name": "Nos 9 catégories",
+        "name": "Nos 12 catégories",
         "itemListElement": [
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Quincaillerie complète" } },
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Énergie renouvelable" } },
@@ -211,7 +211,7 @@ gtag('config', 'G-JFP2NNX9DX');
 {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": "CIZA SUPPLY — Pages des 9 catégories / The 9 category pages",
+  "name": "CIZA SUPPLY — Pages des 12 catégories / The 9 category pages",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "item": { "@type": "WebPage", "url": "https://cizasupply.com/quincaillerie", "name": "Quincaillerie au Burundi — outillage, câbles cuivre, vannes inox", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } },
     { "@type": "ListItem", "position": 2, "item": { "@type": "WebPage", "url": "https://cizasupply.com/energie-solaire", "name": "Énergie solaire au Burundi — panneaux 650 Wc, onduleurs, batteries lithium", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } },
@@ -222,7 +222,9 @@ gtag('config', 'G-JFP2NNX9DX');
     { "@type": "ListItem", "position": 7, "item": { "@type": "WebPage", "url": "https://cizasupply.com/pieces-automobiles", "name": "Pièces automobiles au Burundi — freinage, filtres, suspension", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } },
     { "@type": "ListItem", "position": 8, "item": { "@type": "WebPage", "url": "https://cizasupply.com/moto", "name": "Motos au Burundi — 100 à 250 cm³, tricycles cargo, pièces détachées", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } },
     { "@type": "ListItem", "position": 9, "item": { "@type": "WebPage", "url": "https://cizasupply.com/maison-divers", "name": "Maison & divers au Burundi — cuisine, literie, jouets, papeterie", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } },
-    { "@type": "ListItem", "position": 10, "item": { "@type": "WebPage", "url": "https://cizasupply.com/machines-agricoles", "name": "Machines et équipements agricoles au Burundi — tracteurs, mini-excavatrices, foreuses, pompes", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } }
+    { "@type": "ListItem", "position": 10, "item": { "@type": "WebPage", "url": "https://cizasupply.com/machines-agricoles", "name": "Machines et équipements agricoles au Burundi — tracteurs, mini-excavatrices, foreuses, pompes", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } },
+    { "@type": "ListItem", "position": 11, "item": { "@type": "WebPage", "url": "https://cizasupply.com/electricite-groupes-electrogenes", "name": "Électricité et groupes électrogènes au Burundi — générateurs diesel, câbles cuivre, onduleurs", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } },
+    { "@type": "ListItem", "position": 12, "item": { "@type": "WebPage", "url": "https://cizasupply.com/materiaux-construction", "name": "Matériaux de construction au Burundi — carrelage, sanitaire, portes, toiture", "inLanguage": ["fr", "en"], "isPartOf": { "@id": "https://cizasupply.com/#website" }, "about": { "@id": "https://cizasupply.com/#business" } } }
   ]
 }
 </script>
@@ -238,7 +240,7 @@ gtag('config', 'G-JFP2NNX9DX');
 (function(){
   try {
     var p = new URLSearchParams(window.location.search).get("page");
-    var ok = ["quincaillerie","energie-solaire","telephones-accessoires","beaute-mode","equipement-industriel","usines-transformation","pieces-automobiles","moto","maison-divers","machines-agricoles"];
+    var ok = ["quincaillerie","energie-solaire","telephones-accessoires","beaute-mode","equipement-industriel","usines-transformation","pieces-automobiles","moto","maison-divers","machines-agricoles","electricite-groupes-electrogenes","materiaux-construction"];
     var seg = window.location.pathname.split("/").filter(Boolean).pop() || "";
     if((p && ok.indexOf(p) > -1) || ok.indexOf(seg) > -1){
       try { history.scrollRestoration = "manual"; } catch(e){}
@@ -1704,7 +1706,7 @@ gtag('config', 'G-JFP2NNX9DX');
         <p class="pa-hero-sub" data-i18n="pa.heroSub">Le bureau de vente au Burundi d'usines partenaires en Chine — sans intermédiaire. Nous sourçons, contrôlons et importons pour les commerçants et les porteurs de projets.</p>
         <div class="pa-hero-ctas">
           <a class="btn btn-wa wa" data-wa="general" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis." target="_blank" rel="noopener" data-i18n="pa.ctaWa">Devis sur WhatsApp</a>
-          <a class="btn btn-ghost" href="#categories" data-i18n="hero.cta2">Voir les 9 catégories</a>
+          <a class="btn btn-ghost" href="#categories" data-i18n="hero.cta2">Voir les 12 catégories</a>
         </div>
       </div>
     </div>
@@ -1816,7 +1818,7 @@ gtag('config', 'G-JFP2NNX9DX');
   <div class="wrap">
     <div class="sec-head">
       <p class="kicker" data-i18n="cat.kicker">Catalogue</p>
-      <h2 data-i18n="cat.h2">Nos 9 catégories</h2>
+      <h2 data-i18n="cat.h2">Nos 12 catégories</h2>
       <p data-i18n="cat.sub">Neuf univers d'approvisionnement, du clou au kit solaire complet. Faites défiler les photos de chaque catégorie, touchez une photo pour l'ouvrir en plein écran, regardez les vidéos, lisez les descriptions — puis demandez votre devis. Rien ne se vend en ligne.</p>
     </div>
     <div class="cat-grid">
@@ -2111,6 +2113,60 @@ gtag('config', 'G-JFP2NNX9DX');
           </ul>
           <a class="devis wa" data-wa="agricole" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20la%20cat%C3%A9gorie%20Machines%20et%20%C3%A9quipements%20agricoles." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
           <a class="page-link" href="?page=machines-agricoles"><span data-i18n="ui.page">Page dédiée</span> <span class="arr">→</span></a>
+        </div>
+      </article>
+
+
+      <article class="cat">
+        <div class="gal" data-gal>
+          <div class="gal-track">
+            <img src="assets/02834362fce688ed.jpg" alt="Groupe électrogène diesel industriel" data-alt-en="Industrial diesel generator set" />
+            <img src="assets/d96b887b0aa15dc2.jpg" alt="Bobines de câble en cuivre" data-alt-en="Copper cable reels" loading="lazy" />
+            <img src="assets/c5bbff56645e124e.jpg" alt="Tableau électrique et disjoncteurs" data-alt-en="Electrical panel and circuit breakers" loading="lazy" />
+            <img src="assets/79b82704411cd75c.jpg" alt="Onduleur de secours" data-alt-en="Backup power inverter" loading="lazy" />
+            <img src="assets/e562aeaff5a4599e.jpg" alt="Projecteur LED industriel" data-alt-en="Industrial LED floodlight" loading="lazy" />
+          </div>
+          <div class="gal-ui"><span class="gal-count">1 / 5</span><button type="button" class="gal-btn" data-gal-prev aria-label="Précédent">‹</button><button type="button" class="gal-btn" data-gal-next aria-label="Suivant">›</button></div>
+        </div>
+        <div class="cat-body">
+          <span class="cat-num"><span data-i18n="cat.num">Catégorie</span> 11</span>
+          <h3 data-i18n="c11.title">Électricité &amp; groupes électrogènes</h3>
+          <p data-i18n="c11.p">Groupes électrogènes diesel, câbles en cuivre, tableaux et disjoncteurs, onduleurs et éclairage : l'électricité fiable pour maisons, commerces et chantiers, spécifiée avec vous et livrée au Burundi.</p>
+          <ul class="stars">
+            <li class="stars-lab" data-i18n="ph.lab">Produits phares</li>
+            <li data-i18n="ph11a">Groupes électrogènes diesel — de 5 à 500 kVA</li>
+            <li data-i18n="ph11b">Câbles en cuivre véritable — toutes sections</li>
+            <li data-i18n="ph11c">Onduleurs et stabilisateurs de tension</li>
+          </ul>
+          <a class="devis wa" data-wa="electricite" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20la%20cat%C3%A9gorie%20%C3%89lectricit%C3%A9%20et%20groupes%20%C3%A9lectrog%C3%A8nes." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
+          <a class="page-link" href="?page=electricite-groupes-electrogenes"><span data-i18n="ui.page">Page dédiée</span> <span class="arr">→</span></a>
+        </div>
+      </article>
+
+
+      <article class="cat">
+        <div class="gal" data-gal>
+          <div class="gal-track">
+            <img src="assets/ded22ec657d4486f.jpg" alt="Showroom de carrelage" data-alt-en="Tiles showroom" />
+            <img src="assets/dbaf550eb709f708.jpg" alt="Salle de bain moderne — sanitaire et robinetterie" data-alt-en="Modern bathroom — sanitary ware and faucets" loading="lazy" />
+            <img src="assets/44906cabe458bd8e.jpg" alt="Porte de sécurité en acier" data-alt-en="Steel security door" loading="lazy" />
+            <img src="assets/b465839ccf69e86c.jpg" alt="Tôles de toiture métalliques" data-alt-en="Metal roofing sheets" loading="lazy" />
+            <img src="assets/fc3ffa89edde823c.jpg" alt="Tuyaux PVC en stock" data-alt-en="PVC pipes in stock" loading="lazy" />
+          </div>
+          <div class="gal-ui"><span class="gal-count">1 / 5</span><button type="button" class="gal-btn" data-gal-prev aria-label="Précédent">‹</button><button type="button" class="gal-btn" data-gal-next aria-label="Suivant">›</button></div>
+        </div>
+        <div class="cat-body">
+          <span class="cat-num"><span data-i18n="cat.num">Catégorie</span> 12</span>
+          <h3 data-i18n="c12.title">Matériaux de construction</h3>
+          <p data-i18n="c12.p">Carrelage, sanitaire et robinetterie, portes de sécurité, fenêtres, toiture et plomberie : les matériaux de votre chantier, contrôlés avant expédition et livrés au Burundi.</p>
+          <ul class="stars">
+            <li class="stars-lab" data-i18n="ph.lab">Produits phares</li>
+            <li data-i18n="ph12a">Carrelage et revêtements — séries complètes</li>
+            <li data-i18n="ph12b">Sanitaire et robinetterie assortis</li>
+            <li data-i18n="ph12c">Portes de sécurité et fenêtres aluminium</li>
+          </ul>
+          <a class="devis wa" data-wa="construction" href="https://wa.me/15145029503?text=Bonjour%20CIZA%20SUPPLY%2C%20je%20souhaite%20un%20devis%20pour%20la%20cat%C3%A9gorie%20Mat%C3%A9riaux%20de%20construction." target="_blank" rel="noopener"><span data-i18n="ui.quote">Demander un devis</span> <span class="arr">→</span></a>
+          <a class="page-link" href="?page=materiaux-construction"><span data-i18n="ui.page">Page dédiée</span> <span class="arr">→</span></a>
         </div>
       </article>
 
@@ -2782,6 +2838,8 @@ gtag('config', 'G-JFP2NNX9DX');
               <option data-i18n="c8.title">Motos</option>
               <option data-i18n="c9.title">Maison &amp; divers</option>
               <option data-i18n="c10.title">Machines et équipements agricoles</option>
+              <option data-i18n="c11.title">Électricité & groupes électrogènes</option>
+              <option data-i18n="c12.title">Matériaux de construction</option>
               <option data-i18n="qf.catAd">Publicité — afficher mes produits sur ce site</option>
               <option data-i18n="qf.catOther">Autre / produit précis à sourcer</option>
             </select>
@@ -2970,6 +3028,8 @@ gtag('config', 'G-JFP2NNX9DX');
         <a href="/moto/"><span data-i18n="c8.title">Motos</span></a>
         <a href="/maison-divers/"><span data-i18n="c9.title">Maison &amp; divers</span></a>
         <a href="/machines-agricoles/"><span data-i18n="c10.title">Machines et équipements agricoles</span></a>
+        <a href="/electricite-groupes-electrogenes/"><span data-i18n="c11.title">Électricité &amp; groupes électrogènes</span></a>
+        <a href="/materiaux-construction/"><span data-i18n="c12.title">Matériaux de construction</span></a>
       </nav>
       <nav class="foot-col" aria-label="Guides">
         <h3 data-i18n="gd.kicker">Guides &amp; conseils</h3>
@@ -3518,7 +3578,7 @@ gtag('config', 'G-JFP2NNX9DX');
       "hero.ledeLink": "sans intermédiaire",
       "hero.lede2": ". Nous sourçons, contrôlons et importons pour les commerçants, les entrepreneurs et les porteurs de projets.",
       "hero.cta1": "Découvrir la finition & le confort",
-      "hero.cta2": "Voir les 9 catégories",
+      "hero.cta2": "Voir les 12 catégories",
       "hero.f1": "Catégories de produits",
       "hero.f2": "Bureaux — Burundi & Chine",
       "hero.f3": "Devis sur demande",
@@ -3569,7 +3629,7 @@ gtag('config', 'G-JFP2NNX9DX');
       "fin4.li2": "Vasques et plans en surface solide, sur mesure",
       "fin4.li3": "Marches d'escalier et finitions assorties",
       "cat.kicker": "Catalogue",
-      "cat.h2": "Nos 9 catégories",
+      "cat.h2": "Nos 12 catégories",
       "cat.sub": "Neuf univers d'approvisionnement, du clou au kit solaire complet. Faites défiler les photos de chaque catégorie, touchez une photo pour l'ouvrir en plein écran, regardez les vidéos, lisez les descriptions — puis demandez votre devis. Rien ne se vend en ligne.",
       "cat.num": "Catégorie",
       "c1.title": "Quincaillerie complète",
@@ -3822,6 +3882,16 @@ gtag('config', 'G-JFP2NNX9DX');
       "ph10a": "Tracteurs agricoles — pièces de rechange et accessoires",
       "ph10b": "Foreuses de puits — roche dure, 200 m et plus",
       "ph10c": "Pompes et irrigation — diesel, solaire, goutte-à-goutte",
+      "c11.title": "Électricité & groupes électrogènes",
+      "c11.p": "Groupes électrogènes diesel, câbles en cuivre, tableaux et disjoncteurs, onduleurs et éclairage : l'électricité fiable pour maisons, commerces et chantiers, spécifiée avec vous et livrée au Burundi.",
+      "ph11a": "Groupes électrogènes diesel — de 5 à 500 kVA",
+      "ph11b": "Câbles en cuivre véritable — toutes sections",
+      "ph11c": "Onduleurs et stabilisateurs de tension",
+      "c12.title": "Matériaux de construction",
+      "c12.p": "Carrelage, sanitaire et robinetterie, portes de sécurité, fenêtres, toiture et plomberie : les matériaux de votre chantier, contrôlés avant expédition et livrés au Burundi.",
+      "ph12a": "Carrelage et revêtements — séries complètes",
+      "ph12b": "Sanitaire et robinetterie assortis",
+      "ph12c": "Portes de sécurité et fenêtres aluminium",
       "gd.kicker": "Guides & conseils",
       "gd.h2": "Comprendre avant d'acheter",
       "gd.sub": "Des réponses claires aux vraies questions de nos clients, écrites par notre équipe.",
@@ -4008,7 +4078,7 @@ gtag('config', 'G-JFP2NNX9DX');
       "hero.ledeLink": "with no middleman",
       "hero.lede2": ". We source, inspect and import for traders, contractors and project developers.",
       "hero.cta1": "Discover finishing & comfort",
-      "hero.cta2": "See the 9 categories",
+      "hero.cta2": "See the 12 categories",
       "hero.f1": "Product categories",
       "hero.f2": "Offices — Burundi & China",
       "hero.f3": "Quotes on request",
@@ -4059,7 +4129,7 @@ gtag('config', 'G-JFP2NNX9DX');
       "fin4.li2": "Solid-surface basins and worktops, made to measure",
       "fin4.li3": "Stair treads and matching finishes",
       "cat.kicker": "Catalogue",
-      "cat.h2": "Our 9 categories",
+      "cat.h2": "Our 12 categories",
       "cat.sub": "Nine sourcing universes, from a nail to a complete solar kit. Scroll through the photos of each category, tap a photo to open it full-screen, watch the videos, read the descriptions — then request your quote. Nothing is sold online.",
       "cat.num": "Category",
       "c1.title": "Full hardware",
@@ -4312,6 +4382,16 @@ gtag('config', 'G-JFP2NNX9DX');
       "ph10a": "Farm tractors — spare parts and accessories",
       "ph10b": "Well drilling rigs — hard rock, 200 m and deeper",
       "ph10c": "Pumps and irrigation — diesel, solar, drip",
+      "c11.title": "Electrical & power generators",
+      "c11.p": "Diesel generator sets, copper cables, panels and breakers, inverters and lighting: reliable power for homes, businesses and worksites, specified with you and delivered to Burundi.",
+      "ph11a": "Diesel generator sets — from 5 to 500 kVA",
+      "ph11b": "Genuine copper cables — all sizes",
+      "ph11c": "Inverters and voltage stabilizers",
+      "c12.title": "Building materials",
+      "c12.p": "Tiles, sanitary ware and faucets, security doors, windows, roofing and plumbing: the materials for your project, checked before shipping and delivered to Burundi.",
+      "ph12a": "Tiles and coverings — complete series",
+      "ph12b": "Matching sanitary ware and faucets",
+      "ph12c": "Security doors and aluminium windows",
       "gd.kicker": "Guides & advice",
       "gd.h2": "Understand before you buy",
       "gd.sub": "Clear answers to our clients' real questions, written by our team.",
@@ -4995,14 +5075,15 @@ gtag('config', 'G-JFP2NNX9DX');
 (function(){
   "use strict";
 
-  /* ============ Pages catégories — 10 pages séparées ============
-     Chacune des 10 catégories est une page séparée, avec sa propre
+  /* ============ Pages catégories — 12 pages séparées ============
+     Chacune des 12 catégories est une page séparée, avec sa propre
      adresse, qui s'affiche quand on la visite directement :
        ?page=quincaillerie        ?page=energie-solaire
        ?page=telephones-accessoires   ?page=beaute-mode
        ?page=equipement-industriel    ?page=usines-transformation
        ?page=pieces-automobiles   ?page=moto   ?page=maison-divers
-       ?page=machines-agricoles
+       ?page=machines-agricoles   ?page=electricite-groupes-electrogenes
+       ?page=materiaux-construction
      (en production : cizasupply.com/<slug>, l'adresse canonique
      déclarée à Google — canonical, Open Graph, sitemap.)
      Chaque page garde le catalogue complet de sa catégorie : la
@@ -5095,7 +5176,23 @@ gtag('config', 'G-JFP2NNX9DX');
       seoDFr:"Machines et équipements agricoles au Burundi : tracteurs, mini-excavatrices, foreuses de puits, pompes diesel et solaires, panneaux solaires et irrigation. Devis sur demande, bureau à Bujumbura.",
       seoDEn:"Agricultural machinery and equipment in Burundi: tractors, mini excavators, water well drilling rigs, diesel and solar pumps, solar panels and irrigation. Quotes on request, Bujumbura office.",
       introFr:"Les machines qui font avancer un projet agricole : tracteurs, mini-excavatrices, foreuses de puits capables de percer la roche dure, pompes diesel et solaires, panneaux et irrigation. Chaque machine est spécifiée avec vous, inspectée avant le paiement final et expédiée jusqu'au Burundi.",
-      introEn:"The machines that move a farming project forward: tractors, mini excavators, water well drilling rigs able to drill through hard rock, diesel and solar pumps, panels and irrigation. Every machine is specified with you, inspected before the final payment and shipped to Burundi." }
+      introEn:"The machines that move a farming project forward: tractors, mini excavators, water well drilling rigs able to drill through hard rock, diesel and solar pumps, panels and irrigation. Every machine is specified with you, inspected before the final payment and shipped to Burundi." },
+    { slug:"electricite-groupes-electrogenes", num:"11",
+      nameFr:"Électricité & groupes électrogènes", nameEn:"Electrical & power generators",
+      seoTFr:"Électricité et groupes électrogènes au Burundi — câbles cuivre, générateurs, onduleurs | CIZA SUPPLY",
+      seoTEn:"Electrical & Generators in Burundi — copper cables, generator sets, inverters | CIZA SUPPLY",
+      seoDFr:"Matériel électrique et groupes électrogènes au Burundi : groupes électrogènes diesel, câbles en cuivre, tableaux et disjoncteurs, onduleurs, éclairage. Devis sur demande, bureau à Bujumbura.",
+      seoDEn:"Electrical equipment and generator sets in Burundi: diesel generators, copper cables, panels and breakers, inverters, lighting. Quotes on request, Bujumbura office.",
+      introFr:"L'électricité fiable pour les maisons, les commerces et les chantiers : groupes électrogènes dimensionnés juste, câbles en cuivre véritable, protection aux normes et secours par onduleur. Nous spécifions avec vous, nous inspectons avant le paiement final, et tout arrive en un seul envoi.",
+      introEn:"Reliable power for homes, businesses and worksites: correctly sized generator sets, genuine copper cables, standards-compliant protection and inverter backup. We specify with you, we inspect before the final payment, and everything arrives in one shipment." },
+    { slug:"materiaux-construction", num:"12",
+      nameFr:"Matériaux de construction", nameEn:"Building materials",
+      seoTFr:"Matériaux de construction au Burundi — carrelage, sanitaire, portes, toiture | CIZA SUPPLY",
+      seoTEn:"Building Materials in Burundi — tiles, sanitary ware, doors, roofing | CIZA SUPPLY",
+      seoDFr:"Matériaux de construction au Burundi : carrelage, sanitaire et robinetterie, portes de sécurité, fenêtres, toiture et plomberie. Devis sur demande, bureau à Bujumbura.",
+      seoDEn:"Building materials in Burundi: tiles, sanitary ware and faucets, security doors, windows, roofing and plumbing. Quotes on request, Bujumbura office.",
+      introFr:"Construire ou rénover avec des matériaux qui durent : carrelage, sanitaire, portes et fenêtres, toiture et plomberie, choisis auprès des usines et contrôlés avant expédition. Un seul envoi groupé pour tout votre chantier, jusqu'au Burundi.",
+      introEn:"Build or renovate with materials that last: tiles, sanitary ware, doors and windows, roofing and plumbing, chosen at the factories and checked before shipping. One grouped shipment for your whole project, delivered to Burundi." }
   ];
   /* Catalogue produits par catégorie — transcription du catalogue produits
      CIZA SUPPLY (document de travail) : noms de produits et caractéristiques
@@ -5181,6 +5278,20 @@ gtag('config', 'G-JFP2NNX9DX');
       {hFr:"Pompes à eau", hEn:"Water pumps", fr:"Pompes diesel de surface (irrigation et transfert), pompes solaires immergées et de surface, motopompes, tuyaux et raccords.", en:"Diesel surface pumps (irrigation and transfer), solar submersible and surface pumps, motor pumps, hoses and fittings."},
       {hFr:"Énergie solaire", hEn:"Solar energy", fr:"Panneaux solaires (fortes puissances pour pompage et irrigation), contrôleurs de pompage, structures de montage, câbles solaires.", en:"Solar panels (high wattage for pumping and irrigation), pump controllers, mounting structures, solar cables."},
       {hFr:"Irrigation", hEn:"Irrigation", fr:"Goutte-à-goutte (rouleaux et kits), tuyaux HDPE et layflat, arroseurs et asperseurs, raccords et vannes, kits d'irrigation par hectare.", en:"Drip irrigation (rolls and kits), HDPE and layflat hoses, sprinklers, fittings and valves, per-hectare irrigation kits."}
+    ],
+    "electricite-groupes-electrogenes": [
+      {hFr:"Groupes électrogènes", hEn:"Generator sets", fr:"Groupes électrogènes diesel de 5 à 500 kVA, ouverts ou insonorisés, démarrage manuel ou automatique, pour maisons, commerces, fermes et chantiers.", en:"Diesel generator sets from 5 to 500 kVA, open or soundproofed, manual or automatic start, for homes, businesses, farms and worksites."},
+      {hFr:"Câbles et fils électriques", hEn:"Cables and wires", fr:"Câbles et fils en cuivre véritable (BV/BVR et armés), toutes sections, en bobines d'usine — la section juste pour chaque installation.", en:"Genuine copper cables and wires (BV/BVR and armoured), all sizes, on factory reels — the right size for every installation."},
+      {hFr:"Tableaux et protection", hEn:"Panels and protection", fr:"Coffrets et tableaux électriques, disjoncteurs, interrupteurs différentiels, parafoudres et matériel de mise à la terre.", en:"Electrical panels and enclosures, circuit breakers, residual-current devices, surge protectors and earthing equipment."},
+      {hFr:"Onduleurs et stabilisateurs", hEn:"Inverters and stabilizers", fr:"Onduleurs et systèmes de secours (UPS), stabilisateurs de tension, convertisseurs — le relais propre quand le réseau coupe.", en:"Inverters and backup systems (UPS), voltage stabilizers, converters — clean backup when the grid fails."},
+      {hFr:"Éclairage et installation", hEn:"Lighting and installation", fr:"Projecteurs et luminaires LED, lampadaires, prises et interrupteurs, gaines et accessoires d'installation pour bâtiments et entrepôts.", en:"LED floodlights and luminaires, street lights, sockets and switches, conduits and installation accessories for buildings and warehouses."}
+    ],
+    "materiaux-construction": [
+      {hFr:"Carrelage et revêtements", hEn:"Tiles and coverings", fr:"Carrelage de sol et de mur, faïence, grands formats, revêtements et profils de finition — les séries complètes pour un chantier entier.", en:"Floor and wall tiles, large formats, coverings and finishing profiles — complete series for a whole project."},
+      {hFr:"Sanitaire et robinetterie", hEn:"Sanitary ware and faucets", fr:"WC, lavabos, colonnes et parois de douche, robinetterie et accessoires de salle de bain, en séries assorties.", en:"Toilets, washbasins, shower columns and screens, faucets and bathroom accessories, in matching series."},
+      {hFr:"Portes et fenêtres", hEn:"Doors and windows", fr:"Portes métalliques de sécurité, portes d'intérieur, fenêtres aluminium et PVC, serrures et quincaillerie de porte.", en:"Steel security doors, interior doors, aluminium and PVC windows, locks and door hardware."},
+      {hFr:"Toiture et structures", hEn:"Roofing and structures", fr:"Tôles et tuiles métalliques, profilés et tubes, charpentes légères, gouttières et accessoires de toiture.", en:"Metal roofing sheets and tiles, profiles and tubes, light structures, gutters and roofing accessories."},
+      {hFr:"Plomberie et tuyauterie", hEn:"Plumbing and piping", fr:"Tubes PVC et PPR, raccords et vannes, réservoirs d'eau et accessoires de plomberie pour bâtiments et fermes.", en:"PVC and PPR pipes, fittings and valves, water tanks and plumbing accessories for buildings and farms."}
     ]
   };
   /* Visuels premium des cartes catalogue : pour chaque groupe de produits,
@@ -5320,6 +5431,20 @@ gtag('config', 'G-JFP2NNX9DX');
       {img:"assets/44542da50d358cf2.jpg", ic:"droplet"},
       {img:"assets/ccda7742dfe835ad.jpg", ic:"sun"},
       {img:"assets/94c4e58d4642c895.jpg", ic:"spray"}
+    ],
+    "electricite-groupes-electrogenes": [
+      {img:"assets/02834362fce688ed.jpg", ic:"zap"},
+      {img:"assets/d96b887b0aa15dc2.jpg", ic:"gauge"},
+      {img:"assets/c5bbff56645e124e.jpg", ic:"gear"},
+      {img:"assets/79b82704411cd75c.jpg", ic:"wrench"},
+      {img:"assets/e562aeaff5a4599e.jpg", ic:"sun"}
+    ],
+    "materiaux-construction": [
+      {img:"assets/ded22ec657d4486f.jpg", ic:"gear"},
+      {img:"assets/dbaf550eb709f708.jpg", ic:"spray"},
+      {img:"assets/44906cabe458bd8e.jpg", ic:"wrench"},
+      {img:"assets/b465839ccf69e86c.jpg", ic:"truck"},
+      {img:"assets/fc3ffa89edde823c.jpg", ic:"droplet"}
     ]
   };
   /* Découpe la liste de produits d'un groupe en pastilles individuelles,
