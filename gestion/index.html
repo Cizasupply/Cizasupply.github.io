@@ -128,6 +128,20 @@
   .kpi .k-num{font-size:30px;font-weight:900;color:var(--navy);line-height:1.05}
   .kpi .k-lib{font-size:12.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
   .kpi .k-sub{font-size:12.5px;color:var(--muted);margin-top:2px}
+  /* ---------- Headers premium, pastilles, alertes, caméra ---------- */
+  .page-head{background:linear-gradient(120deg,var(--navy2),var(--navy));border-radius:20px;padding:20px 22px;color:#fff;margin-bottom:18px;box-shadow:0 16px 40px rgba(7,16,31,.18);position:relative;overflow:hidden}
+  .page-head::after{content:"";position:absolute;top:0;right:0;width:190px;height:100%;background:linear-gradient(90deg,transparent,rgba(212,175,55,.16));pointer-events:none}
+  .page-head .ph-eyebrow{font-size:11px;letter-spacing:.16em;color:var(--gold2);font-weight:800;text-transform:uppercase}
+  .page-head h2{font-size:24px;margin:4px 0 4px;color:#fff;position:relative;z-index:1}
+  .page-head p{margin:0;color:#c8d3e6;font-size:13.5px;line-height:1.55;max-width:660px;position:relative;z-index:1}
+  .pastille{display:inline-block;background:var(--gold);color:#07101F;border-radius:999px;font-size:11px;font-weight:900;padding:1px 7px;margin-left:7px;vertical-align:2px}
+  .alerte-live{margin:14px 16px 0;background:#fdf3d7;border:1.5px solid var(--gold);color:#5c4300;border-radius:14px;padding:12px 14px;font-size:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  @media(min-width:1024px){.alerte-live{margin:18px 28px 0}}
+  .alerte-bandeau{background:#fdf3d7;border:1.5px solid var(--gold);color:#5c4300;border-radius:14px;padding:12px 14px;font-size:14px;margin-bottom:16px}
+  .cam-overlay{position:fixed;inset:0;z-index:90;background:rgba(7,16,31,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:18px}
+  .cam-overlay video{width:min(92vw,560px);border-radius:16px;background:#000}
+  .cam-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+
   /* ---------- Impression ---------- */
   #zone-impression{display:none}
   @media print{
@@ -230,6 +244,7 @@
       <div class="qui-h"><span id="qui-email-m"></span></div>
       <button class="btn petit" id="btn-deco-m" type="button">Sortir</button>
     </div>
+    <div id="alerte-live" class="alerte-live caché"></div>
     <main id="contenu"></main>
   </div>
   <nav class="barre-bas" id="barre-bas">
@@ -435,6 +450,63 @@ var MODULES = [
   { cle: "rapports",     titre: "Rapports",     rendre: function(c){ return rendreRapports(c); } },
   { cle: "comptes",      titre: "Comptes",      rendre: function(c){ return rendreComptes(c); }, fondateur: true }
 ];
+function entetePage(titre, sous){
+  return '<div class="page-head"><div class="ph-eyebrow">Ciza Supply · Bureau</div><h2>' + esc(titre) + '</h2>' + (sous ? '<p>' + sous + '</p>' : '') + '</div>';
+}
+async function resoudreMonNom(){
+  if(window.__monNom !== undefined) return window.__monNom;
+  var nom = (profil && profil.nom) || "";
+  if(!nom && profil && profil.email){
+    var r = await sb.from("employes").select("nom").ilike("email", profil.email).limit(1);
+    if(!r.error && r.data && r.data[0]) nom = r.data[0].nom;
+  }
+  window.__monNom = nom || (profil ? (profil.email || "") : "");
+  return window.__monNom;
+}
+function estPourMoi(a, nom){
+  if(!a || !a.assignee_a || !nom) return false;
+  var x = a.assignee_a.trim().toLowerCase(), y = String(nom).trim().toLowerCase();
+  if(!x || !y) return false;
+  if(x === y) return true;
+  return (x.length >= 3 && y.indexOf(x) >= 0) || (y.length >= 3 && x.indexOf(y) >= 0);
+}
+function poserPastille(cle, n){
+  document.querySelectorAll("#nav-modules button, #nav-plein button").forEach(function(b){
+    if(b.dataset.cle !== cle) return;
+    var p = b.querySelector(".pastille"); if(p) p.remove();
+    if(n > 0){ var s = document.createElement("span"); s.className = "pastille"; s.textContent = n; b.appendChild(s); }
+  });
+}
+async function majPastilles(){
+  var r1 = await sb.from("rendez_vous").select("id", { count: "exact", head: true }).eq("date_souhaite", aujourdhui()).in("statut", ["nouvelle", "confirme"]);
+  poserPastille("rendez-vous", r1.error ? 0 : (r1.count || 0));
+  var nom = await resoudreMonNom();
+  var r2 = await sb.from("assignations").select("*").in("statut", ["a_faire", "en_cours"]);
+  var n2 = (!r2.error && r2.data) ? r2.data.filter(function(a){ return estPourMoi(a, nom); }).length : 0;
+  poserPastille("assignations", n2);
+}
+async function verifierNouvelleAssignation(ligne){
+  var nom = await resoudreMonNom();
+  if(!estPourMoi(ligne, nom)) return;
+  var z = document.getElementById("alerte-live");
+  if(!z) return;
+  z.innerHTML = "<span><b>Nouvelle assignation :</b> " + esc(ligne.tache || "") + (ligne.echeance ? " — échéance " + fmtDate(ligne.echeance) : "") + '</span><button class="btn petit" type="button" id="alerte-live-voir">Voir</button>';
+  z.classList.remove("caché");
+  document.getElementById("alerte-live-voir").addEventListener("click", function(){ z.classList.add("caché"); aller("accueil"); });
+  setTimeout(function(){ z.classList.add("caché"); }, 25000);
+}
+function activerTempsReel(){
+  if(window.__canalAssign) return;
+  window.__canalAssign = true;
+  try {
+    sb.channel("assignations-live").on("postgres_changes", { event: "*", schema: "public", table: "assignations" }, function(payload){
+      majPastilles();
+      if(payload.eventType === "INSERT" && payload.new) verifierNouvelleAssignation(payload.new);
+      if(moduleActif === "assignations") aller("assignations");
+      else if(moduleActif === "accueil") aller("accueil");
+    }).subscribe();
+  } catch(e){ /* le temps réel est un plus : l'écran reste utilisable sans lui */ }
+}
 function construireNav(){
   ["nav-modules", "nav-plein"].forEach(function(idNav){
     var nav = document.getElementById(idNav);
@@ -449,6 +521,7 @@ function construireNav(){
       nav.appendChild(b);
     });
   });
+  majPastilles(); activerTempsReel();
 }
 function aller(cle){
   moduleActif = cle;
@@ -459,6 +532,7 @@ function aller(cle){
   var c = document.getElementById("contenu");
   c.innerHTML = "";
   if(m) m.rendre(c);
+  majPastilles();
   window.scrollTo(0, 0);
 }
 </script>
@@ -490,10 +564,38 @@ function lireFormulaire(form, champs){
   return obj;
 }
 
+function ouvrirCamera(cfg, row, rappel){
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){ alert("La caméra n'est pas disponible sur cet appareil. Utilisez « Téléverser une photo »."); return; }
+  var overlay = document.createElement("div");
+  overlay.className = "cam-overlay";
+  overlay.innerHTML = '<video autoplay playsinline></video><div class="cam-actions"><button class="btn" type="button" data-cam="capturer">Capturer la photo</button><button class="btn secondaire" type="button" data-cam="annuler">Annuler</button></div><p style="color:#c8d3e6;font-size:13px;margin:0;text-align:center">Placez le client devant la caméra du bureau, puis capturez.</p>';
+  document.body.appendChild(overlay);
+  var video = overlay.querySelector("video");
+  var flux = null;
+  function fermer(){ if(flux) flux.getTracks().forEach(function(t){ t.stop(); }); overlay.remove(); }
+  navigator.mediaDevices.getUserMedia({ video: true }).then(function(s){ flux = s; video.srcObject = s; }).catch(function(){ fermer(); alert("Caméra refusée ou absente sur cet appareil. Utilisez « Téléverser une photo »."); });
+  overlay.querySelector('[data-cam="annuler"]').addEventListener("click", fermer);
+  overlay.querySelector('[data-cam="capturer"]').addEventListener("click", function(){
+    if(!video.videoWidth){ alert("La caméra démarre encore — réessayez dans une seconde."); return; }
+    var toile = document.createElement("canvas");
+    toile.width = Math.min(video.videoWidth, 900);
+    toile.height = Math.round(toile.width * video.videoHeight / video.videoWidth);
+    toile.getContext("2d").drawImage(video, 0, 0, toile.width, toile.height);
+    toile.toBlob(async function(blob){
+      if(!blob){ fermer(); return; }
+      var chemin = cfg.photo.dossier + "/" + row.id + "/" + Date.now() + "-camera.jpg";
+      var up = await sb.storage.from(cfg.photo.bucket).upload(chemin, blob, { upsert: true, contentType: "image/jpeg" });
+      fermer();
+      if(up.error){ alert("Enregistrement refusé : " + up.error.message); return; }
+      var maj = {}; maj[cfg.photo.champ] = chemin;
+      var r = await sb.from(cfg.table).update(maj).eq("id", row.id);
+      if(r.error) alert("Enregistrement refusé : " + r.error.message); else rappel();
+    }, "image/jpeg", 0.85);
+  });
+}
 function moduleGenerique(conteneur, cfg){
   var etat = { lignes: [], edition: null, filtre: "" };
-  conteneur.innerHTML = '<h2 class="titre">' + esc(cfg.titre) + '</h2>' +
-    (cfg.sous ? '<p class="sous">' + esc(cfg.sous) + '</p>' : '') +
+  conteneur.innerHTML = entetePage(cfg.titre, cfg.sous ? esc(cfg.sous) : '') +
     '<div class="outils">' +
       '<button class="btn" type="button" data-act="nouveau">+ Nouveau</button>' +
       '<button class="btn secondaire" type="button" data-act="excel">Export Excel</button>' +
@@ -529,9 +631,15 @@ function moduleGenerique(conteneur, cfg){
           : "";
         doc += ' <label class="btn petit secondaire" style="cursor:pointer">Déposer un document<input type="file" class="caché" data-doc-depot="' + r.id + '" /></label>';
       }
+      var photo = "";
+      if(cfg.photo){
+        photo = '<div class="docs" style="margin-top:10px">' + (r[cfg.photo.champ] ? '<img data-photo-img="' + r.id + '" alt="Photo du client" />' : '<span class="meta">Aucune photo du client.</span>') + '</div>' +
+          '<div class="actions"><button class="btn petit" type="button" data-photo-cam="' + r.id + '">Prendre une photo</button>' +
+          '<label class="btn petit secondaire" style="cursor:pointer">Téléverser une photo<input type="file" accept="image/*" class="caché" data-photo-depot="' + r.id + '" /></label></div>';
+      }
       return '<article class="carte"><h3>' + esc(cfg.titreLigne(r)) + ' ' + badge + '</h3><div class="meta">' + meta + '</div>' +
         '<div class="actions"><button class="btn petit secondaire" type="button" data-modif="' + r.id + '">Modifier</button>' + doc +
-        (profil.role === "fondateur" ? '<button class="btn petit danger" type="button" data-suppr="' + r.id + '">Supprimer</button>' : "") + '</div></article>';
+        (profil.role === "fondateur" ? '<button class="btn petit danger" type="button" data-suppr="' + r.id + '">Supprimer</button>' : "") + '</div>' + photo + '</article>';
     }).join("");
     zoneListe.querySelectorAll("[data-modif]").forEach(function(b){ b.addEventListener("click", function(){ ouvrirForm(etat.lignes.find(function(x){ return x.id === b.dataset.modif; })); }); });
     zoneListe.querySelectorAll("[data-suppr]").forEach(function(b){ b.addEventListener("click", async function(){
@@ -557,6 +665,26 @@ function moduleGenerique(conteneur, cfg){
       }); });
     }
   }
+    if(cfg.photo){
+      zoneListe.querySelectorAll("[data-photo-img]").forEach(async function(img){
+        var row = etat.lignes.find(function(x){ return x.id === img.dataset.photoImg; });
+        if(row && row[cfg.photo.champ]){ var rr = await sb.storage.from(cfg.photo.bucket).createSignedUrl(row[cfg.photo.champ], 600); if(rr.data) img.src = rr.data.signedUrl; }
+      });
+      zoneListe.querySelectorAll("[data-photo-depot]").forEach(function(inp){ inp.addEventListener("change", async function(){
+        var f = inp.files[0]; if(!f) return;
+        var row = etat.lignes.find(function(x){ return x.id === inp.dataset.photoDepot; });
+        var chemin = cfg.photo.dossier + "/" + row.id + "/" + Date.now() + "-" + f.name.replace(/[^\w.\-]+/g, "_");
+        var up = await sb.storage.from(cfg.photo.bucket).upload(chemin, f, { upsert: true });
+        if(up.error){ alert("Dépôt refusé : " + up.error.message); return; }
+        var maj = {}; maj[cfg.photo.champ] = chemin;
+        var r = await sb.from(cfg.table).update(maj).eq("id", row.id);
+        if(r.error) alert("Enregistrement refusé : " + r.error.message); else charger();
+      }); });
+      zoneListe.querySelectorAll("[data-photo-cam]").forEach(function(b){ b.addEventListener("click", function(){
+        var row = etat.lignes.find(function(x){ return x.id === b.dataset.photoCam; });
+        ouvrirCamera(cfg, row, function(){ charger(); });
+      }); });
+    }
   function ouvrirForm(record){
     etat.edition = record || null;
     zoneForm.innerHTML = '<form class="formulaire"><div class="grille">' +
@@ -628,7 +756,7 @@ var CFG_RDV = {
     { champ: "notes", label: "Notes" }
   ],
   titreLigne: function(r){ return r.nom; },
-  badge: function(r){ return [libelle(OPT_STATUT_RDV, r.statut), r.statut === "nouvelle" ? "or" : (r.statut === "fait" ? "vert" : "")]; }
+  badge: function(r){ if(r.date_souhaite === aujourdhui() && r.statut !== "fait" && r.statut !== "annule") return ["Aujourd'hui · " + libelle(OPT_STATUT_RDV, r.statut), "or"]; return [libelle(OPT_STATUT_RDV, r.statut), r.statut === "nouvelle" ? "or" : (r.statut === "fait" ? "vert" : "")]; }
 };
 var CFG_CLIENTS = {
   titre: "Clients", table: "clients", sous: "Enregistrement des nouveaux clients et registre du bureau.",
@@ -646,7 +774,8 @@ var CFG_CLIENTS = {
     { champ: "source", label: "Source" }, { champ: "notes", label: "Notes" },
     { label: "Enregistré le", format: function(r){ return fmtDate(r.cree_le); } }
   ],
-  titreLigne: function(r){ return r.nom; }
+  titreLigne: function(r){ return r.nom; },
+  photo: { champ: "photo_url", bucket: "documents-bureau", dossier: "clients" }
 };
 var OPT_STATUT_PART = [["en_discussion","En discussion"],["actif","Actif"],["inactif","Inactif"]];
 var CFG_PARTENAIRES = {
@@ -760,8 +889,7 @@ function rendreDepenses(c){ moduleGenerique(c, CFG_DEPENSES); }
 "use strict";
 /* =============== DOSSIERS (suivi clients + documents) =============== */
 async function rendreDossiers(c){
-  c.innerHTML = '<h2 class="titre">Dossiers clients</h2>' +
-    '<p class="sous">Ce que le client voit sur la page publique de suivi : ' + SUPABASE_URL.replace("https://mbbcfxsegmelnfhfzyst.supabase.co", "cizasupply.com") + '/suivi-dossier/ — il tape sa référence. Ici, vous faites avancer l\'étape et vous déposez sa facture et les photos de ses échantillons.</p>' +
+  c.innerHTML = entetePage("Dossiers clients", "Ce que le client voit sur la page publique de suivi : cizasupply.com/suivi-dossier/ — il tape sa référence. Ici, vous faites avancer l'étape et vous déposez sa facture et les photos de ses échantillons.") +
     '<div class="outils"><button class="btn" type="button" data-act="nouveau">+ Nouveau dossier</button></div>' +
     '<div data-zone="form"></div><div data-zone="liste"><p class="vide">Chargement…</p></div>';
   var zoneForm = c.querySelector('[data-zone="form"]');
@@ -923,7 +1051,7 @@ var OPT_STATUT_CONTRAT_EMP = [["envoye","Envoyé"],["signe","Signé"],["depose",
 var OPT_STATUT_PAIE = [["prepare","Préparée"],["valide","Validée"],["paye","Payée"]];
 async function urlSigneePrivee(chemin){ var r = await sb.storage.from("documents-bureau").createSignedUrl(chemin, 600); return r.data ? r.data.signedUrl : null; }
 async function rendreEmployes(c){
-  c.innerHTML = '<h2 class="titre">Employés</h2><p class="sous">Fiche de chaque employé, ses contrats, sa carte d\'employé et ses fiches de paie — comme dans CizaLogistics. Statuts : actif, démission, renvoyé, fin de contrat.</p>' +
+  c.innerHTML = entetePage("Employés", "Fiche de chaque employé, ses contrats, sa carte d'employé et ses fiches de paie — comme dans CizaLogistics. Statuts : actif, démission, renvoyé, fin de contrat.") +
     '<div class="outils"><button class="btn" type="button" data-act="nouveau">+ Nouvel employé</button></div>' +
     '<div data-zone="form"></div><div data-zone="liste"><p class="vide">Chargement…</p></div>';
   var zoneForm = c.querySelector('[data-zone="form"]');
@@ -1027,10 +1155,14 @@ async function rendreEmployes(c){
     }); });
     zoneListe.querySelectorAll("[data-paie-print]").forEach(function(b){ b.addEventListener("click", function(){
       var p = paies.find(function(x){ return x.id === b.dataset.paiePrint; });
-      imprimer("Fiche de paie", "<h1>Fiche de paie — " + esc(p.mois) + "</h1>" + tableImpression(["Élément", "Détail"], [
-        ["Employé", e.nom], ["Numéro", e.numero || ""], ["Poste", e.poste || ""], ["Mois", p.mois],
-        ["Montant", fmtMontant(p.montant, p.devise)], ["Statut", libelle(OPT_STATUT_PAIE, p.statut)], ["Date de paiement", fmtDate(p.date_paiement)]
-      ]) + '<p style="margin-top:18px">Ciza Supply, division de Ciza Group | Burundi</p>');
+      imprimer("Talon de paie", '<div class="doc-titre">Talon de paie</div>' +
+        '<div class="doc-meta"><b>Employé :</b> ' + esc(e.nom) + ' (' + esc(e.numero || "—") + ')<br /><b>Poste :</b> ' + esc(e.poste || "—") + ' &nbsp;·&nbsp; <b>Mois :</b> ' + esc(p.mois) + '</div>' +
+        tableImpression(["Élément", "Détail"], [
+          ["Salaire du mois", fmtMontant(p.montant, p.devise)], ["Statut", libelle(OPT_STATUT_PAIE, p.statut)], ["Date de paiement", fmtDate(p.date_paiement)]
+        ]) +
+        '<p style="font-size:15px;margin-top:12px"><b>Net payé : ' + esc(fmtMontant(p.montant, p.devise)) + '</b></p>' +
+        '<div class="signatures"><div class="sig-bloc"><div class="sig-ligne">Payé par le bureau — signature</div></div><div class="sig-bloc"><div class="sig-ligne">Reçu par l\'employé — signature</div></div></div>' +
+        '<div class="doc-pied">Ciza Supply, division de Ciza Group · Bujumbura, Burundi · +257 79 94 50 07 · infos@cizagroup.com · cizasupply.com</div>');
     }); });
     zoneListe.querySelector('[data-act="carte"]').addEventListener("click", function(){ genererCarteEmploye(e); });
     zoneListe.querySelector('[data-form="contrat"]').addEventListener("submit", async function(ev){
@@ -1053,7 +1185,7 @@ async function rendreEmployes(c){
 /* =============== ACCUEIL (tableau de bord ERP) =============== */
 var ETAPES_NOMS = ["Demande reçue", "Devis préparé et envoyé", "Commande confirmée", "Production et préparation", "Contrôle qualité", "Expédition vers le Burundi", "Arrivée à Bujumbura", "Dossier clôturé"];
 async function rendreAccueil(c){
-  c.innerHTML = '<h2 class="titre">Tableau de bord</h2><p class="sous">' + esc(fmtDate(aujourdhui())) + ' — vue d\'ensemble du bureau, en temps réel.</p><p class="vide">Chargement des chiffres…</p>';
+  c.innerHTML = entetePage("Tableau de bord", esc(fmtDate(aujourdhui())) + " — vue d'ensemble du bureau, en temps réel.") + '<p class="vide">Chargement des chiffres…</p>';
   async function compte(table, fn){
     var q = sb.from(table).select("id", { count: "exact", head: true });
     if(fn) q = fn(q);
@@ -1076,12 +1208,43 @@ async function rendreAccueil(c){
   var totauxDep = {};
   if(!depMois.error && depMois.data) depMois.data.forEach(function(d){ totauxDep[d.devise] = (totauxDep[d.devise] || 0) + Number(d.montant || 0); });
   var depTxt = Object.keys(totauxDep).length ? Object.keys(totauxDep).map(function(dv){ return fmtMontant(totauxDep[dv], dv); }).join(" · ") : "0";
+  var moisNom = new Date(ajd + "T12:00:00").toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
+  async function sommeMois(table){
+    var r = await sb.from(table).select("montant, devise").gte("cree_le", moisDebut).lte("cree_le", ajd + "T23:59:59");
+    var tot = {};
+    if(!r.error && r.data) r.data.forEach(function(x){ if(x.montant != null) tot[x.devise || "BIF"] = (tot[x.devise || "BIF"] || 0) + Number(x.montant || 0); });
+    return Object.keys(tot).length ? Object.keys(tot).map(function(dv){ return fmtMontant(tot[dv], dv); }).join(" · ") : "";
+  }
+  var perfDevisN = await compte("devis", function(q){ return q.gte("cree_le", moisDebut).lte("cree_le", ajd + "T23:59:59"); });
+  var perfDevisTxt = await sommeMois("devis");
+  var perfCmdN = await compte("commandes", function(q){ return q.gte("cree_le", moisDebut).lte("cree_le", ajd + "T23:59:59"); });
+  var perfCmdTxt = await sommeMois("commandes");
+  var clientsMois = await compte("clients", function(q){ return q.gte("cree_le", moisDebut).lte("cree_le", ajd + "T23:59:59"); });
+  var paiesMois = await sb.from("paies").select("montant, devise").eq("statut", "paye").gte("date_paiement", moisDebut).lte("date_paiement", ajd);
+  var totPaies = {};
+  if(!paiesMois.error && paiesMois.data) paiesMois.data.forEach(function(p){ totPaies[p.devise || "BIF"] = (totPaies[p.devise || "BIF"] || 0) + Number(p.montant || 0); });
+  var paiesTxt = Object.keys(totPaies).length ? Object.keys(totPaies).map(function(dv){ return fmtMontant(totPaies[dv], dv); }).join(" · ") : "0";
+  var nomMoi = await resoudreMonNom();
+  var rAssign = await sb.from("assignations").select("*").in("statut", ["a_faire", "en_cours"]).order("echeance");
+  var mesAssign = (!rAssign.error && rAssign.data) ? rAssign.data.filter(function(a){ return estPourMoi(a, nomMoi); }) : [];
+  var htmlPerf = '<h2 class="titre">Performance du mois — ' + esc(moisNom) + '</h2><div class="kpis">' +
+    kpi(perfDevisN, "Devis du mois", perfDevisTxt, "devis") +
+    kpi(perfCmdN, "Commandes du mois", perfCmdTxt, "commandes") +
+    kpi(clientsMois, "Nouveaux clients", "", "clients") +
+    kpi(paiesTxt, "Paies payées du mois", "", "employes") + '</div>';
+  var htmlAssign = '<h2 class="titre">Mes assignations</h2>' + (mesAssign.length ? mesAssign.map(function(a){
+    return '<article class="carte"><h3>' + esc(a.tache) + ' <span class="badge ' + (a.statut === "a_faire" ? "or" : "") + '">' + esc(libelle(OPT_STATUT_TACHE, a.statut)) + '</span></h3>' +
+      '<div class="meta">' + (a.echeance ? '<div>Échéance : <b>' + fmtDate(a.echeance) + '</b></div>' : '') + (a.details ? '<div>' + esc(a.details) + '</div>' : '') + '</div>' +
+      '<div class="actions">' + (a.statut === "a_faire" ? '<button class="btn petit secondaire" type="button" data-assign-maj="' + a.id + '" data-statut="en_cours">Commencer</button>' : '') +
+      '<button class="btn petit" type="button" data-assign-maj="' + a.id + '" data-statut="fait">Marquer terminé</button></div></article>';
+  }).join("") : '<p class="vide">Aucune assignation en cours pour vous.</p>');
+  var htmlAlerte = listeRdv.length ? '<div class="alerte-bandeau"><b>Alerte rendez-vous :</b> ' + listeRdv.length + " rendez-vous aujourd'hui — le prochain : " + esc(listeRdv[0].nom) + (listeRdv[0].heure ? " à " + esc(listeRdv[0].heure) : "") + ".</div>" : "";
   var derniers = await sb.from("suivi_dossiers").select("*").order("maj", { ascending: false }).limit(5);
   var listeDos = derniers.error ? [] : (derniers.data || []);
   function kpi(num, lib, sub, cle){
     return '<button type="button" class="carte kpi" data-kpi="' + cle + '"><div class="k-num">' + num + '</div><div class="k-lib">' + lib + '</div>' + (sub ? '<div class="k-sub">' + sub + '</div>' : '') + '</button>';
   }
-  c.innerHTML = '<h2 class="titre">Tableau de bord</h2><p class="sous">' + esc(fmtDate(ajd)) + ' — vue d\'ensemble du bureau, en temps réel.</p>' +
+  c.innerHTML = entetePage("Tableau de bord", esc(fmtDate(ajd)) + " — vue d'ensemble du bureau, en temps réel.") +
     '<div class="kpis">' +
     kpi(dossEnCours, "Dossiers en cours", dossTotal + " au total", "dossiers") +
     kpi(nbDevis, "Devis", "", "devis") +
@@ -1091,7 +1254,7 @@ async function rendreAccueil(c){
     kpi(nbClients, "Clients", "", "clients") +
     kpi(depTxt, "Dépenses du mois", "", "depenses") +
     kpi(nbEmp, "Employés actifs", "", "employes") +
-    '</div>' +
+    '</div>' + htmlAlerte + htmlPerf + htmlAssign +
     '<h2 class="titre">Rendez-vous du jour</h2>' +
     (listeRdv.length ? listeRdv.map(function(r){
       return '<article class="carte"><h3>' + esc(r.nom) + ' <span class="badge or">' + esc(r.heure || "—") + '</span> <span class="badge">' + esc(r.statut) + '</span></h3>' +
@@ -1103,6 +1266,10 @@ async function rendreAccueil(c){
         '<div class="meta"><div>Catégorie : <b>' + esc(d.categorie) + '</b></div><div>Mis à jour : <b>' + fmtDate(d.maj) + '</b></div>' + (d.note ? '<div>' + esc(d.note) + '</div>' : '') + '</div></article>';
     }).join("") : '<p class="vide">Aucun dossier.</p>');
   c.querySelectorAll("[data-kpi]").forEach(function(b){ b.addEventListener("click", function(){ aller(b.dataset.kpi); }); });
+  c.querySelectorAll("[data-assign-maj]").forEach(function(b){ b.addEventListener("click", async function(){
+    var r = await sb.from("assignations").update({ statut: b.dataset.statut }).eq("id", b.dataset.assignMaj);
+    if(r.error) alert("Mise à jour refusée : " + r.error.message); else { majPastilles(); aller("accueil"); }
+  }); });
 }
 
 /* =============== RAPPORTS (chiffres automatiques + rédaction) =============== */
@@ -1117,7 +1284,7 @@ function bornesPeriode(type, dateRef){
   return { debut: f(lundi), fin: f(dimanche), periode: "Semaine du " + fmtDate(f(lundi)) + " au " + fmtDate(f(dimanche)) };
 }
 async function rendreRapports(c){
-  c.innerHTML = '<h2 class="titre">Rapports</h2><p class="sous">Choisissez le type et la date : les chiffres se remplissent tout seuls depuis les modules (dossiers, clients, rendez-vous, dépenses, présences, paies). Vous ajoutez votre texte, puis vous enregistrez. Impression et PDF sur chaque rapport.</p>' +
+  c.innerHTML = entetePage("Rapports", "Choisissez le type et la date : les chiffres se remplissent tout seuls depuis les modules (dossiers, clients, rendez-vous, dépenses, présences, paies). Vous ajoutez votre texte, puis vous enregistrez. Impression et PDF sur chaque rapport.") +
     '<form class="formulaire"><div class="grille"><div><label>Type de rapport</label><select id="rp-type"><option value="journalier">Journalier</option><option value="hebdomadaire">Hebdomadaire</option><option value="annuel">Annuel</option></select></div>' +
     '<div><label>Date de référence</label><input type="date" id="rp-date" value="' + aujourdhui() + '" /></div></div>' +
     '<div data-zone="calcul"></div></form><div data-zone="liste"><p class="vide">Chargement…</p></div>';
@@ -1210,7 +1377,7 @@ async function rendreRapports(c){
 
 /* =============== COMPTES (fondateur seulement) =============== */
 async function rendreComptes(c){
-  c.innerHTML = '<h2 class="titre">Comptes et accès</h2><p class="sous">Un compte apparaît ici après la première connexion de la personne. Activez le compte et choisissez le rôle : <b>Fondateur</b> = accès complet ; <b>Employeur</b> = les opérations, limité comme d\'habitude. Désactiver un compte coupe son accès tout de suite — démission ou renvoi, sans jamais toucher à la base.</p><div data-zone="liste"><p class="vide">Chargement…</p></div>';
+  c.innerHTML = entetePage("Comptes et accès", "Un compte apparaît ici après la première connexion de la personne. Activez le compte et choisissez le rôle : <b>Fondateur</b> = accès complet ; <b>Employeur</b> = les opérations, limité comme d'habitude. Désactiver un compte coupe son accès tout de suite — démission ou renvoi, sans jamais toucher à la base.") + '<div data-zone="liste"><p class="vide">Chargement…</p></div>';
   var zone = c.querySelector('[data-zone="liste"]');
   async function charger(){
     var r = await sb.from("profils").select("*").order("cree_le", { ascending: true });
@@ -1239,7 +1406,7 @@ var OPT_STATUT_DEVIS = [["envoye","Envoyé"],["accepte","Accepté"],["refuse","R
 var OPT_STATUT_ECH = [["en_preparation","En préparation"],["expedie","Expédié"],["recu","Reçu"]];
 function urlPubliqueSuivi(chemin){ return SUPABASE_URL + "/storage/v1/object/public/dossiers-suivi/" + chemin; }
 async function rendreDevis(c){
-  c.innerHTML = '<h2 class="titre">Devis</h2><p class="sous">Les devis des clients, avec le document PDF et les échantillons liés à chaque devis. Le client voit tout cela dans son espace, relié par l\'adresse de son compte (fiche Clients).</p>' +
+  c.innerHTML = entetePage("Devis", "Les devis des clients, avec le document PDF et les échantillons liés à chaque devis. Le client voit tout cela dans son espace, relié par l'adresse de son compte (fiche Clients).") +
     '<div class="outils"><button class="btn" type="button" data-act="nouveau">+ Nouveau devis</button></div>' +
     '<div data-zone="form"></div><div data-zone="liste"><p class="vide">Chargement…</p></div>';
   var zoneForm = c.querySelector('[data-zone="form"]');

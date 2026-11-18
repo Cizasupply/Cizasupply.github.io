@@ -56,6 +56,19 @@
   .frise i{flex:1;height:7px;border-radius:99px;background:#e2e7f0}
   .frise i.fait{background:var(--gold)}
   .vide{color:var(--muted);font-size:14.5px;padding:18px 4px}
+  /* ---------- Passe premium espace client ---------- */
+  body{background:linear-gradient(180deg,#f2f5fa,#e9eef6)}
+  .barre{border-bottom:3px solid var(--gold)}
+  .carte{border:1px solid #dfe6f2;border-radius:18px;box-shadow:0 1px 2px rgba(7,16,31,.05),0 12px 30px rgba(7,16,31,.08);position:relative;overflow:hidden}
+  .carte::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold) 0%,rgba(212,175,55,.25) 55%,transparent 100%)}
+  .btn{background:linear-gradient(120deg,#F2B840,#D9A82E);box-shadow:0 4px 14px rgba(212,175,55,.3)}
+  .btn.secondaire{background:#eef1f6;box-shadow:none}
+  .login-card{border-top:4px solid var(--gold);border-radius:22px}
+  .page-head{background:linear-gradient(120deg,var(--navy2),var(--navy));border-radius:20px;padding:20px 22px;color:#fff;margin-bottom:16px;box-shadow:0 16px 40px rgba(7,16,31,.18)}
+  .page-head .ph-eyebrow{font-size:11px;letter-spacing:.16em;color:var(--gold2);font-weight:800;text-transform:uppercase}
+  .page-head h2{font-size:23px;margin:4px 0 4px;color:#fff}
+  .page-head p{margin:0;color:#c8d3e6;font-size:13.5px;line-height:1.55}
+  nav.onglets button.actif{background:linear-gradient(120deg,var(--navy2),var(--navy));border-color:var(--navy)}
 </style>
 </head>
 <body>
@@ -115,6 +128,7 @@
   </div>
   <nav class="onglets" id="nav-onglets"></nav>
   <main>
+    <div class="page-head"><div class="ph-eyebrow">Ciza Supply · Espace client</div><h2>Mes dossiers chez Ciza Supply</h2><p>Vos devis, vos commandes et vos livraisons, réunis au même endroit.</p></div>
     <div class="filtres">
       <input type="search" id="filtre-texte" placeholder="Rechercher (référence, produit, destination…)" />
       <select id="filtre-statut"><option value="">Tous les statuts</option></select>
