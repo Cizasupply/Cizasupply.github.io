@@ -87,6 +87,16 @@
 .ce-qr{width:84px;height:84px;flex:none;align-self:center;border:1px solid var(--gold);border-radius:8px;padding:4px;background:#fff}
 .ce-qr svg{width:100%;height:100%;display:block}
 .ce-pied{background:var(--navy);color:var(--gold2);font-size:10.5px;font-weight:700;padding:8px 16px;letter-spacing:.02em}
+.barre{gap:9px;padding:10px 12px}
+.barre .marque{display:flex;align-items:center;gap:8px;font-size:15px;white-space:nowrap;min-width:0}
+.barre .qui{display:flex;align-items:center;gap:7px;margin-left:auto;min-width:0}
+.qui-nom-txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:118px}
+@media (max-width:560px){.mq-txt{display:none}.marque-img{height:24px}}
+.acc-bandeau{padding:14px;gap:12px}
+.acc-bandeau>div{min-width:0}
+.acc-photo,.acc-init{width:60px;height:60px}
+.acc-init{font-size:21px}
+.acc-bandeau h2{font-size:19px}
 .barre-bas-client{overflow-x:auto;scrollbar-width:none}
 .barre-bas-client button{flex:0 0 auto;padding:9px 11px}
 nav.onglets{display:none}
@@ -170,13 +180,12 @@ nav.onglets{display:none}
     </div>
   </aside>
   <div class="barre">
-    <div class="marque"><img class="marque-img" src="/assets/b80a04e40bcd23d4.png" alt="CIZA SUPPLY" /> · Mon espace</div>
+    <div class="marque"><img class="marque-img" src="/assets/b80a04e40bcd23d4.png" alt="CIZA SUPPLY" /><span class="mq-txt">Mon espace</span></div>
     <div class="qui" id="qui-nom"></div>
     <button class="btn petit" id="btn-deco" type="button">Sortir</button>
   </div>
   <nav class="onglets" id="nav-onglets"></nav>
   <main>
-    <div class="page-head"><img class="ph-logo" src="/assets/b80a04e40bcd23d4.png" alt="CIZA SUPPLY" /><div><div class="ph-eyebrow">Ciza Supply · Espace client</div><h2>Mes dossiers chez Ciza Supply</h2><p>Vos devis, vos commandes et vos livraisons, réunis au même endroit.</p></div></div>
     <div class="filtres">
       <input type="search" id="filtre-texte" placeholder="Rechercher (référence, produit, destination…)" />
       <select id="filtre-statut"><option value="">Tous les statuts</option></select>
@@ -302,7 +311,7 @@ async function demarrer(){
   donnees.client = rc.data[0];
   donnees.photoUrl = "";
   if(donnees.client.photo_url){ var rph = await sb.storage.from("documents-bureau").createSignedUrl(donnees.client.photo_url, 3600); if(rph.data) donnees.photoUrl = rph.data.signedUrl; }
-  document.getElementById("qui-nom").innerHTML = (donnees.photoUrl ? '<img src="' + esc(donnees.photoUrl) + '" alt="" style="width:26px;height:26px;border-radius:50%;object-fit:cover;vertical-align:-7px;margin-right:7px;border:1px solid var(--gold)" />' : "") + esc(donnees.client.nom || "");
+  document.getElementById("qui-nom").innerHTML = (donnees.photoUrl ? '<img src="' + esc(donnees.photoUrl) + '" alt="" style="width:26px;height:26px;border-radius:50%;object-fit:cover;border:1px solid var(--gold)" />' : "") + '<span class="qui-nom-txt">' + esc(donnees.client.nom || "") + '</span>';
   var lq = document.getElementById("lat-qui");
   if(lq) lq.innerHTML = (donnees.photoUrl ? '<img src="' + esc(donnees.photoUrl) + '" alt="" />' : '<div class="init">' + esc((donnees.client.nom || "C").trim().charAt(0).toUpperCase()) + '</div>') + '<div><div class="lat-nom">' + esc(donnees.client.nom || "") + '</div><div class="lat-num">' + esc(donnees.client.numero || "") + '</div></div>';
   await chargerDonnees();
@@ -635,6 +644,8 @@ function rendreDemandes(z){
 
 function afficher(){
   var c = document.getElementById("contenu");
+  var LISTES_FILTRES = { devis: 1, echantillons: 1, commandes: 1, livraisons: 1, archives: 1 };
+  document.querySelector(".filtres").style.display = LISTES_FILTRES[onglet] ? "" : "none";
   var f = passeFiltre("");
   var html = "";
   if(onglet === "accueil"){
