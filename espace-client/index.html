@@ -123,6 +123,18 @@ nav.onglets{display:none}
 .login-logo{height:66px}
 .ce-logo{height:42px}
 @media (max-width:560px){.marque-img{height:38px}}
+.entete-client{display:flex;align-items:center;gap:12px;margin-bottom:14px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:10px 14px;box-shadow:0 4px 14px rgba(7,16,31,.05)}
+.entete-client img{height:40px;width:auto}
+.entete-client .ec-eyebrow{font-size:10.5px;letter-spacing:.16em;color:#7a5b00;font-weight:800;text-transform:uppercase}
+.entete-client h2{margin:0;font-size:19px;color:var(--navy)}
+.pied-divisions{margin-top:30px;padding:20px 16px 22px;background:linear-gradient(120deg,var(--navy2),var(--navy));border-radius:18px;color:#fff;text-align:center}
+.pd-titre{font-weight:900;font-size:16px}
+.pd-sous{color:#c8d3e6;font-size:12.5px;margin:3px 0 14px}
+.pd-rangee{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.pd-chip{background:#fff;border-radius:12px;padding:9px 12px 7px;display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;min-width:96px;position:relative}
+.pd-chip img{height:28px;width:auto;max-width:110px;object-fit:contain}
+.pd-chip span{color:var(--navy);font-weight:800;font-size:11.5px}
+.pd-chip em{position:absolute;top:-7px;right:-7px;background:var(--gold);color:#07101F;font-style:normal;font-weight:800;font-size:9.5px;padding:2px 7px;border-radius:99px}
 .barre-bas-client{transform:translateZ(0);-webkit-transform:translateZ(0);backface-visibility:hidden;-webkit-backface-visibility:hidden}
 html,body{overscroll-behavior-y:none}
 </style>
@@ -198,6 +210,17 @@ html,body{overscroll-behavior-y:none}
       <select id="filtre-statut"><option value="">Tous les statuts</option></select>
     </div>
     <div id="contenu"></div>
+    <footer class="pied-divisions">
+      <div class="pd-titre">Un groupe, plusieurs divisions</div>
+      <div class="pd-sous">Ciza Supply est une division de Ciza Group. Découvrez les autres divisions du groupe :</div>
+      <div class="pd-rangee">
+        <a class="pd-chip" href="https://cizashop.com" target="_blank" rel="noopener"><img src="/assets/divisions/cizashop.png" alt="CizaShop" /><span>CizaShop</span><em>Bientôt</em></a>
+        <a class="pd-chip" href="https://cizalogistics.vercel.app" target="_blank" rel="noopener"><img src="/assets/divisions/cizalogistics.png" alt="CizaLogistics" /><span>CizaLogistics</span></a>
+        <a class="pd-chip" href="https://cizaimmo.vercel.app" target="_blank" rel="noopener"><img src="/assets/divisions/cizaimmo.png" alt="CizaImmo" /><span>CizaImmo</span></a>
+        <a class="pd-chip" href="https://cizagroup.com" target="_blank" rel="noopener"><img src="/assets/divisions/cizaverify.png" alt="CizaVerify" /><span>CizaVerify</span></a>
+        <a class="pd-chip" href="https://cizagroup.com" target="_blank" rel="noopener"><img src="/assets/divisions/cizagroup.png" alt="Ciza Group" /><span>Ciza Group</span></a>
+      </div>
+    </footer>
   </main>
   <nav class="barre-bas-client" id="nav-bas"></nav>
 </div>
@@ -653,6 +676,9 @@ function afficher(){
   var c = document.getElementById("contenu");
   var LISTES_FILTRES = { devis: 1, echantillons: 1, commandes: 1, livraisons: 1, archives: 1 };
   document.querySelector(".filtres").style.display = LISTES_FILTRES[onglet] ? "" : "none";
+  var TITRES_PAGES = { accueil: "Accueil", devis: "Mes devis", echantillons: "Mes échantillons", commandes: "Mes commandes", livraisons: "Mes livraisons", messages: "Messages", demandes: "Demandes", carte: "Ma carte client", archives: "Archives" };
+  c.innerHTML = '<div class="entete-client"><img src="/assets/logo-supply-documents.png" alt="CIZA SUPPLY" /><div><div class="ec-eyebrow">Espace client</div><h2>' + (TITRES_PAGES[onglet] || "Mon espace") + '</h2></div></div><div data-corps="1"></div>';
+  c = c.querySelector('[data-corps="1"]');
   var f = passeFiltre("");
   var html = "";
   if(onglet === "accueil"){
@@ -663,12 +689,12 @@ function afficher(){
   if(onglet === "devis"){
     var liste = donnees.devis.filter(function(d){ return !d.archive && !d.archive_client; })
       .filter(function(d){ return (!f.statut || d.statut === f.statut) && passeFiltre([d.ref, d.titre, d.notes].join(" ")).texte; });
-    html = '<h2 class="titre">Mes devis</h2><p class="sous">Vos devis et les échantillons liés à chacun. Le document complet s\'ouvre en PDF.</p>' +
+    html = '<p class="sous">Vos devis et les échantillons liés à chacun. Le document complet s\'ouvre en PDF.</p>' +
       (liste.length ? liste.map(function(d){ return carteDevis(d, true); }).join("") : '<p class="vide">Aucun devis pour le moment.</p>');
   } else if(onglet === "echantillons"){
     var devisParId = {}; donnees.devis.forEach(function(d){ devisParId[d.id] = d; });
     var listeE = donnees.echantillons.filter(function(e){ return (!f.statut || e.statut === f.statut) && passeFiltre([e.description, ST_ECH[e.statut] || ""].join(" ")).texte; });
-    html = '<h2 class="titre">Mes échantillons</h2><p class="sous">Les photos et les vidéos de vos échantillons, déposées par le bureau.</p>' +
+    html = '<p class="sous">Les photos et les vidéos de vos échantillons, déposées par le bureau.</p>' +
       (listeE.length ? '<div class="ech-grille">' + listeE.map(function(e){
         var d = devisParId[e.devis_id];
         return '<article class="carte"><h3>' + esc(e.description || "Échantillon") + ' <span class="badge or">' + esc(ST_ECH[e.statut] || e.statut) + '</span></h3>' +
@@ -678,11 +704,11 @@ function afficher(){
   } else if(onglet === "commandes"){
     var liste2 = donnees.commandes.filter(function(x){ return !x.archive && !x.archive_client; })
       .filter(function(x){ return (!f.statut || x.statut === f.statut) && passeFiltre([x.description, x.suivi_ref, x.notes].join(" ")).texte; });
-    html = '<h2 class="titre">Mes commandes</h2><p class="sous">Vos commandes traitées et leur avancement.</p>' +
+    html = '<p class="sous">Vos commandes traitées et leur avancement.</p>' +
       (liste2.length ? liste2.map(function(x){ return carteCommande(x, true); }).join("") : '<p class="vide">Aucune commande pour le moment.</p>');
   } else if(onglet === "livraisons"){
     var liste3 = donnees.livraisons.filter(function(l){ return (!f.statut || l.statut === f.statut) && passeFiltre([l.port_destination, l.pays_livraison, l.ville_livraison, l.transporteur, l.numero_suivi].join(" ")).texte; });
-    html = '<h2 class="titre">Mes livraisons</h2><p class="sous">Destination, mode d\'expédition et état de chaque livraison.</p>' +
+    html = '<p class="sous">Destination, mode d\'expédition et état de chaque livraison.</p>' +
       (liste3.length ? liste3.map(carteLivraison).join("") : '<p class="vide">Aucune livraison pour le moment.</p>');
   } else if(onglet === "demandes"){
     c.innerHTML = '<div data-zone="dem"><p class="vide">Chargement…</p></div>';
@@ -691,7 +717,7 @@ function afficher(){
   } else if(onglet === "carte"){
     var cl2 = donnees.client;
     var init2 = String(cl2.nom || "C").split(/\s+/).map(function(m){ return m.charAt(0); }).slice(0, 2).join("").toUpperCase();
-    c.innerHTML = '<h2 class="titre">Ma carte client</h2><p class="sous">Présentez cette carte au bureau : le code QR donne votre numéro client permanent.</p>' +
+    c.innerHTML = '<p class="sous">Présentez cette carte au bureau : le code QR donne votre numéro client permanent.</p>' +
       '<div class="carte-ecran"><div class="ce-haut"><img class="ce-logo" src="/assets/logo-supply-documents.png" alt="CIZA SUPPLY" /><span class="ce-type">CARTE CLIENT</span></div>' +
       '<div class="ce-corps">' + (donnees.photoUrl ? '<img class="ce-photo" src="' + esc(donnees.photoUrl) + '" alt="" />' : '<div class="ce-initiales">' + esc(init2) + '</div>') +
       '<div style="flex:1"><div class="ce-nom">' + esc(cl2.nom) + '</div><div class="ce-num">' + esc(cl2.numero || "") + '</div>' +
@@ -704,13 +730,13 @@ function afficher(){
     c.querySelector("[data-carte-print]").addEventListener("click", genererCarteClientEspace);
     return;
   } else if(onglet === "messages"){
-    c.innerHTML = '<h2 class="titre">Messages</h2><div data-zone="msg"><p class="vide">Chargement…</p></div>';
+    c.innerHTML = '<div data-zone="msg"><p class="vide">Chargement…</p></div>';
     rendreMessagesClient(c.querySelector('[data-zone="msg"]'));
     return;
   } else {
     var devisA = donnees.devis.filter(function(d){ return d.archive || d.archive_client; });
     var cmdA = donnees.commandes.filter(function(x){ return x.archive || x.archive_client; });
-    html = '<h2 class="titre">Archives</h2><p class="sous">Vos devis et commandes rangés. Vous pouvez désarchiver ce que vous aviez rangé vous-même.</p>' +
+    html = '<p class="sous">Vos devis et commandes rangés. Vous pouvez désarchiver ce que vous aviez rangé vous-même.</p>' +
       (devisA.length || cmdA.length
         ? devisA.map(function(d){ return carteDevis(d, !d.archive); }).join("") + cmdA.map(function(x){ return carteCommande(x, !x.archive); }).join("")
         : '<p class="vide">Aucun élément archivé.</p>');
