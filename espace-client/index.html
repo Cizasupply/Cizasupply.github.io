@@ -143,7 +143,7 @@ nav.onglets{display:none}
 .pd-sous{font-size:11.5px;margin:2px 0 10px}
 .pd-rangee{gap:8px}
 .pd-chip{min-width:0;flex:1 1 calc(50% - 4px);max-width:calc(50% - 4px);padding:10px 8px 8px;gap:5px;border-radius:12px}
-.pd-chip img{height:30px;max-width:118px}
+.pd-chip img{height:38px;max-width:134px}
 .pd-chip span{font-size:11.5px}
 }
 .barre-bas-client{transform:translateZ(0);-webkit-transform:translateZ(0);backface-visibility:hidden;-webkit-backface-visibility:hidden}
@@ -688,7 +688,7 @@ function afficher(){
   var LISTES_FILTRES = { devis: 1, echantillons: 1, commandes: 1, livraisons: 1, archives: 1 };
   document.querySelector(".filtres").style.display = LISTES_FILTRES[onglet] ? "" : "none";
   var TITRES_PAGES = { accueil: "Accueil", devis: "Mes devis", echantillons: "Mes échantillons", commandes: "Mes commandes", livraisons: "Mes livraisons", messages: "Messages", demandes: "Demandes", carte: "Ma carte client", archives: "Archives" };
-  c.innerHTML = '<div class="entete-client"><img src="/assets/b80a04e40bcd23d4.png" alt="CIZA SUPPLY" /><div><div class="ec-eyebrow">Espace client</div><h2>' + (TITRES_PAGES[onglet] || "Mon espace") + '</h2></div></div><div data-corps="1"></div>';
+  c.innerHTML = '<div class="entete-client"><div><div class="ec-eyebrow">Espace client</div><h2>' + (TITRES_PAGES[onglet] || "Mon espace") + '</h2></div></div><div data-corps="1"></div>';
   c = c.querySelector('[data-corps="1"]');
   var f = passeFiltre("");
   var html = "";
