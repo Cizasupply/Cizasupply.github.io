@@ -206,13 +206,13 @@ html,body{overscroll-behavior-y:none}
     <nav id="nav-lat"></nav>
     <div class="lat-bas">
       <div class="lat-qui" id="lat-qui"></div>
-      <button class="lat-sortir" id="btn-deco-lat" type="button">Sortir</button>
+      <button class="lat-sortir" id="btn-deco-lat" type="button">Se déconnecter</button>
     </div>
   </aside>
   <div class="barre">
     <div class="marque"><img class="marque-img" src="/assets/b80a04e40bcd23d4.png" alt="CIZA SUPPLY" /><span class="mq-txt">Mon espace</span></div>
     <div class="qui" id="qui-nom"></div>
-    <button class="btn petit" id="btn-deco" type="button">Sortir</button>
+    <button class="btn petit" id="btn-deco" type="button">Se déconnecter</button>
   </div>
   <nav class="onglets" id="nav-onglets"></nav>
   <main>
@@ -759,9 +759,10 @@ majFiltreStatut();
 demarrer();
 </script>
 <script>
-/* Moteur de langues Ciza Supply — FR (source) · EN · KI · ZH
-   Traduit l'interface affichée (texte, placeholders, titres) à partir du dictionnaire intégré.
-   Ne touche jamais aux données (noms, messages, dossiers) : seules les chaînes exactes du dictionnaire sont remplacées. */
+/* Moteur de langues Ciza Supply — FR (source) · EN · KI · ZH — v2 complète
+   Traduit TOUTE l'interface affichée : textes, boutons, placeholders, titres, valeurs de boutons,
+   et messages des boîtes alert/confirm/prompt. Ne traduit jamais les données saisies ou
+   les dossiers : seules les chaînes du dictionnaire intégré sont remplacées. */
 (function () {
   var DICT = {"CIZA SUPPLY": {"en": "CIZA SUPPLY", "ki": "CIZA SUPPLY", "zh": "CIZA SUPPLY"}, "Ciza Group": {"en": "Ciza Group", "ki": "Ciza Group", "zh": "Ciza Group"}, "ESPACE CLIENT": {"en": "CLIENT AREA", "ki": "AHANTU H'UMUKIRIYA", "zh": "客户专区"}, "Espace client": {"en": "Client area", "ki": "Ahantu h'umukiriya", "zh": "客户专区"}, "Espace client — CIZA SUPPLY": {"en": "Client area — CIZA SUPPLY", "ki": "Ahantu h'umukiriya — CIZA SUPPLY", "zh": "客户专区 — CIZA SUPPLY"}, "Votre espace client": {"en": "Your client area", "ki": "Ahantu hawe h'umukiriya", "zh": "您的客户专区"}, "Votre espace Ciza Supply": {"en": "Your Ciza Supply area", "ki": "Ahantu hawe ha Ciza Supply", "zh": "您的 Ciza Supply 专区"}, "Mon espace": {"en": "My area", "ki": "Ahantu hanjye", "zh": "我的专区"}, "Mon dossier (bureau)": {"en": "My file (office)", "ki": "Idosiye yanjye (ibiro)", "zh": "我的档案（办事处）"}, "Compte pas encore relié": {"en": "Account not linked yet", "ki": "Konti ntirarahuzwa n'idosiye", "zh": "账户尚未关联"}, "Mes commandes": {"en": "My orders", "ki": "Amakomande yanjye", "zh": "我的订单"}, "Mes devis": {"en": "My quotes", "ki": "Amadevi yanjye", "zh": "我的报价"}, "Mes livraisons": {"en": "My deliveries", "ki": "Amashikirizwa yanjye", "zh": "我的交付"}, "Mes échantillons": {"en": "My samples", "ki": "Ibitegererezo vyanjye", "zh": "我的样品"}, "Mes demandes de devis": {"en": "My quote requests", "ki": "Amasaba yanjye y'amadevi", "zh": "我的报价请求"}, "Mes rendez-vous": {"en": "My appointments", "ki": "Amarandevu yanjye", "zh": "我的预约"}, "Ma carte client": {"en": "My client card", "ki": "Ikarita yanjye y'umukiriya", "zh": "我的客户卡"}, "Carte client": {"en": "Client card", "ki": "Ikarita y'umukiriya", "zh": "客户卡"}, "Accès rapides": {"en": "Quick access", "ki": "Inzira z'ubwihuse", "zh": "快捷入口"}, "Demander un devis / rendez-vous": {"en": "Request a quote / appointment", "ki": "Saba idevi / randevu", "zh": "申请报价 / 预约"}, "Écrire au bureau": {"en": "Write to the office", "ki": "Andikira ibiro", "zh": "联系办事处"}, "WhatsApp du bureau": {"en": "Office WhatsApp", "ki": "WhatsApp y'ibiro", "zh": "办事处 WhatsApp"}, "Messages non lus": {"en": "Unread messages", "ki": "Ubutumwa butarasomwa", "zh": "未读消息"}, "Direction et dossier": {"en": "Management and file", "ki": "Ubuyobozi n'idosiye", "zh": "管理层与档案"}, "Suivi en cours": {"en": "Tracking in progress", "ki": "Ibikurikiranwa ubu", "zh": "进行中的跟踪"}, "Suivre un dossier sans compte (par référence) →": {"en": "Track a file without an account (by reference) →", "ki": "Kurikirana idosiye ata konti (ukoresheje inomero) →", "zh": "无需账户跟踪档案（凭参考编号）→"}, "Se connecter": {"en": "Log in", "ki": "Injira", "zh": "登录"}, "Se déconnecter": {"en": "Log out", "ki": "Sohoka", "zh": "退出登录"}, "Créer un compte": {"en": "Create an account", "ki": "Fungura konti", "zh": "创建账户"}, "Créer le compte": {"en": "Create the account", "ki": "Fungura konti", "zh": "创建账户"}, "Enregistrer et entrer": {"en": "Save and enter", "ki": "Bika kandi winjire", "zh": "保存并进入"}, "Pas encore de compte ?": {"en": "No account yet?", "ki": "Ntufise konti?", "zh": "还没有账户？"}, "Mot de passe": {"en": "Password", "ki": "Ijambo ry'ibanga", "zh": "密码"}, "Nouveau mot de passe": {"en": "New password", "ki": "Ijambo ry'ibanga rishasha", "zh": "新密码"}, "Mot de passe oublié ?": {"en": "Forgot your password?", "ki": "Wibagiwe ijambo ry'ibanga?", "zh": "忘记密码？"}, "Choisissez le nouveau mot de passe de votre compte.": {"en": "Choose the new password for your account.", "ki": "Hitamwo ijambo ry'ibanga rishasha rya konti yawe.", "zh": "请为您账户选择新密码。"}, "Entrez d'abord votre e-mail ci-dessus, puis touchez « Mot de passe oublié ? ».": {"en": "First enter your e-mail above, then tap \"Forgot your password?\".", "ki": "Banza winjize e-mail yawe hejuru, hanyuma ukome « Wibagiwe ijambo ry'ibanga? ».", "zh": "请先在上方输入您的电子邮件，然后点击\"忘记密码？\"。"}, "Connecté, mais la page n'a pas pu charger vos dossiers. Touchez à nouveau « Se connecter ».": {"en": "Logged in, but the page could not load your files. Tap \"Log in\" again.", "ki": "Winjiye, ariko urubuga ntirwashoboye gushiraho amadosiye yawe. Ongera ukome « Injira ».", "zh": "已登录，但页面无法加载您的档案。请再次点击\"登录\"。"}, "Connexion impossible — vérifiez votre réseau, puis retouchez le bouton.": {"en": "Unable to log in — check your network, then tap the button again.", "ki": "Ntibishoboka kwinjira — suzuma interineti yawe, hanyuma ongère ukome akabuto.", "zh": "无法登录 — 请检查您的网络，然后再次点击按钮。"}, "Le serveur met trop longtemps à répondre. Touchez à nouveau « Se connecter ».": {"en": "The server is taking too long to respond. Tap \"Log in\" again.", "ki": "Seriveri irateye gusubiza. Ongera ukome « Injira ».", "zh": "服务器响应时间过长。请再次点击\"登录\"。"}, "Action refusée :": {"en": "Action refused:", "ki": "Igikorwa canzwe:", "zh": "操作被拒绝："}, "Connexion refusée :": {"en": "Login refused:", "ki": "Kwinjira kwanzwe:", "zh": "登录被拒绝："}, "Création refusée :": {"en": "Creation refused:", "ki": "Gufungura kwanzwe:", "zh": "创建被拒绝："}, "Envoi refusé :": {"en": "Sending refused:", "ki": "Kurungika kwanzwe:", "zh": "发送被拒绝："}, "Lien refusé :": {"en": "Link refused:", "ki": "Ihuza ryanze:", "zh": "关联被拒绝："}, "Refusé :": {"en": "Refused:", "ki": "Byanzwe:", "zh": "已拒绝："}, "Accepté": {"en": "Accepted", "ki": "Byakiriwe", "zh": "已接受"}, "Annulé": {"en": "Cancelled", "ki": "Byahagaritswe", "zh": "已取消"}, "Arrivée": {"en": "Arrival", "ki": "Ukushika", "zh": "到达"}, "Arrivée à Bujumbura": {"en": "Arrived in Bujumbura", "ki": "Gushika i Bujumbura", "zh": "已到达布琼布拉"}, "Clôturée": {"en": "Closed", "ki": "Yafunze", "zh": "已关闭"}, "Confirmé": {"en": "Confirmed", "ki": "Byemejwe", "zh": "已确认"}, "Contrôle qualité": {"en": "Quality control", "ki": "Isuzuma ry'ubwiza", "zh": "质量检验"}, "Demande envoyée": {"en": "Request sent", "ki": "Isaba ryarungitswe", "zh": "请求已发送"}, "Demande reçue": {"en": "Request received", "ki": "Isaba ryakiriwe", "zh": "已收到请求"}, "Devis préparé et envoyé": {"en": "Quote prepared and sent", "ki": "Idevi yateguwe irarungikwa", "zh": "报价已准备并发送"}, "Commande confirmée au bureau": {"en": "Order confirmed at the office", "ki": "Komande yemejwe ku biro", "zh": "订单已在办事处确认"}, "Dossier clôturé": {"en": "File closed", "ki": "Idosiye yafunze", "zh": "档案已关闭"}, "En préparation": {"en": "Being prepared", "ki": "Birategurwa", "zh": "准备中"}, "En préparation par le bureau": {"en": "Being prepared by the office", "ki": "Ibiro biriko birategura", "zh": "办事处准备中"}, "En production": {"en": "In production", "ki": "Biri mu gukorwa", "zh": "生产中"}, "En traitement": {"en": "Being processed", "ki": "Biri mu gutunganywa", "zh": "处理中"}, "En transit": {"en": "In transit", "ki": "Mu nzira", "zh": "运输中"}, "Envoyé": {"en": "Sent", "ki": "Byarungitswe", "zh": "已发送"}, "Expiré": {"en": "Expired", "ki": "Igihe cararangiye", "zh": "已过期"}, "Expédié": {"en": "Shipped", "ki": "Byoherejwe", "zh": "已发货"}, "Expédiée": {"en": "Shipped", "ki": "Yoherejwe", "zh": "已发货"}, "Expédition vers le Burundi": {"en": "Shipping to Burundi", "ki": "Kwohereza mu Burundi", "zh": "发往布隆迪"}, "Livrée": {"en": "Delivered", "ki": "Yashikirijwe", "zh": "已送达"}, "Production et préparation": {"en": "Production and preparation", "ki": "Gukora no gutegura", "zh": "生产与准备"}, "Refusé": {"en": "Refused", "ki": "Byanzwe", "zh": "已拒绝"}, "Reporté": {"en": "Postponed", "ki": "Vyimuriwe", "zh": "已改期"}, "Reçu": {"en": "Received", "ki": "Byaronswe", "zh": "已收到"}, "Tous les statuts": {"en": "All statuses", "ki": "Imimerere yose", "zh": "所有状态"}, "Par avion": {"en": "By air", "ki": "Mu ndege", "zh": "空运"}, "Par mer": {"en": "By sea", "ki": "Mu bwato", "zh": "海运"}, "Par route": {"en": "By road", "ki": "Mu muhanda", "zh": "陆运"}, "Client depuis": {"en": "Client since", "ki": "Umukiriya kuva", "zh": "成为客户自"}, "Lieu": {"en": "Location", "ki": "Ahantu", "zh": "地点"}, "Téléphone": {"en": "Phone", "ki": "Terefoni", "zh": "电话"}, "Quantité": {"en": "Quantity", "ki": "Ingene bingana", "zh": "数量"}, "Quantité :": {"en": "Quantity:", "ki": "Ingene bingana:", "zh": "数量："}, "Date souhaitée": {"en": "Preferred date", "ki": "Itariki ushaka", "zh": "期望日期"}, "Heure souhaitée": {"en": "Preferred time", "ki": "Isaha ushaka", "zh": "期望时间"}, "Mes coordonnées chez Ciza Supply": {"en": "My details at Ciza Supply", "ki": "Aderesi yanjye kwa Ciza Supply", "zh": "我在 Ciza Supply 的联系方式"}, "À fournir au bureau": {"en": "To provide to the office", "ki": "Ivyo gutanga ku biro", "zh": "需向办事处提供"}, "Échantillons liés à ce devis": {"en": "Samples linked to this quote", "ki": "Ibitegererezo bifitaniye isano n'iri devi", "zh": "与此报价关联的样品"}, "Archiver": {"en": "Archive", "ki": "Bika mu bubiko", "zh": "归档"}, "Désarchiver": {"en": "Unarchive", "ki": "Kura mu bubiko", "zh": "取消归档"}, "Envoyer la demande de devis": {"en": "Send the quote request", "ki": "Rungika isaba ry'idevi", "zh": "发送报价请求"}, "Envoyer la demande de rendez-vous": {"en": "Send the appointment request", "ki": "Rungika isaba rya randevu", "zh": "发送预约请求"}, "Ouvrir le devis (PDF)": {"en": "Open the quote (PDF)", "ki": "Fungura idevi (PDF)", "zh": "打开报价（PDF）"}, "Direction (Fondateur)": {"en": "Management (Founder)", "ki": "Ubuyobozi (Uwushinze)", "zh": "管理层（创始人）"}, "Le Fondateur": {"en": "The Founder", "ki": "Uwushinze ikigo", "zh": "创始人"}, "Le bureau": {"en": "The office", "ki": "Ibiro", "zh": "办事处"}, "Vous": {"en": "You", "ki": "Wewe", "zh": "您"}, "Chargement…": {"en": "Loading…", "ki": "Biriko birashirwaho…", "zh": "加载中…"}, "Aucun élément archivé.": {"en": "No archived items.", "ki": "Nta kintu na kimwe kibitswe.", "zh": "没有已归档的内容。"}, "Rechercher (référence, produit, destination…)": {"en": "Search (reference, product, destination…)", "ki": "Rondera (inomero, igicuruzwa, aho bija…)", "zh": "搜索（参考编号、产品、目的地…）"}, "Écrivez ici…": {"en": "Write here…", "ki": "Andika hano…", "zh": "在此输入…"}, "Ex. : 1, 20 pièces…": {"en": "E.g.: 1, 20 pieces…", "ki": "Urugero: 1, ibice 20…", "zh": "例如：1、20 件…"}, "Ex. : tracteur 75 HP, panneaux solaires…": {"en": "E.g.: 75 HP tractor, solar panels…", "ki": "Urugero: tracteur 75 HP, amapanewu y'izuba…", "zh": "例如：75 HP 拖拉机、太阳能板…"}, "Le sujet du rendez-vous…": {"en": "The subject of the appointment…", "ki": "Ingingo ya randevu…", "zh": "预约事由…"}, "Tout ce qui aide le bureau à chiffrer juste…": {"en": "Anything that helps the office quote accurately…", "ki": "Vyose bifasha ibiro kubara neza…", "zh": "有助于办事处准确报价的任何信息…"}, "Les photos et les vidéos de vos échantillons, déposées par le bureau.": {"en": "Photos and videos of your samples, uploaded by the office.", "ki": "Amafoto n'amavidewo y'ibitegererezo vyawe, yashizweho n'ibiro.", "zh": "办事处上传的您样品的照片和视频。"}, "Présentez cette carte au bureau : le code QR donne votre numéro client permanent.": {"en": "Show this card at the office: the QR code gives your permanent client number.", "ki": "Erekana iyi karita ku biro: kode QR itanga inomero yawe y'umukiriya yama.", "zh": "请在办事处出示此卡：二维码显示您的永久客户编号。"}, "Vos commandes traitées et leur avancement.": {"en": "Your processed orders and their progress.", "ki": "Amakomande yawe yatunganyijwe n'aho ageze.", "zh": "您已处理的订单及其进度。"}, "Vos devis et commandes rangés. Vous pouvez désarchiver ce que vous aviez rangé vous-même.": {"en": "Your filed quotes and orders. You can unarchive what you filed yourself.", "ki": "Amadevi n'amakomande yawe yabitswe. Ushobora gusubiza ivyo wabitswe ubwawe.", "zh": "您已归档的报价和订单。您可以取消归档自己归档的内容。"}, "Conversation avec l'employé du bureau qui suit votre dossier. Le Fondateur peut aussi la voir.": {"en": "Conversation with the office employee handling your file. The Founder can also see it.", "ki": "Ikiganiro n'umukozi w'ibiro akurikirana idosiye yawe. Uwushinze ikigo na we ashobora kukibona.", "zh": "与负责您档案的办事处员工的对话。创始人也可以查看。"}, "Conversation privée entre vous et le Fondateur de Ciza Group : le bureau ne la voit pas.": {"en": "Private conversation between you and the Founder of Ciza Group: the office cannot see it.", "ki": "Ikiganiro c'ibanga hagati yawe n'Uwushinze Ciza Group: ibiro ntikibona.", "zh": "您与 Ciza Group 创始人之间的私密对话：办事处无法查看。"}, "Ciza Supply est une division de Ciza Group. Découvrez les autres divisions du groupe :": {"en": "Ciza Supply is a division of Ciza Group. Discover the group's other divisions:", "ki": "Ciza Supply ni igisata ca Ciza Group. Menya ibindi bisata vy'itsinda:", "zh": "Ciza Supply 是 Ciza Group 的一个部门。了解集团的其他部门："}, "Un groupe, plusieurs divisions": {"en": "One group, several divisions", "ki": "Itsinda rimwe, ibisata vyinshi", "zh": "一个集团，多个部门"}, "Vos devis, vos échantillons, vos commandes et vos livraisons — au même endroit. Connectez-vous avec l'adresse que le bureau a reliée à votre dossier.": {"en": "Your quotes, your samples, your orders and your deliveries — all in one place. Log in with the address the office linked to your file.", "ki": "Amadevi yawe, ibitegererezo vyawe, amakomande yawe n'ivyo woherejwe — vyose hamwe. Injira ukoresheje aderesi biro yahujije n'idosiye yawe.", "zh": "您的报价、样品、订单和交付——全在一处。请使用办事处与您档案关联的邮箱地址登录。"}, "Vos devis et les échantillons liés à chacun. Le document complet s'ouvre en PDF.": {"en": "Your quotes and the samples linked to each one. The full document opens as a PDF.", "ki": "Amadevi yawe n'ibitegererezo bijanye na buri devi. Inyandiko yuzuye ifunguka muri PDF.", "zh": "您的报价及每份报价关联的样品。完整文件以 PDF 格式打开。"}};
   var LANGS = [
@@ -774,23 +775,25 @@ demarrer();
   try { lang = localStorage.getItem("cs_lang") || "fr"; } catch (e) {}
   if (!DICT || !Object.keys(DICT).length) return;
   var keys = Object.keys(DICT).sort(function (a, b) { return b.length - a.length; });
-  var originaux = new WeakMap();
+  var origTexte = new WeakMap();
+  var origPlaceholder = new WeakMap();
+  var origTitle = new WeakMap();
+  var origValeur = new WeakMap();
+  var titreOriginal = null;
   var applying = false;
 
   function traduireTexte(texte, l) {
+    if (!texte) return texte;
     var trimmed = texte.trim();
     if (!trimmed) return texte;
     var entree = DICT[trimmed];
-    if (entree && entree[l]) {
-      return texte.replace(trimmed, entree[l]);
-    }
+    if (entree && entree[l]) return texte.replace(trimmed, entree[l]);
     var out = texte;
     for (var i = 0; i < keys.length; i++) {
       var k = keys[i];
-      if (k.length < 5) continue;
-      if (out.indexOf(k) !== -1 && DICT[k][l]) {
-        out = out.split(k).join(DICT[k][l]);
-      }
+      if (k.length < 4) continue;
+      if (k.length < 6 && !/[\s:·—\-»«]/.test(k)) continue;
+      if (out.indexOf(k) !== -1 && DICT[k][l]) out = out.split(k).join(DICT[k][l]);
     }
     return out;
   }
@@ -812,26 +815,28 @@ demarrer();
     var n;
     while ((n = walker.nextNode())) nodes.push(n);
     nodes.forEach(function (node) {
-      if (!originaux.has(node)) originaux.set(node, node.nodeValue);
-      var orig = originaux.get(node);
+      if (!origTexte.has(node)) origTexte.set(node, node.nodeValue);
+      var orig = origTexte.get(node);
       node.nodeValue = (l === "fr") ? orig : traduireTexte(orig, l);
     });
     racine.querySelectorAll("[placeholder]").forEach(function (el) {
-      if (!originaux.has(el)) originaux.set(el, el.getAttribute("placeholder"));
-      var orig = originaux.get(el);
+      if (!origPlaceholder.has(el)) origPlaceholder.set(el, el.getAttribute("placeholder"));
+      var orig = origPlaceholder.get(el);
       el.setAttribute("placeholder", (l === "fr") ? orig : traduireTexte(orig, l));
     });
     racine.querySelectorAll("[title]").forEach(function (el) {
       if (el.closest && el.closest("[data-no-i18n]")) return;
-      var cle = "title:" + (el.getAttribute("data-i18n-id") || "");
-      if (!el.getAttribute("data-i18n-id")) {
-        cle = "title:@" + Math.random().toString(36).slice(2);
-        el.setAttribute("data-i18n-id", cle.slice(6));
-      }
-      if (!originaux.has(cle)) originaux.set(cle, el.getAttribute("title"));
-      var orig = originaux.get(cle);
+      if (!origTitle.has(el)) origTitle.set(el, el.getAttribute("title"));
+      var orig = origTitle.get(el);
       el.setAttribute("title", (l === "fr") ? orig : traduireTexte(orig, l));
     });
+    racine.querySelectorAll("input[type='button'], input[type='submit'], input[type='reset']").forEach(function (el) {
+      if (!origValeur.has(el)) origValeur.set(el, el.value);
+      var orig = origValeur.get(el);
+      el.value = (l === "fr") ? orig : traduireTexte(orig, l);
+    });
+    if (titreOriginal === null) titreOriginal = document.title;
+    document.title = (l === "fr") ? titreOriginal : traduireTexte(titreOriginal, l);
   }
 
   function appliquer() {
@@ -844,6 +849,14 @@ demarrer();
     } finally {
       setTimeout(function () { applying = false; }, 0);
     }
+  }
+
+  /* Messages natifs : alert / confirm / prompt traduits eux aussi */
+  var _alert = window.alert, _confirm = window.confirm, _prompt = window.prompt;
+  window.alert = function (m) { _alert(lang === "fr" ? m : traduireTexte(String(m), lang)); };
+  window.confirm = function (m) { return _confirm(lang === "fr" ? m : traduireTexte(String(m), lang)); };
+  if (typeof _prompt === "function") {
+    window.prompt = function (m, d) { return _prompt(lang === "fr" ? m : traduireTexte(String(m), lang), d); };
   }
 
   var barre;
@@ -859,7 +872,7 @@ demarrer();
   function construireBarre() {
     barre = document.createElement("div");
     barre.setAttribute("data-no-i18n", "1");
-    barre.style.cssText = "position:fixed;top:10px;right:12px;z-index:9999;display:flex;gap:2px;background:rgba(10,30,60,.92);border:1px solid rgba(212,175,55,.5);border-radius:999px;padding:3px;box-shadow:0 6px 20px rgba(0,0,0,.25);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";
+    barre.style.cssText = "position:fixed;bottom:calc(76px + env(safe-area-inset-bottom));right:12px;z-index:9999;display:flex;gap:2px;background:rgba(10,30,60,.92);border:1px solid rgba(212,175,55,.5);border-radius:999px;padding:3px;box-shadow:0 6px 20px rgba(0,0,0,.25);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";
     LANGS.forEach(function (L) {
       var b = document.createElement("button");
       b.type = "button";
