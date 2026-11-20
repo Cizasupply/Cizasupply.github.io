@@ -149,6 +149,15 @@ nav.onglets{display:none}
 .barre-bas-client{transform:translateZ(0);-webkit-transform:translateZ(0);backface-visibility:hidden;-webkit-backface-visibility:hidden}
 html,body{overscroll-behavior-y:none}
 </style>
+<style>
+@media(max-width:1023px){
+  #vue-app{position:fixed;inset:0;display:flex;flex-direction:column;padding-left:0}
+  #vue-app .barre{position:static;flex:none}
+  #nav-onglets{flex:none}
+  #vue-app main{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:24px}
+  #nav-bas{position:static;flex:none}
+}
+</style>
 </head>
 <body>
 
@@ -685,6 +694,7 @@ function rendreDemandes(z){
 
 function afficher(){
   var c = document.getElementById("contenu");
+  var sc = document.querySelector("#vue-app main"); if (sc) sc.scrollTop = 0;
   var LISTES_FILTRES = { devis: 1, echantillons: 1, commandes: 1, livraisons: 1, archives: 1 };
   document.querySelector(".filtres").style.display = LISTES_FILTRES[onglet] ? "" : "none";
   var TITRES_PAGES = { accueil: "Accueil", devis: "Mes devis", echantillons: "Mes échantillons", commandes: "Mes commandes", livraisons: "Mes livraisons", messages: "Messages", demandes: "Demandes", carte: "Ma carte client", archives: "Archives" };
