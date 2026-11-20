@@ -1137,7 +1137,7 @@ async function ouvrirFicheClient(c, cl, profils){
   var nlDos = msgs.filter(function(m){ return m.canal === "dossier" && !m.lu && m.expediteur_type === "client"; }).length;
   function ligne(titre, meta){ return '<article class="carte"><h3>' + titre + '</h3><div class="meta">' + meta + '</div></article>'; }
   c.innerHTML = entetePage("Fiche client — " + esc(cl.nom), "Tout son dossier au même endroit : coordonnées, devis, commandes, livraisons, rendez-vous et messages.") +
-    '<div class="outils"><button class="btn secondaire" type="button" data-act="retour">← Tous les clients</button> <button class="btn" type="button" data-act="fiche-pdf">Fiche client (PDF)</button> <button class="btn secondaire" type="button" data-act="carte">Carte client (PDF)</button></div>' +
+    '<div class="outils"><button class="btn secondaire" type="button" data-act="retour">← Tous les clients</button> <button class="btn" type="button" data-act="fiche-pdf">Fiche client (PDF)</button> <button class="btn secondaire" type="button" data-act="carte">Carte client (PDF)</button> <button class="btn secondaire" type="button" data-act="demande-doc">Demander un document par e-mail</button></div>' +
     '<article class="carte">' + (photo ? '<img src="' + esc(photo) + '" alt="" style="width:92px;height:92px;object-fit:cover;border-radius:14px;border:1px solid var(--border)" />' : '') +
       '<h3>' + esc(cl.nom) + (cl.societe ? ' <span class="badge or">' + esc(cl.societe) + '</span>' : '') + '</h3>' +
       '<div class="meta">' +
@@ -1192,6 +1192,14 @@ async function ouvrirFicheClient(c, cl, profils){
       '<div class="doc-pied">Ciza Supply, division de Ciza Group · Bujumbura, Burundi · WhatsApp +1 514 502 9503 · Burundi +257 79 94 50 07 · infos@cizagroup.com · cizasupply.com — CIZA GROUP SURL · RC : 0082870/26 · NIF : 4003446905</div>');
   });
   var bPiece = c.querySelector('[data-act="piece"]'); if(bPiece) bPiece.addEventListener("click", async function(){ var u2 = await urlSigneePrivee(cl.piece_url); if(u2) window.open(u2, "_blank"); else alert("Pièce introuvable."); });
+  var bDoc = c.querySelector('[data-act="demande-doc"]');
+  if(bDoc) bDoc.addEventListener("click", async function(){
+    var dest = cl.email_compte || cl.email;
+    if(!dest){ alert("Adresse e-mail du client manquante : ajoutez-la dans la fiche du client (module Clients), puis réessayez."); return; }
+    var docDemande = prompt("Quel document demander à " + cl.nom + " ?");
+    if(!docDemande) return;
+    await avisClient("demande-document", dest, { NOM_CLIENT: cl.nom || "", REFERENCE: cl.numero || "", DOCUMENT_DEMANDE: docDemande });
+  });
   c.querySelectorAll("[data-aller]").forEach(function(b){ b.addEventListener("click", function(){ aller(b.dataset.aller); }); });
 }
 
@@ -2324,6 +2332,29 @@ function mediaEchHtml(chemin){
   if(/\.(mp4|mov|webm|m4v)$/i.test(chemin)) return '<div class="docs"><video controls preload="metadata" src="' + u + '" style="max-width:100%;border-radius:12px"></video></div>';
   return '<div class="docs"><a href="' + u + '" target="_blank" rel="noopener"><img src="' + u + '" alt="" /></a></div>';
 }
+/* ===== ERP26 : avis client par e-mail (fonction Edge avis-client) ===== */
+async function avisClient(type, email, variables){
+  if(!email){ alert("Adresse e-mail du client manquante : ajoutez-la dans la fiche du client (module Clients), puis réessayez."); return; }
+  var r;
+  try { r = await sb.functions.invoke("avis-client", { body: { type: type, email: email, variables: variables || {} } }); }
+  catch(e){ alert("Envoi impossible : " + (e && e.message ? e.message : e)); return; }
+  if(r.error){
+    var detail = "";
+    try { var j = await r.error.context.json(); if(j && j.error) detail = j.error; } catch(e2){}
+    if(detail === "cle_absente") alert("Envoi impossible : la clé d'envoi des e-mails n'est pas encore configurée côté serveur. Le Fondateur doit d'abord la poser.");
+    else alert("Envoi refusé : " + (detail || r.error.message || "erreur inconnue"));
+    return;
+  }
+  alert("E-mail envoyé au client.");
+}
+async function avisClientParId(clientId, type, variables){
+  var rc = await sb.from("clients").select("nom, email, email_compte").eq("id", clientId).single();
+  if(rc.error || !rc.data){ alert("Client introuvable : avis non envoyé."); return; }
+  variables = variables || {};
+  if(!variables.NOM_CLIENT) variables.NOM_CLIENT = rc.data.nom || "";
+  await avisClient(type, rc.data.email_compte || rc.data.email, variables);
+}
+
 async function rendreDevis(c){
   c.innerHTML = entetePage("Devis", "Les devis des clients, avec le document PDF et les échantillons liés à chaque devis. Le client voit tout cela dans son espace, relié par l'adresse de son compte (fiche Clients).") +
     '<div class="outils"><button class="btn" type="button" data-act="nouveau">+ Nouveau devis</button></div>' +
@@ -2385,6 +2416,7 @@ async function rendreDevis(c){
       '<div class="meta"><div>Client : <b>' + esc(nomClient(d.client_id)) + '</b></div><div>Montant : <b>' + esc(fmtMontant(d.montant, d.devise)) + '</b> · Envoyé le : <b>' + fmtDate(d.date_envoi) + '</b></div>' +
       (d.notes ? '<div>' + esc(d.notes) + '</div>' : '') + '</div>' +
       '<div class="actions"><button class="btn petit secondaire" type="button" data-act="modif">Modifier le devis</button>' +
+      (d.statut === "envoye" ? '<button class="btn petit" type="button" data-act="avis-devis">Aviser par e-mail</button>' : '') +
       (d.document_url ? '<a class="btn petit" href="' + esc(urlPubliqueSuivi(d.document_url)) + '" target="_blank" rel="noopener">Voir le document</a>' : '') +
       '<label class="btn petit secondaire" style="cursor:pointer">Déposer le devis (PDF)<input type="file" accept=".pdf,.jpg,.jpeg,.png" class="caché" data-doc-devis /></label></div></article>' +
       '<h2 class="titre" style="margin-top:22px">Échantillons liés à ce devis</h2>' +
@@ -2400,6 +2432,8 @@ async function rendreDevis(c){
       '<button class="btn" type="submit" style="margin-top:10px">Ajouter l\'échantillon</button></form>';
     zoneListe.querySelector('[data-act="retour"]').addEventListener("click", charger);
     zoneListe.querySelector('[data-act="modif"]').addEventListener("click", function(){ formulaireDevis(d); zoneForm.scrollIntoView({ behavior: "smooth" }); });
+    var bAvisDevis = zoneListe.querySelector('[data-act="avis-devis"]');
+    if(bAvisDevis) bAvisDevis.addEventListener("click", function(){ avisClientParId(d.client_id, "devis-pret", { NUMERO_DEVIS: d.ref || "", PRODUIT: d.titre || "" }); });
     zoneListe.querySelector("[data-doc-devis]").addEventListener("change", async function(ev){
       var f = ev.target.files[0]; if(!f) return;
       var chemin = "devis/" + d.id + "/" + Date.now() + "-" + f.name.replace(/[^\w.\-]+/g, "_");
@@ -2420,7 +2454,12 @@ async function rendreDevis(c){
       ev.preventDefault();
       var f = ev.target;
       var r = await sb.from("echantillons").insert({ devis_id: id, description: f.elements.description.value, statut: f.elements.statut.value, date_envoi: f.elements.date_envoi.value || null });
-      if(r.error) alert("Ajout refusé : " + r.error.message); else ouvrirDevis(id);
+      if(r.error){ alert("Ajout refusé : " + r.error.message); return; }
+      var stEch = f.elements.statut.value;
+      if(stEch === "expedie" || stEch === "recu"){
+        await avisClientParId(d.client_id, stEch === "expedie" ? "echantillons-expedies" : "echantillons-recus", { DESCRIPTION: f.elements.description.value || "", NUMERO_DEVIS: d.ref || "" });
+      }
+      ouvrirDevis(id);
     });
   }
   charger();
