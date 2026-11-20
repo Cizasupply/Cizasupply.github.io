@@ -7,6 +7,14 @@
 <title>Gestion — CIZA SUPPLY</title>
 <style>
 html,body{overflow-x:hidden}
+@media(max-width:1023px){
+  #vue-app{position:fixed;inset:0;display:flex;flex-direction:column}
+  #vue-app .principal{display:flex;flex-direction:column;flex:1;min-height:0;margin-left:0}
+  #vue-app .barre-haut{position:static;flex:none}
+  #alerte-live{flex:none}
+  #contenu{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:24px}
+  #barre-bas{position:static;flex:none}
+}
   :root{--navy:#0A1E3C;--navy2:#07101F;--gold:#D4AF37;--gold2:#F2B840;--bg:#f2f4f8;--surface:#fff;--border:#e2e7f0;--muted:#5a6a86;--ok:#1d7a3a;--warn:#9a6a00;--bad:#b3261e}
   *{box-sizing:border-box}
   body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:#14213a}
@@ -603,6 +611,7 @@ function aller(cle){
   if(m) m.rendre(c);
   majPastilles();
   window.scrollTo(0, 0);
+  c.scrollTop = 0;
 }
 </script>
 <script>
